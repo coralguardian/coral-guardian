@@ -1,9 +1,9 @@
 {
-    "name": "d4rk0snet/coral-guardian",
+    "name": "d4rk0snet/coralguardian",
     "type": "wordpress-plugin",
     "autoload": {
         "psr-4": {
-            "D4rk0snet\\CoralGuardian\\": "src/"
+            "D4rk0snet\\Coralguardian\\": "src/"
         }
     },
     "authors": [
