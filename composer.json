@@ -12,5 +12,6 @@
             "email": "gregory@d4rk0s.net"
         }
     ],
-    "require": {}
+    "require": {},
+    "minimum-stability": "dev"
 }
