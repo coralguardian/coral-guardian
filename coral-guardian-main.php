@@ -9,5 +9,5 @@
  * Author URI:
  * Licence: GPLv2
  */
-//new \D4rk0snet\Coralguardian\Shortcodes\FullFormShortcode();
-//new \D4rk0snet\Coralguardian\Shortcodes\CoralAdoptionFormShortcode();
+new \D4rk0snet\Coralguardian\Shortcodes\CoralAdoptionFormShortcode();
+new \D4rk0snet\Coralguardian\Shortcodes\FullFormShortcode();

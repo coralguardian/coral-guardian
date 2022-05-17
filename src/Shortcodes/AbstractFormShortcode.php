@@ -11,8 +11,9 @@ abstract class AbstractFormShortcode
 
     public function __construct()
     {
-        $this->basePath = plugin_dir_url("coral-adoption.php") . "coral-adoption/assets/";
+        $this->basePath = plugin_dir_url("coral-guardian-main.php") . "coralguardian/assets/";
         add_action("init", [$this, "onInit"]);
+        add_shortcode($this->getTag(), [$this, 'getCallback']);
     }
 
     public function onInit()
@@ -25,8 +26,6 @@ abstract class AbstractFormShortcode
     {
         wp_enqueue_script('vue', $this->basePath . 'node_modules/vue/dist/vue.min.js', null, null, true);
         $this->loadHashedStylesAndScripts("js");
-//        wp_enqueue_script('app', $this->basePath . 'dist/js/app.js', [], null, true);
-//        wp_enqueue_script('vendor', $this->basePath . 'dist/js/chunk-vendors.js', [], null, true);
         wp_enqueue_script('stripe', "https://js.stripe.com/v3/", null, null);
         wp_localize_script("app", "siteLocale", [get_locale()]);
         wp_localize_script("app", "publicPath", [$this->basePath]);
@@ -35,8 +34,6 @@ abstract class AbstractFormShortcode
     protected function getStyles(): void
     {
         $this->loadHashedStylesAndScripts("css");
-//        wp_enqueue_style('app', $this->basePath . 'dist/css/app.css', [], null);
-//        wp_enqueue_style('vendor', $this->basePath . 'dist/css/chunk-vendors.css', [], null);
         wp_enqueue_style('mdi', "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css", [], null);
         wp_enqueue_style('police', "https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap", [], null);
     }
