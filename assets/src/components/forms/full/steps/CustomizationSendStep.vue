@@ -1,0 +1,105 @@
+<template>
+  <div class="row text-left">
+    <v-form
+        :ref="formRefName"
+        v-model="valid"
+    >
+      <div class="col-12">
+        <p class="subtitles poppins-police">
+          {{ $t('default.stepper.customizationSend.message.title') }}
+        </p>
+        <p v-html="$t('default.stepper.customizationSend.message.description')"/>
+
+        <v-textarea
+            v-model="gift.message"
+            class="mt-5"
+            rows="3"
+            no-resize
+            color="tertiary"
+            outlined
+            :placeholder="$t('default.stepper.customizationSend.message.placeholder')"
+            maxlength="490"
+            counter
+        />
+      </div>
+      <div class="col-12">
+        <p class="subtitles poppins-police">
+          {{ $t('default.stepper.customizationSend.send.title') }}
+        </p>
+        <p>{{ $t('default.stepper.customizationSend.send.description1') }}</p>
+        <p class="mt-5">{{ $t('default.stepper.customizationSend.send.description2') }}</p>
+        <v-checkbox color="tertiary" v-model="scheduled">
+          <template v-slot:label>
+            <p class="black--text">{{ $t('default.stepper.customizationSend.send.checkbox') }}</p>
+          </template>
+        </v-checkbox>
+        <v-date-picker
+            v-if="scheduled"
+            v-model="gift.toSendOn"
+            color="tertiary"
+            :first-day-of-week="1"
+            :locale="$i18n.locale"
+            :min="tomorrow"
+            :max="maxDate"
+        />
+        <error-display :message="errorMessage"></error-display>
+      </div>
+    </v-form>
+  </div>
+</template>
+
+<script>
+import ErrorDisplay from "../../../utils/ErrorDisplay";
+import validationMixin from "../../../../mixins/validationMixin";
+import {mapGetters} from "vuex";
+
+export default {
+  name: "customization-send-step",
+  mixins: [validationMixin],
+  components: {
+    ErrorDisplay
+  },
+  data() {
+    return {
+      scheduled: false,
+      errorMessage: null
+    }
+  },
+  computed: {
+    ...mapGetters({
+      gift: "getGift"
+    }),
+    tomorrow() {
+      const tomorrow = new Date(new Date())
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      return tomorrow.toISOString()
+    },
+    maxDate() {
+      const max = new Date(new Date())
+      max.setDate(max.getDate() + 365)
+      return max.toISOString()
+    }
+  },
+  methods: {
+    check() {
+      if (this.scheduled && this.gift.toSendOn === null) {
+        this.errorMessage = this.$t("default.errors.select_date")
+        this.$root.$emit("IsLoaded")
+      } else {
+        this.errorMessage = null
+        this.$root.$emit("StepValid")
+      }
+    }
+  },
+  mounted() {
+    this.$root.$on(this.customValidationEventName, () => this.check())
+  },
+  beforeDestroy() {
+    this.$root.$off(this.customValidationEventName)
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

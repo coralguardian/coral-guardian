@@ -1,0 +1,17 @@
+.text-no-transform {
+  text-transform: none !important;
+}
+
+.v-text-field--outlined.v-input--is-focused fieldset {
+  border-width: 1px;
+}
+
+.input-right input {
+  text-align: right;
+}
+
+.subtitles {
+  font-weight: bolder;
+  font-size: 1.25rem;
+  padding: 12px 0;
+}

@@ -1,0 +1,18 @@
+.d-flex {
+    display: flex;
+}
+
+.form-block {
+    margin-right: 20px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+select, input[type="text"], input[type="date"] {
+    width: 100%;
+}
+
+#donation-recurrent-date-block, #customer-company-name-block, #block-file-recipients {
+    display: none;
+}

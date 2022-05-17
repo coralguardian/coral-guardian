@@ -1,0 +1,81 @@
+* {
+  font-family: "Open Sans", Arial, sans-serif !important;
+}
+
+.poppins-police {
+  font-family: "Poppins", sans-serif !important;
+
+  > * {
+    font-family: "Poppins", sans-serif !important;
+  }
+}
+
+
+.v-application--wrap {
+  min-height: unset !important;
+}
+
+.v-application {
+  a {
+    color: var(--v-tertiary-darken2) !important;
+  }
+
+  .font-weight-bold {
+    font-weight: 900 !important;
+  }
+}
+
+.v-tabs-items {
+  border-radius: 1% 1% 0 0;
+}
+
+.tooltip {
+  position: absolute !important;
+  opacity: 0.9;
+  top: 20px;
+  left: 20px;
+  width: 90%;
+  z-index: 10;
+}
+
+input, form, textarea {
+  box-shadow: inherit;
+}
+
+p {
+  font-size: 14px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+@media (max-width: 450px) {
+  .subtitles {
+    font-size: 1rem !important;
+  }
+}
+
+// hide tabs arrow if visibility is none
+.v-slide-group__prev--disabled {
+  display: none !important;
+}
+
+.v-stepper__label, .v-label {
+  margin-left: 0.5em;
+}
+
+.v-stepper--vertical .v-stepper__content {
+  padding: unset !important;
+}
+
+.v-btn.secondary {
+  color: black !important;
+}
+
+.tertiary-tab-active {
+  background: $tertiary;
+}
