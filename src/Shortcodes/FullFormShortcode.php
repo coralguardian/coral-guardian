@@ -4,19 +4,18 @@ namespace D4rk0snet\Coralguardian\Shortcodes;
 
 class FullFormShortcode extends AbstractFormShortcode
 {
-    public function getTag(): string
+    public static function getTag(): string
     {
         return "full-form";
     }
 
-    protected function getId()
+    public static function getId(): string
     {
         return "full-form";
     }
 
-    protected function getAttributes(array $atts): array
+    protected static function getAttributes(array $atts): array
     {
-        $attributes = [];
-        return $attributes;
+        return [];
     }
 }

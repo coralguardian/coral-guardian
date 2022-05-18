@@ -1,0 +1,22 @@
+<div class="form-block">
+    <h2>Informations des destinataires et adoptions</h2>
+
+    <p>Chacun des fichiers doit être rempli avec autant de ligne que de quantités adoptées.</p>
+
+    <div id="block-file-adoptions">
+        <h3>Adoptions</h3>
+        <a href="{{ adoption_file }}">Télécharger le template</a><br>
+
+        <label for="file-adoptions">Fichier adoptions complété *</label><br>
+        <input type="file" id=file-adoptions" name="file[adoptions]" accept=".xls,.xlsx" required>
+    </div>
+
+    <div id="block-file-recipients">
+        <h3>Destinataires</h3>
+        <a href="{{ recipient_file }}">Télécharger le template</a><br>
+
+        <label for="file-recipients">Fichier destinataires complété *</label><br>
+        <input type="file" id=file-recipients" name="file[recipients]" accept=".xls,.xlsx">
+    </div>
+
+</div>

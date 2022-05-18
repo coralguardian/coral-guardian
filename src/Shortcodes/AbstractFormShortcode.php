@@ -4,51 +4,42 @@ namespace D4rk0snet\Coralguardian\Shortcodes;
 
 use DirectoryIterator;
 
-abstract class AbstractFormShortcode
+abstract class AbstractFormShortcode implements ShortcodeInterface
 {
-    abstract protected function getId();
-    private string $basePath;
-
-    public function __construct()
+    public static function onInit()
     {
-        $this->basePath = plugin_dir_url("coral-guardian-main.php") . "coralguardian/assets/";
-        add_action("init", [$this, "onInit"]);
-        add_shortcode($this->getTag(), [$this, 'getCallback']);
+        self::getScripts();
+        self::getStyles();
     }
 
-    public function onInit()
+    protected static function getScripts(): void
     {
-        $this->getScripts();
-        $this->getStyles();
-    }
-
-    protected function getScripts(): void
-    {
-        wp_enqueue_script('vue', $this->basePath . 'node_modules/vue/dist/vue.min.js', null, null, true);
-        $this->loadHashedStylesAndScripts("js");
+        $basePath = plugin_dir_url("coral-guardian-main.php") . "coralguardian/assets/";
+        wp_enqueue_script('vue', $basePath . 'node_modules/vue/dist/vue.min.js', null, null, true);
+        self::loadHashedStylesAndScripts("js");
         wp_enqueue_script('stripe', "https://js.stripe.com/v3/", null, null);
         wp_localize_script("app", "siteLocale", [get_locale()]);
-        wp_localize_script("app", "publicPath", [$this->basePath]);
+        wp_localize_script("app", "publicPath", [$basePath]);
     }
 
-    protected function getStyles(): void
+    protected static function getStyles(): void
     {
-        $this->loadHashedStylesAndScripts("css");
+        self::loadHashedStylesAndScripts("css");
         wp_enqueue_style('mdi', "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css", [], null);
         wp_enqueue_style('police', "https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap", [], null);
     }
 
-    protected function getAttributes(array $atts): array
+    protected static function getAttributes(array $atts): array
     {
         return [];
     }
 
-    public function getCallback($atts): string
+    public static function getCallback($atts): string
     {
-        $content = "<div id='{$this->getId()}'";
+        $content = "<div id='" . static::getId() . "'";
 
         if (is_array($atts)) {
-            foreach ($this->getAttributes($atts) as $key => $attribute) {
+            foreach (self::getAttributes($atts) as $key => $attribute) {
                 $content .= " $key='$attribute'";
             }
         }
@@ -56,7 +47,7 @@ abstract class AbstractFormShortcode
         return $content . "></div>";
     }
 
-    private function loadHashedStylesAndScripts(string $type)
+    private static function loadHashedStylesAndScripts(string $type)
     {
         $filesPath = plugin_dir_path(__FILE__) . "../../assets/dist/$type";
         $dir = new DirectoryIterator($filesPath);
@@ -70,26 +61,26 @@ abstract class AbstractFormShortcode
 
         // Hack to be sure that app files are enqueued on last so they properly override vendors ones
         foreach ($fileNames as $fullName) {
-            $name = $this->getNameOfFileWithoutHash($fullName);
+            $name = self::getNameOfFileWithoutHash($fullName);
             if ($name === 'chunk-vendors') {
-                $this->enqueueFileBasedOnType($type, $name, $fullName);
+                self::enqueueFileBasedOnType($type, $name, $fullName);
             }
         }
 
         foreach ($fileNames as $fullName) {
-            $name = $this->getNameOfFileWithoutHash($fullName);
+            $name = self::getNameOfFileWithoutHash($fullName);
             if ($name === 'app') {
-                $this->enqueueFileBasedOnType($type, $name, $fullName);
+                self::enqueueFileBasedOnType($type, $name, $fullName);
             }
         }
     }
 
-    private function getNameOfFileWithoutHash(string $fullName)
+    private static function getNameOfFileWithoutHash(string $fullName)
     {
         return substr(basename($fullName), 0, strpos(basename($fullName), '.')); // main
     }
 
-    private function enqueueFileBasedOnType(string $type, string $name, string $fullName)
+    private static function enqueueFileBasedOnType(string $type, string $name, string $fullName)
     {
         switch ($type) {
             case "js":

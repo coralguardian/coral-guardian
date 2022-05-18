@@ -1,0 +1,44 @@
+<div class="form-block">
+    <h2>Informations du don</h2>
+
+    <label for="donation-type">Type de don *</label><br>
+    <select id="donation-type" name="donation[type]">
+        <option value="unique">Ponctuel</option>
+        <option value="recurrent">Mensuel</option>
+    </select>
+
+    <div id="donation-unique-date-block">
+        <label for="donation-date">Date du don *</label><br>
+        <input type="date" id="donation-date" name="donation[donation_date]" required><br>
+    </div>
+
+    <div id="donation-recurrent-date-block">
+        <label for="donation-date">Date de début *</label><br>
+        <input type="date" id="donation-date" name="donation[start_date]"><br>
+        <label for="donation-end-date">Date de fin *</label><br>
+        <input type="date" id="donation-end-date" name="donation[end_date]"><br>
+    </div>
+
+    <label for="donation-project">Projet *</label><br>
+    <select id="donation-project" name="donation[project_key]" required>
+        {% for project in projects %}
+            <option value="{{ project.projectKey }}">{{ project.name }} - {{ project.country }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="donation-price">Prix payé *</label><br>
+    <input type="text" id="donation-price" name="donation[amount]" required><br>
+
+    <label for="donation-payment-method">Méthode de paiement *</label><br>
+    <select id="donation-payment-method" name="donation[payment_method]" required>
+        <option value="creditCard">Carte de crédit</option>
+        <option value="bankTransfert">Virement bancaire</option>
+    </select>
+
+    <label for="donation-language">Langue *</label><br>
+    <select id="donation-language" name="donation[lang]" required>
+        <option value="fr">Français</option>
+        <option value="en">Anglais</option>
+    </select>
+
+</div>

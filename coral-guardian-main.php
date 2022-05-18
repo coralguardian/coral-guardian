@@ -9,5 +9,7 @@
  * Author URI:
  * Licence: GPLv2
  */
-new \D4rk0snet\Coralguardian\Shortcodes\CoralAdoptionFormShortcode();
-new \D4rk0snet\Coralguardian\Shortcodes\FullFormShortcode();
+add_action('plugins_loaded', [\D4rk0snet\Coralguardian\Plugin::class, "launchActions"]);
+add_action('admin_menu', [\D4rk0snet\Coralguardian\Service\AdminService::class, "addTopMenu"]);
+add_action("admin_notices", [\D4rk0snet\Coralguardian\Service\AdminService::class, "handleAdminNotices"]);
+add_action("admin_init", [\D4rk0snet\Coralguardian\Service\AdminService::class, "init"]);
