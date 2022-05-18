@@ -3,6 +3,7 @@
 namespace D4rk0snet\Coralguardian\Shortcodes;
 
 use DirectoryIterator;
+use Hyperion\RestAPI\Plugin;
 
 abstract class AbstractFormShortcode implements ShortcodeInterface
 {
@@ -20,6 +21,7 @@ abstract class AbstractFormShortcode implements ShortcodeInterface
         wp_enqueue_script('stripe', "https://js.stripe.com/v3/", null, null);
         wp_localize_script("app", "siteLocale", [get_locale()]);
         wp_localize_script("app", "publicPath", [$basePath]);
+        wp_localize_script("app", "apiNamespace", [get_option(Plugin::API_NAMESPACE_OPTION)]);
     }
 
     protected static function getStyles(): void

@@ -5,6 +5,8 @@ import DonationModel from "../models/donationModel";
 // public path is from wp, used to set full images path
 /* global publicPath */
 let basePath = (typeof publicPath !== "undefined") && (publicPath !== null) ? publicPath[0] : ""
+/* global apiNamespace */
+let apiPath = (typeof apiNamespace !== "undefined") && (apiNamespace !== null) ? apiNamespace[0] : ""
 const qparams = new URLSearchParams(window.location.search)
 const project = qparams.has('prt') ? qparams.get('prt') : 'france'
 
@@ -13,6 +15,7 @@ export default class BaseFormStore {
     this.state = {
       formType: "basic",
       baseImgPath: basePath,
+      apiNamespace: apiPath,
       data: {
         step: 0,
         baseElementPrice: null,
@@ -120,7 +123,8 @@ export default class BaseFormStore {
       getOrder: state => state.data.order,
       getImgPath: state => state.baseImgPath,
       getDonation: state => state.data.donation,
-      getFormType: state => state.formType
+      getFormType: state => state.formType,
+      getApiNamespace: state => state.apiNamespace
     };
 
     this.mutations = {

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {BaseAdoptionFormStore} from "../store/baseAdoptionFormStore";
+import {BaseAdoptionFormStore} from "@/store/baseAdoptionFormStore";
 import {cloneDeep} from "lodash";
 import AdoptionForm from "../forms/full/adoptionForm";
 import GiftForm from "../forms/full/giftForm";

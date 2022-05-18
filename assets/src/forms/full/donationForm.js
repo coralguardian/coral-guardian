@@ -30,10 +30,10 @@ export default class DonationForm extends AbstractForm {
           title: "default.stepper.information.title",
           component: "InformationStep",
           validate: true,
-          api: {
-            method: "post",
-            endpoint: "createCustomer"
-          },
+          // api: {
+          //   method: "post",
+          //   endpoint: "createCustomer"
+          // },
           props: {
             newsletterFullBlock: true,
             isCompany: true
@@ -50,7 +50,7 @@ export default class DonationForm extends AbstractForm {
           },
           api: {
             method: "post",
-            endpoint: "createDonation"
+            endpoint: "donate"
           }
         },
         {

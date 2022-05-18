@@ -13,8 +13,6 @@ class AdminService
     public const MENU_SLUG = "coralguardian";
     public const NEW_ADOPTION_MENU_SLUG = "coralguardian-create-adoption";
     public const NEW_DONATION_MENU_SLUG = "coralguardian-creation-donation";
-    private Environment $twigEnvironment;
-    private EntityManagerInterface $entityManager;
 
     public static function init(): void
     {
