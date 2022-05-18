@@ -3,18 +3,17 @@ import {mapGetters} from "vuex";
 import {isEmpty} from "lodash";
 
 export default {
-  data() {
-    return {
-      baseUrl: window.location.origin + process.env.VUE_APP_BASE_ENDPOINT
-    }
-  },
   computed: {
     ...mapGetters({
-      apiData: "getApiData"
+      apiData: "getApiData",
+      apiNameSpace: "getApiNamespace"
     }),
     apiEventName() {
       return this.$options._componentTag + 'Api'
     },
+    baseUrl() {
+      return "/wp-json/" +  this.apiNameSpace + "/"
+    }
   },
   methods: {
     post(data, endpoint, options) {

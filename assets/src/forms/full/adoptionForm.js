@@ -31,10 +31,10 @@ export default class AdoptionForm extends AbstractForm {
         title: "default.stepper.information.title",
         component: "InformationStep",
         validate: true,
-        api: {
-          method: "post",
-          endpoint: "createCustomer"
-        },
+        // api: {
+        //   method: "post",
+        //   endpoint: "createCustomer"
+        // },
         props: {
           newsletterFullBlock: true,
           isCompany: true
@@ -47,7 +47,7 @@ export default class AdoptionForm extends AbstractForm {
         customValidation: true,
         api: {
           method: "post",
-          endpoint: "createOrder"
+          endpoint: "adoption/individual"
         },
         props: {
           bankTransfer: true

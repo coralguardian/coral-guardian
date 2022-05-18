@@ -4,17 +4,17 @@ namespace D4rk0snet\Coralguardian\Shortcodes;
 
 class GiftCodeFormShortcode extends AbstractFormShortcode
 {
-    public function getTag(): string
+    public static function getTag(): string
     {
         return "gift-code-form";
     }
 
-    protected function getId()
+    public static function getId(): string
     {
         return "gift-code-form";
     }
 
-    protected function getAttributes(array $atts): array
+    protected static function getAttributes(array $atts): array
     {
         return [];
     }

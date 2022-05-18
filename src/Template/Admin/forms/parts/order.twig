@@ -1,0 +1,35 @@
+<div class="form-block">
+    <h2>Informations de la commande</h2>
+
+    <label for="order-type">Type de commande *</label><br>
+    <select id="order-type" name="order[type]" required>
+        <option value="regular">Pour soi</option>
+        <option value="gift">Pour offrir</option>
+    </select>
+
+    <label for="order-product">Produit *</label><br>
+    <select id="order-product" name="order[product_key]" required>
+        {% for product in products %}
+            <option value="{{ product.productKey }}">{{ product.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="order-quantity">Quantité *</label><br>
+    <input type="text" id="order-quantity" name="order[quantity]" required><br>
+
+    <label for="order-price">Prix payé *</label><br>
+    <input type="text" id="order-price" name="order[price]" required><br>
+
+    <label for="order-payment-method">Méthode de paiement *</label><br>
+    <select id="order-payment-method" name="order[payment_method]" required>
+        <option value="creditCard">Carte de crédit</option>
+        <option value="bankTransfert">Virement bancaire</option>
+    </select>
+
+    <label for="order-language">Langue *</label><br>
+    <select id="order-language" name="order[lang]" required>
+        <option value="fr">Français</option>
+        <option value="en">Anglais</option>
+    </select>
+
+</div>

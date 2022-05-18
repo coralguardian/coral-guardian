@@ -4,17 +4,17 @@ namespace D4rk0snet\Coralguardian\Shortcodes;
 
 class CoralAdoptionFormShortcode extends AbstractFormShortcode
 {
-    public function getTag(): string
+    public static function getTag(): string
     {
         return "coral-adoption-form";
     }
 
-    protected function getId()
+    public static function getId(): string
     {
         return "coral-form";
     }
 
-    protected function getAttributes(array $atts): array
+    protected static function getAttributes(array $atts): array
     {
         $attributes = [];
         if(array_key_exists("fiscal_type", $atts)) {

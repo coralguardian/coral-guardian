@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Suivi des dons et adoptions</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/dt/dt-1.11.5/b-2.2.2/b-html5-2.2.2/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ assets_path ~ "css/tracking.css" }}">
+    </script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/dt/dt-1.11.5/b-2.2.2/b-html5-2.2.2/datatables.min.js"></script>
+    <script type="text/javascript" src="{{ assets_path ~ "js/admin.js" }}"></script>
+</head>
+
+<body>
+
+<h2>Suivi des dons et adoptions</h2>
+
+<p>
+    Vous trouverez dans ce tableaux l'ensemble des adoptions, cadeaux et dons réalisés sur la plateforme ainsi que
+    les différentes actions correspondantes.
+</p>
+<p>
+    La recherche est cumulative en laissant un espace entre chaque élément recherché.
+</p>
+
+<table id="coral-orders" class="display" style="">
+    <thead>
+    <tr>
+        <th>Identifiant</th>
+        <th>Date</th>
+        <th>Type d'adopteur</th>
+        <th>Type d'action</th>
+        <th>Produit</th>
+        <th>Nom de l'entreprise</th>
+        <th>Nom de l'adoptant /<br>Contact principal</th>
+        <th>Adresse email</th>
+        <th>Projet</th>
+        <th>Nombre d'adoptions</th>
+        <th>Montant</th>
+        <th>Paiement</th>
+        <th>Certificat</th>
+        <th>Reçu fiscal</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+        <tr>
+            <td><a target="_blank" href="{{ item.link }}">{{ item.id }}</a></td>
+            <td data-sort="{{ item.date|date('Y-m-d') }}">
+                {{ item.date|date('d/m/Y') }}
+                {% if item.endDate %}
+                    - {{ item.endDate|date('d/m/Y') }}
+                {% endif %}
+            </td>
+            <td>{{ item.adoptionType }}</td>
+            <td>{{ item.action }}</td>
+            <td>{{ item.product }}</td>
+            <td>{{ item.companyName }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.project }}</td>
+            <td>{{ item.amount }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+                {% if item.isPaid == "Confirmé" or item.isPaid == "--" %}
+                    {{ item.isPaid }}
+                {% else %}
+                    <a href="{{ item.isPaid }}">Valider le paiement</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if item.certificate %}
+                    <a target="_blank" href="{{ item.certificate }}">Télécharger</a>
+                {% else %}
+                    --
+                {% endif %}
+            </td>
+            <td>
+                {% if item.receipt %}
+                    <a target="_blank" href="{{ item.receipt }}">Télécharger</a>
+                {% elseif item.receipts %}
+                    {% for receipt in item.receipts %}
+                        <a target="_blank" href="{{ receipt }}">Télécharger</a><br>
+                    {% endfor %}
+                {% else %}
+                    --
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

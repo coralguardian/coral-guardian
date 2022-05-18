@@ -1,0 +1,21 @@
+{% extends "Admin/forms/base-form.twig" %}
+
+{% block title %}
+    Nouveau don
+{% endblock %}
+
+{% block body %}
+    <h1>Nouveau don</h1>
+
+    <div class="create-adoption-admin"></div>
+    <form action="{{ action }}" method="post">
+
+        <div class="d-flex">
+            {% include "Admin/forms/parts/customer.twig" %}
+            {% include "Admin/forms/parts/donation.twig" with {projects: projects} %}
+        </div>
+
+        <input type="submit" value="Nouveau don">
+    </form>
+
+{% endblock %}
