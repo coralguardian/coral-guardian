@@ -25,11 +25,12 @@ class IndividualCustomerEntity extends CustomerEntity
         string $firstname,
         string $lastname,
         string $address,
+        string $postalCode,
         string $city,
         string $country,
         string $email
     ) {
-        parent::__construct(address:$address, city: $city, country: $country, email: $email);
+        parent::__construct(address:$address, city: $city, country: $country, email: $email, postalCode: $postalCode);
         $this->firstname = $firstname;
         $this->lastname = $lastname;
     }

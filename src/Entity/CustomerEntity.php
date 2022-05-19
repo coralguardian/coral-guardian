@@ -37,6 +37,11 @@ class CustomerEntity
     /**
      * @ORM\Column(type="string")
      */
+    private string $postalCode;
+
+    /**
+     * @ORM\Column(type="string")
+     */
     private string $city;
 
     /**
@@ -49,22 +54,18 @@ class CustomerEntity
      */
     private string $email;
 
-    /**
-     * @param string $address
-     * @param string $city
-     * @param string $country
-     * @param string $email
-     */
     public function __construct(
         string $address,
         string $city,
         string $country,
-        string $email
+        string $email,
+        string $postalCode
     ) {
         $this->address = $address;
         $this->city = $city;
         $this->country = $country;
         $this->email = $email;
+        $this->postalCode = $postalCode;
     }
 
 
@@ -114,6 +115,17 @@ class CustomerEntity
     public function setEmail(string $email): CustomerEntity
     {
         $this->email = $email;
+        return $this;
+    }
+
+    public function getPostalCode(): string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(string $postalCode): CustomerEntity
+    {
+        $this->postalCode = $postalCode;
         return $this;
     }
 }

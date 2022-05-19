@@ -24,11 +24,12 @@ class CompanyCustomerEntity extends CustomerEntity
         string $companyName,
         string $mainContactName,
         string $address,
+        string $postalCode,
         string $city,
         string $country,
         string $email
     ) {
-        parent::__construct(address:$address, city: $city, country: $country, email: $email);
+        parent::__construct(address:$address, city: $city, country: $country, email: $email, postalCode: $postalCode);
         $this->companyName = $companyName;
         $this->mainContactName = $mainContactName;
     }

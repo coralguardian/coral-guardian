@@ -22,6 +22,11 @@ class CompanyCustomerModel
     /**
      * @required
      */
+    private string $postalCode;
+
+    /**
+     * @required
+     */
     private string $city;
 
     /**
@@ -97,6 +102,17 @@ class CompanyCustomerModel
     public function setEmail(string $email): CompanyCustomerModel
     {
         $this->email = $email;
+        return $this;
+    }
+
+    public function getPostalCode(): string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(string $postalCode): CompanyCustomerModel
+    {
+        $this->postalCode = $postalCode;
         return $this;
     }
 }

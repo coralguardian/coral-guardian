@@ -16,6 +16,7 @@ class CustomerService
             companyName: $model->getCompanyName(),
             mainContactName: $model->getMainContactName(),
             address: $model->getAddress(),
+            postalCode: $model->getPostalCode(),
             city: $model->getCity(),
             country: $model->getCountry(),
             email: $model->getEmail()
@@ -33,6 +34,7 @@ class CustomerService
             firstname: $model->getFirstname(),
             lastname: $model->getLastname(),
             address: $model->getAddress(),
+            postalCode: $model->getPostalCode(),
             city: $model->getCity(),
             country: $model->getCountry(),
             email: $model->getEmail()
