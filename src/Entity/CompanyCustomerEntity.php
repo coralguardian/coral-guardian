@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="customer_company")
  */
 class CompanyCustomerEntity extends CustomerEntity
 {

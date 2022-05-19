@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
 /**
  * @Entity
  * @ORM\Table(name="customer")
- * @InheritanceType("SINGLE_TABLE")
+ * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="discr", type="string")
  * @DiscriminatorMap({"customer" = "CustomerEntity", "individual" = "IndividualCustomerEntity", "company" = "CompanyCustomerEntity"})
  */
