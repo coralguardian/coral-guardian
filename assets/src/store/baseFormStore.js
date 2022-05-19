@@ -33,6 +33,7 @@ export default class BaseFormStore {
         },
         order: {
           id: null,
+          uuid: null,
           type: "regular",
           clientSecret: null,
           price: null,

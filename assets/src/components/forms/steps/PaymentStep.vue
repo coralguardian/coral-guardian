@@ -232,6 +232,7 @@ export default {
         }
         this[this.apiData.method](data, this.apiData.endpoint)
             .then((resp) => {
+              console.log(resp)
               const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}
               this.updateForm(data).then(() => {
                 this.loadPaymentNextSteps().then(() => this.$root.$emit('ApiValid'))

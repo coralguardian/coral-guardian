@@ -1,20 +1,14 @@
+import i18n from "@/plugins/i18n";
+
 export default class AdoptionModel {
   constructor(data) {
-    let adoptees = []
-    data.adoption.names.forEach(name => {
-      adoptees.push({
-        adoptee_name: name
-      })
-    })
-    let model = {
-      adoptees: adoptees,
-      order: data.order.id,
+    return {
+      customerUUID: data.adopter.id,
+      adoptedProduct: data.order.productType === 'reef' ? data.specificType : data.order.productType,
+      quantity: data.order.quantity,
+      amount: data.order.price,
+      lang: i18n.locale,
+      paymentMethod: data.order.payment_method.type
     }
-
-    if (data.order.giftCode) {
-      model.gift_code = data.order.giftCode
-    }
-
-    return model;
   }
 }

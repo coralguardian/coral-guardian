@@ -61,7 +61,7 @@ export default new Vuex.Store({
             validate: true,
             api: {
               method: "post",
-              endpoint: "createCustomer"
+              endpoint: "customer"
             }
           },
           {
@@ -71,7 +71,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createOrder"
+              endpoint: "adoption/individual"
             }
           },
           {
@@ -81,7 +81,7 @@ export default new Vuex.Store({
             back: false,
             api: {
               method: "post",
-              endpoint: "createAdoptions"
+              endpoint: "adoption/naming"
             }
           },
           {

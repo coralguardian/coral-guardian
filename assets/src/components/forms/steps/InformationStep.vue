@@ -161,7 +161,7 @@ export default {
       this.post(this.adopter, this.apiData.endpoint)
           .then((resp) => {
             this.updateForm({
-              adopter: {id: resp.data.id}
+              adopter: {id: resp.data.uuid}
             }).then(() => this.$root.$emit('ApiValid'))
           })
     })
