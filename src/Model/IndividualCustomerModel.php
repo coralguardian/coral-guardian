@@ -4,11 +4,34 @@ namespace D4rk0snet\Coralguardian\Model;
 
 class IndividualCustomerModel
 {
+    /**
+     * @required
+     */
     private string $firstname;
+
+    /**
+     * @required
+     */
     private string $lastname;
+
+    /**
+     * @required
+     */
     private string $address;
+
+    /**
+     * @required
+     */
     private string $city;
+
+    /**
+     * @required
+     */
     private string $country;
+
+    /**
+     * @required
+     */
     private string $email;
 
     public function getFirstname(): string

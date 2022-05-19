@@ -4,11 +4,34 @@ namespace D4rk0snet\Coralguardian\Model;
 
 class CompanyCustomerModel
 {
+    /**
+     * @required
+     */
     private string $companyName;
+
+    /**
+     * @required
+     */
     private string $mainContactName;
+
+    /**
+     * @required
+     */
     private string $address;
+
+    /**
+     * @required
+     */
     private string $city;
+
+    /**
+     * @required
+     */
     private string $country;
+
+    /**
+     * @required
+     */
     private string $email;
 
     public function getCompanyName(): string
