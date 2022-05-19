@@ -49,10 +49,10 @@ class CustomerEndpoint extends APIEnpointAbstract
 
         switch ($customerType) {
             case CustomerType::INDIVIDUAL:
-                $uuid = CustomerService::getOrCreateIndividualCustomer($customerModel)->getUuid();
+                $uuid = CustomerService::createIndividualCustomer($customerModel)->getUuid();
                 break;
             case CustomerType::COMPANY:
-                $uuid = CustomerService::getOrCreateCompanyCustomer($customerModel)->getUuid();
+                $uuid = CustomerService::createCompanyCustomer($customerModel)->getUuid();
                 break;
         }
 

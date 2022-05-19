@@ -10,45 +10,36 @@ use Hyperion\Doctrine\Service\DoctrineService;
 
 class CustomerService
 {
-    public static function getOrCreateCompanyCustomer(CompanyCustomerModel $model) : CompanyCustomerEntity
+    public static function createCompanyCustomer(CompanyCustomerModel $model) : CompanyCustomerEntity
     {
-        $customer = DoctrineService::getEntityManager()
-            ->getRepository(CompanyCustomerEntity::class)
-            ->findOneBy(['email' => $model->getEmail()]);
+        $customer = new CompanyCustomerEntity(
+            companyName: $model->getCompanyName(),
+            mainContactName: $model->getMainContactName(),
+            address: $model->getAddress(),
+            city: $model->getCity(),
+            country: $model->getCountry(),
+            email: $model->getEmail()
+        );
 
-        if ($customer === null) {
-            $customer = new CompanyCustomerEntity(
-                companyName: $model->getCompanyName(),
-                mainContactName: $model->getMainContactName(),
-                address: $model->getAddress(),
-                city: $model->getCity(),
-                country: $model->getCountry(),
-                email: $model->getEmail()
-            );
-            DoctrineService::getEntityManager()->persist($customer);
-        }
+        DoctrineService::getEntityManager()->persist($customer);
+        DoctrineService::getEntityManager()->flush();
 
         return $customer;
     }
 
-    public static function getOrCreateIndividualCustomer(IndividualCustomerModel $model) : IndividualCustomerEntity
+    public static function createIndividualCustomer(IndividualCustomerModel $model) : IndividualCustomerEntity
     {
-        $customer = DoctrineService::getEntityManager()
-            ->getRepository(IndividualCustomerEntity::class)
-            ->findOneBy(['email' => $model->getEmail()]);
+        $customer = new IndividualCustomerEntity(
+            firstname: $model->getFirstname(),
+            lastname: $model->getLastname(),
+            address: $model->getAddress(),
+            city: $model->getCity(),
+            country: $model->getCountry(),
+            email: $model->getEmail()
+        );
 
-        if ($customer === null) {
-            $customer = new IndividualCustomerEntity(
-                firstname: $model->getFirstname(),
-                lastname: $model->getLastname(),
-                address: $model->getAddress(),
-                city: $model->getCity(),
-                country: $model->getCountry(),
-                email: $model->getEmail()
-            );
-            DoctrineService::getEntityManager()->persist($customer);
-            DoctrineService::getEntityManager()->flush();
-        }
+        DoctrineService::getEntityManager()->persist($customer);
+        DoctrineService::getEntityManager()->flush();
 
         return $customer;
     }
