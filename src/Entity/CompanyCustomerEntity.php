@@ -2,20 +2,20 @@
 
 namespace D4rk0snet\Coralguardian\Entity;
 
-use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class CompanyCustomerEntity extends CustomerEntity
 {
     /**
-     * @required
+     * @ORM\Column(type="string")
      */
     private string $companyName;
 
     /**
-     * @required
+     * @ORM\Column(type="string")
      */
     private string $mainContactName;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace D4rk0snet\Adoption\API;
+namespace D4rk0snet\Coralguardian\API;
 
 use D4rk0snet\Coralguardian\Enums\CustomerType;
 use D4rk0snet\Coralguardian\Model\CompanyCustomerModel;
@@ -25,7 +25,7 @@ class CustomerEndpoint extends APIEnpointAbstract
         }
 
         try {
-            $customerType = CustomerType::from($payload->customer_type);
+            $customerType = CustomerType::from($payload->type);
         } catch (\ValueError $exception) {
             return APIManagement::APIError("Undefined customer type", 400);
         }

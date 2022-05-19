@@ -47,6 +47,7 @@ class CustomerService
                 email: $model->getEmail()
             );
             DoctrineService::getEntityManager()->persist($customer);
+            DoctrineService::getEntityManager()->flush();
         }
 
         return $customer;
