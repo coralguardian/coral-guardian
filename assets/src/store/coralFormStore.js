@@ -71,7 +71,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "adoption/individual"
+              endpoint: "adoption"
             }
           },
           {
@@ -104,7 +104,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createDonation"
+              endpoint: "donate"
             }
           },
           {
@@ -159,7 +159,7 @@ export default new Vuex.Store({
             validate: true,
             api: {
               method: "post",
-              endpoint: "createCustomer"
+              endpoint: "customer"
             }
           },
           {
@@ -174,7 +174,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createOrder"
+              endpoint: "adoption/gift"
             }
           },
           {
@@ -192,7 +192,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createDonation"
+              endpoint: "donate"
             }
           },
           {
@@ -265,7 +265,7 @@ export default new Vuex.Store({
             validate: true,
             api: {
               method: "post",
-              endpoint: "createCustomer"
+              endpoint: "customer"
             }
           },
           {
@@ -278,7 +278,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createDonation"
+              endpoint: "donate"
             }
           },
           {

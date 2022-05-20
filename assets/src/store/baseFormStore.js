@@ -1,6 +1,7 @@
 import {merge} from "lodash";
 import fiscalHelper from "@/helpers/fiscalHelper";
 import DonationModel from "../models/donationModel";
+import CustomerModel from "@/models/customerModel";
 
 // public path is from wp, used to set full images path
 /* global publicPath */
@@ -121,6 +122,7 @@ export default class BaseFormStore {
         return fiscalReduction;
       },
       getAdopter: state => state.data.adopter,
+      getCustomerModel: state => new CustomerModel(state.data),
       getOrder: state => state.data.order,
       getImgPath: state => state.baseImgPath,
       getDonation: state => state.data.donation,

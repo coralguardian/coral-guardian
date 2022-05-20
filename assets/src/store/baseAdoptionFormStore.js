@@ -2,7 +2,7 @@ import {mergeWith, cloneDeep} from "lodash";
 import customizerMergeObjectWithArrays from "@/helpers/functionHelper";
 import BaseFormStore from "../store/baseFormStore";
 import AdoptionModel from "../models/adoptionModel";
-import GiftOrderModel from "../models/giftOrderModel";
+import GiftAdoptionModel from "../models/giftAdoptionModel";
 import AdopteeModel from "@/models/adopteeModel";
 
 const baseForm = new BaseFormStore()
@@ -86,15 +86,10 @@ export class BaseAdoptionFormStore {
         return getters.getForm.steps[state.data.step]
       },
       getPostPaymentDataAdoption(state) {
-        console.log(state.data.order.type)
         if (state.data.order.type === "gift") {
-          return new GiftOrderModel(state.data)
+          return new GiftAdoptionModel(state.data)
         } else {
-          console.log(new AdoptionModel(state.data))
           return new AdoptionModel(state.data)
-          // let model = new OrderModel(state.data)
-          // model.friends = [state.data.friend]
-          // return model;
         }
       },
       getPaymentData: state => {

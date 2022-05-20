@@ -140,7 +140,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      adopter: "getAdopter"
+      adopter: "getAdopter",
+      customerModel: "getCustomerModel"
     }),
     informationSubstring() {
       return this.newsletterFullBlock ? "company." : ""
@@ -158,7 +159,7 @@ export default {
       })
     })
     this.$root.$on(this.apiEventName, () => {
-      this.post(this.adopter, this.apiData.endpoint)
+      this.post(this.customerModel, this.apiData.endpoint)
           .then((resp) => {
             this.updateForm({
               adopter: {id: resp.data.uuid}
