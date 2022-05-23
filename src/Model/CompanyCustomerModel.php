@@ -174,4 +174,10 @@ class CompanyCustomerModel
         $this->alternateNewsletterEmail = $alternateNewsletterEmail;
         return $this;
     }
+
+    public function setWantsNewsletter(bool $wantsNewsletter): CompanyCustomerModel
+    {
+        $this->wantsNewsletter = $wantsNewsletter;
+        return $this;
+    }
 }

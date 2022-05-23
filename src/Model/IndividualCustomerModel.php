@@ -147,4 +147,10 @@ class IndividualCustomerModel
         $this->lastname = $lastname;
         return $this;
     }
+
+    public function setWantsNewsletter(bool $wantsNewsletter): IndividualCustomerModel
+    {
+        $this->wantsNewsletter = $wantsNewsletter;
+        return $this;
+    }
 }
