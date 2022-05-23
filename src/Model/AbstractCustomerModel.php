@@ -2,6 +2,8 @@
 
 namespace D4rk0snet\Coralguardian\Model;
 
+use D4rk0snet\Coralguardian\Enums\Language;
+
 abstract class AbstractCustomerModel
 {
     /**
@@ -34,6 +36,10 @@ abstract class AbstractCustomerModel
      */
     private bool $wantsNewsletter;
 
+    /**
+     * @required
+     */
+    private Language $language;
 
     public function getAddress(): string
     {
@@ -93,5 +99,20 @@ abstract class AbstractCustomerModel
     public function wantsNewsletter(): bool
     {
         return $this->wantsNewsletter;
+    }
+
+    public function getLanguage(): Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): AbstractCustomerModel
+    {
+        try {
+            $this->language = Language::from($language);
+            return $this;
+        } catch (\ValueError $exception) {
+            throw new \Exception("Code de langue invalide",400);
+        }
     }
 }

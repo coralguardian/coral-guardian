@@ -4,6 +4,8 @@ namespace D4rk0snet\Coralguardian\Service;
 
 use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
 use D4rk0snet\Coralguardian\Entity\CustomerEntity;
+use D4rk0snet\Coralguardian\Enums\Language;
+use D4rk0snet\Coralguardian\Enums\SIBLists;
 use D4rk0snet\Coralguardian\Model\CompanyCustomerModel;
 use D4rk0snet\Coralguardian\Model\IndividualCustomerModel;
 use Hyperion\Doctrine\Service\DoctrineService;
@@ -43,6 +45,27 @@ class CustomerService
 
         DoctrineService::getEntityManager()->persist($customer);
         DoctrineService::getEntityManager()->flush();
+
+        // Create sendinblue user and put it in newsletter list
+        $sibLists = [];
+        if($model->wantsNewsletter() === true)
+        {
+            $sibLists[] = $model->getLanguage() === Language::FR ? SIBLists::NEWSLETTER_FR : SIBLists::NEWSLETTER_EN;
+        }
+
+        \Hyperion\Sendinblue\Service\CustomerService::createCustomer(
+            $model->getEmail(),
+            [
+                'NOM' => $model->getLastname(),
+                'PRENOM' => $model->getFirstname(),
+                'CODE_POSTAL' => $model->getPostalCode(),
+                'VILLE' => $model->getCity(),
+                'PAYS' => $model->getCountry(),
+                'ADRESSE' => $model->getAddress(),
+                'LANGUE' => $model->getLanguage()->value
+            ],
+            $sibLists
+        );
 
         return $customer;
     }
