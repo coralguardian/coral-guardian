@@ -81,7 +81,8 @@ export default {
     ...mapGetters({
       order: "getOrder",
       donation: "getDonation",
-      formType: "getFormType"
+      formType: "getFormType",
+      donationEnum: "getDonationEnum"
     }),
     ...mapState({
       baseElementPrice: state => state.data.baseElementPrice,
@@ -146,7 +147,7 @@ export default {
           this.updateElementStatus("success")
           this.$root.$off(this.customValidationEventName)
           this.$root.$on(this.customValidationEventName, () => {
-            if (this.element.type !== "recurrent" && this.formType === "advanced") {
+            if (this.element.type !== this.donationEnum.monthly && this.formType === "advanced") {
               this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
             } // cas du don suite à une adoption, on a plus d'étape à charger
             else {
@@ -257,7 +258,7 @@ export default {
   },
   mounted() {
     (new GtagService()).executeTag(this.element, this.mode);
-    if (this.bankTransfer && !this.element.clientSecret && this.element.type !== "recurrent") {
+    if (this.bankTransfer && !this.element.clientSecret && this.element.type !== this.donationEnum.monthly) {
       this.displayPaymentMethod = true
     } else {
       this.displayCard()

@@ -8,8 +8,8 @@ export default {
     tooltip: "Un récif est composé de plusieurs coraux.<br>Vous pourrez adopter un récif de 30, 75 ou 150 coraux."
   },
   gift: "cadeau",
-  unique: "ponctuel",
-  recurrent: "mensuel",
+  oneshot: "ponctuel",
+  monthly: "mensuel",
   ui: {
     continue: "Continuer",
     previous: "Précédent"

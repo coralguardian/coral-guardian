@@ -14,6 +14,7 @@ import RecipientForm from "../forms/full/recipientForm";
 import FinalAdoptionForm from "../forms/full/finalAdoptionForm";
 import BankTransferThanksForm from "../forms/full/bankTransferThanksForm";
 import GiftModel from "../models/giftModel";
+import donationHelper from "@/helpers/donationHelper";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -107,19 +108,19 @@ export default new Vuex.Store({
         switch (context.state.data.target) {
           case adoptionHelper.me:
             context.dispatch('loadForm', new AdoptionForm())
-              .then(() => {context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: 'recurrent'}})
+              .then(() => {context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: donationHelper.monthly}})
                   .then(() => resolve())
               });
             break;
           case adoptionHelper.friend:
             context.dispatch('loadForm', new GiftForm())
-              .then(() => {context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: 'recurrent'}})
+              .then(() => {context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: donationHelper.monthly}})
                   .then(() => resolve())
               })
             break;
           case "donation":
             context.dispatch('loadForm', new DonationForm(context.state.data.donation.project_key))
-              .then(() => {context.dispatch('updateForm', {donation: {type: 'unique'}})
+              .then(() => {context.dispatch('updateForm', {donation: {type: donationHelper.oneshot}})
                   .then(() => resolve())
               })
             break;

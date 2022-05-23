@@ -45,7 +45,7 @@ export default new Vuex.Store({
           validate: true,
           api: {
             method: "post",
-            endpoint: "createCustomer"
+            endpoint: "customer"
           },
         },
         {
@@ -58,7 +58,7 @@ export default new Vuex.Store({
           },
           api: {
             method: "post",
-            endpoint: "createDonation"
+            endpoint: "donate"
           }
         },
         {

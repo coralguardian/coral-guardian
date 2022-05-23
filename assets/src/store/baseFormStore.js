@@ -2,6 +2,8 @@ import {merge} from "lodash";
 import fiscalHelper from "@/helpers/fiscalHelper";
 import DonationModel from "../models/donationModel";
 import CustomerModel from "@/models/customerModel";
+import DonationHelper from "@/helpers/donationHelper";
+import donationHelper from "@/helpers/donationHelper";
 
 // public path is from wp, used to set full images path
 /* global publicPath */
@@ -47,7 +49,7 @@ export default class BaseFormStore {
         },
         orderToken: "",
         donation: {
-          type: 'unique',
+          type: donationHelper.oneshot,
           price: 0,
           project_key: project,
           payment_method: {
@@ -110,9 +112,7 @@ export default class BaseFormStore {
           email: adopter.email
         }
       },
-      getPostPaymentDataDonation(state) {
-        return new DonationModel(state.data)
-      },
+      getPostPaymentDataDonation: state => new DonationModel(state.data),
       getFiscalReduction(state) {
         const fiscalReduction = fiscalHelper[state.data.adopter.type]
         if (!fiscalReduction) {
@@ -127,7 +127,8 @@ export default class BaseFormStore {
       getImgPath: state => state.baseImgPath,
       getDonation: state => state.data.donation,
       getFormType: state => state.formType,
-      getApiNamespace: state => state.apiNamespace
+      getApiNamespace: state => state.apiNamespace,
+      getDonationEnum: () => DonationHelper
     };
 
     this.mutations = {

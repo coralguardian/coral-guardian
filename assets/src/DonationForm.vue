@@ -42,6 +42,7 @@ export default {
     if (this.donatorNature.length) {
       this.updateForm({donatorNature: this.donatorNature, isDonatorNatureSetByShortcode: true})
     }
+    this.checkPaymentStepForBasicForms()
   }
 }
 </script>

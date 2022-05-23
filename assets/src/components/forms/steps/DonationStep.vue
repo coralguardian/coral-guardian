@@ -8,10 +8,10 @@
         grow
         :vertical="windowWidth <= 450"
     >
-      <v-tab class="text-no-transform" @click="updateForm({donation: {type: 'unique'}})">
+      <v-tab class="text-no-transform" @click="updateForm({donation: {type: donationEnum.oneshot}})">
         {{ $t("default.stepper.donation.buttons.unique") }}
       </v-tab>
-      <v-tab class="text-no-transform" @click="updateForm({donation: {type: 'recurrent'}})">
+      <v-tab class="text-no-transform" @click="updateForm({donation:{type: donationEnum.monthly}})">
         {{ $t("default.stepper.donation.buttons.recurrent") }}
       </v-tab>
     </v-tabs>
@@ -45,7 +45,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      donation: "getDonation"
+      donation: "getDonation",
+      donationEnum: "getDonationEnum"
     })
   },
   methods: {

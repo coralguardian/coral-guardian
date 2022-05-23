@@ -4,6 +4,7 @@ import BaseFormStore from "../store/baseFormStore";
 import AdoptionModel from "../models/adoptionModel";
 import GiftAdoptionModel from "../models/giftAdoptionModel";
 import AdopteeModel from "@/models/adopteeModel";
+import donationHelper from "@/helpers/donationHelper";
 
 const baseForm = new BaseFormStore()
 
@@ -45,7 +46,7 @@ export class BaseAdoptionFormStore {
           },
           donation: {
             ...baseForm.state.data.donation,
-            type: 'recurrent'
+            type: donationHelper.monthly
           }
         },
         baseForm: {

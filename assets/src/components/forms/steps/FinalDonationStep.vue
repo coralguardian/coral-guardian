@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p v-if="donation.type === 'unique' && donation.payment_method.type === 'credit_card'" v-html="$t('default.stepper.finalDonation.description')" />
-    <p v-else-if="donation.type === 'recurrent'" v-html="$t('default.stepper.finalRecurrentDonation.description')"/>
+    <p v-if="donation.type === donationEnum.oneshot && donation.payment_method.type === 'credit_card'" v-html="$t('default.stepper.finalDonation.description')" />
+    <p v-else-if="donation.type === donationEnum.monthly" v-html="$t('default.stepper.finalRecurrentDonation.description')"/>
     <p v-else-if="donation.payment_method.type === 'bank_transfert'">
       {{$t('default.stepper.finalDonation.bankTransfer')}}
     </p>
@@ -19,7 +19,8 @@ export default {
   mixins: [apiMixin, finalStepMixin, paymentMixin],
   computed: {
     ...mapGetters({
-      'donation': "getDonation"
+      donation: "getDonation",
+      donationEnum: "getDonationEnum"
     })
   },
   mounted() {

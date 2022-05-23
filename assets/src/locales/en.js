@@ -8,8 +8,8 @@ export default {
     tooltip: "A reef is composed of several corals.<br>You can adopt a reef of 30, 75 or 150 corals."
   },
   gift: "gift",
-  unique: "one-off",
-  recurrent: "monthly",
+  onehsot: "one-off",
+  monthly: "monthly",
   ui: {
     continue: "Continue",
     previous: "Previous"
