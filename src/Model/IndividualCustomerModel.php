@@ -2,7 +2,7 @@
 
 namespace D4rk0snet\Coralguardian\Model;
 
-class IndividualCustomerModel
+class IndividualCustomerModel extends AbstractCustomerModel
 {
     /**
      * @required
