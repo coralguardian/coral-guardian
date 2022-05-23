@@ -2,7 +2,7 @@
 
 namespace D4rk0snet\Coralguardian\Model;
 
-class CompanyCustomerModel
+class CompanyCustomerModel extends AbstractCustomerModel
 {
     /**
      * @required
@@ -14,30 +14,7 @@ class CompanyCustomerModel
      */
     private string $mainContactName;
 
-    /**
-     * @required
-     */
-    private string $address;
-
-    /**
-     * @required
-     */
-    private string $postalCode;
-
-    /**
-     * @required
-     */
-    private string $city;
-
-    /**
-     * @required
-     */
-    private string $country;
-
-    /**
-     * @required
-     */
-    private string $email;
+    private ?string $alternateNewsletterEmail = null;
 
     public function getCompanyName(): string
     {
@@ -61,58 +38,14 @@ class CompanyCustomerModel
         return $this;
     }
 
-    public function getAddress(): string
+    public function getAlternateNewsletterEmail(): ?string
     {
-        return $this->address;
+        return $this->alternateNewsletterEmail;
     }
 
-    public function setAddress(string $address): CompanyCustomerModel
+    public function setAlternateNewsletterEmail(?string $alternateNewsletterEmail): CompanyCustomerModel
     {
-        $this->address = $address;
-        return $this;
-    }
-
-    public function getCity(): string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): CompanyCustomerModel
-    {
-        $this->city = $city;
-        return $this;
-    }
-
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): CompanyCustomerModel
-    {
-        $this->country = $country;
-        return $this;
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): CompanyCustomerModel
-    {
-        $this->email = $email;
-        return $this;
-    }
-
-    public function getPostalCode(): string
-    {
-        return $this->postalCode;
-    }
-
-    public function setPostalCode(string $postalCode): CompanyCustomerModel
-    {
-        $this->postalCode = $postalCode;
+        $this->alternateNewsletterEmail = $alternateNewsletterEmail;
         return $this;
     }
 }
