@@ -2,7 +2,9 @@
 
 namespace D4rk0snet\Coralguardian\Model;
 
-abstract class AbstractCustomerModel
+use D4rk0snet\Coralguardian\Enums\Language;
+
+abstract class CustomerModel
 {
     /**
      * @required
@@ -34,13 +36,17 @@ abstract class AbstractCustomerModel
      */
     private bool $wantsNewsletter;
 
+    /**
+     * @required
+     */
+    private Language $language;
 
     public function getAddress(): string
     {
         return $this->address;
     }
 
-    public function setAddress(string $address): AbstractCustomerModel
+    public function setAddress(string $address): self
     {
         $this->address = $address;
         return $this;
@@ -51,7 +57,7 @@ abstract class AbstractCustomerModel
         return $this->city;
     }
 
-    public function setCity(string $city): AbstractCustomerModel
+    public function setCity(string $city): self
     {
         $this->city = $city;
         return $this;
@@ -62,7 +68,7 @@ abstract class AbstractCustomerModel
         return $this->country;
     }
 
-    public function setCountry(string $country): AbstractCustomerModel
+    public function setCountry(string $country): self
     {
         $this->country = $country;
         return $this;
@@ -73,7 +79,7 @@ abstract class AbstractCustomerModel
         return $this->email;
     }
 
-    public function setEmail(string $email): AbstractCustomerModel
+    public function setEmail(string $email): self
     {
         $this->email = $email;
         return $this;
@@ -84,7 +90,7 @@ abstract class AbstractCustomerModel
         return $this->postalCode;
     }
 
-    public function setPostalCode(string $postalCode): AbstractCustomerModel
+    public function setPostalCode(string $postalCode): self
     {
         $this->postalCode = $postalCode;
         return $this;
@@ -93,5 +99,26 @@ abstract class AbstractCustomerModel
     public function wantsNewsletter(): bool
     {
         return $this->wantsNewsletter;
+    }
+
+    public function getLanguage(): Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): self
+    {
+        try {
+            $this->language = Language::from($language);
+            return $this;
+        } catch (\ValueError $exception) {
+            throw new \Exception("Code de langue invalide",400);
+        }
+    }
+
+    public function setWantsNewsletter(bool $wantsNewsletter): self
+    {
+        $this->wantsNewsletter = $wantsNewsletter;
+        return $this;
     }
 }
