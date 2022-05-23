@@ -27,7 +27,7 @@ export default class FinalAdoptionForm extends AbstractForm {
         back: false,
         api: {
           method: "post",
-          endpoint: "createAdoptions"
+          endpoint: "adoption/naming"
         }
       },
       {
@@ -50,7 +50,7 @@ export default class FinalAdoptionForm extends AbstractForm {
         customValidation: true,
         api: {
           method: "post",
-          endpoint: "createDonation"
+          endpoint: "donate"
         }
       },
       {

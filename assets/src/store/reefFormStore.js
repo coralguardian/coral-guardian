@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import adoptionHelper from "@/helpers/adoptionHelper";
 import {BaseAdoptionFormStore} from "@/store/baseAdoptionFormStore";
-// import i18n from "@/plugins/i18n";
 
 const form = new BaseAdoptionFormStore('reef', 900, 5)
 
@@ -205,19 +204,7 @@ export default new Vuex.Store({
   getters: {
     ...form.getters,
     getDefaultTranslation: state => 'default.' + state.data.order.productType + ".base",
-    getSpecificTranslation: state => 'default.' + state.data.specificType,
-    // getPostPaymentDataAdoption(state) {
-    //   return {
-    //     product_key: state.data.specificType,
-    //     quantity: state.data.order.quantity,
-    //     custom_amount: state.data.order.customAmount,
-    //     customer_id: state.data.adopter.id,
-    //     type: state.data.order.type,
-    //     price: state.data.order.price,
-    //     // language: i18n.locale,
-    //     friend: state.data.friend,
-    //   }
-    // }
+    getSpecificTranslation: state => 'default.' + state.data.specificType
   },
   mutations: {
     ...form.mutations

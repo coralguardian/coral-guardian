@@ -33,7 +33,7 @@ export default class FinalGiftForm extends AbstractForm {
         customValidation: true,
         api: {
           method: "post",
-          endpoint: "createDonation"
+          endpoint: "donate"
         }
       },
       {

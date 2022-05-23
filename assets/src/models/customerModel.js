@@ -1,6 +1,8 @@
+import {merge} from "lodash";
+
 export default class CustomerModel {
   constructor(data) {
-    return {
+    let customer = {
       firstname: data.adopter.first_name,
       lastname: data.adopter.last_name,
       address: data.adopter.address,
@@ -8,7 +10,17 @@ export default class CustomerModel {
       city: data.adopter.city,
       country: data.adopter.country,
       email: data.adopter.email,
-      type: data.adopter.type
+      type: data.adopter.type,
+      wantsNewsletter: data.adopter.wants_newsletter
     }
+
+    if (data.adopter.type === "company") {
+      merge(customer, {
+        alternateNewsletterEmail: data.adopter.alternate_newsletter_email,
+        companyName: data.adopter.company_name
+      })
+    }
+
+    return customer
   }
 }
