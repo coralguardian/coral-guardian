@@ -3,23 +3,24 @@
 namespace D4rk0snet\Coralguardian\Service;
 
 use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
-use D4rk0snet\Coralguardian\Entity\IndividualCustomerEntity;
+use D4rk0snet\Coralguardian\Entity\CustomerEntity;
 use D4rk0snet\Coralguardian\Model\CompanyCustomerModel;
 use D4rk0snet\Coralguardian\Model\IndividualCustomerModel;
 use Hyperion\Doctrine\Service\DoctrineService;
 
 class CustomerService
 {
-    public static function createCompanyCustomer(CompanyCustomerModel $model) : CompanyCustomerEntity
+    public static function createCompanyCustomer(CompanyCustomerModel $model): CompanyCustomerEntity
     {
         $customer = new CompanyCustomerEntity(
             companyName: $model->getCompanyName(),
-            mainContactName: $model->getMainContactName(),
             address: $model->getAddress(),
             postalCode: $model->getPostalCode(),
             city: $model->getCity(),
             country: $model->getCountry(),
-            email: $model->getEmail()
+            email: $model->getEmail(),
+            firstname: $model->getFirstname(),
+            lastname: $model->getLastname()
         );
 
         DoctrineService::getEntityManager()->persist($customer);
@@ -28,16 +29,16 @@ class CustomerService
         return $customer;
     }
 
-    public static function createIndividualCustomer(IndividualCustomerModel $model) : IndividualCustomerEntity
+    public static function createIndividualCustomer(IndividualCustomerModel $model): CustomerEntity
     {
-        $customer = new IndividualCustomerEntity(
-            firstname: $model->getFirstname(),
-            lastname: $model->getLastname(),
+        $customer = new CustomerEntity(
             address: $model->getAddress(),
-            postalCode: $model->getPostalCode(),
             city: $model->getCity(),
             country: $model->getCountry(),
-            email: $model->getEmail()
+            email: $model->getEmail(),
+            postalCode: $model->getPostalCode(),
+            firstname: $model->getFirstname(),
+            lastname: $model->getLastname(),
         );
 
         DoctrineService::getEntityManager()->persist($customer);

@@ -15,23 +15,28 @@ class CompanyCustomerEntity extends CustomerEntity
      */
     private string $companyName;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    private string $mainContactName;
 
     public function __construct(
         string $companyName,
-        string $mainContactName,
         string $address,
         string $postalCode,
         string $city,
         string $country,
-        string $email
-    ) {
-        parent::__construct(address:$address, city: $city, country: $country, email: $email, postalCode: $postalCode);
+        string $email,
+        string $firstname,
+        string $lastname
+    )
+    {
+        parent::__construct(
+            address: $address,
+            city: $city,
+            country: $country,
+            email: $email,
+            postalCode: $postalCode,
+            firstname: $firstname,
+            lastname: $lastname
+        );
         $this->companyName = $companyName;
-        $this->mainContactName = $mainContactName;
     }
 
     public function getCompanyName(): string
@@ -47,12 +52,6 @@ class CompanyCustomerEntity extends CustomerEntity
 
     public function getMainContactName(): string
     {
-        return $this->mainContactName;
-    }
-
-    public function setMainContactName(string $mainContactName): CompanyCustomerEntity
-    {
-        $this->mainContactName = $mainContactName;
-        return $this;
+        return $this->getFirstname() . " " . $this->getLastname();
     }
 }

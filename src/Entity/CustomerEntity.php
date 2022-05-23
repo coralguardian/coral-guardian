@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
  * @ORM\Table(name="customer")
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({"customer" = "CustomerEntity", "individual" = "IndividualCustomerEntity", "company" = "CompanyCustomerEntity"})
+ * @DiscriminatorMap({"customer" = "CustomerEntity", "company" = "CompanyCustomerEntity"})
  */
 class CustomerEntity
 {
@@ -28,6 +28,16 @@ class CustomerEntity
      * @CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidOrderedTimeGenerator")
      */
     private $uuid;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private string $firstname;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private string $lastname;
 
     /**
      * @ORM\Column(type="string")
@@ -59,13 +69,17 @@ class CustomerEntity
         string $city,
         string $country,
         string $email,
-        string $postalCode
+        string $postalCode,
+        string $firstname,
+        string $lastname
     ) {
         $this->address = $address;
         $this->city = $city;
         $this->country = $country;
         $this->email = $email;
         $this->postalCode = $postalCode;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
     }
 
 
@@ -127,5 +141,37 @@ class CustomerEntity
     {
         $this->postalCode = $postalCode;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstname(): string
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param string $firstname
+     */
+    public function setFirstname(string $firstname): void
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastname(): string
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param string $lastname
+     */
+    public function setLastname(string $lastname): void
+    {
+        $this->lastname = $lastname;
     }
 }
