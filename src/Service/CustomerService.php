@@ -50,7 +50,7 @@ class CustomerService
         $sibLists = [];
         if($model->wantsNewsletter() === true)
         {
-            $sibLists[] = $model->getLanguage() === Language::FR ? SIBLists::NEWSLETTER_FR : SIBLists::NEWSLETTER_EN;
+            $sibLists[] = $model->getLanguage() === Language::FR ? SIBLists::NEWSLETTER_FR->value : SIBLists::NEWSLETTER_EN->value;
         }
 
         \Hyperion\Sendinblue\Service\CustomerService::createCustomer(
