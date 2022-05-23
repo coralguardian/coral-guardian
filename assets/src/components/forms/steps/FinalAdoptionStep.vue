@@ -2,7 +2,7 @@
   <div>
     <p v-if="adoption.type === 'file'" v-html="$tc('default.stepper.finalAdoption.description_file', order.quantity, translation)"/>
     <p v-else-if="hasDownloaded" v-html="$tc('default.stepper.finalAdoption.description_no_certif', order.quantity)"/>
-    <p v-else v-html="$tc('default.stepper.finalAdoption.description', order.quantity, {link: this.getGetUrl({order_id: order.id})})"/>
+    <p v-else v-html="$tc('default.stepper.finalAdoption.description', order.quantity, {link: this.getGetUrl({order_uuid: order.uuid})})"/>
     <social-share-block/>
     <v-form
         :ref="formRefName"

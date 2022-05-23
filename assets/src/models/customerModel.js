@@ -1,4 +1,5 @@
 import {merge} from "lodash";
+import i18n from "@/plugins/i18n";
 
 export default class CustomerModel {
   constructor(data) {
@@ -11,7 +12,8 @@ export default class CustomerModel {
       country: data.adopter.country,
       email: data.adopter.email,
       type: data.adopter.type,
-      wantsNewsletter: data.adopter.wants_newsletter
+      wantsNewsletter: data.adopter.wants_newsletter,
+      lang: i18n.locale
     }
 
     if (data.adopter.type === "company") {
