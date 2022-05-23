@@ -63,7 +63,7 @@ class CompanyCustomerModel
         return $this->address;
     }
 
-    public function setAddress(string $address): AbstractCustomerModel
+    public function setAddress(string $address): self
     {
         $this->address = $address;
         return $this;
@@ -74,7 +74,7 @@ class CompanyCustomerModel
         return $this->city;
     }
 
-    public function setCity(string $city): AbstractCustomerModel
+    public function setCity(string $city): self
     {
         $this->city = $city;
         return $this;
@@ -85,7 +85,7 @@ class CompanyCustomerModel
         return $this->country;
     }
 
-    public function setCountry(string $country): AbstractCustomerModel
+    public function setCountry(string $country): self
     {
         $this->country = $country;
         return $this;
@@ -96,7 +96,7 @@ class CompanyCustomerModel
         return $this->email;
     }
 
-    public function setEmail(string $email): AbstractCustomerModel
+    public function setEmail(string $email): self
     {
         $this->email = $email;
         return $this;
@@ -107,7 +107,7 @@ class CompanyCustomerModel
         return $this->postalCode;
     }
 
-    public function setPostalCode(string $postalCode): AbstractCustomerModel
+    public function setPostalCode(string $postalCode): self
     {
         $this->postalCode = $postalCode;
         return $this;
@@ -123,7 +123,7 @@ class CompanyCustomerModel
         return $this->language;
     }
 
-    public function setLanguage(string $language): AbstractCustomerModel
+    public function setLanguage(string $language): self
     {
         try {
             $this->language = Language::from($language);
