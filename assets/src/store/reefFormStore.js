@@ -61,7 +61,7 @@ export default new Vuex.Store({
             validate: true,
             api: {
               method: "post",
-              endpoint: "createCustomer"
+              endpoint: "customer"
             }
           },
           {
@@ -71,7 +71,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createOrder"
+              endpoint: "adoption"
             }
           },
           {
@@ -81,7 +81,7 @@ export default new Vuex.Store({
             back: false,
             api: {
               method: "post",
-              endpoint: "createAdoptions"
+              endpoint: "adoption/naming"
             }
           },
           {
@@ -102,7 +102,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createDonation",
+              endpoint: "donate",
             }
           },
           {
@@ -157,7 +157,7 @@ export default new Vuex.Store({
             validate: true,
             api: {
               method: "post",
-              endpoint: "createCustomer"
+              endpoint: "customer"
             }
           },
           {
@@ -172,7 +172,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createOrder"
+              endpoint: "adoption/gift"
             }
           },
           {
@@ -190,7 +190,7 @@ export default new Vuex.Store({
             customValidation: true,
             api: {
               method: "post",
-              endpoint: "createDonation"
+              endpoint: "donate"
             }
           },
           {
@@ -199,107 +199,25 @@ export default new Vuex.Store({
             back: false
           }
         ]
-      },
-      {
-        target: adoptionHelper.offered,
-        tabs: [
-          {
-            visible: true,
-            title: "default.stepper.header.gift",
-            class: 'round-left-top'
-          },
-          {
-            visible: true,
-            title: "default.stepper.header.customization",
-            class: 'round-right-top'
-          },
-          {
-            visible: false,
-            title: null
-          },
-          {
-            visible: false,
-            title: null
-          },
-          {
-            visible: false,
-            title: null
-          },
-          {
-            visible: false,
-            title: null
-          }
-        ],
-        steps: [
-          {
-            title: "default.stepper.gift.title",
-            component: "GiftStep",
-            validate: true,
-            api: {
-              method: "post",
-              endpoint: "adoption/friend"
-            }
-          },
-          {
-            title: "default.stepper.customization.title",
-            component: "CustomizationStep",
-            validate: true,
-            api: {
-              method: "post",
-              endpoint: "products/givenames"
-            }
-          },
-          {
-            title: "default.stepper.finalFriendGift.title",
-            component: "FinalFriendGiftAdoptionStep",
-            back: false,
-            api: {
-              endpoint: "getCertificates"
-            }
-          },
-          {
-            title: "default.stepper.information.title",
-            component: "InformationStep",
-            validate: true
-          },
-          {
-            title: "default.stepper.payment.title",
-            component: "PaymentStep",
-            props: {
-              mode: 'donation'
-            },
-            validate: true,
-            customValidation: true,
-            api: {
-              method: "post",
-              endpoint: "createDonation"
-            }
-          },
-          {
-            title: "default.stepper.finalDonation.title",
-            component: "FinalDonationStep",
-            back: false
-          }
-        ]
-      },
+      }
     ]
   },
   getters: {
     ...form.getters,
     getDefaultTranslation: state => 'default.' + state.data.order.productType + ".base",
     getSpecificTranslation: state => 'default.' + state.data.specificType,
-    getPostPaymentDataAdoption(state) {
-      return {
-        product_key: state.data.specificType,
-        quantity: state.data.order.quantity,
-        custom_amount: state.data.order.customAmount,
-        customer_id: state.data.adopter.id,
-        type: state.data.order.type,
-        price: state.data.order.price,
-        // language: i18n.locale,
-        friend: state.data.friend,
-      }
-    }
+    // getPostPaymentDataAdoption(state) {
+    //   return {
+    //     product_key: state.data.specificType,
+    //     quantity: state.data.order.quantity,
+    //     custom_amount: state.data.order.customAmount,
+    //     customer_id: state.data.adopter.id,
+    //     type: state.data.order.type,
+    //     price: state.data.order.price,
+    //     // language: i18n.locale,
+    //     friend: state.data.friend,
+    //   }
+    // }
   },
   mutations: {
     ...form.mutations
