@@ -22,7 +22,7 @@ export default class RecipientFullForm extends AbstractForm{
         validate: true,
         api: {
           method: "post",
-          endpoint: "createGifts"
+          endpoint: "adoption/gift/friend"
         }
       },
     ]

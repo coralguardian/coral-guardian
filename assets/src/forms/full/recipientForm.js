@@ -14,7 +14,7 @@ export default class RecipientForm extends AbstractForm{
         back: false,
         api: {
           method: "post",
-          endpoint: "createGifts"
+          endpoint: "adoption/gift/friend"
         }
       },
     ]

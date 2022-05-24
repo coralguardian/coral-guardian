@@ -3,16 +3,16 @@ export default class GiftModel {
     let friends = []
     data.gift.recipients.forEach(recipient => {
       friends.push({
-        first_name: recipient.first_name,
-        last_name: recipient.last_name,
-        email: recipient.email
+        friendFirstname: recipient.first_name,
+        friendLastname: recipient.last_name,
+        friendEmail: recipient.email,
       })
     })
     return {
       friends: friends,
-      order_id: data.order.id,
+      adoption_uuid: data.order.uuid,
       message: data.gift.message,
-      to_send_on: data.gift.toSendOn ? data.gift.toSendOn.replaceAll("-", "") : null
+      sendOn: data.gift.toSendOn ? data.gift.toSendOn.replaceAll("-", "") : null
     }
   }
 }

@@ -2,7 +2,7 @@
 
 namespace D4rk0snet\Coralguardian\Model;
 
-class CompanyCustomerModel
+class CompanyCustomerModel extends CustomerModel
 {
     /**
      * @required

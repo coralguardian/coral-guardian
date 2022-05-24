@@ -33,7 +33,7 @@ export default class GiftForm extends AbstractForm {
         validate: true,
         api: {
           method: "post",
-          endpoint: "createCustomer"
+          endpoint: "customer"
         },
         props: {
           newsletterFullBlock: true,
@@ -48,7 +48,7 @@ export default class GiftForm extends AbstractForm {
         customValidation: true,
         api: {
           method: "post",
-          endpoint: "createOrder"
+          endpoint: "adoption/gift"
         },
         props: {
           bankTransfer: true
