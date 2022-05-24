@@ -29,17 +29,21 @@ class SetAdoptionAsPaidEndPoint extends APIEnpointAbstract
         $donation->setIsPaid(true);
         DoctrineService::getEntityManager()->flush();
 
-        return APIManagement::APIRedirect(get_admin_url(null, 'coralguardian'));
+        return APIManagement::APIRedirect(get_admin_url(null, 'admin.php?page=coralguardian'));
     }
 
     public static function getMethods(): array
     {
-        return ["POST"];
+        return ["GET"];
     }
 
     public static function getPermissions(): string
     {
-        return current_user_can('manage_options');
+        if(current_user_can('manage_options')) {
+            return "__return_true";
+        }
+
+        return "__return_false";
     }
 
     public static function getEndpoint(): string
