@@ -36,7 +36,6 @@
         <th>Nom de l'entreprise</th>
         <th>Nom de l'adoptant /<br>Contact principal</th>
         <th>Adresse email</th>
-        <th>Projet</th>
         <th>Nombre d'adoptions</th>
         <th>Montant</th>
         <th>Paiement</th>
@@ -60,9 +59,8 @@
             <td>{{ item.companyName }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.email }}</td>
-            <td>{{ item.project }}</td>
             <td>{{ item.amount }}</td>
-            <td>{{ item.price }}</td>
+            <td>{{ item.price }} €</td>
             <td>
                 {% if item.isPaid == "Confirmé" or item.isPaid == "--" %}
                     {{ item.isPaid }}
