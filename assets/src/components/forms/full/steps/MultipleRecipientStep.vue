@@ -107,7 +107,7 @@ export default {
       giftModel: "getGiftModel"
     }),
     recipientFileUrl() {
-      return this.baseUrl + "getRecipientFile?order_id=" + this.order.id
+      return this.baseUrl + "getRecipientFile?order_uuid=" + this.order.id
     }
   },
   methods: {

@@ -100,7 +100,7 @@ export default {
       adoptionModel: "getPostAdoptionsData"
     }),
     adoptionFileUrl() {
-      return this.baseUrl + "getAdoptionFile?order_id=" + this.adoptionModel.order
+      return this.baseUrl + "getAdoptionFile?order_uuid=" + this.adoptionModel.order
     }
   },
   methods: {

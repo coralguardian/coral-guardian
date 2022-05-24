@@ -36,8 +36,8 @@ export default class GiftCodeForm extends AbstractForm {
         component: "GiftStep",
         validate: true,
         api: {
-          method: "post",
-          endpoint: "getGiftOrder"
+          method: "get",
+          endpoint: "giftcode/getAdoption"
         }
       },
       {
@@ -47,7 +47,7 @@ export default class GiftCodeForm extends AbstractForm {
         back: false,
         api: {
           method: "post",
-          endpoint: "createAdoptions"
+          endpoint: "adoption/naming"
         }
       },
       {
@@ -65,7 +65,7 @@ export default class GiftCodeForm extends AbstractForm {
         validate: true,
         api: {
           method: "post",
-          endpoint: "createCustomer"
+          endpoint: "customer"
         }
       },
       {
@@ -78,7 +78,7 @@ export default class GiftCodeForm extends AbstractForm {
         customValidation: true,
         api: {
           method: "post",
-          endpoint: "createDonation"
+          endpoint: "donate"
         }
       },
       {

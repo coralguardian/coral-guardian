@@ -32,11 +32,10 @@ export default {
           })
       })
     },
-    get(data, endpoint) {
+    get(data) {
       return new Promise((resolve, reject) => {
-        let url = this.baseUrl + endpoint
-        // console.log(data, url)
-        axios.get(url, data)
+        let url = this.getGetUrl(data)
+        axios.get(url)
           .then(resp => {
             resolve(resp)
           })

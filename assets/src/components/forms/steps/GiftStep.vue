@@ -47,11 +47,16 @@ export default {
     checkOrderToken() {
       this[this.apiData.method]({gift_code: this.order.giftCode}, this.apiData.endpoint)
           .then((resp) => {
+            let types = resp.data.type.split(".")
             let data = {
-              order: resp.data
+              order: {
+                uuid: resp.data.uuid,
+                type: types[0],
+                quantity: resp.data.quantity
+              }
             }
-            if (resp.data.type !== resp.data.key) {
-              data.order.specificType = resp.data.key
+            if (types[1] !== undefined) {
+              data.order.specificType = types[1]
             }
             this.updateForm(data).then(() => this.$root.$emit('ApiValid'))
             this.$root.$emit('IsLoaded')

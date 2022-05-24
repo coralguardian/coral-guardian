@@ -13,7 +13,7 @@ export default class CustomerModel {
       email: data.adopter.email,
       type: data.adopter.type,
       wantsNewsletter: data.adopter.wants_newsletter,
-      lang: i18n.locale
+      language: i18n.locale
     }
 
     if (data.adopter.type === "company") {
