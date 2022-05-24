@@ -7,6 +7,8 @@ use D4rk0snet\Adoption\Entity\GiftAdoption;
 use D4rk0snet\Certificate\Endpoint\GetCertificateEndpoint;
 use D4rk0snet\Coralguardian\API\Admin\SetAdoptionAsPaidEndPoint;
 use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
+use D4rk0snet\Donation\Entity\DonationEntity;
+use D4rk0snet\Donation\Entity\RecurringDonationEntity;
 use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
 use Hyperion\Doctrine\Service\DoctrineService;
 use Twig\Environment;
@@ -57,9 +59,8 @@ class AdminService
     public static function coralOrdersPage()
     {
         $orderModels = self::getOrderModels();
-        //$donationModels = self::getDonationModels();
         self::getTwig()->load("Admin/tracking.twig")->display([
-          'items' => $orderModels,
+          'items' => array_merge($orderModels),
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http")
         ]);
     }
@@ -107,61 +108,52 @@ class AdminService
 
     private static function getOrderModels()
     {
-        $adoptionsEntities = DoctrineService::getEntityManager()->getRepository(AdoptionEntity::class)->findAll();
-        $giftAdoptionEntities = DoctrineService::getEntityManager()->getRepository(GiftAdoption::class)->findBy([], ['uuid' => 'desc']);
+        $donations = DoctrineService::getEntityManager()->getRepository(DonationEntity::class)->findAll();
 
-        return array_map(function (AdoptionEntity $adoption) {
-            $customer = $adoption->getCustomer();
-            return [
-                "id" => (string) $adoption->getUuid(),
-                "date" => $adoption->getDate()->format("d-m-Y"),
+
+        return array_map(function (DonationEntity $donation) {
+            $customer = $donation->getCustomer();
+            $isDonation = !($donation instanceof AdoptionEntity || $donation instanceof GiftAdoption);
+
+            switch(get_class($donation)) {
+                case AdoptionEntity::class : $action = "Adoption"; break;
+                case GiftAdoption::class : $action = "Cadeau"; break;
+                case DonationEntity::class : $action = "Don ponctuel"; break;
+                case RecurringDonationEntity::class : $action = "Don mensuel";
+                default:
+                    throw new \Exception("Invalid donation class : ".get_class($donation));
+            }
+
+            $object = [
+                "id" => (string) $donation->getUuid(),
+                "date" => $donation->getDate()->format("d-m-Y"),
                 "adoptionType" => $customer instanceof CompanyCustomerEntity ? "entreprise" : "particulier",
-                "action" => $adoption instanceof GiftAdoption ? "cadeau" : "adoption",
-                "product" => $adoption->getAdoptedProduct()->value,
+                "action" => $action,
+                "product" => $isDonation ? "--" : $donation->getAdoptedProduct()->value,
                 "companyName" => $customer instanceof CompanyCustomerEntity ? $customer->getCompanyName() : "--",
                 "name" => $customer->getFirstname().' '.$customer->getLastname(),
                 "email" => $customer->getEmail(),
-                "amount" => $adoption->getQuantity(),
-                "price" => (string)$adoption->getAmount(),
+                "amount" => $isDonation ? "--" : $donation->getQuantity(),
+                "price" => (string)$donation->getAmount(),
                 "link" => "",//getenv('WP_HOME') . "/wp/wp-admin/post.php?post=" . $postId . "&action=edit",
-                "isPaid" => $adoption->isPaid() ? "Confirmé" : SetAdoptionAsPaidEndPoint::getUrl()."?".SetAdoptionAsPaidEndPoint::ORDER_UUID_PARAM."=".$adoption->getUuid(),
-                "certificate" => GetCertificateEndpoint::getUrl()."?".GetCertificateEndpoint::ORDER_UUID_PARAM."=".$adoption->getUuid(),//GetCertificate::getUrl()."?order_id=" . $postId,
-                "receipt" => "http://".FiscalReceiptService::getURl($adoption->getUuid())
+                "isPaid" => $donation->isPaid() ? "Confirmé" : SetAdoptionAsPaidEndPoint::getUrl()."?".SetAdoptionAsPaidEndPoint::ORDER_UUID_PARAM."=".$donation->getUuid(),
             ];
-        }, array_merge($adoptionsEntities,$giftAdoptionEntities));
-    }
 
-//    private function getDonationModels()
-//    {
-//        $donations = self::entityManager->getRepository(Donation::class)->findBy([], ['id' => 'desc']);
-//
-//        return array_map(function (Donation $donation) {
-//            $customer = $donation->getCustomer();
-//            $receipts = [];
-//            // Pour un don mensuel qui s'étale sur 2 années il y aura 2 reçus fiscaux
-//            /** @var FiscalReceipt $receipt */
-//            foreach ($donation->getFiscalReceipts() as $receipt) {
-//                $receipts[] = GetFiscalReceipt::getUrl() . "?receipt_id=" . $receipt->getPost()->getId();
-//            }
-//            return [
-//                "id" => $donation->getId(),
-//                "endDate" => $donation instanceof RecurrentDonation ? $donation->getStopDate() : null,
-//                "date" => $donation->getStartDate(),
-//                "adoptionType" => $customer instanceof Company ? "entreprise" : "particulier",
-//                "action" => $donation instanceof RecurrentDonation ? "don mensuel" : "don ponctuel",
-//                "product" => "--",
-//                "companyName" => $customer instanceof Company ? $customer->getCompanyName() : "--",
-//                "name" => $customer->getFullName(),
-//                "email" => $customer->getEmail(),
-//                "amount" => "--",
-//                "price" => (string)$donation->getAmount(),
-//                "link" => WP_HOME . "/wp/wp-admin/post.php?post=" . $donation->getPost()->getId() . "&action=edit",
-//                "isPaid" => $donation->getPaymentMethod()->isPaid() ? "Confirmé" : "--",
-//                "project" => $donation->getProject()->getCountry(),
-//                "receipts" => $receipts
-//            ];
-//        }, $donations);
-//    }
+            if(!$isDonation) {
+                $object["certificate"] = GetCertificateEndpoint::getUrl()."?".GetCertificateEndpoint::ORDER_UUID_PARAM."=".$donation->getUuid();
+                $object["receipt"] = "http://".FiscalReceiptService::getURl($donation->getUuid());
+
+            } else {
+                // Pour un don mensuel qui s'étale sur 2 années il y aura 2 reçus fiscaux
+                foreach ($donation->getFiscalReceipts() as $receipt) {
+                    $receipts[] = GetFiscalReceipt::getUrl() . "?receipt_id=" . $receipt->getPost()->getId();
+                }
+            }
+
+            return $object;
+
+        }, $donations);
+    }
 
     private static function startSession()
     {
