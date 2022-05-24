@@ -69,11 +69,20 @@ class AdminService
 
     public static function coralCreateAdoptionPage()
     {
+        $products = [];
+
+        foreach(AdoptedProduct::getAllAdoptedProduct() as $k => $v) {
+            $products[] = [
+                    'key' => $v,
+                    'value' => $k
+            ];
+        }
+
         self::getTwig()->load("Admin/forms/create-adoption.twig")->display([
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http"),
             'adoption_file' => home_url("/app/plugins/coralguardian/public/coral-guardian-adoptees-admin.xlsx", "http"),
             'recipient_file' => home_url("/app/plugins/coralguardian/public/coral-guardian-recipients-admin.xlsx", "http"),
-            "products" => AdoptedProduct::getAllAdoptedProduct(),
+            "products" => $products,
             "action" => CreateAdoptionAdmin::getUrl()
         ]);
     }

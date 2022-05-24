@@ -10,7 +10,7 @@
     <label for="order-product">Produit *</label><br>
     <select id="order-product" name="order[product_key]" required>
         {% for product in products %}
-            <option value="{{ product.productKey }}">{{ product.name }}</option>
+            <option value="{{ product.key }}">{{ product.value }}</option>
         {% endfor %}
     </select>
 
