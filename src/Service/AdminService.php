@@ -2,6 +2,9 @@
 
 namespace D4rk0snet\Coralguardian\Service;
 
+use D4rk0snet\Adoption\Entity\AdoptionEntity;
+use D4rk0snet\Adoption\Entity\GiftAdoption;
+use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Hyperion\Doctrine\Service\DoctrineService;
 use Twig\Environment;
@@ -51,10 +54,10 @@ class AdminService
 
     public static function coralOrdersPage()
     {
-//        $orderModels = self::getOrderModels();
-//        $donationModels = self::getDonationModels();
+        $orderModels = self::getOrderModels();
+        //$donationModels = self::getDonationModels();
         self::getTwig()->load("Admin/tracking.twig")->display([
-//            'items' => array_merge($orderModels, $donationModels),
+          'items' => $orderModels,
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http")
         ]);
     }
@@ -100,34 +103,31 @@ class AdminService
         }
     }
 
-//    private static function getOrderModels()
-//    {
-//        $orders = DoctrineService::getEntityManager()->getRepository(Order::class)->findBy([], ['id' => 'desc']);
-//        $orders = array_filter($orders, function (Order $order) {
-//            return $order->getOrderHasProducts()->count() > 0;
-//        });
-//
-//        return array_map(function (Order $order) {
-//            $postId = $order->getPost()->getId();
-//            $customer = $order->getCustomer();
-//            return [
-//                "id" => $order->getId(),
-//                "date" => $order->getDate(),
-//                "adoptionType" => $customer instanceof Company ? "entreprise" : "particulier",
-//                "action" => $order->getGifts()->count() > 0 ? "cadeau" : "adoption",
-//                "product" => $order->getOrderHasProducts()[0]->getProduct()->getName(),
-//                "companyName" => $customer instanceof Company ? $customer->getCompanyName() : "--",
-//                "name" => $customer->getFullName(),
-//                "email" => $customer->getEmail(),
-//                "amount" => $order->getAdoptions()->count(),
-//                "price" => (string)$order->getPrice(),
-//                "link" => WP_HOME . "/wp/wp-admin/post.php?post=" . $postId . "&action=edit",
-//                "isPaid" => $order->getPaymentMethod()->isPaid() ? "Confirmé" : GetValidatePayment::getUrl() . "?order_id=" . $postId . "&redirect=" . home_url($_SERVER["REQUEST_URI"]),
-//                "certificate" => GetCertificate::getUrl()."?order_id=" . $postId,
-//                "receipt" => null !== $order->getFiscalReceipt() ? GetFiscalReceipt::getUrl() . "?receipt_id=" . $order->getFiscalReceipt()->getPost()->getId() : null
-//            ];
-//        }, $orders);
-//    }
+    private static function getOrderModels()
+    {
+        $adoptionsEntities = DoctrineService::getEntityManager()->getRepository(AdoptionEntity::class)->findBy([], ['uuid' => 'desc']);
+        $giftAdoptionEntities = DoctrineService::getEntityManager()->getRepository(GiftAdoption::class)->findBy([], ['uuid' => 'desc']);
+
+        return array_map(function (AdoptionEntity $adoption) {
+            $customer = $adoption->getCustomer();
+            return [
+                "id" => $adoption->getUuid(),
+                "date" => $adoption->getDate(),
+                "adoptionType" => $customer instanceof CompanyCustomerEntity ? "entreprise" : "particulier",
+                "action" => $adoption instanceof GiftAdoption ? "cadeau" : "adoption",
+                "product" => $adoption->getAdoptedProduct()->value,
+                "companyName" => $customer instanceof CompanyCustomerEntity ? $customer->getCompanyName() : "--",
+                "name" => $customer->getFullName(),
+                "email" => $customer->getEmail(),
+                "amount" => $adoption->getQuantity(),
+                "price" => (string)$adoption->getAmount(),
+                "link" => "",//getenv('WP_HOME') . "/wp/wp-admin/post.php?post=" . $postId . "&action=edit",
+                "isPaid" => $adoption->isPaid() ? "Confirmé" : "Non payé",
+                "certificate" => "",//GetCertificate::getUrl()."?order_id=" . $postId,
+                "receipt" => ""
+            ];
+        }, array_merge($adoptionsEntities, $giftAdoptionEntities));
+    }
 
 //    private function getDonationModels()
 //    {
