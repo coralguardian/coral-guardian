@@ -4,7 +4,9 @@ namespace D4rk0snet\Coralguardian\Service;
 
 use D4rk0snet\Adoption\Entity\AdoptionEntity;
 use D4rk0snet\Adoption\Entity\GiftAdoption;
+use D4rk0snet\Adoption\Enums\AdoptedProduct;
 use D4rk0snet\Certificate\Endpoint\GetCertificateEndpoint;
+use D4rk0snet\Coralguardian\API\Admin\CreateAdoptionAdmin;
 use D4rk0snet\Coralguardian\API\Admin\SetAdoptionAsPaidEndPoint;
 use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
 use D4rk0snet\Donation\Entity\DonationEntity;
@@ -67,13 +69,12 @@ class AdminService
 
     public static function coralCreateAdoptionPage()
     {
-//        $products = DoctrineService::getEntityManager()->getRepository(Product::class)->findAll();
         self::getTwig()->load("Admin/forms/create-adoption.twig")->display([
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http"),
             'adoption_file' => home_url("/app/plugins/coralguardian/public/coral-guardian-adoptees-admin.xlsx", "http"),
             'recipient_file' => home_url("/app/plugins/coralguardian/public/coral-guardian-recipients-admin.xlsx", "http"),
-//            "products" => $products,
-//            "action" => CreateAdoptionAdmin::getUrl()
+            "products" => AdoptedProduct::getAllAdoptedProduct(),
+            "action" => CreateAdoptionAdmin::getUrl()
         ]);
     }
 
@@ -119,7 +120,7 @@ class AdminService
                 case AdoptionEntity::class : $action = "Adoption"; break;
                 case GiftAdoption::class : $action = "Cadeau"; break;
                 case DonationEntity::class : $action = "Don ponctuel"; break;
-                case RecurringDonationEntity::class : $action = "Don mensuel";
+                case RecurringDonationEntity::class : $action = "Don mensuel"; break;
                 default:
                     throw new \Exception("Invalid donation class : ".get_class($donation));
             }
@@ -144,10 +145,8 @@ class AdminService
                 $object["receipt"] = "http://".FiscalReceiptService::getURl($donation->getUuid());
 
             } else {
-                // Pour un don mensuel qui s'étale sur 2 années il y aura 2 reçus fiscaux
-                foreach ($donation->getFiscalReceipts() as $receipt) {
-                    $receipts[] = GetFiscalReceipt::getUrl() . "?receipt_id=" . $receipt->getPost()->getId();
-                }
+                /** @todo : Pour un don mensuel qui s'étale sur 2 années il y aura 2 reçus fiscaux */
+                $object["receipt"] = "http://".FiscalReceiptService::getURl($donation->getUuid());
             }
 
             return $object;

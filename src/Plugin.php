@@ -2,6 +2,7 @@
 
 namespace D4rk0snet\Coralguardian;
 
+use D4rk0snet\Coralguardian\API\Admin\CreateAdoptionAdmin;
 use D4rk0snet\Coralguardian\API\Admin\SetAdoptionAsPaidEndPoint;
 use D4rk0snet\Coralguardian\API\CustomerEndpoint;
 use D4rk0snet\Coralguardian\Service\ShortcodeService;
@@ -22,5 +23,6 @@ class Plugin
         ShortcodeService::registerShortcode(GiftCodeFormShortcode::class);
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CustomerEndpoint());
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new SetAdoptionAsPaidEndPoint());
+        do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CreateAdoptionAdmin());
     }
 }
