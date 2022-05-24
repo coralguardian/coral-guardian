@@ -4,7 +4,9 @@ namespace D4rk0snet\Coralguardian\Service;
 
 use D4rk0snet\Adoption\Entity\AdoptionEntity;
 use D4rk0snet\Adoption\Entity\GiftAdoption;
+use D4rk0snet\Certificate\Endpoint\GetCertificateEndpoint;
 use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
+use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
 use Doctrine\ORM\EntityManagerInterface;
 use Hyperion\Doctrine\Service\DoctrineService;
 use Twig\Environment;
@@ -105,7 +107,7 @@ class AdminService
 
     private static function getOrderModels()
     {
-        $adoptionsEntities = DoctrineService::getEntityManager()->getRepository(AdoptionEntity::class)->findBy([], ['uuid' => 'desc']);
+        $adoptionsEntities = DoctrineService::getEntityManager()->getRepository(AdoptionEntity::class)->findAll();
         $giftAdoptionEntities = DoctrineService::getEntityManager()->getRepository(GiftAdoption::class)->findBy([], ['uuid' => 'desc']);
 
         return array_map(function (AdoptionEntity $adoption) {
@@ -117,16 +119,16 @@ class AdminService
                 "action" => $adoption instanceof GiftAdoption ? "cadeau" : "adoption",
                 "product" => $adoption->getAdoptedProduct()->value,
                 "companyName" => $customer instanceof CompanyCustomerEntity ? $customer->getCompanyName() : "--",
-                "name" => $customer->getFullName(),
+                "name" => $customer->getFirstname().' '.$customer->getLastname(),
                 "email" => $customer->getEmail(),
                 "amount" => $adoption->getQuantity(),
                 "price" => (string)$adoption->getAmount(),
                 "link" => "",//getenv('WP_HOME') . "/wp/wp-admin/post.php?post=" . $postId . "&action=edit",
                 "isPaid" => $adoption->isPaid() ? "Confirmé" : "Non payé",
-                "certificate" => "",//GetCertificate::getUrl()."?order_id=" . $postId,
-                "receipt" => ""
+                "certificate" => "http://".GetCertificateEndpoint::getUrl()."?".GetCertificateEndpoint::ORDER_UUID_PARAM."=".$adoption->getUuid(),//GetCertificate::getUrl()."?order_id=" . $postId,
+                "receipt" => "http://".FiscalReceiptService::getURl($adoption->getUuid())
             ];
-        }, array_merge($adoptionsEntities, $giftAdoptionEntities));
+        }, array_merge($adoptionsEntities,$giftAdoptionEntities));
     }
 
 //    private function getDonationModels()
