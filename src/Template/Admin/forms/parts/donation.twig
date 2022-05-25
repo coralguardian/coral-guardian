@@ -19,13 +19,6 @@
         <input type="date" id="donation-end-date" name="donation[end_date]"><br>
     </div>
 
-    <label for="donation-project">Projet *</label><br>
-    <select id="donation-project" name="donation[project_key]" required>
-        {% for project in projects %}
-            <option value="{{ project.projectKey }}">{{ project.name }} - {{ project.country }}</option>
-        {% endfor %}
-    </select>
-
     <label for="donation-price">Prix payé *</label><br>
     <input type="text" id="donation-price" name="donation[amount]" required><br>
 
