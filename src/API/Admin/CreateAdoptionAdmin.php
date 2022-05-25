@@ -77,11 +77,11 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
         DoctrineService::getEntityManager()->flush();
 
         $adoptionFilename = self::saveFileFromRequest($_FILES["file"]["tmp_name"]['adoptions']);
-        NamingFileService::importDataFromFile($adoptionFilename);
+        NamingFileService::importDataFromFile($adoptionFilename, $adoption);
 
         if($adoption instanceof GiftAdoption) {
             $recipientFilename = self::saveFileFromRequest($_FILES["file"]["tmp_name"]['recipients']);
-            RecipientFileService::importDataFromFile($recipientFilename);
+            RecipientFileService::importDataFromFile($recipientFilename, $adoption);
         }
 
         return APIManagement::APIRedirect(admin_url("admin.php?page=coralguardian"));
