@@ -107,7 +107,7 @@ export default {
       giftModel: "getGiftModel"
     }),
     recipientFileUrl() {
-      return this.baseUrl + "getRecipientFile?order_uuid=" + this.order.id
+      return this.baseUrl + "recipientsFile?adoption_uuid=" + this.order.uuid
     }
   },
   methods: {
@@ -145,7 +145,7 @@ export default {
         if (this.giftModel.message !== "") {
           formData.append("message", this.giftModel.message);
         }
-        this.post(formData, "createGiftsByFile", options)
+        this.post(formData, "recipientFileImport", options)
             .then(() => {
               this.loadForm(new FinalGiftForm()).then(() => {
                 this.cleanUrl()
