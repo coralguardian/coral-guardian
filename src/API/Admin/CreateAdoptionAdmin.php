@@ -83,7 +83,7 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
             $recipientFilename = self::saveFileFromRequest($_FILES["file"]["tmp_name"]['recipients']);
             RecipientFileService::importDataFromFile($recipientFilename, $adoption);
         }
-
+        $_SESSION["success_notice"] = "Adoption ajoutée avec succès.";
         return APIManagement::APIRedirect(admin_url("admin.php?page=coralguardian"));
     }
 

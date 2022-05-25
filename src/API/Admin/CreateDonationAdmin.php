@@ -61,7 +61,7 @@ class CreateDonationAdmin extends APIEnpointAbstract
 
         DoctrineService::getEntityManager()->persist($donation);
         DoctrineService::getEntityManager()->flush();
-
+        $_SESSION["success_notice"] = "Don ajouté avec succès.";
         return APIManagement::APIRedirect(admin_url("admin.php?page=coralguardian"));
     }
 

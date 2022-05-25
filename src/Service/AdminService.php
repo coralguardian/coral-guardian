@@ -29,6 +29,7 @@ class AdminService
     public static function init(): void
     {
         self::startSession();
+        add_action("admin_notices", [AdminService::class, "handleAdminNotices"]);
     }
 
     public static function addTopMenu()
@@ -65,7 +66,7 @@ class AdminService
     {
         $orderModels = self::getOrderModels();
         self::getTwig()->load("Admin/tracking.twig")->display([
-          'items' => array_merge($orderModels),
+            'items' => array_merge($orderModels),
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http")
         ]);
     }
@@ -74,10 +75,10 @@ class AdminService
     {
         $products = [];
 
-        foreach(AdoptedProduct::getAllAdoptedProduct() as $k => $v) {
+        foreach (AdoptedProduct::getAllAdoptedProduct() as $k => $v) {
             $products[] = [
-                    'key' => $v,
-                    'value' => $k
+                'key' => $v,
+                'value' => $k
             ];
         }
 
@@ -125,37 +126,45 @@ class AdminService
             $customer = $donation->getCustomer();
             $isDonation = !($donation instanceof AdoptionEntity || $donation instanceof GiftAdoption);
 
-            switch(get_class($donation)) {
-                case AdoptionEntity::class : $action = "Adoption"; break;
-                case GiftAdoption::class : $action = "Cadeau"; break;
-                case DonationEntity::class : $action = "Don ponctuel"; break;
-                case RecurringDonationEntity::class : $action = "Don mensuel"; break;
+            switch (get_class($donation)) {
+                case AdoptionEntity::class :
+                    $action = "Adoption";
+                    break;
+                case GiftAdoption::class :
+                    $action = "Cadeau";
+                    break;
+                case DonationEntity::class :
+                    $action = "Don ponctuel";
+                    break;
+                case RecurringDonationEntity::class :
+                    $action = "Don mensuel";
+                    break;
                 default:
-                    throw new \Exception("Invalid donation class : ".get_class($donation));
+                    throw new \Exception("Invalid donation class : " . get_class($donation));
             }
 
             $object = [
-                "id" => (string) $donation->getUuid(),
+                "id" => (string)$donation->getUuid(),
                 "date" => $donation->getDate()->format("d-m-Y"),
                 "adoptionType" => $customer instanceof CompanyCustomerEntity ? "entreprise" : "particulier",
                 "action" => $action,
                 "product" => $isDonation ? "--" : __($donation->getAdoptedProduct()->value),
                 "companyName" => $customer instanceof CompanyCustomerEntity ? $customer->getCompanyName() : "--",
-                "name" => $customer->getFirstname().' '.$customer->getLastname(),
+                "name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                 "email" => $customer->getEmail(),
                 "amount" => $isDonation ? "--" : $donation->getQuantity(),
                 "price" => (string)$donation->getAmount(),
                 "link" => "",//getenv('WP_HOME') . "/wp/wp-admin/post.php?post=" . $postId . "&action=edit",
-                "isPaid" => $donation->isPaid() ? "Confirmé" : SetAdoptionAsPaidEndPoint::getUrl()."?".SetAdoptionAsPaidEndPoint::ORDER_UUID_PARAM."=".$donation->getUuid(),
+                "isPaid" => $donation->isPaid() ? "Confirmé" : SetAdoptionAsPaidEndPoint::getUrl() . "?" . SetAdoptionAsPaidEndPoint::ORDER_UUID_PARAM . "=" . $donation->getUuid(),
             ];
 
-            if(!$isDonation) {
-                $object["certificate"] = GetCertificateEndpoint::getUrl()."?".GetCertificateEndpoint::ORDER_UUID_PARAM."=".$donation->getUuid();
-                $object["receipt"] = "http://".FiscalReceiptService::getURl($donation->getUuid());
+            if (!$isDonation) {
+                $object["certificate"] = GetCertificateEndpoint::getUrl() . "?" . GetCertificateEndpoint::ORDER_UUID_PARAM . "=" . $donation->getUuid();
+                $object["receipt"] = "http://" . FiscalReceiptService::getURl($donation->getUuid());
 
             } else {
                 /** @todo : Pour un don mensuel qui s'étale sur 2 années il y aura 2 reçus fiscaux */
-                $object["receipt"] = "http://".FiscalReceiptService::getURl($donation->getUuid());
+                $object["receipt"] = "http://" . FiscalReceiptService::getURl($donation->getUuid());
             }
 
             return $object;
@@ -172,7 +181,7 @@ class AdminService
 
     private static function getTwig(): Environment
     {
-        $loader = new FilesystemLoader(__DIR__."/../Template");
+        $loader = new FilesystemLoader(__DIR__ . "/../Template");
         return new Environment($loader);
     }
 }

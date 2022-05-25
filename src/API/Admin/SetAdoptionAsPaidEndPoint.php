@@ -28,6 +28,7 @@ class SetAdoptionAsPaidEndPoint extends APIEnpointAbstract
 
         $donation->setIsPaid(true);
         DoctrineService::getEntityManager()->flush();
+        $_SESSION["success_notice"] = "Paiement validé avec succès.";
 
         return APIManagement::APIRedirect(get_admin_url(null, 'admin.php?page=coralguardian'));
     }
