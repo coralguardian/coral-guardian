@@ -139,7 +139,7 @@ class AdminService
                 "date" => $donation->getDate()->format("d-m-Y"),
                 "adoptionType" => $customer instanceof CompanyCustomerEntity ? "entreprise" : "particulier",
                 "action" => $action,
-                "product" => $isDonation ? "--" : __($donation->getAdoptedProduct()),
+                "product" => $isDonation ? "--" : __($donation->getAdoptedProduct()->value),
                 "companyName" => $customer instanceof CompanyCustomerEntity ? $customer->getCompanyName() : "--",
                 "name" => $customer->getFirstname().' '.$customer->getLastname(),
                 "email" => $customer->getEmail(),
