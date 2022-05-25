@@ -10,6 +10,7 @@ use D4rk0snet\Coralguardian\Entity\CustomerEntity;
 use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\Donation\Enums\PaymentMethod;
 use D4rk0snet\NamingFileImport\Service\NamingFileService;
+use D4rk0snet\NamingFileImport\Service\RecipientFileService;
 use Hyperion\Doctrine\Service\DoctrineService;
 use Hyperion\RestAPI\APIEnpointAbstract;
 use Hyperion\RestAPI\APIManagement;
@@ -80,7 +81,7 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
 
         if($adoption instanceof GiftAdoption) {
             $recipientFilename = self::saveFileFromRequest($_FILES["file"]["tmp_name"]['recipients']);
-            NamingFileService::importDataFromFile($recipientFilename);
+            RecipientFileService::importDataFromFile($recipientFilename);
         }
 
         return APIManagement::APIRedirect(admin_url("admin.php?page=coralguardian"));

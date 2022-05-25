@@ -12,6 +12,8 @@ use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
 use D4rk0snet\Donation\Entity\DonationEntity;
 use D4rk0snet\Donation\Entity\RecurringDonationEntity;
 use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
+use D4rk0snet\NamingFileImport\API\Admin\GetNamingFileEndPoint;
+use D4rk0snet\NamingFileImport\API\Admin\GetRecipientsFileEndPoint;
 use Hyperion\Doctrine\Service\DoctrineService;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -80,8 +82,8 @@ class AdminService
 
         self::getTwig()->load("Admin/forms/create-adoption.twig")->display([
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http"),
-            'adoption_file' => home_url("/app/plugins/coralguardian/public/coral-guardian-adoptees-admin.xlsx", "http"),
-            'recipient_file' => home_url("/app/plugins/coralguardian/public/coral-guardian-recipients-admin.xlsx", "http"),
+            'adoption_file' => GetNamingFileEndPoint::getUrl(),
+            'recipient_file' => GetRecipientsFileEndPoint::getUrl(),
             "products" => $products,
             "action" => CreateAdoptionAdmin::getUrl()
         ]);
