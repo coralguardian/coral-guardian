@@ -110,7 +110,7 @@ export default new Vuex.Store({
             break;
           case adoptionHelper.friend:
             context.dispatch('loadForm', new GiftForm())
-              .then(() => {context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: donationHelper.monthly}})
+              .then(() => {context.dispatch('updateForm', {order: {type: 'gift'}, donation: {type: donationHelper.monthly}})
                   .then(() => resolve())
               })
             break;

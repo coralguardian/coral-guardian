@@ -147,6 +147,7 @@ export default class BaseFormStore {
       updateForm(context, data) {
         return new Promise((resolve) => {
           context.commit('updateForm', data)
+          console.log(data)
           resolve()
         })
       },
