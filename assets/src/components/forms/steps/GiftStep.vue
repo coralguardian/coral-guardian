@@ -51,7 +51,7 @@ export default {
             let data = {
               order: {
                 uuid: resp.data.uuid,
-                type: types[0],
+                productType: types[0],
                 quantity: resp.data.quantity
               }
             }

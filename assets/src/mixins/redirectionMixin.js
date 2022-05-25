@@ -52,22 +52,27 @@ export default {
           }
         }
         // redirection fichiers
-        else if (this.params.orderId && this.params.step) {
+        else if (this.params.adoptionUuid && this.params.step) {
           this.loading = true
-
-          this.post({order_id: this.params.orderId}, "getOrder")
+          let url = this.getGetUrlNoApiData(
+            {
+              adoptionUuid: this.params.adoptionUuid,
+              step: this.params.step
+            },
+            "adoption/redirection")
+          this.getByUrl(url)
             .then(resp => {
               this.loading = false
+              let types = resp.data.type.split(".")
               let data = {
                 order: {
-                  id: resp.data.id,
-                  quantity: resp.data.quantity,
-                  productType: resp.data.type
+                  uuid: resp.data.uuid,
+                  productType: types[0],
+                  quantity: resp.data.quantity
                 }
               }
-              // cas des récifs
-              if (resp.data.type !== resp.data.key) {
-                data.order.specificType = resp.data.key
+              if (types[1] !== undefined) {
+                data.order.specificType = types[1]
               }
               switch (this.params.step) {
                 // redirection fichier nommage adoption

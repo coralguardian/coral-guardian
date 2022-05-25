@@ -45,6 +45,18 @@ export default {
           })
       })
     },
+    getByUrl(url) {
+      return new Promise((resolve, reject) => {
+        axios.get(url)
+          .then(resp => {
+            resolve(resp)
+          })
+          .catch(err => {
+            // console.warn(err)
+            reject(err)
+          })
+      })
+    },
     getGetUrl(params) {
       if (!this.apiData) {
         console.error("Pas de données API dans l'étape en cours.")
@@ -54,8 +66,13 @@ export default {
       if (!isEmpty(params)) {
         url += "?"
       }
+      let i = 0;
       Object.keys(params).forEach(key => {
+        if (i > 0) {
+          url += "&"
+        }
         url += key + '=' + params[key]
+        i++
       })
       return url;
     },
@@ -64,8 +81,13 @@ export default {
       if (!isEmpty(params)) {
         url += "?"
       }
+      let i = 0;
       Object.keys(params).forEach(key => {
+        if (i > 0) {
+          url += "&"
+        }
         url += key + '=' + params[key]
+        i++
       })
       return url;
     }
