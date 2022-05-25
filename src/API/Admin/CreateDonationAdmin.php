@@ -2,13 +2,11 @@
 
 namespace D4rk0snet\Coralguardian\API\Admin;
 
-use D4rk0snet\Adoption\Entity\GiftAdoption;
-use D4rk0snet\Adoption\Service\AdoptionService;
 use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
 use D4rk0snet\Coralguardian\Entity\CustomerEntity;
+use D4rk0snet\Donation\Enums\DonationRecurrencyEnum;
 use D4rk0snet\Donation\Models\DonationModel;
-use D4rk0snet\NamingFileImport\Service\NamingFileService;
-use D4rk0snet\NamingFileImport\Service\RecipientFileService;
+use D4rk0snet\Donation\Service\DonationService;
 use Hyperion\Doctrine\Service\DoctrineService;
 use Hyperion\RestAPI\APIEnpointAbstract;
 use Hyperion\RestAPI\APIManagement;
@@ -23,8 +21,6 @@ class CreateDonationAdmin extends APIEnpointAbstract
     public static function callback(WP_REST_Request $request): WP_REST_Response
     {
         $data = $request->get_params();
-
-        var_dump($data); die;
 
         if($data['customer']['type'] === "individual") {
             $customerEntity = new CustomerEntity(
@@ -50,32 +46,20 @@ class CreateDonationAdmin extends APIEnpointAbstract
         }
 
         DoctrineService::getEntityManager()->persist($customerEntity);
+        DoctrineService::getEntityManager()->flush();
 
-        if($data['order']['type'] === "regular") {
-            $adoptionModel = new DonationModel();
-            $adoptionModel
-                ->setPaymentMethod($data['order']['payment_method'])
-                ->setAdoptedProduct($data['order']['product_key'])
-                ->setCustomerUUID($customerEntity->getUuid())
-                ->setLang($data['order']['lang'])
-                ->setQuantity((int)$data['order']['quantity'])
-                ->setAmount((float)$data['order']['price']);
+        $donationModel = new DonationModel();
+        $donationModel
+            ->setAmount($data['donation']['amount'])
+            ->setLang($data['donation']['lang'])
+            ->setCustomerUUID($customerEntity->getUuid())
+            ->setPaymentMethod($data['donation']['payment_method'])
+            ->setDonationRecurrency(DonationRecurrencyEnum::ONESHOT->value)
+            ->setDate(date_create_from_format("Y-m-d", $data['donation']['donation_date']));
 
-            $adoption = AdoptionService::createAdoption($adoptionModel);
-        } else {
-            $giftAdoptionModel = new DonationModel();
-            $giftAdoptionModel
-                ->setAmount((float)$data['order']['price'])
-                ->setQuantity((int)$data['order']['quantity'])
-                ->setLang($data['order']['lang'])
-                ->setCustomerUUID($customerEntity->getUuid())
-                ->setAdoptedProduct($data['order']['product_key'])
-                ->setPaymentMethod($data['order']['payment_method']);
+        $donation = DonationService::createDonation($donationModel);
 
-            $adoption = AdoptionService::createGiftAdoption($giftAdoptionModel);
-        }
-
-        DoctrineService::getEntityManager()->persist($adoption);
+        DoctrineService::getEntityManager()->persist($donation);
         DoctrineService::getEntityManager()->flush();
 
         return APIManagement::APIRedirect(admin_url("admin.php?page=coralguardian"));
