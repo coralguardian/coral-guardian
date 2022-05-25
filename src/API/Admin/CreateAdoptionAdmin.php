@@ -2,13 +2,12 @@
 
 namespace D4rk0snet\Coralguardian\API\Admin;
 
-use D4rk0snet\Adoption\Entity\AdoptionEntity;
 use D4rk0snet\Adoption\Entity\GiftAdoption;
-use D4rk0snet\Adoption\Enums\AdoptedProduct;
+use D4rk0snet\Adoption\Models\AdoptionModel;
+use D4rk0snet\Adoption\Models\GiftAdoptionModel;
+use D4rk0snet\Adoption\Service\AdoptionService;
 use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
 use D4rk0snet\Coralguardian\Entity\CustomerEntity;
-use D4rk0snet\Coralguardian\Enums\Language;
-use D4rk0snet\Donation\Enums\PaymentMethod;
 use D4rk0snet\NamingFileImport\Service\NamingFileService;
 use D4rk0snet\NamingFileImport\Service\RecipientFileService;
 use Hyperion\Doctrine\Service\DoctrineService;
@@ -19,6 +18,9 @@ use WP_REST_Response;
 
 class CreateAdoptionAdmin extends APIEnpointAbstract
 {
+    /**
+     * @todo: passer par le modele pour le customer
+     */
     public static function callback(WP_REST_Request $request): WP_REST_Response
     {
         $data = $request->get_params();
@@ -48,29 +50,27 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
         DoctrineService::getEntityManager()->persist($customerEntity);
 
         if($data['order']['type'] === "regular") {
-            $adoption = new AdoptionEntity(
-                customer: $customerEntity,
-                date: new \DateTime(),
-                amount: (float)$data['order']['price'],
-                lang: Language::from($data['order']['lang']),
-                adoptedProduct: AdoptedProduct::from($data['order']['product_key']),
-                quantity: (int)$data['order']['quantity'],
-                paymentMethod: PaymentMethod::from($data['order']['payment_method']),
-                isPaid: true
-            );
+            $adoptionModel = new AdoptionModel();
+            $adoptionModel
+                ->setPaymentMethod($data['order']['payment_method'])
+                ->setAdoptedProduct($data['order']['product_key'])
+                ->setCustomerUUID($customerEntity->getUuid())
+                ->setLang($data['order']['lang'])
+                ->setQuantity((int)$data['order']['quantity'])
+                ->setAmount((float)$data['order']['price']);
+
+            $adoption = AdoptionService::createAdoption($adoptionModel);
         } else {
-            $adoption = new GiftAdoption(
-                customer: $customerEntity,
-                date: new \DateTime(),
-                amount: (float)$data['order']['price'],
-                lang: Language::from($data['order']['lang']),
-                adoptedProduct: AdoptedProduct::from($data['order']['product_key']),
-                quantity: (int)$data['order']['quantity'],
-                paymentMethod: PaymentMethod::from($data['order']['payment_method']),
-                isPaid: true,
-                sendOn: null,
-                message: $data['order']['message']
-            );
+            $giftAdoptionModel = new GiftAdoptionModel();
+            $giftAdoptionModel
+                ->setAmount((float)$data['order']['price'])
+                ->setQuantity((int)$data['order']['quantity'])
+                ->setLang($data['order']['lang'])
+                ->setCustomerUUID($customerEntity->getUuid())
+                ->setAdoptedProduct($data['order']['product_key'])
+                ->setPaymentMethod($data['order']['payment_method']);
+
+            $adoption = AdoptionService::createGiftAdoption($giftAdoptionModel);
         }
 
         DoctrineService::getEntityManager()->persist($adoption);

@@ -7,6 +7,7 @@ use D4rk0snet\Adoption\Entity\GiftAdoption;
 use D4rk0snet\Adoption\Enums\AdoptedProduct;
 use D4rk0snet\Certificate\Endpoint\GetCertificateEndpoint;
 use D4rk0snet\Coralguardian\API\Admin\CreateAdoptionAdmin;
+use D4rk0snet\Coralguardian\API\Admin\CreateDonationAdmin;
 use D4rk0snet\Coralguardian\API\Admin\SetAdoptionAsPaidEndPoint;
 use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
 use D4rk0snet\Donation\Entity\DonationEntity;
@@ -91,11 +92,9 @@ class AdminService
 
     public static function coralCreateDonationPage()
     {
-//        $projects = DoctrineService::getEntityManager()->getRepository(Project::class)->findAll();
         self::getTwig()->load("Admin/forms/create-donation.twig")->display([
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http"),
-//            "projects" => $projects,
-//            "action" => CreateDonationAdmin::getUrl()
+            "action" => CreateDonationAdmin::getUrl()
         ]);
     }
 
@@ -122,7 +121,6 @@ class AdminService
     {
         $donations = DoctrineService::getEntityManager()->getRepository(DonationEntity::class)->findAll();
 
-
         return array_map(function (DonationEntity $donation) {
             $customer = $donation->getCustomer();
             $isDonation = !($donation instanceof AdoptionEntity || $donation instanceof GiftAdoption);
@@ -141,7 +139,7 @@ class AdminService
                 "date" => $donation->getDate()->format("d-m-Y"),
                 "adoptionType" => $customer instanceof CompanyCustomerEntity ? "entreprise" : "particulier",
                 "action" => $action,
-                "product" => $isDonation ? "--" : $donation->getAdoptedProduct()->value,
+                "product" => $isDonation ? "--" : __($donation->getAdoptedProduct()->value),
                 "companyName" => $customer instanceof CompanyCustomerEntity ? $customer->getCompanyName() : "--",
                 "name" => $customer->getFirstname().' '.$customer->getLastname(),
                 "email" => $customer->getEmail(),
