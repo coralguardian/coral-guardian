@@ -30,7 +30,7 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
                 email: $data['customer']['email'],
                 postalCode: $data['customer']['postal_code'],
                 firstname: $data['customer']['first_name'],
-                lastname: $data['customer']['lastname']
+                lastname: $data['customer']['last_name']
             );
         } else {
             $customerEntity = new CompanyCustomerEntity(
@@ -41,13 +41,13 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
                 country: $data['customer']['country'],
                 email: $data['customer']['email'],
                 firstname: $data['customer']['first_name'],
-                lastname: $data['customer']['lastname']
+                lastname: $data['customer']['last_name']
             );
         }
 
         DoctrineService::getEntityManager()->persist($customerEntity);
 
-        if($data['customer']['order']['type'] === "regular") {
+        if($data['order']['type'] === "regular") {
             $adoption = new AdoptionEntity(
                 customer: $customerEntity,
                 date: new \DateTime(),
