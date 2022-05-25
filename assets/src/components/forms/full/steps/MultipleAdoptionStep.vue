@@ -100,7 +100,7 @@ export default {
       adoptionModel: "getPostAdoptionsData"
     }),
     adoptionFileUrl() {
-      return this.baseUrl + "getAdoptionFile?order_uuid=" + this.adoptionModel.order
+      return this.baseUrl + "namingFile?adoption_uuid=" + this.adoptionModel.adoptionUuid
     }
   },
   methods: {
@@ -117,7 +117,7 @@ export default {
         }
         let formData = new FormData();
         formData.append("adoption_file", this.namesFile);
-        this.post(formData, "createAdoptionsByFile", options)
+        this.post(formData, "namingFileImport", options)
             .then(() => {
               this.cleanUrl()
               this.$root.$emit('ApiValid')
