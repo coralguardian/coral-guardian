@@ -4,7 +4,7 @@ $(document).ready(function () {
       "language": {
         "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json"
       },
-      "order": [0, 'desc'],
+      "order": [1, 'desc'],
       dom: 'Bfrtip',
       buttons: [
         'pageLength',
