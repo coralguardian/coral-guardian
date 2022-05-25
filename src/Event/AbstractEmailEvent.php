@@ -15,10 +15,10 @@ abstract class AbstractEmailEvent
             throw new \Exception("Impossible d'utiliser email ou event comme clef de propriété pour le tableau properties");
         }
 
-        $sibApiKey = get_option(\Hyperion\Sendinblue\Plugin::SENDINBLUE_APIKEY_OPTION);
+        $sibApiKey = get_option(\Hyperion\Sendinblue\Plugin::SENDINBLUE_CLIENTKEY_OPTION);
 
         if(false === $sibApiKey) {
-            throw new \Exception("Variable d'environnement SIB_APIKEY non définie.");
+            throw new \Exception("Configuration de SENDINBLUE_CLIENTKEY_OPTION non définie.");
         }
 
         $body = [
