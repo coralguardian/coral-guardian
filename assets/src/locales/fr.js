@@ -96,7 +96,7 @@ export default {
         },
         friend: {
           text: "J'offre l'adoption d'un {item}",
-          tooltip: "Votre ou vos destinataire(s) recevront immédiatement ou en différé un code leur permettant de choisir le(s) nom(s) du ou des coraux/récifs adopté(s) et télécharger le(s) certificat(s) correspondant(s)"
+          tooltip: "Votre destinataire recevra immédiatement un code lui permettant de choisir le(s) nom(s) du ou des {item} adopté(s) et télécharger le(s) certificat(s) correspondant(s)."
         },
         company: "Je suis une entreprise"
       }
@@ -154,7 +154,7 @@ export default {
       donation: "Je fais un don",
       tooltips: {
         me: "Vous pourrez choisir vous même le nom de votre ou de vos adoptions et télécharger directement le(s) certificat(s) d'adoption personnalisé(s).",
-        recipient: "Vos destinataires recevront immédiatement un code leur permettant de nommer leur adoption et de télécharger le certificat d'adoption correspondant."
+        recipient: "Votre ou vos destinataire(s) recevront immédiatement ou en différé un code leur permettant de choisir le(s) nom(s) du ou des coraux/récifs adopté(s) et télécharger le(s) certificat(s) correspondant(s)."
       }
     },
     gift: {
