@@ -96,7 +96,7 @@ export default {
         },
         friend: {
           text: "J'offre l'adoption d'un {item}",
-          tooltip: "Votre destinataire recevra immédiatement un code lui permettant de choisir le(s) nom(s) du ou des {item} adopté(s) et télécharger le(s) certificat(s) correspondant(s)."
+          tooltip: "Votre ou vos destinataire(s) recevront immédiatement ou en différé un code leur permettant de choisir le(s) nom(s) du ou des coraux/récifs adopté(s) et télécharger le(s) certificat(s) correspondant(s)"
         },
         company: "Je suis une entreprise"
       }
@@ -201,8 +201,8 @@ export default {
       description: "Assurez la poursuite de nos actions de recherche, de restauration et de sensibilisation au quotidien avec un don mensuel."
     },
     multipleAdoption: {
-      description: "Donnez un nom à votre {item}, vous pouvez choisir celui que vous souhaitez ! 2 solutions s'offrent à vous : | " +
-        "Donnez un nom à chacun de vos {item}, vous pouvez choisir ceux que vous souhaitez ! 2 solutions s'offrent à vous :",
+      description: "Donnez un nom à votre {item}, vous pouvez choisir celui que vous souhaitez ! Deux solutions s'offrent à vous : | " +
+        "Donnez un nom à chacun de vos {item}, vous pouvez choisir ceux que vous souhaitez ! Deux solutions s'offrent à vous :",
       tabs: {
         fields: {
           title: "Je remplis les champs",
@@ -221,7 +221,7 @@ export default {
       }
     },
     multipleRecipient: {
-      description: "Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif. 2 solutions s'offrent à vous :",
+      description: "Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif. Deux solutions s'offrent à vous :",
       tabs: {
         fields: {
           title: "Je remplis les champs",
@@ -339,7 +339,7 @@ export default {
   giftCustom: {
     title: "Options d'envoi des codes cadeaux*",
     radios: {
-      dont: "Je souhaite recevoir le(s) code(s) cadeau sur mon adresse email",
+      dont: "Je souhaite recevoir le(s) code(s) cadeau(x) sur mon adresse email",
       send: "Je souhaite renseigner les adresses emais du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement (l'import d'un fichier de contact est possible)"
     }
   }

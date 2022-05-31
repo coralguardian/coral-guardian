@@ -12,7 +12,7 @@ const opts = {
       light: {
         primary: "#DDE8EE",
         secondary: "#E3FE93",
-        tertiary: "#0D47A1"
+        tertiary: "#00456e"
       },
     },
   }
