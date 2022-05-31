@@ -11,9 +11,10 @@ class AdoptionOrder extends AbstractEmailEvent
         string $lang,
         int $quantity,
         string $receiptFileUrl,
-        string $nextStepUrl
+        string $nextStepUrl,
+        bool $codeSentTofriend = false
     ) {
-        self::sendQuery($email, compact('lang', 'quantity', 'receiptFileUrl', 'nextStepUrl'));
+        self::sendQuery($email, compact('lang', 'quantity', 'receiptFileUrl', 'nextStepUrl', 'codeSentTofriend'));
     }
 
     protected static function getEventName(): SIBEvent
