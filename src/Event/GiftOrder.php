@@ -2,19 +2,22 @@
 
 namespace D4rk0snet\Coralguardian\Event;
 
-use D4rk0snet\CoralAdoption\Enums\AdoptionType;
-use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
 
 class GiftOrder extends AbstractEmailEvent
 {
-    public static function send(string       $email,
-                                Language     $lang,
-                                int          $quantity,
-                                string       $fiscalReceiptLink,
-                                AdoptionType $adoptionType)
+    public static function send(
+        string $email,
+        string $lang,
+        int $quantity,
+        string $receiptFileUrl,
+        string $nextStepUrl,
+        bool $codeSentTofriend = false,
+        bool $isCompany = false,
+        array $codeToSend = []
+    )
     {
-        self::sendQuery($email, compact('lang', 'quantity', 'fiscalReceiptLink', 'adoptionType'));
+        self::sendQuery($email, compact('lang', 'quantity', 'receiptFileUrl', 'nextStepUrl', 'codeSentTofriend', 'isCompany', 'codeToSend'));
     }
 
     protected static function getEventName(): SIBEvent
