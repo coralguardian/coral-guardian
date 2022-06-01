@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-html="$t('default.stepper.finalRecipient.description', this.translation.count = this.count)"/>
+    <p v-html="description"/>
     <social-share-block/>
     <v-form
         :ref="formRefName"
@@ -18,6 +18,7 @@ import DonationBlock from "@/components/forms/blocks/DonationBlock";
 import SocialShareBlock from "../../blocks/SocialShareBlock";
 import validationMixin from "../../../../mixins/validationMixin";
 import itemTranslationMixin from "../../../../mixins/itemTranslationMixin";
+import {mapGetters} from "vuex";
 
 export default {
   name: "final-adoption-step",
@@ -26,6 +27,21 @@ export default {
     SocialShareBlock
   },
   mixins: [apiMixin, finalStepMixin, validationMixin, itemTranslationMixin],
+  computed: {
+    ...mapGetters({
+      adopter: "getAdopter",
+      gift: "getGift"
+    }),
+    description() {
+      let base = 'default.stepper.finalRecipient.description.';
+      if (!this.adopter.send_to_friend) {
+        base += "sendToMe"
+      } else {
+        base += this.gift.toSendOn === null ? "base" : "scheduled"
+      }
+      return this.$t(base)
+    }
+  },
   mounted() {
     this.$root.$on(this.apiEventName, () => this.$root.$emit('ApiValid'))
   },

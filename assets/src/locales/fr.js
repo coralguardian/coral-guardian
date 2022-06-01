@@ -306,7 +306,14 @@ export default {
     },
     finalRecipient: {
       title: "Bravo et merci, vous avez offert {count} {item}",
-      description: "Votre reçu fiscal a été envoyé par email.",
+      description: {
+        base: "Votre reçu fiscal vous a été envoyé par email." +
+          "<br>Les codes cadeaux ont été envoyés à vos destinataires.",
+        sendToMe: "Votre reçu fiscal a été envoyé par email ainsi que l'ensemble des codes cadeaux." +
+          "<br>En se rendant sur le site Coral Guardian, vos destinataires pourront personnaliser leur cadeau !",
+        scheduled: "Votre reçu fiscal vous a été envoyé par email." +
+          "<br>Les codes cadeaux seront envoyés à vos destinataires à la date programmée."
+      },
       description2: "Si vous avez choisi de nous faire parvenir les noms de vos destinataires grâche aux fichier à disposition, " +
         "vous pouvez le remplir et nous le renvoyer à l'adresse inscrite dans l'email de confirmation que vous venez de recevoir."
     }
