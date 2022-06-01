@@ -2,6 +2,11 @@
 
 namespace D4rk0snet\Coralguardian\API\Admin;
 
+use D4rk0snet\Adoption\Entity\AdoptionEntity;
+use D4rk0snet\Adoption\Entity\GiftAdoption;
+use D4rk0snet\Coralguardian\Event\AdoptionOrder;
+use D4rk0snet\Coralguardian\Event\BankTransferPayment;
+use D4rk0snet\Coralguardian\Event\GiftOrder;
 use D4rk0snet\Donation\Entity\DonationEntity;
 use Hyperion\Doctrine\Service\DoctrineService;
 use Hyperion\RestAPI\APIEnpointAbstract;
@@ -29,7 +34,13 @@ class SetAdoptionAsPaidEndPoint extends APIEnpointAbstract
         $donation->setIsPaid(true);
         DoctrineService::getEntityManager()->flush();
 
-        // @todo-sib: envoyer un email de confirmation de paiement avec lien pour la suite
+        switch(get_class($donation)) {
+            case GiftAdoption::class : GiftOrder::sendEvent($donation); break;
+            case AdoptionEntity::class: AdoptionOrder::sendEvent($donation); break;
+            default :
+                BankTransferPayment::sendEvent($donation);
+                break;
+        }
 
         $_SESSION["success_notice"] = "Paiement validé avec succès.";
 

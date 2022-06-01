@@ -6,7 +6,8 @@ use D4rk0snet\Adoption\Enums\AdoptedProduct;
 use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
 
-class ScheduledGiftCodeSent extends AbstractEmailEvent
+// Envoie du code cadeau a un ami
+class GiftCodeSent extends AbstractEmailEvent
 {
     public static function send(string   $email,
                                 Language $lang,
@@ -21,6 +22,6 @@ class ScheduledGiftCodeSent extends AbstractEmailEvent
 
     protected static function getEventName(): SIBEvent
     {
-        return SIBEvent::SCHEDULED_GIF_CODE_SENT;
+        return SIBEvent::FRIEND_GIF_CODE_SENT;
     }
 }

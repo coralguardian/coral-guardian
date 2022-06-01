@@ -5,6 +5,9 @@ use D4rk0snet\Coralguardian\Enums\SIBEvent;
 use Exception;
 use GuzzleHttp\Client;
 
+/**
+ * @todo : mettre en abstract le sendEvent
+ */
 abstract class AbstractEmailEvent
 {
     private const SIB_ENDPOINT = 'https://in-automate.sendinblue.com/api/v2/trackEvent';

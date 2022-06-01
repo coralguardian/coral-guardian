@@ -16,6 +16,6 @@ class OwnerScheduledCodeSentNotificationEvent extends AbstractEmailEvent
 
     protected static function getEventName(): SIBEvent
     {
-        return SIBEvent::OWNER_SCHEDULED_GIFT_CODE_SENT;
+        return SIBEvent::OWNER_GIFT_CODE_SENT;
     }
 }
