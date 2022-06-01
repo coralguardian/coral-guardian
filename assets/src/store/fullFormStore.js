@@ -9,12 +9,12 @@ import SetupForm from "../forms/full/setupForm";
 import adoptionHelper from "../helpers/adoptionHelper";
 import AbstractForm from "../forms/form";
 import RecipientFullForm from "../forms/full/recipientFullForm";
-import RecipientForm from "../forms/full/recipientForm";
 import FinalAdoptionForm from "../forms/full/finalAdoptionForm";
 import BankTransferThanksForm from "../forms/full/bankTransferThanksForm";
 import GiftModel from "../models/giftModel";
 import donationHelper from "@/helpers/donationHelper";
 import AdoptionModel from "@/models/adoptionModel";
+import FinalGiftForm from "@/forms/full/finalGiftForm";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -139,7 +139,7 @@ export default new Vuex.Store({
               resolve()
             })
         } else if (context.state.data.target === adoptionHelper.friend) {
-          context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new RecipientForm())
+          context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new FinalGiftForm())
             .then(() => {
               resolve()
             })

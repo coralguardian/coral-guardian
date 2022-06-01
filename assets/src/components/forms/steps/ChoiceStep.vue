@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     companyUrl() {
-      return window.location.origin + (this.$i18n.locale === 'fr' ? '/entreprise' : '/company')
+      return window.location.origin + (this.$i18n.locale === 'fr' ? '/adoption-entreprise' : '/company')
     }
   },
   methods: {
