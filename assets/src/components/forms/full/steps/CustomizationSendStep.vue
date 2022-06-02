@@ -51,7 +51,7 @@
 <script>
 import ErrorDisplay from "../../../utils/ErrorDisplay";
 import validationMixin from "../../../../mixins/validationMixin";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "customization-send-step",
@@ -80,7 +80,17 @@ export default {
       return max.toISOString()
     }
   },
+  watch: {
+    scheduled(value) {
+      if (!value) {
+        this.updateForm({gift: {toSendOn: null}})
+      }
+    }
+  },
   methods: {
+    ...mapActions({
+      updateForm: "updateForm"
+    }),
     check() {
       if (this.scheduled && this.gift.toSendOn === null) {
         this.errorMessage = this.$t("default.errors.select_date")
