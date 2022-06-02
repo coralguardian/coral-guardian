@@ -2,16 +2,26 @@
 
 namespace D4rk0snet\Coralguardian\Event;
 
+use D4rk0snet\Adoption\Entity\Friend;
 use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
 
 class OwnerScheduledCodeSentNotificationEvent extends AbstractEmailEvent
 {
-    public static function send(string   $email,
+    private static function send(string   $email,
                                 Language $lang,
                                 int      $quantity)
     {
         self::sendQuery($email, compact('lang', 'quantity'));
+    }
+
+    public static function sendEvent(Friend $friend)
+    {
+        self::send(
+            email: $friend->getGiftAdoption()->getCustomer()->getEmail(),
+            lang: $friend->getGiftAdoption()->getLang(),
+            quantity: $friend->getGiftAdoption()->getQuantity()
+        );
     }
 
     protected static function getEventName(): SIBEvent

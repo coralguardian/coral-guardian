@@ -3,10 +3,12 @@
 namespace D4rk0snet\Coralguardian\Event;
 
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
+use D4rk0snet\Donation\Entity\DonationEntity;
+use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
 
 class DonationEvent extends AbstractEmailEvent
 {
-    public static function send(
+    private static function send(
         string $email,
         string $fiscalReceiptUrl,
         string $lang
@@ -17,5 +19,14 @@ class DonationEvent extends AbstractEmailEvent
     protected static function getEventName(): SIBEvent
     {
         return SIBEvent::DONATION;
+    }
+
+    public static function sendEvent(DonationEntity $entity)
+    {
+        self::send(
+            email: $entity->getCustomer()->getEmail(),
+            fiscalReceiptUrl: FiscalReceiptService::getURl($entity->getUuid()),
+            lang: $entity->getLang()->value,
+        );
     }
 }
