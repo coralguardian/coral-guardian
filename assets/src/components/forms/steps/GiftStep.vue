@@ -63,6 +63,7 @@ export default {
           })
           .catch(err => {
             this.$root.$emit('displayError', err.response.data)
+            this.$root.$emit('IsLoaded')
           })
     }
   },

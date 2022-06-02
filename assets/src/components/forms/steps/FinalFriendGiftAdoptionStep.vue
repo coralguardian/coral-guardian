@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-html="$tc('default.stepper.finalFriendGift.description', order.quantity, {link: this.getGetUrl({order_uuid: order.uuid})})"/>
+    <p v-html="$tc('default.stepper.finalFriendGift.description', order.quantity, {link: this.getGetUrl({gift_code: order.giftCode})})"/>
 
     <v-form
         :ref="formRefName"

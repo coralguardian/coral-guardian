@@ -320,13 +320,14 @@ export default {
   },
   errors: {
     base: "Une erreur est survenue, veuillez réessayer ultérieurement.",
-    already_named: "Ce code a déjà été utilisé pour nommer le {item} adopté.",
+    already_named: "Ce code a déjà été utilisé.",
     order_incompatible_type: "Ce code ne semble pas correspondre à l'adoption souhaitée.",
     invalid_type: "Ce code ne correspond à aucune commande.",
     download_file: "Veuillez télécharger le fichier avant de continuer.",
     wrong_token: "Le numéro de commande semble invalide. Si le problème persiste, veuillez nous contacter directement.",
     select_date: "Veuillez sélectionner une date si vous souhaitez préciser la date d'envoi.",
-    incorrect_file_data: "Les données du fichier semblent incorrects, veuillez vérifier vos informations et réessayer."
+    incorrect_file_data: "Les données du fichier semblent incorrects, veuillez vérifier vos informations et réessayer.",
+    code_not_found: "Le code cadeau semble invalide. Si le problème persiste, veuillez nous contacter directement.",
   },
   donation: {
     monthly: {
