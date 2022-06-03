@@ -2,10 +2,10 @@
 
 namespace D4rk0snet\Coralguardian\Event;
 
-use D4rk0snet\Adoption\Entity\Friend;
 use D4rk0snet\Adoption\Enums\AdoptedProduct;
 use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
+use D4rk0snet\GiftCode\Entity\GiftCodeEntity;
 
 // Envoie du code cadeau a un ami
 class GiftCodeSent extends AbstractEmailEvent
@@ -21,16 +21,16 @@ class GiftCodeSent extends AbstractEmailEvent
         self::sendQuery($email, compact('lang', 'product', 'message', 'giftCode', 'friendName', 'quantity'));
     }
 
-    public static function sendEvent(Friend $friend, int $quantity = null)
+    public static function sendEvent(GiftCodeEntity $giftAdoption, int $quantity = null)
     {
         self::send(
-            email: $friend->getFriendEmail(),
-            lang: $friend->getGiftAdoption()->getLang(),
-            product: $friend->getGiftAdoption()->getAdoptedProduct(),
-            message: $friend->getGiftAdoption()->getMessage(),
-            giftCode: $friend->getGiftCode(),
-            friendName: $friend->getFriendFirstname() . " " . $friend->getFriendLastname(),
-            quantity: $quantity ?? $friend->getGiftAdoption()->getQuantity()
+            email: $giftAdoption->getFriend()->getFriendEmail(),
+            lang: $giftAdoption->getGiftAdoption()->getLang(),
+            product: $giftAdoption->getGiftAdoption()->getAdoptedProduct(),
+            message: $giftAdoption->getGiftAdoption()->getMessage(),
+            giftCode: $giftAdoption->getGiftCode(),
+            friendName: $giftAdoption->getFriend()->getFriendFirstname() . " " . $giftAdoption->getFriend()->getFriendLastname(),
+            quantity: $quantity ?? $giftAdoption->getGiftAdoption()->getQuantity()
         );
     }
 
