@@ -16,14 +16,14 @@ class GiftOrder extends AbstractEmailEvent
         string $email,
         string $lang,
         int $quantity,
-        string $receiptFileUrl,
+        string $fiscalReceiptUrl,
         string $nextStepUrl,
         bool $codeSentTofriend = false,
         bool $isCompany = false,
-        array $codeToSend = []
+        array $giftCodeList = []
     )
     {
-        self::sendQuery($email, compact('lang', 'quantity', 'receiptFileUrl', 'nextStepUrl', 'codeSentTofriend', 'isCompany', 'codeToSend'));
+        self::sendQuery($email, compact('lang', 'quantity', 'fiscalReceiptUrl', 'nextStepUrl', 'codeSentTofriend', 'isCompany', 'giftCodeList'));
     }
 
     protected static function getEventName(): SIBEvent
@@ -43,11 +43,11 @@ class GiftOrder extends AbstractEmailEvent
             email: $entity->getCustomer()->getEmail(),
             lang: $entity->getLang()->value,
             quantity: $entity->getQuantity(),
-            receiptFileUrl: FiscalReceiptService::getURl($entity->getUuid()),
+            fiscalReceiptUrl: FiscalReceiptService::getURl($entity->getUuid()),
             nextStepUrl: RedirectionService::buildRedirectionUrl($entity),
             codeSentTofriend: $entity->isSendToFriend(),
             isCompany: $entity->getCustomer() instanceof CompanyCustomerEntity,
-            codeToSend: $codeToSend->toArray()
+            giftCodeList: $codeToSend->toArray()
         );
     }
 }

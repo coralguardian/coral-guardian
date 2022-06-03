@@ -18,9 +18,9 @@ class OwnerScheduledCodeSentNotificationEvent extends AbstractEmailEvent
     public static function sendEvent(Friend $friend)
     {
         self::send(
-            email: $friend->getGiftAdoption()->getCustomer()->getEmail(),
-            lang: $friend->getGiftAdoption()->getLang(),
-            quantity: $friend->getGiftAdoption()->getQuantity()
+            email: $friend->getGiftCode()->getGiftAdoption()->getCustomer()->getEmail(),
+            lang: $friend->getGiftCode()->getGiftAdoption()->getLang(),
+            quantity: $friend->getGiftCode()->getGiftAdoption()->getQuantity()
         );
     }
 
