@@ -160,12 +160,10 @@ class AdminService
 
             if (!$isDonation) {
                 $object["certificate"] = GetCertificateEndpoint::getUrl() . "?" . GetCertificateEndpoint::ORDER_UUID_PARAM . "=" . $donation->getUuid();
-                $object["receipt"] = "http://" . FiscalReceiptService::getURl($donation->getUuid());
-
             } else {
                 /** @todo : Pour un don mensuel qui s'étale sur 2 années il y aura 2 reçus fiscaux */
-                $object["receipt"] = "http://" . FiscalReceiptService::getURl($donation->getUuid());
             }
+            $object["receipt"] = FiscalReceiptService::getURl($donation->getUuid());
 
             return $object;
 
