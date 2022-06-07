@@ -143,7 +143,6 @@ class AdminService
 
         return array_map(function (DonationEntity $donation) {
             $customer = $donation->getCustomer();
-            $isDonation = !($donation instanceof AdoptionEntity || $donation instanceof GiftAdoption);
 
             switch (get_class($donation)) {
                 case AdoptionEntity::class :
@@ -167,21 +166,22 @@ class AdminService
                 "date" => $donation->getDate()->format("d-m-Y"),
                 "adoptionType" => $customer instanceof CompanyCustomerEntity ? "entreprise" : "particulier",
                 "action" => $action,
-                "product" => $isDonation ? "--" : __($donation->getAdoptedProduct()->value),
+                "product" => $donation instanceof AdoptionEntity ? "--" : __($donation->getAdoptedProduct()->value),
                 "companyName" => $customer instanceof CompanyCustomerEntity ? $customer->getCompanyName() : "--",
                 "name" => $customer->getFirstname() . ' ' . $customer->getLastname(),
                 "email" => $customer->getEmail(),
-                "amount" => $isDonation ? "--" : $donation->getQuantity(),
+                "amount" => $donation instanceof AdoptionEntity ? "--" : $donation->getQuantity(),
                 "price" => (string)$donation->getAmount(),
                 "link" => "",//getenv('WP_HOME') . "/wp/wp-admin/post.php?post=" . $postId . "&action=edit",
                 "isPaid" => $donation->isPaid() ? "Confirmé" : SetAdoptionAsPaidEndPoint::getUrl() . "?" . SetAdoptionAsPaidEndPoint::ORDER_UUID_PARAM . "=" . $donation->getUuid(),
             ];
 
             if ($donation->isPaid()) {
-                if (!$isDonation) {
+                $object["receipt"] = FiscalReceiptService::getURl($donation->getUuid());
+
+                if ($donation instanceof AdoptionEntity && count($donation->getAdoptees()) > 0) {
                     $object["certificate"] = GetCertificateEndpoint::getUrl() . "?" . GetCertificateEndpoint::ORDER_UUID_PARAM . "=" . $donation->getUuid();
                 }
-                $object["receipt"] = FiscalReceiptService::getURl($donation->getUuid());
             }
 
             return $object;
