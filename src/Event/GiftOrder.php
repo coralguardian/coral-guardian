@@ -17,12 +17,12 @@ class GiftOrder extends AbstractEmailEvent
         int $quantity,
         string $fiscalReceiptUrl,
         string $nextStepUrl,
-        bool $codeSentTofriend = false,
+        bool $codeSentToFriend = false,
         bool $isCompany = false,
         array $giftCodeList = []
     )
     {
-        self::sendQuery($email, compact('lang', 'quantity', 'fiscalReceiptUrl', 'nextStepUrl', 'codeSentTofriend', 'isCompany', 'giftCodeList'));
+        self::sendQuery($email, compact('lang', 'quantity', 'fiscalReceiptUrl', 'nextStepUrl', 'codeSentToFriend', 'isCompany', 'giftCodeList'));
     }
 
     protected static function getEventName(): SIBEvent

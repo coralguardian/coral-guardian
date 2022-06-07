@@ -196,13 +196,11 @@ class AdminService
         return array_map(function (GiftCodeEntity $giftCode) {
             $adoption = $giftCode->getGiftAdoption();
             $customer = $adoption->getCustomer();
-            $friend = $giftCode->getFriend();
 
             return [
                 "code" => $giftCode->getGiftCode(),
                 "adoptionUuid" => $adoption->getUuid(),
                 "adopter" => $customer->getFullName() . " - " . $customer->getEmail(),
-                "friend" => $friend ? $friend->getFriendFirstname() . " " . $friend->getFriendLastname() . " - " . $friend->getFriendEmail() : "N/R",
                 "adoptedProduct" => $adoption->getAdoptedProduct()->value,
                 "quantity" => $giftCode->getProductQuantity(),
                 "isUsed" => $giftCode->isUsed() ? "Oui" : "Non",
@@ -211,7 +209,6 @@ class AdminService
                 "certificate" => $giftCode->isUsed() ? GetCertificateByGiftEndpoint::getUrl() . "?" . GetCertificateByGiftEndpoint::GIFT_CODE_PARAM . "=" . $giftCode->getGiftCode(): null
             ];
         }, $giftCodes);
-
     }
 
     private static function startSession()
