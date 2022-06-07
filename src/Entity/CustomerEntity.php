@@ -174,4 +174,9 @@ class CustomerEntity
     {
         $this->lastname = $lastname;
     }
+
+    public function getFullName(): string
+    {
+        return $this->getFirstname() . " " . $this->getLastname();
+    }
 }

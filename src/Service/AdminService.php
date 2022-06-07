@@ -5,6 +5,7 @@ namespace D4rk0snet\Coralguardian\Service;
 use D4rk0snet\Adoption\Entity\AdoptionEntity;
 use D4rk0snet\Adoption\Entity\GiftAdoption;
 use D4rk0snet\Adoption\Enums\AdoptedProduct;
+use D4rk0snet\Certificate\Endpoint\GetCertificateByGiftEndpoint;
 use D4rk0snet\Certificate\Endpoint\GetCertificateEndpoint;
 use D4rk0snet\Coralguardian\API\Admin\CreateAdoptionAdmin;
 use D4rk0snet\Coralguardian\API\Admin\CreateDonationAdmin;
@@ -13,6 +14,7 @@ use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
 use D4rk0snet\Donation\Entity\DonationEntity;
 use D4rk0snet\Donation\Entity\RecurringDonationEntity;
 use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
+use D4rk0snet\GiftCode\Entity\GiftCodeEntity;
 use D4rk0snet\NamingFileImport\API\Admin\GetNamingFileEndPoint;
 use D4rk0snet\NamingFileImport\API\Admin\GetRecipientsFileEndPoint;
 use Hyperion\Doctrine\Service\DoctrineService;
@@ -25,6 +27,7 @@ class AdminService
     public const MENU_SLUG = "coralguardian";
     public const NEW_ADOPTION_MENU_SLUG = "coralguardian-create-adoption";
     public const NEW_DONATION_MENU_SLUG = "coralguardian-creation-donation";
+    public const GIFT_CODES_MENU_SLUG = "gift-codes";
 
     public static function init(): void
     {
@@ -41,6 +44,15 @@ class AdminService
             self::MENU_SLUG,
             [AdminService::class, 'coralOrdersPage'],
             null
+        );
+
+        add_submenu_page(
+            self::MENU_SLUG,
+            'Codes cadeaux',
+            'Codes cadeaux',
+            "manage_options",
+            self::GIFT_CODES_MENU_SLUG,
+            [AdminService::class, 'coralGiftCodesPage']
         );
 
         add_submenu_page(
@@ -64,9 +76,16 @@ class AdminService
 
     public static function coralOrdersPage()
     {
-        $orderModels = self::getOrderModels();
         self::getTwig()->load("Admin/tracking.twig")->display([
-            'items' => array_merge($orderModels),
+            'items' => self::getOrderModels(),
+            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http")
+        ]);
+    }
+
+    public static function coralGiftCodesPage()
+    {
+        self::getTwig()->load("Admin/giftCodes.twig")->display([
+            'items' => self::getGiftCodeModels(),
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http")
         ]);
     }
@@ -118,7 +137,7 @@ class AdminService
         }
     }
 
-    private static function getOrderModels()
+    private static function getOrderModels(): array
     {
         $donations = DoctrineService::getEntityManager()->getRepository(DonationEntity::class)->findAll();
 
@@ -168,6 +187,30 @@ class AdminService
             return $object;
 
         }, $donations);
+    }
+
+    private static function getGiftCodeModels(): array
+    {
+        $giftCodes = DoctrineService::getEntityManager()->getRepository(GiftCodeEntity::class)->findAll();
+
+        return array_map(function (GiftCodeEntity $giftCode) {
+            $adoption = $giftCode->getGiftAdoption();
+            $customer = $adoption->getCustomer();
+            $friend = $giftCode->getFriend();
+
+            return [
+                "code" => $giftCode->getGiftCode(),
+                "adoptionUuid" => $adoption->getUuid(),
+                "adopter" => $customer->getFullName() . " - " . $customer->getEmail(),
+                "friend" => $friend ? $friend->getFriendFirstname() . " " . $friend->getFriendLastname() . " - " . $friend->getFriendEmail() : "N/R",
+                "adoptedProduct" => $adoption->getAdoptedProduct()->value,
+                "quantity" => $giftCode->getProductQuantity(),
+                "isUsed" => $giftCode->isUsed() ? "Oui" : "Non",
+                "usedDate" => $giftCode->getUsedOn(),
+                "certificate" => $giftCode->isUsed() ? GetCertificateByGiftEndpoint::getUrl() . "?" . GetCertificateByGiftEndpoint::GIFT_CODE_PARAM . "=" . $giftCode->getGiftCode(): null
+            ];
+        }, $giftCodes);
+
     }
 
     private static function startSession()

@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Suivi des dons et adoptions</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/dt/dt-1.11.5/b-2.2.2/b-html5-2.2.2/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ assets_path ~ "css/tracking.css" }}">
+    </script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/dt/dt-1.11.5/b-2.2.2/b-html5-2.2.2/datatables.min.js"></script>
+    <script type="text/javascript" src="{{ assets_path ~ "js/admin.js" }}"></script>
+</head>
+
+<body>
+
+<h2>Suivi des codes cadeaux</h2>
+
+<p>
+    Vous trouverez dans ce tableaux l'ensemble des codes cadeaux.
+</p>
+<p>
+    La recherche est cumulative en laissant un espace entre chaque élément recherché.
+</p>
+
+<table id="coral-gift-codes" class="display" style="">
+    <thead>
+    <tr>
+        <th>Code</th>
+        <th>Identifiant adoption</th>
+        <th>Adopteur</th>
+        <th>Destinataire</th>
+        <th>Elément adopté</th>
+        <th>Quantité</th>
+        <th>Utilisé ?</th>
+        <th>Date d'utilisation</th>
+        <th>Certificats</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+        <tr>
+            <td>{{ item.code }}</td>
+            <td data-sort="{{ item.date|date('Y-m-d') }}">
+                {{ item.adoptionUuid }}
+            </td>
+            <td>{{ item.adopter }}</td>
+            <td>{{ item.friend }}</td>
+            <td>{{ item.adoptedProduct }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.isUsed }}</td>
+            {% if item.usedDate %}
+                <td data-sort="{{ item.usedDate|date('Y-m-d') }}">
+                    {{ item.usedDate|date('d/m/Y') }}
+                </td>
+            {% else %}
+                <td>--</td>
+            {% endif %}
+            <td>
+                {% if item.certificate %}
+                    <a target="_blank" href="{{ item.certificate }}">Télécharger</a>
+                {% else %}
+                    --
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
