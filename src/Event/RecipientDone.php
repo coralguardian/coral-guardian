@@ -11,12 +11,12 @@ class RecipientDone extends AbstractEmailEvent
 {
     private static function send(
         string $email,
-        Language $language,
+        Language $lang,
         AdoptedProduct $adoptedProduct,
         int $quantity
     )
     {
-        self::sendQuery($email, compact('language', 'adoptedProduct', 'quantity'));
+        self::sendQuery($email, compact('lang', 'adoptedProduct', 'quantity'));
     }
 
     public static function sendEvent(AdoptionEntity $adoptionEntity)

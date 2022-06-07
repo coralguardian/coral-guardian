@@ -348,7 +348,7 @@ export default {
     title: "Options d'envoi des codes cadeaux*",
     radios: {
       dont: "Je souhaite recevoir le(s) code(s) cadeau(x) sur mon adresse email",
-      send: "Je souhaite renseigner les adresses emais du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement (l'import d'un fichier de contact est possible)"
+      send: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement (l'import d'un fichier de contact est possible)"
     }
   }
 }
