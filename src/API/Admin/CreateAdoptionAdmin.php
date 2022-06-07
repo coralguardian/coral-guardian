@@ -73,6 +73,7 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
             $adoption = AdoptionService::createGiftAdoption($giftAdoptionModel);
         }
 
+        $adoption->setIsPaid(true);
         DoctrineService::getEntityManager()->persist($adoption);
         DoctrineService::getEntityManager()->flush();
 

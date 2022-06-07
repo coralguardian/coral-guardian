@@ -58,6 +58,7 @@ class CreateDonationAdmin extends APIEnpointAbstract
             ->setDate(date_create_from_format("Y-m-d", $data['donation']['donation_date']));
 
         $donation = DonationService::createDonation($donationModel);
+        $donation->setIsPaid(true);
 
         DoctrineService::getEntityManager()->persist($donation);
         DoctrineService::getEntityManager()->flush();

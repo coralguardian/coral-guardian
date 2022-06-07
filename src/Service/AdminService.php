@@ -158,12 +158,12 @@ class AdminService
                 "isPaid" => $donation->isPaid() ? "Confirmé" : SetAdoptionAsPaidEndPoint::getUrl() . "?" . SetAdoptionAsPaidEndPoint::ORDER_UUID_PARAM . "=" . $donation->getUuid(),
             ];
 
-            if (!$isDonation) {
-                $object["certificate"] = GetCertificateEndpoint::getUrl() . "?" . GetCertificateEndpoint::ORDER_UUID_PARAM . "=" . $donation->getUuid();
-            } else {
-                /** @todo : Pour un don mensuel qui s'étale sur 2 années il y aura 2 reçus fiscaux */
+            if ($donation->isPaid()) {
+                if (!$isDonation) {
+                    $object["certificate"] = GetCertificateEndpoint::getUrl() . "?" . GetCertificateEndpoint::ORDER_UUID_PARAM . "=" . $donation->getUuid();
+                }
+                $object["receipt"] = FiscalReceiptService::getURl($donation->getUuid());
             }
-            $object["receipt"] = FiscalReceiptService::getURl($donation->getUuid());
 
             return $object;
 
