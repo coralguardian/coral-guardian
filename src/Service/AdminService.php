@@ -177,7 +177,7 @@ class AdminService
             ];
 
             if ($donation->isPaid()) {
-                $object["receipt"] = FiscalReceiptService::getURl($donation->getUuid());
+                $object["receipt"] = $donation->getAmount() > 0 ? FiscalReceiptService::getURl($donation->getUuid()) : null;
 
                 if ($donation instanceof AdoptionEntity && count($donation->getAdoptees()) > 0) {
                     $object["certificate"] = GetCertificateEndpoint::getUrl() . "?" . GetCertificateEndpoint::ORDER_UUID_PARAM . "=" . $donation->getUuid();
