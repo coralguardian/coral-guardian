@@ -21,16 +21,16 @@ class GiftCodeSent extends AbstractEmailEvent
         self::sendQuery($email, compact('lang', 'adoptedProduct', 'message', 'giftCode', 'friendName', 'quantity'));
     }
 
-    public static function sendEvent(GiftCodeEntity $giftAdoption, int $quantity = null)
+    public static function sendEvent(GiftCodeEntity $giftCodeEntity, int $quantity = null)
     {
         self::send(
-            email: $giftAdoption->getFriend()->getFriendEmail(),
-            lang: $giftAdoption->getGiftAdoption()->getLang(),
-            adoptedProduct: $giftAdoption->getGiftAdoption()->getAdoptedProduct(),
-            message: $giftAdoption->getGiftAdoption()->getMessage(),
-            giftCode: $giftAdoption->getGiftCode(),
-            friendName: $giftAdoption->getFriend()->getFriendFirstname() . " " . $giftAdoption->getFriend()->getFriendLastname(),
-            quantity: $quantity ?? $giftAdoption->getGiftAdoption()->getQuantity()
+            email: $giftCodeEntity->getFriend()->getFriendEmail(),
+            lang: $giftCodeEntity->getGiftAdoption()->getLang(),
+            adoptedProduct: $giftCodeEntity->getGiftAdoption()->getAdoptedProduct(),
+            message: $giftCodeEntity->getGiftAdoption()->getMessage(),
+            giftCode: $giftCodeEntity->getGiftCode(),
+            friendName: $giftCodeEntity->getFriend()->getFriendFirstname() . " " . $giftCodeEntity->getFriend()->getFriendLastname(),
+            quantity: $quantity ?? $giftCodeEntity->getGiftAdoption()->getQuantity()
         );
     }
 
