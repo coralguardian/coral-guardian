@@ -35,7 +35,7 @@ class GiftOrder extends AbstractEmailEvent
     {
         $codeToSend = [];
         if (!$entity->isSendToFriend()) {
-            $codeToSend = $entity->getGiftCodes()->map(function(GiftCodeEntity $giftCodeEntity) { return $giftCodeEntity->getGiftCode(); } );
+            $codeToSend = $entity->getGiftCodes()->map(function(GiftCodeEntity $giftCodeEntity) { return $giftCodeEntity->getGiftCode(); } )->toArray();
         }
 
         // Send email event with data needed
