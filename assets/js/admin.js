@@ -24,7 +24,7 @@ $(document).ready(function () {
       "language": {
         "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json"
       },
-      "code": [1, 'desc'],
+      "order": [2, 'desc'],
       dom: 'Bfrtip',
       buttons: [
         'pageLength',

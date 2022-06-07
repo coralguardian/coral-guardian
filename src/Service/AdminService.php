@@ -207,6 +207,7 @@ class AdminService
                 "quantity" => $giftCode->getProductQuantity(),
                 "isUsed" => $giftCode->isUsed() ? "Oui" : "Non",
                 "usedDate" => $giftCode->getUsedOn(),
+                "adoptionDate" => $adoption->getDate(),
                 "certificate" => $giftCode->isUsed() ? GetCertificateByGiftEndpoint::getUrl() . "?" . GetCertificateByGiftEndpoint::GIFT_CODE_PARAM . "=" . $giftCode->getGiftCode(): null
             ];
         }, $giftCodes);

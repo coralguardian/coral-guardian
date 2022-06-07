@@ -47,7 +47,7 @@ class GiftOrder extends AbstractEmailEvent
             nextStepUrl: RedirectionService::buildRedirectionUrl($entity),
             codeSentTofriend: $entity->isSendToFriend(),
             isCompany: $entity->getCustomer() instanceof CompanyCustomerEntity,
-            giftCodeList: $codeToSend->toArray()
+            giftCodeList: $codeToSend
         );
     }
 }
