@@ -28,7 +28,7 @@ export default {
       options.item = this.translation.item;
       if (!isEmpty(this.interval) && this.order.quantity >= this.interval.min && this.order.quantity <= this.interval.max) {
         options.displayAlert = true;
-        options.message = this.$t('default.stepper.adoption.corals.hint.' + this.donatorNature, {max: this.maxCount, item: this.plural.item})
+        options.message = this.$t('default.stepper.adoption.corals.hint.individual', {max: this.maxCount, item: this.plural.item})
         this.$vuetify.goTo('#deduction', { container: '#CoralAdoptionStep' })
       }
       return options
