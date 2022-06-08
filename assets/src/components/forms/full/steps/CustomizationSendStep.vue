@@ -52,10 +52,11 @@
 import ErrorDisplay from "../../../utils/ErrorDisplay";
 import validationMixin from "../../../../mixins/validationMixin";
 import {mapActions, mapGetters} from "vuex";
+import apiMixin from "@/mixins/apiMixin";
 
 export default {
   name: "customization-send-step",
-  mixins: [validationMixin],
+  mixins: [validationMixin, apiMixin],
   components: {
     ErrorDisplay
   },
@@ -67,7 +68,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      gift: "getGift"
+      gift: "getGift",
+      giftMessageModel: "getGiftMessageModel"
     }),
     tomorrow() {
       const tomorrow = new Date(new Date())
@@ -99,13 +101,27 @@ export default {
         this.errorMessage = null
         this.$root.$emit("StepValid")
       }
+    },
+    sendMessageData() {
+      this[this.apiData.method](this.giftMessageModel, this.apiData.endpoint)
+          .then(() => {
+            this.$root.$emit('ApiValid')
+          })
+          .catch(err => {
+            this.$root.$emit('displayError', err.response.data)
+          })
+          .finally(() => {
+            this.$root.$emit('IsLoaded')
+          })
     }
   },
   mounted() {
     this.$root.$on(this.customValidationEventName, () => this.check())
+    this.$root.$on(this.apiEventName, () => this.sendMessageData())
   },
   beforeDestroy() {
     this.$root.$off(this.customValidationEventName)
+    this.$root.$off(this.apiEventName)
   }
 }
 </script>

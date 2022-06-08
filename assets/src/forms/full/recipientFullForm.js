@@ -15,7 +15,11 @@ export default class RecipientFullForm extends AbstractForm{
         component: "CustomizationSendStep",
         validate: true,
         customValidation: true,
-        back: false
+        back: false,
+        api: {
+          method: "post",
+          endpoint: "adoption/gift/message"
+        }
       },
       {
         component: "MultipleRecipientStep",

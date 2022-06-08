@@ -15,6 +15,7 @@ import GiftModel from "../models/giftModel";
 import donationHelper from "@/helpers/donationHelper";
 import AdoptionModel from "@/models/adoptionModel";
 import FinalGiftForm from "@/forms/full/finalGiftForm";
+import GiftMessageModel from "@/models/giftMessageModel";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -69,7 +70,8 @@ export default new Vuex.Store({
     getSpecificTranslation: state => state.data.specificType ? 'default.' + state.data.specificType : null,
     getPostPaymentDataAdoption: state => new AdoptionModel(state.data),
     getGift: state => state.data.gift,
-    getGiftModel: state => new GiftModel(state.data)
+    getGiftModel: state => new GiftModel(state.data),
+    getGiftMessageModel: state => new GiftMessageModel(state.data)
   },
   mutations: {
     ...baseStore.mutations,
