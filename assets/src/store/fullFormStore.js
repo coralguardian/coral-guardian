@@ -144,7 +144,7 @@ export default new Vuex.Store({
           context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new FinalGiftForm())
             .then(() => {
               resolve()
-            })
+            }).catch((err) => console.log(err))
         } else if (context.state.data.target === adoptionHelper.me) {
           context.dispatch("loadForm", new FinalAdoptionForm())
             .then(() => {

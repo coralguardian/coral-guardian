@@ -2,6 +2,7 @@ import {mapActions} from "vuex";
 import {isEmpty} from "lodash";
 import adoptionHelper from "../helpers/adoptionHelper";
 import apiMixin from "./apiMixin";
+import FinalGiftForm from "@/forms/full/finalGiftForm";
 
 export default {
   mixins: [apiMixin],
@@ -15,7 +16,8 @@ export default {
     ...mapActions({
       updateForm: "updateForm",
       loadSetupNextSteps: "loadSetupNextSteps",
-      loadPaymentNextSteps: "loadPaymentNextSteps"
+      loadPaymentNextSteps: "loadPaymentNextSteps",
+      loadFormSteps: "loadForm"
     }),
     fillParams() {
       new URLSearchParams(window.location.search)
@@ -42,7 +44,8 @@ export default {
                     this.updateForm({order: data.order})
                       .then(() => this.loadPaymentNextSteps()
                         .then(() => this.updateForm(data)
-                          .then(() => resolve())))
+                          .then(() => this.loadFormSteps(new FinalGiftForm())
+                            .then(() => resolve()))))
                   } else {
                     this.updateForm(data).then(() => resolve())
                   }
