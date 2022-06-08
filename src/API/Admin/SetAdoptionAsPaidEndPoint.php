@@ -5,7 +5,7 @@ namespace D4rk0snet\Coralguardian\API\Admin;
 use D4rk0snet\Adoption\Entity\AdoptionEntity;
 use D4rk0snet\Adoption\Entity\GiftAdoption;
 use D4rk0snet\Coralguardian\Event\AdoptionOrder;
-use D4rk0snet\Coralguardian\Event\BankTransferPayment;
+use D4rk0snet\Coralguardian\Event\DonationEvent;
 use D4rk0snet\Coralguardian\Event\GiftOrder;
 use D4rk0snet\Donation\Entity\DonationEntity;
 use Hyperion\Doctrine\Service\DoctrineService;
@@ -38,7 +38,7 @@ class SetAdoptionAsPaidEndPoint extends APIEnpointAbstract
             case GiftAdoption::class : GiftOrder::sendEvent($donation); break;
             case AdoptionEntity::class: AdoptionOrder::sendEvent($donation); break;
             default :
-                BankTransferPayment::sendEvent($donation);
+                DonationEvent::sendEvent($donation);
                 break;
         }
 
