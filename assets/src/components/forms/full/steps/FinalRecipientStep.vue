@@ -19,6 +19,7 @@ import SocialShareBlock from "../../blocks/SocialShareBlock";
 import validationMixin from "../../../../mixins/validationMixin";
 import itemTranslationMixin from "../../../../mixins/itemTranslationMixin";
 import {mapGetters} from "vuex";
+import paymentMixin from "@/mixins/paymentMixin";
 
 export default {
   name: "final-adoption-step",
@@ -26,7 +27,7 @@ export default {
     DonationBlock,
     SocialShareBlock
   },
-  mixins: [apiMixin, finalStepMixin, validationMixin, itemTranslationMixin],
+  mixins: [apiMixin, finalStepMixin, validationMixin, itemTranslationMixin, paymentMixin],
   computed: {
     ...mapGetters({
       adopter: "getAdopter",
@@ -44,6 +45,7 @@ export default {
   },
   mounted() {
     this.$root.$on(this.apiEventName, () => this.$root.$emit('ApiValid'))
+    this.cleanLocalStorage()
   },
   beforeDestroy() {
     this.$root.$off(this.apiEventName)

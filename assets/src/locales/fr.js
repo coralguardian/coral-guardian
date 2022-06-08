@@ -305,7 +305,7 @@ export default {
       description: "Votre reçu fiscal récapitulant l’ensemble de vos dons de l’année fiscale en cours vous sera envoyé par email au mois de janvier prochain."
     },
     finalRecipient: {
-      title: "Bravo et merci, vous avez offert {count} {item}",
+      title: "Bravo et merci, vous avez adopté {count} {item} pour votre destinataire | Bravo et merci, vous avez adopté {count} {item} pour vos destinataires",
       description: {
         base: "Votre reçu fiscal vous a été envoyé par email." +
           "<br>Les codes cadeaux ont été envoyés à vos destinataires.",

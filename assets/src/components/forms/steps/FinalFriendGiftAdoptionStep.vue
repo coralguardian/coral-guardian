@@ -16,12 +16,16 @@ import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
 import DonationBlock from "@/components/forms/blocks/DonationBlock";
 import validationMixin from "../../../mixins/validationMixin";
+import paymentMixin from "@/mixins/paymentMixin";
 
 export default {
   name: "final-friend-gift-adoption-step",
-  mixins: [apiMixin, finalStepMixin, validationMixin],
+  mixins: [apiMixin, finalStepMixin, validationMixin, paymentMixin],
   components: {
     DonationBlock
+  },
+  mounted() {
+    this.cleanLocalStorage()
   }
 }
 </script>

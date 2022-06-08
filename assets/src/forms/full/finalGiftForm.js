@@ -18,7 +18,7 @@ export default class FinalGiftForm extends AbstractForm {
     ],
     steps: [
       {
-        title: "default.stepper.finalFriendAdoption.title",
+        title: "default.stepper.finalRecipient.title",
         component: "FinalRecipientStep",
         validate: true,
         back: false
