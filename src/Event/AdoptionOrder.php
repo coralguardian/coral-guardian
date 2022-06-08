@@ -33,7 +33,7 @@ class AdoptionOrder extends AbstractEmailEvent
             lang: $entity->getLang()->value,
             quantity: $entity->getQuantity(),
             fiscalReceiptUrl: FiscalReceiptService::getURl($entity->getUuid()),
-            nextStepUrl: RedirectionService::buildRedirectionUrl($entity),
+            nextStepUrl: RedirectionService::buildRedirectionUrlWithoutHost($entity),
             isCompany: $entity->getCustomer() instanceof CompanyCustomerEntity
         );
     }

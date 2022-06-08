@@ -97,7 +97,7 @@ export default {
                 case "recipient": {
                   data = {
                     ...data,
-                    step: 6,
+                    step: 7,
                     recipient: {
                       type: 'file',
                       locked: true
@@ -105,7 +105,7 @@ export default {
                   }
                   this.updateForm({target: adoptionHelper.friend})
                     .then(() => this.loadSetupNextSteps()
-                      .then(() => this.updateForm({order: {type: "gift"}})
+                      .then(() => this.updateForm({order: {type: "gift"}, adopter: {send_to_friend: true}})
                         .then(() => this.loadPaymentNextSteps()
                           .then(() => this.updateForm(data)
                             .then(() => resolve())))))

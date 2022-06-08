@@ -43,7 +43,7 @@ class GiftOrder extends AbstractEmailEvent
             lang: $entity->getLang()->value,
             quantity: $entity->getQuantity(),
             fiscalReceiptUrl: FiscalReceiptService::getURl($entity->getUuid()),
-            nextStepUrl: RedirectionService::buildRedirectionUrl($entity),
+            nextStepUrl: RedirectionService::buildRedirectionUrlWithoutHost($entity),
             codeSentToFriend: $entity->isSendToFriend(),
             isCompany: $entity->getCustomer() instanceof CompanyCustomerEntity,
             giftCodeList: $codeToSend
