@@ -293,7 +293,8 @@ export default {
       description: "Votre certificat d'adoption a été envoyé par email. " +
         "Vous pouvez aussi directement le télécharger en cliquant <a href='{link}' target='_blank'>ici</a>." +
         "| Vos certificats d'adoption ont été envoyés par email. " +
-      "Vous pouvez aussi directement les télécharger en cliquant <a href='{link}' target='_blank'>ici</a>."
+      "Vous pouvez aussi directement les télécharger en cliquant <a href='{link}' target='_blank'>ici</a>.",
+      descriptionNoEmail: "Vous pouvez télécharger votre certificat directement en cliquant <a href='{link}' target='_blank'>ici</a>."
     },
     finalDonation: {
       title: "Bravo et merci pour votre soutien",

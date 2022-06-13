@@ -53,6 +53,9 @@ export default {
                 uuid: resp.data.uuid,
                 productType: types[0],
                 quantity: resp.data.quantity
+              },
+              adopter: {
+                send_to_friend: resp.data.sendToFriend
               }
             }
             if (types[1] !== undefined) {

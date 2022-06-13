@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-html="$tc('default.stepper.finalFriendGift.description', order.quantity, {link: this.getGetUrl({gift_code: order.giftCode})})"/>
+    <p v-html="description"/>
 
     <v-form
         :ref="formRefName"
@@ -17,12 +17,25 @@ import finalStepMixin from "@/mixins/finalStepMixin";
 import DonationBlock from "@/components/forms/blocks/DonationBlock";
 import validationMixin from "../../../mixins/validationMixin";
 import paymentMixin from "@/mixins/paymentMixin";
+import {mapGetters} from "vuex";
 
 export default {
   name: "final-friend-gift-adoption-step",
   mixins: [apiMixin, finalStepMixin, validationMixin, paymentMixin],
   components: {
     DonationBlock
+  },
+  computed: {
+    ...mapGetters({
+      adopter: "getAdopter"
+    }),
+    description() {
+      if (this.adopter.send_to_friend) {
+        return this.$tc('default.stepper.finalFriendGift.description', this.order.quantity, {link: this.getGetUrl({gift_code: this.order.giftCode})})
+      } else {
+        return this.$tc('default.stepper.finalFriendGift.descriptionNoEmail', null, {link: this.getGetUrl({gift_code: this.order.giftCode})})
+      }
+    }
   },
   mounted() {
     this.cleanLocalStorage()
