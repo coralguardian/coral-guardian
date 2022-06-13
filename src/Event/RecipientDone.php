@@ -16,7 +16,7 @@ class RecipientDone extends AbstractEmailEvent
         Language $lang,
         AdoptedProduct $adoptedProduct,
         int $quantity,
-        DateTime $giftDate
+        ?DateTime $giftDate
     )
     {
         self::sendQuery($email,
