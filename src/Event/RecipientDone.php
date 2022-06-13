@@ -23,7 +23,8 @@ class RecipientDone extends AbstractEmailEvent
             array_merge(
                 compact('lang', 'adoptedProduct', 'quantity'),
                 [
-                    "giftDate" => $giftDate ? $giftDate->format("d/m/Y") : ""
+                    "giftDate" => $giftDate ? $giftDate->format("d/m/Y") : "",
+                    "isToday" => $giftDate->format("Y-m-d") === (new DateTime())->format("Y-m-d")
                 ])
         );
     }
