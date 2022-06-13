@@ -46,7 +46,7 @@
     <tbody>
     {% for item in items %}
         <tr>
-            <td><a target="_blank" href="{{ item.link }}">{{ item.id }}</a></td>
+            <td>{{ item.id }}</td>
             <td data-sort="{{ item.date|date('Y-m-d') }}">
                 {{ item.date|date('d/m/Y') }}
                 {% if item.endDate %}
