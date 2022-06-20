@@ -88,7 +88,7 @@ export default new Vuex.Store({
             component: "FinalAdoptionStep",
             back: false,
             api: {
-              endpoint: "certificates"
+              endpoint: "getCertificates"
             }
           },
           {
