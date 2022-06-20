@@ -7,6 +7,7 @@ use D4rk0snet\Adoption\Entity\GiftAdoption;
 use D4rk0snet\Adoption\Enums\AdoptedProduct;
 use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
+use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
 use DateTime;
 
 class RecipientDone extends AbstractEmailEvent
@@ -16,12 +17,13 @@ class RecipientDone extends AbstractEmailEvent
         Language $lang,
         AdoptedProduct $adoptedProduct,
         int $quantity,
-        ?DateTime $giftDate
+        ?DateTime $giftDate,
+        string $fiscalReceiptUrl
     )
     {
         self::sendQuery($email,
             array_merge(
-                compact('lang', 'adoptedProduct', 'quantity'),
+                compact('lang', 'adoptedProduct', 'quantity', 'fiscalReceiptUrl'),
                 [
                     "giftDate" => $giftDate ? $giftDate->format("d/m/Y") : "",
                     "isToday" => $giftDate === null
@@ -36,7 +38,8 @@ class RecipientDone extends AbstractEmailEvent
             $adoptionEntity->getLang(),
             $adoptionEntity->getAdoptedProduct(),
             $adoptionEntity->getQuantity(),
-            $adoptionEntity->getSendOn()
+            $adoptionEntity->getSendOn(),
+            FiscalReceiptService::getURl($adoptionEntity->getUuid())
         );
     }
 
