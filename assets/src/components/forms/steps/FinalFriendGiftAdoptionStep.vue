@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p v-if="adopter.send_to_friend">{{ $tc('default.stepper.certificate.gift.email', order.quantity) }}</p>
     <p v-html="description"/>
 
     <v-form

@@ -87,6 +87,16 @@ export default {
       description: "Dès que votre virement sera validé, vous recevrez un email contenant un lien vous permettant de continuer le processus d'adoption personnalisé.",
       seeYouSoon: "A très vite !"
     },
+    certificate: {
+      gift: {
+        email: "Votre certificat d'adoption vous sera envoyé par email d'ici une quinzaine de minutes." +
+          "| Vos certificats d'adoption vous seront envoyés par email d'ici une quinzaine de minutes."
+      },
+      adoption: {
+        email: "Votre reçu fiscal et votre certificat d'adoption vous seront envoyés par email d'ici une quinzaine de minutes. " +
+          "| Votre reçu fiscal et vos certificats d'adoption vous seront envoyés par email d'ici une quinzaine de minutes."
+      }
+    },
     choice: {
       title: "C’est parti pour adopter un {item} !",
       buttons: {
@@ -271,10 +281,8 @@ export default {
     },
     finalAdoption: {
       title: "Bravo et merci, vous avez adopté {count} {item}",
-      description: "Votre reçu fiscal et votre certificat d'adoption ont été envoyés par email. " +
-        "Vous pouvez aussi directement télécharger le certificat en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>." +
-        "| Votre reçu fiscal et vos certificats d'adoption ont été envoyés par email." +
-        " Vous pouvez aussi directement télécharger les certificats en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>.",
+      description: "Vous pouvez aussi directement télécharger le certificat en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>." +
+        "|Vous pouvez aussi directement télécharger les certificats en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>.",
       description_no_certif: "Votre reçu fiscal a été envoyé par email. " +
         "Vous recevrez votre certificat par email une fois que vous nous aurez retourné votre fichier de noms." +
         "| Votre reçu fiscal a été envoyé par email." +
@@ -290,10 +298,8 @@ export default {
     },
     finalFriendGift: {
       title: "Bravo et merci, vous avez adopté {count} {item}",
-      description: "Votre certificat d'adoption a été envoyé par email. " +
-        "Vous pouvez aussi directement le télécharger en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>." +
-        "| Vos certificats d'adoption ont été envoyés par email. " +
-      "Vous pouvez aussi directement les télécharger en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>.",
+      description: "Vous pouvez aussi directement le télécharger en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>." +
+        "| Vous pouvez aussi directement les télécharger en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>.",
       descriptionNoEmail: "Vous pouvez télécharger votre certificat directement en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>."
     },
     finalDonation: {

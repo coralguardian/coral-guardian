@@ -1,8 +1,14 @@
 <template>
   <div>
-    <p v-if="adoption.type === 'file'" v-html="$tc('default.stepper.finalAdoption.description_file', order.quantity, translation)"/>
+    <p v-if="adoption.type === 'file'"
+       v-html="$tc('default.stepper.finalAdoption.description_file', order.quantity, translation)"/>
     <p v-else-if="hasDownloaded" v-html="$tc('default.stepper.finalAdoption.description_no_certif', order.quantity)"/>
-    <p v-else v-html="$tc('default.stepper.finalAdoption.description', order.quantity, {link: this.getGetUrl({order_uuid: order.uuid})})"/>
+    <div v-else>
+      <p>{{ $tc('default.stepper.certificate.adoption.email', order.quantity) }}</p>
+      <p v-if="order.quantity <= 3"
+         v-html="$tc('default.stepper.finalAdoption.description', order.quantity, {link: this.getGetUrl({order_uuid: order.uuid})})"/>
+    </div>
+
     <social-share-block/>
     <v-form
         :ref="formRefName"
