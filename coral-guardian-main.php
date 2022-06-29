@@ -13,6 +13,7 @@ add_action('plugins_loaded', [\D4rk0snet\Coralguardian\Plugin::class, "launchAct
 add_action('admin_menu', [\D4rk0snet\Coralguardian\Service\AdminService::class, "addTopMenu"]);
 add_action("admin_notices", [\D4rk0snet\Coralguardian\Service\AdminService::class, "handleAdminNotices"]);
 add_action("init", [\D4rk0snet\Coralguardian\Service\AdminService::class, "init"]);
+add_action('cli_init', [\D4rk0snet\Coralguardian\Plugin::class,'addCliCommand']);
 add_filter(\Hyperion\Doctrine\Plugin::ADD_ENTITIES_FILTER, function (array $entityPaths) {
     $entityPaths[] = __DIR__."/src/Entity";
 

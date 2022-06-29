@@ -27,4 +27,9 @@ class Plugin
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CreateAdoptionAdmin());
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CreateDonationAdmin());
     }
+
+    public static function addCliCommand()
+    {
+        WP_CLI::add_command('migrate_old_site', ['\D4rk0snet\Coralguardian\Command\MigrationScript','runCommand']);
+    }
 }
