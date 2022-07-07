@@ -288,7 +288,7 @@ export default {
         "| Votre reçu fiscal a été envoyé par email." +
         " Vous recevrez vos certificats par email une fois que vous nous aurez retourné votre fichier de noms.",
       description_file: "Votre reçu fiscal et votre certificat ont été envoyés par email." +
-        "| Votre reçu fiscal et vos certificates ont été envoyés par email."
+        "| Votre reçu fiscal et vos certificats ont été envoyés par email."
     },
     finalFriendAdoption: {
       title: "Bravo et merci, vous avez adopté {count} {item} pour votre destinataire",
