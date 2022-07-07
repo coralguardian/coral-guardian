@@ -25,7 +25,7 @@ class CustomerEntity
      * @Id
      * @Column(type="uuid_binary_ordered_time", unique=true)
      * @GeneratedValue(strategy="CUSTOM")
-     * @CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidOrderedTimeGenerator")
+     * @CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $uuid;
 
