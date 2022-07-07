@@ -12,6 +12,7 @@ use D4rk0snet\Coralguardian\Shortcodes\DonationFormShortcode;
 use D4rk0snet\Coralguardian\Shortcodes\FullFormShortcode;
 use D4rk0snet\Coralguardian\Shortcodes\GiftCodeFormShortcode;
 use D4rk0snet\Coralguardian\Shortcodes\ReefAdoptionFormShortcode;
+use WP_CLI;
 
 class Plugin
 {
