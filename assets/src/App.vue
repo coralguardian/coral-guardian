@@ -8,10 +8,11 @@
 import BaseForm from "@/components/forms/BaseForm";
 import paymentMixin from "./mixins/paymentMixin";
 import {mapGetters} from "vuex";
+import missingTranslationsMixin from "@/mixins/missingTranslationsMixin";
 
 export default {
   name: "app",
-  mixins: [paymentMixin],
+  mixins: [paymentMixin, missingTranslationsMixin],
   components: {
     BaseForm
   },

@@ -128,7 +128,9 @@ export default {
       }
     },
     donation: {
-      title: "Support Coral Guardian",
+      title: {
+        france: "Support Coral Guardian"
+      },
       description: "Every donation counts! Take part in restoring coral reef ecosystems.",
       buttons: {
         unique: "Donate once",
