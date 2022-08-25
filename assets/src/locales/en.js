@@ -8,7 +8,7 @@ export default {
     tooltip: "A reef is composed of several corals.<br>You can adopt a reef of 30, 75 or 150 corals."
   },
   gift: "gift",
-  onehsot: "one-off",
+  oneshot: "one-off",
   monthly: "monthly",
   ui: {
     continue: "Continue",
@@ -52,7 +52,7 @@ export default {
     },
     adoption: {
       title: "Adopt a {item} | Adopt {item}",
-      description: "<b>For {donation} €</b>, bring endangered marine ecosystems back to life.",
+      description: "<b>For {donation} €</b>, contribute to bringing endangered marine ecosystems back to life.",
       corals: {
         hint: {
           individual: "Adopt an entire reef of 30 corals by clicking here \"<a href='/en/adopt-a-reef-individuals/'>Adopt a reef</a>\"!",
@@ -86,6 +86,14 @@ export default {
       title: "Your payment by bank transfer is pending",
       description: "As soon as your transfer is validated, you will receive an email with a link to continue the custom adoption process.",
       seeYouSoon: "See you soon!"
+    },
+    certificate: {
+      gift: {
+        email: "Your adoption certificate will be sent to you by email within the next 15 minutes.| Your adoption certificates will be sent to you by email within the next 15 minutes."
+      },
+      adoption: {
+        email: "Your tax receipt and adoption certificate will be sent to you by email within 15 minutes. | Your tax receipt and adoption certificates will be sent to you by email within 15 minutes."
+      }
     },
     choice: {
       title: "Adopt a {item}!",
@@ -129,7 +137,8 @@ export default {
     },
     donation: {
       title: {
-        france: "Support Coral Guardian"
+        france: "Support Coral Guardian",
+        spain: "Support the project Deep CORE"
       },
       description: "Every donation counts! Take part in restoring coral reef ecosystems.",
       buttons: {
@@ -158,7 +167,7 @@ export default {
     },
     gift: {
       title: "Your gift",
-      description: "Did someone adopt a gift for you?<br>To adopt it, enter the gift code you received by email.",
+      description: "Did someone adopt a gift for you?<br>To name it, enter the gift code you received by email.",
       input: {
         label: "Gift code",
         placeholder: "Your gift code"
@@ -190,7 +199,7 @@ export default {
         contact: {
           title: "Billing details",
           address: "Address",
-          postalCode: "Postal code",
+          postalCode: "Postcode",
           city: "Town",
           country: "Country"
         }
@@ -200,16 +209,16 @@ export default {
       description: "Ensure the evolution of the restoration area through a monthly donation which will help us continue to protect, restore and raise awareness."
     },
     multipleAdoption: {
-      description: "Give a name to your {item}, you can choose whatever name you want! 2 solutions are available to you : | Give a name to each one of your {item}, pick the name you want! 2 solutions are available to you:",
+      description: "Give a name to your {item}, you can choose whatever name you want! Two solutions are available to you : | Give a name to each one of your {item}, pick the name you want! Two solutions are available to you:",
       tabs: {
         fields: {
           title: "Fill in the fields",
-          description: "I fill in each name for my {item} in the fields below :"
+          description: "I wish to fill in each name for my {item} in the fields below :"
         },
         file: {
           title: "Send a file",
-          subtitle: "I have a lot of {item} to name? I would rather send a file with all the names for my {item}.",
-          description: "I download the Excel file provided for me. Once completed, I go to the address given in the confirmation email I received, and deposit my file in the field provided.",
+          subtitle: "I have a lot of {item} to name and would rather send a file with all the names of my {item}.",
+          description: "Download the Excel file provided. Once completed, you can go to the address given in your confirmation email, and deposit your file in the field provided.",
           button: "Download the Excel file",
           upload: {
             label: "Your file",
@@ -219,21 +228,21 @@ export default {
       }
     },
     multipleRecipient: {
-      description: "Fill in the details of your recipients so that they receive their respective gift codes. You have 2 options:",
+      description: "Fill in the details of your recipients so that they receive their respective gift codes. You have two options:",
       tabs: {
         fields: {
           title: "Fill in the fields",
-          description: "I fill in the details of each of my recipients in the fields below:",
+          description: "I wish to fill in the details of each of my recipients in the fields below:",
           recipient: "Recipient n°{index}"
         },
         file: {
           title: "Send a file",
           subtitle: "I would rather send a file later with the details of my recipients",
-          description: "I download the Excel file provided to me. Once filled in, I go to the address given in the confirmation email I received and I deposit my file in the field provided for this purpose.",
+          description: "Download the Excel file provided. Once completed, you can go to the address given in your confirmation email, and deposit your file in the field provided for this purpose.",
           button: "Download the file",
           upload: {
             label: "Your file",
-            description: "Upload your recipient excel file here :"
+            description: "Upload your recipient Excel file here :"
           }
         }
       }
@@ -246,9 +255,9 @@ export default {
         },
         bank: {
           tab: "Bank transfer",
-          button: "Download the IBAN",
-          description: "To pay by bank transfer, download the IBAN of the NGO and make the payment via your bank.",
-          hint: "A processing time of 2 to 5 days is to be expected while validating the payment. Once validated, you will receive an email allowing you to continue your order."
+          button: "Download the bank details",
+          description: "To pay by bank transfer, download our bank details and make the payment via your bank.",
+          hint: "A processing time of 2 to 5 days is to be expected while we validate your payment. Once validated, you will receive an email allowing you to continue your order."
         }
       },
       title: "Proceed to payment",
@@ -256,7 +265,7 @@ export default {
       reminder: {
         title: "Review your donation",
         adoption: {
-          description: "{count} {item} transplanted on Hatamin island in Indonesia. | {count} {item} transplanted on Hatamin island in Indonesia."
+          description: "{count} {item} adopted on Hatamin island in Indonesia. | {count} {item} adopted on Hatamin island in Indonesia."
         },
         donation: {
           description: "Your {item} donation will help us continue all of our actions."
@@ -274,20 +283,21 @@ export default {
     },
     finalFriendAdoption: {
       title: "Congratulations and thank you, you have adopted {count} {item} for your recipient",
-      description: "Your tax receipt has been sent to you by email. <br><br>Your recipient's coupon code is: {orderToken}.<br><br>Your recipient will receive an email to personalize their adoption certificate!"
+      description: "Your tax receipt has been sent to you by email. <br><br>Your recipient's gift code is: {orderToken}.<br><br>Your recipient will receive an email to personalise their adoption certificate!"
     },
     finalFriendGift: {
       title: "Congratulations and thank you, you have adopted {count} {item}",
-      description: "Your certificate of adoption has been sent to you by email. You can also download them directly by clicking <a href='{link}' target='_blank'>here</a>.| Your adoption certificates have been sent to you by email. You can also download them directly by clicking <a href='{link}' target='_blank'>here</a>."
+      description: "Your certificate of adoption has been sent to you by email. You can also download them directly by clicking <a href='{link}' target='_blank'>here</a>.| Your adoption certificates have been sent to you by email. You can also download them directly by clicking <a href='{link}' target='_blank'>here</a>.",
+      descriptionNoEmail: "You can download your certificate directly by clicking <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>here</a>."
     },
     finalDonation: {
       title: "Congratulations and thanks for your support",
       description: "Your tax receipt will be sent to you by email.<br><br>Do you wish to receive news of all our actions and projects? Subscribe to our newsletter right <a href='/en/newsletter-coral-guardian/'>here</a>!<br>For any question, write to us at <a href='mailto:info@coralguardian.org'>info@coralguardian.org</a>",
-      bankTransfer: "Your transfer is pending. Once validated, you will receive an email containing your tax receipt."
+      bankTransfer: "Your transfer is pending. Once validated, you will receive an email with your tax receipt."
     },
     finalRecurrentDonation: {
       title: "Congratulations and thank you for your monthly donation",
-      description: "Your tax receipt summarizing all your donations for the current fiscal year will be sent to you by email next January.<br><br>Do not hesitate to subscribe to our newsletter <a href='/en/newsletter-coral-guardian/'>here</a> to receive news on the progress of our projects every month."
+      description: "Your tax receipt summarising all your donations for the current fiscal year will be sent to you by email next January.<br><br>Do not hesitate to subscribe to our newsletter <a href='/en/newsletter-coral-guardian/'>here</a> to receive news on the progress of our projects every month."
     },
     finalRecipient: {
       title: "Congratulations and thank you, you have made a gift of {count} {item}",
@@ -301,11 +311,14 @@ export default {
     order_incompatible_type: "This code doesn't seem to correspond to the related adoption.",
     invalid_type: "This code does not correspond to any coral adoption.",
     download_file: "Please download the file before continuing.",
-    wrong_token: "The order number appears to be invalid. If the problem persists, please contact us directly."
+    wrong_token: "The order number appears to be invalid. If the problem persists, please contact us directly.",
+    select_date: "Please select a date if you wish to specify the sending date.",
+    incorrect_file_data: "The data in the file seems incorrect, please check your information and try again.",
+    code_not_found: "The gift code seems to be invalid. If the problem persists, please contact us directly."
   },
   donation: {
     monthly: {
-      description: "Keep supporting our daily actions to protect coral reefs with a monthly donation!"
+      description: "Support our daily actions for coral reefs with a monthly donation!"
     }
   },
   newsletter: {
