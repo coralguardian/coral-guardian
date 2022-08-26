@@ -17,6 +17,7 @@ import DonationBlock from "@/components/forms/blocks/DonationBlock";
 import SocialShareBlock from "../blocks/SocialShareBlock";
 import paymentMixin from "../../../mixins/paymentMixin";
 import validationMixin from "../../../mixins/validationMixin";
+import apiMixin from "@/mixins/apiMixin";
 
 export default {
   name: "final-friend-adoption-step",
@@ -24,9 +25,13 @@ export default {
     DonationBlock,
     SocialShareBlock
   },
-  mixins: [finalStepMixin, paymentMixin, validationMixin],
+  mixins: [apiMixin, finalStepMixin, paymentMixin, validationMixin],
   mounted() {
     this.cleanLocalStorage()
+    this.$root.$on(this.apiEventName, () => this.$root.$emit('ApiValid'))
+  },
+  beforeDestroy() {
+    this.$root.$off(this.apiEventName)
   }
 }
 </script>
