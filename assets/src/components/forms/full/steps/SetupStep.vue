@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex justify-space-between">
+    <div class="d-flex justify-space-between btn-container">
       <setup-btn
           v-model="isAdoptionForMe"
           @click="updateForm({target: adoptionConstants.me, order: {type: 'regular'}})"
@@ -93,4 +93,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-container {
+  @media (max-width: 450px) {
+    height: 200px;
+  }
+}
 </style>

@@ -94,6 +94,9 @@ export default {
 <style lang="scss" scoped>
 
 .app-stepper-footer {
+  @media (max-width: 450px) {
+    padding: 1rem 0;
+  }
   padding: 1rem;
 }
 

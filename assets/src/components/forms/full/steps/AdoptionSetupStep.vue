@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex justify-space-around">
+    <div class="d-flex justify-space-around btn-container">
       <setup-btn
           v-model="isCoral"
           @click="updateForm({order: {productType: 'coral', price: 30}, baseElementPrice: 30})"
@@ -88,6 +88,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.btn-container {
+  @media (max-width: 450px) {
+    height: 140px;
+  }
+}
 </style>

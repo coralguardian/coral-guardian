@@ -79,3 +79,9 @@ p {
 .tertiary-tab-active {
   background: $tertiary;
 }
+
+.btn-container {
+  @media (max-width: 450px) {
+    flex-direction: column;
+  }
+}
