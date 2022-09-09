@@ -49,7 +49,7 @@ export default class BaseFormStore {
         },
         orderToken: "",
         donation: {
-          type: donationHelper.oneshot,
+          type: donationHelper.monthly,
           price: 0,
           project_key: project,
           payment_method: {

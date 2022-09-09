@@ -8,6 +8,7 @@
         center-active
         color="tertiary"
         active-class="tab-active"
+        :vertical="windowWidth <= 450"
     >
       <v-tab @click="updateForm(reefs.lady)">{{ $t('default.stepper.adoption.reefs.lady.title') }}</v-tab>
       <v-tab @click="updateForm(reefs.butterfly)">{{ $t('default.stepper.adoption.reefs.butterfly.title') }}</v-tab>
@@ -28,11 +29,12 @@
 <script>
 import AdoptionStep from "@/components/forms/steps/AdoptionStep";
 import adoptionMixin from "@/mixins/adoptionMixin";
+import screenMixin from "@/mixins/screenMixin";
 
 export default {
   name: "reef-adoption-step",
   extends: AdoptionStep,
-  mixins: [adoptionMixin],
+  mixins: [adoptionMixin, screenMixin],
   data() {
     return {
       tab: 0

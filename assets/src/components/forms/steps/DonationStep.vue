@@ -8,11 +8,11 @@
         grow
         :vertical="windowWidth <= 450"
     >
+      <v-tab class="text-no-transform" @click="updateForm({donation: {type: donationEnum.monthly}})">
+        {{ $t("default.stepper.donation.buttons.recurrent") }}
+      </v-tab>
       <v-tab class="text-no-transform" @click="updateForm({donation: {type: donationEnum.oneshot}})">
         {{ $t("default.stepper.donation.buttons.unique") }}
-      </v-tab>
-      <v-tab class="text-no-transform" @click="updateForm({donation:{type: donationEnum.monthly}})">
-        {{ $t("default.stepper.donation.buttons.recurrent") }}
       </v-tab>
     </v-tabs>
 
@@ -31,17 +31,16 @@ import DonationBlock from "@/components/forms/blocks/DonationBlock";
 import {mapActions, mapGetters} from "vuex";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 import validationMixin from "../../../mixins/validationMixin";
+import screenMixin from "@/mixins/screenMixin";
 
 export default {
   name: "donation-step",
   components: {
     DonationBlock
   },
-  mixins: [itemTranslationMixin, validationMixin],
+  mixins: [itemTranslationMixin, validationMixin, screenMixin],
   data() {
-    return {
-      windowWidth: null
-    }
+    return {}
   },
   computed: {
     ...mapGetters({
@@ -53,9 +52,6 @@ export default {
     ...mapActions({
       updateForm: 'updateForm'
     }),
-  },
-  mounted() {
-    this.windowWidth = window.innerWidth
   }
 }
 </script>
