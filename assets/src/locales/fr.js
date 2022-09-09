@@ -339,6 +339,21 @@ export default {
   donation: {
     monthly: {
       description: "Continuez à soutenir nos actions au quotidien pour les océans avec un don mensuel !"
+    },
+    dialog: {
+      activation: "A quoi sert un don ?",
+      title: "Comment sont utilisés vos dons à Coral Guardian ?",
+      button: "J'ai compris",
+      chart: {
+        labels: {
+          program: "Programmes de conservation marine",
+          awareness: "Sensibilisation",
+          science: "Science/Recherche",
+          communication: "Communication",
+          fundraisingCosts: "Frais de collectes de fonds",
+          managementCosts: "Frais de gestion et d'administration"
+        }
+      }
     }
   },
   newsletter: {

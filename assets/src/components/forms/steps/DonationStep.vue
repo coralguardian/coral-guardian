@@ -23,11 +23,14 @@
       <donation-block/>
     </v-form>
 
+    <donation-explanation-dialog/>
+
   </div>
 </template>
 
 <script>
 import DonationBlock from "@/components/forms/blocks/DonationBlock";
+import DonationExplanationDialog from "@/components/forms/misc/DonationExplanationDialog";
 import {mapActions, mapGetters} from "vuex";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 import validationMixin from "../../../mixins/validationMixin";
@@ -36,7 +39,8 @@ import screenMixin from "@/mixins/screenMixin";
 export default {
   name: "donation-step",
   components: {
-    DonationBlock
+    DonationBlock,
+    DonationExplanationDialog
   },
   mixins: [itemTranslationMixin, validationMixin, screenMixin],
   data() {

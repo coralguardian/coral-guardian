@@ -76,6 +76,10 @@ p {
   color: black !important;
 }
 
+#app .v-card__title {
+  word-break: inherit;
+}
+
 .tertiary-tab-active {
   background: $tertiary;
 }
