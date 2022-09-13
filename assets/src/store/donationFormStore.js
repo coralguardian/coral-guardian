@@ -35,7 +35,7 @@ export default new Vuex.Store({
       ],
       steps: [
         {
-          title: "default.stepper.donation.title." + form.state.data.donation.project_key,
+          title: "default.stepper.donation.title." + form.state.data.project,
           component: "DonationStep",
           validate: true
         },

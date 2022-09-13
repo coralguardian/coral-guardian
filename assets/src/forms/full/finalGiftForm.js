@@ -6,14 +6,6 @@ export default class FinalGiftForm extends AbstractForm {
       {
         hide: true,
         title: "default.stepper.header.thanks"
-      },
-      {
-        hide: true,
-        title: "default.stepper.header.payment"
-      },
-      {
-        hide: true,
-        title: "default.stepper.header.thanks"
       }
     ],
     steps: [
@@ -21,25 +13,8 @@ export default class FinalGiftForm extends AbstractForm {
         title: "default.stepper.finalRecipient.title",
         component: "FinalRecipientStep",
         validate: true,
-        back: false
-      },
-      {
-        title: "default.stepper.payment.title",
-        component: "PaymentStep",
-        props: {
-          mode: 'donation'
-        },
-        validate: true,
-        customValidation: true,
-        api: {
-          method: "post",
-          endpoint: "donate"
-        }
-      },
-      {
-        title: "default.stepper.finalDonation.title",
-        component: "FinalDonationStep",
-        back: false
+        back: false,
+        last: true
       }
     ]
   }

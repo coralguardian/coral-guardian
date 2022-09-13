@@ -43,7 +43,7 @@ export default {
       return this.$options._componentTag + 'Form'
     },
     customValidationEventName() {
-      return "CustomValid"
+      return this.$options._componentTag + "CustomValid"
     }
   },
   methods: {

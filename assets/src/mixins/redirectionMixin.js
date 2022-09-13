@@ -40,7 +40,7 @@ export default {
                 .then(() => {
                   // si on est sur une étape après le paiement de la commande
                   // on a payé un don
-                  if (data.step > 5) {
+                  if (data.step > 7) {
                     this.updateForm({order: data.order})
                       .then(() => this.loadPaymentNextSteps()
                         .then(() => this.updateForm(data)
@@ -82,7 +82,7 @@ export default {
                 case "adoption": {
                   data = {
                     ...data,
-                    step: 6,
+                    step: 8,
                     adoption: {
                       type: 'file',
                       locked: true
@@ -100,7 +100,7 @@ export default {
                 case "recipient": {
                   data = {
                     ...data,
-                    step: 7,
+                    step: 9,
                     recipient: {
                       type: 'file',
                       locked: true

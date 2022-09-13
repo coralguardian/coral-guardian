@@ -48,6 +48,7 @@ import paymentMixin from "../../../mixins/paymentMixin";
 import {mapActions, mapGetters, mapState} from "vuex";
 import apiMixin from "../../../mixins/apiMixin";
 import GtagService from "../../../services/gtagService";
+import adopterHelper from "@/helpers/adopterHelper";
 
 export default {
   name: "payment-step",
@@ -82,7 +83,8 @@ export default {
       order: "getOrder",
       donation: "getDonation",
       formType: "getFormType",
-      donationEnum: "getDonationEnum"
+      donationEnum: "getDonationEnum",
+      adopter: "getAdopter"
     }),
     ...mapState({
       baseElementPrice: state => state.data.baseElementPrice,
@@ -258,16 +260,13 @@ export default {
   },
   mounted() {
     (new GtagService()).executeTag(this.element, this.mode);
-    if (this.bankTransfer && !this.element.clientSecret && this.element.type !== this.donationEnum.monthly) {
+    if (this.adopter.type === adopterHelper.company && !this.element.clientSecret && this.element.type !== this.donationEnum.monthly) {
       this.displayPaymentMethod = true
     } else {
       this.displayCard()
     }
     this.$root.$on(this.customValidationEventName, this.validation)
     this.$root.$on(this.apiEventName, this.purchase)
-    // setTimeout(() => {
-    //   (new GtagService()).executeTag(this.element, this.mode);
-    // }, 500)
   },
   beforeDestroy() {
     this.$root.$off(this.customValidationEventName)

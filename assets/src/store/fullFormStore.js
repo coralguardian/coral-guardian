@@ -16,6 +16,7 @@ import donationHelper from "@/helpers/donationHelper";
 import AdoptionModel from "@/models/adoptionModel";
 import FinalGiftForm from "@/forms/full/finalGiftForm";
 import GiftMessageModel from "@/models/giftMessageModel";
+import axios from "axios";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -32,8 +33,7 @@ export default new Vuex.Store({
         ...baseStore.state.data.adopter,
         alternate_newsletter_email: null,
         send_to_friend: null,
-        company_name: "",
-        type: "company"
+        company_name: ""
       },
       order: {
         ...baseStore.state.data.order,
@@ -47,10 +47,12 @@ export default new Vuex.Store({
         recipients: [],
         message: "",
         toSendOn: null
-      }
+      },
+      project: null
     },
     baseForm: new SetupForm(),
-    form: new SetupForm()
+    form: new SetupForm(),
+    products: null
   },
   getters: {
     ...baseStore.getters,
@@ -71,7 +73,8 @@ export default new Vuex.Store({
     getPostPaymentDataAdoption: state => new AdoptionModel(state.data),
     getGift: state => state.data.gift,
     getGiftModel: state => new GiftModel(state.data),
-    getGiftMessageModel: state => new GiftMessageModel(state.data)
+    getGiftMessageModel: state => new GiftMessageModel(state.data),
+    getProject: state => state.data.project
   },
   mutations: {
     ...baseStore.mutations,
@@ -105,6 +108,7 @@ export default new Vuex.Store({
         }
         switch (context.state.data.target) {
           case adoptionHelper.me:
+            context.dispatch('loadProducts')
             context.dispatch('loadForm', new AdoptionForm())
               .then(() => {context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: donationHelper.monthly}})
                   .then(() => resolve())
@@ -117,7 +121,7 @@ export default new Vuex.Store({
               })
             break;
           case "donation":
-            context.dispatch('loadForm', new DonationForm(context.state.data.donation.project_key))
+            context.dispatch('loadForm', new DonationForm(context.state.data.project))
               .then(() => {context.dispatch('updateForm', {donation: {type: donationHelper.oneshot}})
                   .then(() => resolve())
               })
@@ -167,6 +171,22 @@ export default new Vuex.Store({
     },
     resetForm(context) {
       context.commit("resetForm")
+    },
+    loadProducts(context) {
+      return new Promise((resolve, reject) => {
+        if (context.state.data.project === null) {
+          reject("Un projet doit être sélectionné !")
+        }
+        axios.get("/wp-json/" +  context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject)
+          .then(resp => {
+            console.log(resp)
+          })
+          .catch(err => {
+            // console.warn(err)
+            reject(err)
+          })
+      })
+
     }
   }
 })

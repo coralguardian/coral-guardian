@@ -35,11 +35,13 @@ export default {
   },
   stepper: {
     header: {
+      adopterType: "Vous êtes ?",
       adoption: "Adoption",
       customization: "Personnalisation",
       donation: "Don",
       information: "Informations",
       payment: "Paiement",
+      project: "Quel projet souhaitez-vous soutenir ?",
       friend: "Votre destinataire",
       recipients: "Destinataires",
       gift: "Cadeau",
@@ -49,6 +51,10 @@ export default {
       },
       customizationSend: "Personnalisation de l'envoi",
       thanks: "Merci !"
+    },
+    adopterType: {
+      individual: "Un particulier",
+      company: "Une entreprise"
     },
     adoption: {
       title: "Adoptez un {item} | Adoptez des {item}",
@@ -277,6 +283,20 @@ export default {
       },
       errors: {
         card: "Veuillez renseigner les informations de votre carte bancaire."
+      }
+    },
+    project: {
+      spain: "Méditerrannée",
+      indonesia: "Indo-Pacifique",
+      tooltips: {
+        spain: "📍 À Punta de la Mona, en Espagne<br>" +
+          "🤝 En collaboration avec l’association locale Coral Soul<br>" +
+          "⚠️ La pollution en Méditerranée<br>" +
+          "🌊 Actions de restauration des fonds coralliens, nettoyage des fonds marins, suivis et analyses scientifiques de la zone, et sensibilisation locale",
+        indonesia: "📍 À Pulau Hatamin, en Indonésie<br>" +
+          "🤝 En collaboration avec l’association locale WES<br>" +
+          "⚠️ La surpêche et la pêche à la dynamite<br>" +
+          "🌊 Actions de restauration du récif corallien, protection de l’aire marine protégée, suivis scientifiques de la zone, et sensibilisation locale"
       }
     },
     finalAdoption: {

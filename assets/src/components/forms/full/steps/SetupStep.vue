@@ -5,8 +5,8 @@
           v-model="isAdoptionForMe"
           @click="updateForm({target: adoptionConstants.me, order: {type: 'regular'}})"
       >
-        <img class="form-icon" :src="path + '/img/icons/certificat.svg'" alt="">
-        {{$t("default.stepper.setup.adopt")}}
+        <img class="form-icon" :src="path + 'img/icons/certificat.svg'" alt="">
+        {{ $t("default.stepper.setup.adopt") }}
 
         <btn-tooltip>
           <div class="text-center">
@@ -19,8 +19,8 @@
           v-model="isAdoptionToOffer"
           @click="updateForm({target: adoptionConstants.friend, order: {type: 'gift'}})"
       >
-        <img class="form-icon" :src="path + '/img/icons/joffre.svg'" alt="">
-        {{$t("default.stepper.setup.offer")}}
+        <img class="form-icon" :src="path + 'img/icons/joffre.svg'" alt="">
+        {{ $t("default.stepper.setup.offer") }}
 
         <btn-tooltip>
           <div class="text-center">
@@ -34,14 +34,9 @@
           v-model="isDonation"
           @click="updateForm({target: 'donation'})"
       >
-        <img class="form-icon" :src="path + '/img/icons/don.svg'" alt="">
-        {{$t("default.stepper.setup.donation")}}
+        <img class="form-icon" :src="path + 'img/icons/don.svg'" alt="">
+        {{ $t("default.stepper.setup.donation") }}
       </setup-btn>
-    </div>
-    <div v-if="isAdoptionForMe || isAdoptionToOffer || isDonation" class="text-right mt-5">
-      <v-btn color="secondary black--text" @click="loadForm">
-        Continuer
-      </v-btn>
     </div>
 
   </div>
@@ -52,10 +47,11 @@ import {mapActions, mapGetters} from "vuex";
 import adoptionMixin from "../../../../mixins/adoptionMixin";
 import BtnTooltip from "../../../utils/BtnTooltip";
 import SetupBtn from "../SetupBtn";
+import validationMixin from "@/mixins/validationMixin";
 
 export default {
   name: "setup-step",
-  mixins: [adoptionMixin],
+  mixins: [adoptionMixin, validationMixin],
   components: {
     BtnTooltip,
     SetupBtn
@@ -79,15 +75,24 @@ export default {
     ...mapActions({
       updateForm: "updateForm",
       loadSetupNextSteps: "loadSetupNextSteps",
-      resetForm: "resetForm",
       incrementStep: "incrementStep"
-    }),
-    loadForm() {
-      this.loadSetupNextSteps().then(() => this.incrementStep())
-    }
+    })
   },
   mounted() {
-    this.resetForm()
+    this.$root.$on(this.customValidationEventName, () => {
+      if (this.target !== null) {
+        this.$root.$emit('StepValid')
+        this.$root.$emit('IsLoaded')
+        this.displayErrorMessage = false
+      } else {
+        this.$root.$emit(this.validationErrorEventName)
+        this.$root.$emit('IsLoaded')
+        this.displayErrorMessage = true
+      }
+    })
+  },
+  beforeDestroy() {
+    this.$root.$off(this.customValidationEventName)
   }
 }
 </script>

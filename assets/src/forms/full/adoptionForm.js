@@ -34,10 +34,6 @@ export default class AdoptionForm extends AbstractForm {
         api: {
           method: "post",
           endpoint: "customer"
-        },
-        props: {
-          newsletterFullBlock: true,
-          isCompany: true
         }
       },
       {
@@ -48,9 +44,6 @@ export default class AdoptionForm extends AbstractForm {
         api: {
           method: "post",
           endpoint: "adoption"
-        },
-        props: {
-          bankTransfer: true
         }
       }
     ]

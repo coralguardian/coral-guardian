@@ -10,8 +10,8 @@ import donationHelper from "@/helpers/donationHelper";
 let basePath = (typeof publicPath !== "undefined") && (publicPath !== null) ? publicPath[0] : ""
 /* global apiNamespace */
 let apiPath = (typeof apiNamespace !== "undefined") && (apiNamespace !== null) ? apiNamespace[0] : ""
-const qparams = new URLSearchParams(window.location.search)
-const project = qparams.has('prt') ? qparams.get('prt') : 'france'
+// const qparams = new URLSearchParams(window.location.search)
+// const project = qparams.has('prt') ? qparams.get('prt') : 'france'
 
 export default class BaseFormStore {
   constructor() {
@@ -24,7 +24,7 @@ export default class BaseFormStore {
         baseElementPrice: null,
         adopter: {
           id: null,
-          type: "individual",
+          type: null,
           first_name: "",
           last_name: "",
           email: "",
@@ -51,7 +51,6 @@ export default class BaseFormStore {
         donation: {
           type: donationHelper.monthly,
           price: 0,
-          project_key: project,
           payment_method: {
             type: "credit_card"
           },

@@ -97,7 +97,7 @@
         </div>
 
         <div class="col-12">
-          <newsletter-block v-model="adopter.wants_newsletter" :full="newsletterFullBlock"/>
+          <newsletter-block v-model="adopter.wants_newsletter" :full="isCompany"/>
         </div>
 
       </div>
@@ -112,6 +112,7 @@ import validationMixin from "@/mixins/validationMixin";
 import NewsletterBlock from "@/components/forms/blocks/NewsletterBlock";
 import apiMixin from "../../../mixins/apiMixin";
 import GiftCustomBlock from "../blocks/GiftCustomBlock";
+import adopterHelper from "@/helpers/adopterHelper";
 
 export default {
   name: "information-step",
@@ -122,14 +123,6 @@ export default {
   },
   mixins: [validationMixin, apiMixin],
   props: {
-    newsletterFullBlock: {
-      type: Boolean,
-      default: false
-    },
-    isCompany: {
-      type: Boolean,
-      default: false
-    },
     isGiftCustom: {
       type: Boolean,
       default: false
@@ -144,7 +137,10 @@ export default {
       customerModel: "getCustomerModel"
     }),
     informationSubstring() {
-      return this.newsletterFullBlock ? "company." : ""
+      return this.isCompany ? "company." : ""
+    },
+    isCompany() {
+      return this.adopter.type === adopterHelper.company;
     }
   },
   methods: {

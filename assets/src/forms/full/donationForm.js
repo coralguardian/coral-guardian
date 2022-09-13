@@ -33,10 +33,6 @@ export default class DonationForm extends AbstractForm {
           api: {
             method: "post",
             endpoint: "customer"
-          },
-          props: {
-            newsletterFullBlock: true,
-            isCompany: true
           }
         },
         {
@@ -45,8 +41,7 @@ export default class DonationForm extends AbstractForm {
           validate: true,
           customValidation: true,
           props: {
-            mode: 'donation',
-            bankTransfer: true
+            mode: 'donation'
           },
           api: {
             method: "post",
