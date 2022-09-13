@@ -97,6 +97,9 @@ export default new Vuex.Store({
           break
         }
       }
+    },
+    updateProducts(state, products) {
+      state.data.products = products
     }
   },
   actions: {
@@ -109,20 +112,29 @@ export default new Vuex.Store({
         switch (context.state.data.target) {
           case adoptionHelper.me:
             context.dispatch('loadProducts')
-            context.dispatch('loadForm', new AdoptionForm())
-              .then(() => {context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: donationHelper.monthly}})
-                  .then(() => resolve())
-              });
+              .then(() => {
+                context.dispatch('loadForm', new AdoptionForm())
+                  .then(() => {
+                    context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: donationHelper.monthly}})
+                      .then(() => resolve())
+                  });
+              })
+              .catch((err) => {
+                console.error(err)
+              })
+
             break;
           case adoptionHelper.friend:
             context.dispatch('loadForm', new GiftForm())
-              .then(() => {context.dispatch('updateForm', {order: {type: 'gift'}, donation: {type: donationHelper.monthly}})
+              .then(() => {
+                context.dispatch('updateForm', {order: {type: 'gift'}, donation: {type: donationHelper.monthly}})
                   .then(() => resolve())
               })
             break;
           case "donation":
             context.dispatch('loadForm', new DonationForm(context.state.data.project))
-              .then(() => {context.dispatch('updateForm', {donation: {type: donationHelper.oneshot}})
+              .then(() => {
+                context.dispatch('updateForm', {donation: {type: donationHelper.oneshot}})
                   .then(() => resolve())
               })
             break;
@@ -177,9 +189,10 @@ export default new Vuex.Store({
         if (context.state.data.project === null) {
           reject("Un projet doit être sélectionné !")
         }
-        axios.get("/wp-json/" +  context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject)
+        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject)
           .then(resp => {
             console.log(resp)
+            context.commit("updateProducts", resp)
           })
           .catch(err => {
             // console.warn(err)
