@@ -1,5 +1,3 @@
-import {mergeWith, cloneDeep} from "lodash";
-import customizerMergeObjectWithArrays from "@/helpers/functionHelper";
 import BaseFormStore from "../store/baseFormStore";
 import AdoptionModel from "../models/adoptionModel";
 import GiftAdoptionModel from "../models/giftAdoptionModel";
@@ -73,14 +71,14 @@ export class BaseAdoptionFormStore {
 
     this.getters = {
       ...baseForm.getters,
-      getForm: state => {
-        if (state.data.target === null) {
-          return state.baseForm
-        }
-        let form = cloneDeep(state.forms.find(form => form.target === state.data.target))
-        let baseForm = cloneDeep(state.baseForm);
-        return mergeWith(baseForm, form, customizerMergeObjectWithArrays)
-      },
+      // getForm: state => {
+      //   if (state.data.target === null) {
+      //     return state.baseForm
+      //   }
+      //   let form = cloneDeep(state.forms.find(form => form.target === state.data.target))
+      //   let baseForm = cloneDeep(state.baseForm);
+      //   return mergeWith(baseForm, form, customizerMergeObjectWithArrays)
+      // },
       getTarget: state => state.data.target,
       // count: state => state.data.count,
       getCurrentStep: (state, getters) => {

@@ -58,14 +58,12 @@ export default class BaseFormStore {
         }
       },
       baseForm: {
-        tabs: [
-          {
-            visible: false,
-            title: null
-          }
-        ],
         steps: [
           {
+            tab: {
+              visible: false,
+              title: null
+            },
             title: "",
             component: null,
             singularTitle: true,

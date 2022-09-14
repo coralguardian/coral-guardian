@@ -1,51 +1,51 @@
 import AbstractForm from "../form";
+import projectHelper from "@/helpers/projectHelper";
 
 export default class AdoptionForm extends AbstractForm {
-  form = {
-    tabs: [
-      {
-        title: "default.stepper.header.full.adoption",
+  steps = [
+    {
+      tab: {
+        title: "default.stepper.header.full.adoption"
       },
-      {
-        title: "default.stepper.header.adoption",
+      component: "AdoptionSetupStep",
+      validate: true,
+      customValidation: true,
+      display: (state) => {
+        return state.data.project !== projectHelper.spain
+      }
+    },
+    {
+      tab: {
+        title: "default.stepper.header.adoption"
       },
-      {
+      title: "default.stepper.adoption.title",
+      component: null,
+      componentType: "adoption"
+    },
+    {
+      tab: {
         title: "default.stepper.header.information"
       },
-      {
+      title: "default.stepper.information.title",
+      component: "InformationStep",
+      validate: true,
+      api: {
+        method: "post",
+        endpoint: "customer"
+      }
+    },
+    {
+      tab: {
         title: "default.stepper.header.payment"
+      },
+      title: "default.stepper.payment.title",
+      component: "PaymentStep",
+      validate: true,
+      customValidation: true,
+      api: {
+        method: "post",
+        endpoint: "adoption"
       }
-    ],
-    steps: [
-      {
-        component: "AdoptionSetupStep",
-        validate: true,
-        customValidation: true
-      },
-      {
-        title: "default.stepper.adoption.title",
-        component: null,
-        componentType: "adoption"
-      },
-      {
-        title: "default.stepper.information.title",
-        component: "InformationStep",
-        validate: true,
-        api: {
-          method: "post",
-          endpoint: "customer"
-        }
-      },
-      {
-        title: "default.stepper.payment.title",
-        component: "PaymentStep",
-        validate: true,
-        customValidation: true,
-        api: {
-          method: "post",
-          endpoint: "adoption"
-        }
-      }
-    ]
-  }
+    }
+  ]
 }

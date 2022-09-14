@@ -5,7 +5,6 @@ import {cloneDeep} from "lodash";
 import AdoptionForm from "../forms/full/adoptionForm";
 import GiftForm from "../forms/full/giftForm";
 import DonationForm from "../forms/full/donationForm";
-import SetupForm from "../forms/full/setupForm";
 import adoptionHelper from "../helpers/adoptionHelper";
 import AbstractForm from "../forms/form";
 import RecipientFullForm from "../forms/full/recipientFullForm";
@@ -17,6 +16,8 @@ import AdoptionModel from "@/models/adoptionModel";
 import FinalGiftForm from "@/forms/full/finalGiftForm";
 import GiftMessageModel from "@/models/giftMessageModel";
 import axios from "axios";
+import {checkStepsToDisplay} from "@/helpers/functionHelper";
+import EmptyForm from "@/forms/full/emptyForm";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -50,13 +51,13 @@ export default new Vuex.Store({
       },
       project: null
     },
-    baseForm: new SetupForm(),
-    form: new SetupForm(),
+    baseForm: new EmptyForm(),
+    form: new EmptyForm(),
     products: null
   },
   getters: {
     ...baseStore.getters,
-    getForm: state => state.form.getForm(),
+    getForm: state => state.form,
     getCurrentStep: (state, getters) => {
       return getters.getForm.steps[state.data.step - 1]
     },
@@ -78,11 +79,12 @@ export default new Vuex.Store({
   },
   mutations: {
     ...baseStore.mutations,
-    loadSpecificForm(state, form) {
-      let stateForm = state.form.getForm()
-      let newForm = form.getForm()
-      stateForm.tabs = stateForm.tabs.concat(newForm.tabs)
-      stateForm.steps = stateForm.steps.concat(newForm.steps)
+    loadSpecificForm(state, steps) {
+      let stateSteps = state.form.getSteps()
+      state.form.steps = stateSteps.concat(steps)
+      if (state.baseForm instanceof EmptyForm) {
+        state.baseForm.steps = stateSteps.concat(steps)
+      }
     },
     resetForm(state) {
       state.form = cloneDeep(state.baseForm)
@@ -115,7 +117,7 @@ export default new Vuex.Store({
               .then(() => {
                 context.dispatch('loadForm', new AdoptionForm())
                   .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: donationHelper.monthly}})
+                    context.dispatch('updateForm', {order: {type: 'regular'}})
                       .then(() => resolve())
                   });
               })
@@ -125,10 +127,13 @@ export default new Vuex.Store({
 
             break;
           case adoptionHelper.friend:
-            context.dispatch('loadForm', new GiftForm())
+            context.dispatch('loadProducts')
               .then(() => {
-                context.dispatch('updateForm', {order: {type: 'gift'}, donation: {type: donationHelper.monthly}})
-                  .then(() => resolve())
+                context.dispatch('loadForm', new GiftForm())
+                  .then(() => {
+                    context.dispatch('updateForm', {order: {type: 'gift'}})
+                      .then(() => resolve())
+                  })
               })
             break;
           case "donation":
@@ -176,7 +181,8 @@ export default new Vuex.Store({
         if (!(form instanceof AbstractForm)) {
           reject('Formulaire incomplet')
         } else {
-          context.commit("loadSpecificForm", form)
+          let steps = checkStepsToDisplay(form, context.state)
+          context.commit("loadSpecificForm", steps)
           resolve()
         }
       })
@@ -191,11 +197,10 @@ export default new Vuex.Store({
         }
         axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject)
           .then(resp => {
-            console.log(resp)
-            context.commit("updateProducts", resp)
+            context.commit("updateProducts", resp.data)
+            resolve()
           })
           .catch(err => {
-            // console.warn(err)
             reject(err)
           })
       })

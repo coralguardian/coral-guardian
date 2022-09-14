@@ -11,13 +11,13 @@
         <div v-for="index in stepCount" :key="index">
 
           <v-stepper-step
-              v-show="!form.tabs[index - 1].hide || stepNumber >= index"
+              v-show="!form.steps[index - 1].tab.hide || stepNumber >= index"
               color="tertiary"
               :complete="stepNumber > index"
               :step="index"
               :key="'tab' + index"
           >
-            {{ $t(form.tabs[index - 1].title) }}
+            {{ $t(form.steps[index - 1].tab.title) }}
           </v-stepper-step>
 
           <v-stepper-content
@@ -66,9 +66,10 @@ import paymentMixin from "./mixins/paymentMixin";
 import components from "@/components/forms/full/steps";
 import Step from "./components/utils/Step";
 
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import redirectionMixin from "./mixins/redirectionMixin";
 import {merge} from "lodash";
+import SetupForm from "@/forms/full/setupForm";
 // import fr from "@/locales/fr"
 // import en from "@/locales/en"
 
@@ -90,6 +91,9 @@ export default {
     })
   },
   methods: {
+    ...mapActions({
+      loadForm: "loadForm"
+    }),
     compare(one, two) {
       merge(one, two)
       const data = JSON.stringify(one)
@@ -104,10 +108,6 @@ export default {
     }
   },
   // methods: {
-  //   ...mapActions({
-  //     loadSetupNextSteps: "loadSetupNextSteps",
-  //     updateForm: "updateForm"
-  //   }),
   //   hasPayment() {
   //     const clientSecret = new URLSearchParams(window.location.search).get(
   //         "payment_intent_client_secret"
@@ -124,6 +124,12 @@ export default {
   //     }
   //   }
   // },
+  created() {
+    this.loadForm(new SetupForm())
+        .then(() => {
+          this.handleRedirection()
+        })
+  },
   mounted() {
     this.handleRedirection()
     // this.compare(fr, en)

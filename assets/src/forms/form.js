@@ -1,23 +1,15 @@
 export default class AbstractForm {
 
-  form = []
+  steps = []
 
-  getForm() {
+  getSteps() {
     this.checkForm()
-    return this.form
+    return this.steps
   }
 
   checkForm() {
-    if (!this.form.tabs) {
-      throw new Error("Form must have tabs")
-    }
-
-    if (!this.form.steps) {
+    if (!this.steps) {
       throw new Error("Form must have steps")
-    }
-
-    if (this.form.tabs.length !== this.form.steps.length) {
-      throw new Error("Form must have equal tabs and steps")
     }
   }
 }
