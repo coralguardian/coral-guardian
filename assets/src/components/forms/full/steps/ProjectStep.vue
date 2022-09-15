@@ -65,17 +65,15 @@ export default {
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      loadSetupNextSteps: "loadSetupNextSteps",
-      resetForm: "resetForm",
-      incrementStep: "incrementStep"
+      resetForm: "resetForm"
     })
   },
   mounted() {
     this.resetForm()
     this.$root.$on(this.customValidationEventName, () => {
+      console.log("cocuo")
       if (this.project !== null) {
         this.$root.$emit('StepValid')
-        this.$root.$emit('IsLoaded')
         this.displayErrorMessage = false
       } else {
         this.$root.$emit(this.validationErrorEventName)

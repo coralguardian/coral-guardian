@@ -95,11 +95,18 @@ export default class BaseFormStore {
         })
       },
       incrementStep(context) {
-        if (context.state.data.step === context.state.form.steps.length) {
-          context.dispatch("loadNextForm").then(() => context.commit('incrementStep'))
-        } else {
-          context.commit('incrementStep')
-        }
+        return new Promise(resolve => {
+          if (context.state.data.step === context.state.form.steps.length) {
+            context.dispatch("loadNextForm")
+              .then(() => {
+                context.commit('incrementStep')
+                resolve()
+              })
+          } else {
+            context.commit('incrementStep')
+            resolve()
+          }
+        })
       },
       decrementStep(context) {
         if (context.state.data.step > 0) {

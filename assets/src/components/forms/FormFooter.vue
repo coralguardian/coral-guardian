@@ -55,7 +55,9 @@ export default {
         this.$root.$emit(this.currentStep.component + 'Validation', this.currentStep.customValidation)
       } else {
         this.customPreviousHide = false
-        this.incrementStep()
+        this.incrementStep().then(() => {
+          this.customPreviousHide = false
+        })
       }
     }
   },
@@ -65,15 +67,17 @@ export default {
         if (this.currentStep.api) {
           this.$root.$emit(this.currentStep.component + 'Api')
         } else {
-          this.customPreviousHide = false
-          this.isLoading = false
-          this.incrementStep()
+          this.incrementStep().then(() => {
+            this.customPreviousHide = false
+            this.isLoading = false
+          })
         }
       })
       this.$root.$on('ApiValid', () => {
-        this.customPreviousHide = false
-        this.isLoading = false
-        this.incrementStep()
+        this.incrementStep().then(() => {
+          this.customPreviousHide = false
+          this.isLoading = false
+        })
       })
       this.$root.$on('IsLoaded', () => {
         this.customPreviousHide = false
