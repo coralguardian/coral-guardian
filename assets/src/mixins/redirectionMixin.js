@@ -1,8 +1,11 @@
 import {mapActions} from "vuex";
-import {isEmpty} from "lodash";
+import {isEmpty, merge} from "lodash";
 import adoptionHelper from "../helpers/adoptionHelper";
 import apiMixin from "./apiMixin";
 import FinalGiftForm from "@/forms/full/finalGiftForm";
+import AdopterEnum from "@/enums/adopterEnum";
+import ActionEnum from "@/enums/actionEnum";
+import ProjectEnum from "@/enums/projectEnum";
 
 export default {
   mixins: [apiMixin],
@@ -24,6 +27,24 @@ export default {
         .forEach((value, key) => {
           this.params[key] = value
         })
+    },
+    fillState() {
+      if (isEmpty(this.params)) {
+        this.fillParams()
+      }
+      let data = {}
+      if (this.params.c && AdopterEnum.isValueValid(this.params.c)) {
+        data = merge(data, {adopter: {type: this.params.c}})
+      }
+      if (this.params.action && ActionEnum.isValueValid(this.params.action)) {
+        data = merge(data, {target: ActionEnum.getTarget(this.params.action)})
+      }
+      if (this.params.project && ProjectEnum.isValueValid(this.params.project)) {
+        data = merge(data, {project: this.params.project})
+      }
+      return new Promise(resolve => {
+        this.updateForm(data).then(() => resolve())
+      })
     },
     handleRedirection() {
       if (isEmpty(this.params)) {

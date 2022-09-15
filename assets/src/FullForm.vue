@@ -125,13 +125,16 @@ export default {
   //   }
   // },
   created() {
+    this.fillState()
+  },
+  beforeMount() {
     this.loadForm(new SetupForm())
         .then(() => {
           this.handleRedirection()
         })
   },
   mounted() {
-    this.handleRedirection()
+    // this.handleRedirection()
     // this.compare(fr, en)
   }
 }

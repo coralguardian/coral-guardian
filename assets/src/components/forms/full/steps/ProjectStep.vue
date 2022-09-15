@@ -37,8 +37,8 @@
 import {mapActions, mapGetters} from "vuex";
 import BtnTooltip from "../../../utils/BtnTooltip";
 import SetupBtn from "../SetupBtn";
-import projectHelper from "@/helpers/projectHelper";
 import validationMixin from "@/mixins/validationMixin";
+import ProjectEnum from "@/enums/projectEnum";
 
 export default {
   name: "project-step",
@@ -53,13 +53,13 @@ export default {
       project: "getProject"
     }),
     projectConstant() {
-      return projectHelper
+      return ProjectEnum
     },
     isIndonesia() {
-      return this.project === projectHelper.indonesia
+      return this.project === ProjectEnum.indonesia
     },
     isSpain() {
-      return this.project === projectHelper.spain
+      return this.project === ProjectEnum.spain
     }
   },
   methods: {

@@ -28,7 +28,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import SetupBtn from "../SetupBtn";
-import adopterHelper from "@/helpers/adopterHelper";
+import AdopterEnum from "@/enums/adopterEnum";
 
 export default {
   name: "adopter-type-step",
@@ -40,7 +40,7 @@ export default {
       adopter: "getAdopter"
     }),
     adopterType() {
-      return adopterHelper
+      return AdopterEnum
     },
     isIndividual() {
       return this.adopter.type === this.adopterType.individual

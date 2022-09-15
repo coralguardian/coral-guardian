@@ -112,7 +112,7 @@ import validationMixin from "@/mixins/validationMixin";
 import NewsletterBlock from "@/components/forms/blocks/NewsletterBlock";
 import apiMixin from "../../../mixins/apiMixin";
 import GiftCustomBlock from "../blocks/GiftCustomBlock";
-import adopterHelper from "@/helpers/adopterHelper";
+import AdopterEnum from "@/enums/adopterEnum";
 
 export default {
   name: "information-step",
@@ -140,7 +140,7 @@ export default {
       return this.isCompany ? "company." : ""
     },
     isCompany() {
-      return this.adopter.type === adopterHelper.company;
+      return this.adopter.type === AdopterEnum.company;
     }
   },
   methods: {

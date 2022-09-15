@@ -1,5 +1,5 @@
 import AbstractForm from "../form";
-import projectHelper from "@/helpers/projectHelper";
+import ProjectEnum from "@/enums/projectEnum";
 
 export default class AdoptionForm extends AbstractForm {
   steps = [
@@ -11,7 +11,7 @@ export default class AdoptionForm extends AbstractForm {
       validate: true,
       customValidation: true,
       display: (state) => {
-        return state.data.project !== projectHelper.spain
+        return state.data.project !== ProjectEnum.spain
       }
     },
     {

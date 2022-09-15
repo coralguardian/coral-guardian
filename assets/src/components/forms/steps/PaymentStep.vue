@@ -48,7 +48,7 @@ import paymentMixin from "../../../mixins/paymentMixin";
 import {mapActions, mapGetters, mapState} from "vuex";
 import apiMixin from "../../../mixins/apiMixin";
 import GtagService from "../../../services/gtagService";
-import adopterHelper from "@/helpers/adopterHelper";
+import AdopterEnum from "@/enums/adopterEnum";
 
 export default {
   name: "payment-step",
@@ -260,7 +260,7 @@ export default {
   },
   mounted() {
     (new GtagService()).executeTag(this.element, this.mode);
-    if (this.adopter.type === adopterHelper.company && !this.element.clientSecret && this.element.type !== this.donationEnum.monthly) {
+    if (this.adopter.type === AdopterEnum.company && !this.element.clientSecret && this.element.type !== this.donationEnum.monthly) {
       this.displayPaymentMethod = true
     } else {
       this.displayCard()

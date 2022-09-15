@@ -1,5 +1,4 @@
 import {merge} from "lodash";
-import fiscalHelper from "@/helpers/fiscalHelper";
 import DonationModel from "../models/donationModel";
 import CustomerModel from "@/models/customerModel";
 import DonationHelper from "@/helpers/donationHelper";
@@ -110,14 +109,15 @@ export default class BaseFormStore {
         }
       },
       getPostPaymentDataDonation: state => new DonationModel(state.data),
-      getFiscalReduction(state) {
-        const fiscalReduction = fiscalHelper[state.data.adopter.type]
-        if (!fiscalReduction) {
-          alert("Cette réduction fiscale n'existe pas.")
-          return;
-        }
-        return fiscalReduction;
-      },
+      // getFiscalReduction(state) {
+      //   console.log(state.data.adopter.type)
+      //   const fiscalReduction = fiscalHelper[state.data.adopter.type]
+      //   if (!fiscalReduction) {
+      //     alert("Cette réduction fiscale n'existe pas.")
+      //     return;
+      //   }
+      //   return fiscalReduction;
+      // },
       getAdopter: state => state.data.adopter,
       getCustomerModel: state => new CustomerModel(state.data),
       getOrder: state => state.data.order,

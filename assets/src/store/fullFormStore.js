@@ -137,6 +137,7 @@ export default new Vuex.Store({
               })
             break;
           case "donation":
+            console.log("aa")
             context.dispatch('loadForm', new DonationForm(context.state.data.project))
               .then(() => {
                 context.dispatch('updateForm', {donation: {type: donationHelper.oneshot}})
@@ -182,6 +183,7 @@ export default new Vuex.Store({
           reject('Formulaire incomplet')
         } else {
           let steps = checkStepsToDisplay(form, context.state)
+          console.log(steps)
           context.commit("loadSpecificForm", steps)
           resolve()
         }

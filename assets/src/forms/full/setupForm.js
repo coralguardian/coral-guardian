@@ -7,9 +7,9 @@ export default class SetupForm extends AbstractForm {
         title: "default.stepper.header.adopterType",
       },
       component: "AdopterTypeStep",
-      // display: () => {
-      //   return false
-      // }
+      display: (state) => {
+        return state.data.adopter.type === null
+      }
     },
     {
       tab: {
@@ -18,7 +18,10 @@ export default class SetupForm extends AbstractForm {
       component: "SetupStep",
       larger: true,
       validate: true,
-      customValidation: true
+      customValidation: true,
+      display: (state) => {
+        return state.data.target === null
+      }
     },
     {
       tab: {
