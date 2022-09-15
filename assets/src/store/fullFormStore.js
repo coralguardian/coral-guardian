@@ -2,22 +2,19 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {BaseAdoptionFormStore} from "@/store/baseAdoptionFormStore";
 import {cloneDeep} from "lodash";
-import AdoptionForm from "../forms/full/adoptionForm";
-import GiftForm from "../forms/full/giftForm";
-import DonationForm from "../forms/full/donationForm";
 import adoptionHelper from "../helpers/adoptionHelper";
-import AbstractForm from "../forms/form";
+import AbstractForm from "../forms/abstractForm";
 import RecipientFullForm from "../forms/full/recipientFullForm";
 import FinalAdoptionForm from "../forms/full/finalAdoptionForm";
 import BankTransferThanksForm from "../forms/full/bankTransferThanksForm";
 import GiftModel from "../models/giftModel";
-import donationHelper from "@/helpers/donationHelper";
 import AdoptionModel from "@/models/adoptionModel";
 import FinalGiftForm from "@/forms/full/finalGiftForm";
 import GiftMessageModel from "@/models/giftMessageModel";
 import axios from "axios";
 import {checkStepsToDisplay} from "@/helpers/functionHelper";
 import EmptyForm from "@/forms/full/emptyForm";
+import ActionEnum from "@/enums/actionEnum";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -64,7 +61,7 @@ export default new Vuex.Store({
     getDefaultTranslation: state => {
       let defaultTranslation = 'default.'
       switch (state.data.target) {
-        case "donation":
+        case ActionEnum.donation:
           return defaultTranslation + state.data.donation.type
         default:
           return defaultTranslation + state.data.order.productType + (state.data.order.productType === 'reef' ? ".base" : "")
@@ -79,11 +76,13 @@ export default new Vuex.Store({
   },
   mutations: {
     ...baseStore.mutations,
-    loadSpecificForm(state, steps) {
+    loadSpecificForm(state, form) {
       let stateSteps = state.form.getSteps()
-      state.form.steps = stateSteps.concat(steps)
+      let steps = checkStepsToDisplay(form, state)
+      form.steps = stateSteps.concat(steps)
+      state.form = form
       if (state.baseForm instanceof EmptyForm) {
-        state.baseForm.steps = stateSteps.concat(steps)
+        state.baseForm = form
       }
     },
     resetForm(state) {
@@ -106,48 +105,6 @@ export default new Vuex.Store({
   },
   actions: {
     ...baseStore.actions,
-    loadSetupNextSteps(context) {
-      return new Promise((resolve, reject) => {
-        if (context.state.data.target === null) {
-          reject("Aucune action sélectionnée")
-        }
-        switch (context.state.data.target) {
-          case adoptionHelper.me:
-            context.dispatch('loadProducts')
-              .then(() => {
-                context.dispatch('loadForm', new AdoptionForm())
-                  .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'regular'}})
-                      .then(() => resolve())
-                  });
-              })
-              .catch((err) => {
-                console.error(err)
-              })
-
-            break;
-          case adoptionHelper.friend:
-            context.dispatch('loadProducts')
-              .then(() => {
-                context.dispatch('loadForm', new GiftForm())
-                  .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'gift'}})
-                      .then(() => resolve())
-                  })
-              })
-            break;
-          case "donation":
-            context.dispatch('loadForm', new DonationForm(context.state.data.project))
-              .then(() => {
-                context.dispatch('updateForm', {donation: {type: donationHelper.oneshot}})
-                  .then(() => resolve())
-              })
-            break;
-          default:
-            reject("Formulaire non trouvé")
-        }
-      })
-    },
     loadAdoptionStep(context) {
       return new Promise((resolve) => {
         context.commit('loadAdoptionStep')
@@ -165,7 +122,8 @@ export default new Vuex.Store({
           context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new FinalGiftForm())
             .then(() => {
               resolve()
-            }).catch((err) => console.log(err))
+            })
+            .catch((err) => console.log(err))
         } else if (context.state.data.target === adoptionHelper.me) {
           context.dispatch("loadForm", new FinalAdoptionForm())
             .then(() => {
@@ -181,8 +139,7 @@ export default new Vuex.Store({
         if (!(form instanceof AbstractForm)) {
           reject('Formulaire incomplet')
         } else {
-          let steps = checkStepsToDisplay(form, context.state)
-          context.commit("loadSpecificForm", steps)
+          context.commit("loadSpecificForm", form)
           resolve()
         }
       })
@@ -204,7 +161,6 @@ export default new Vuex.Store({
             reject(err)
           })
       })
-
     }
   }
 })

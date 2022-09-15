@@ -1,4 +1,4 @@
-import AbstractForm from "@/forms/form";
+import AbstractForm from "@/forms/abstractForm";
 
 function customizerMergeObjectWithArrays(objValue, srcValue) {
   if (Array.isArray(objValue)) {

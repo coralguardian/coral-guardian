@@ -74,11 +74,9 @@ export default {
     this.resetForm()
     this.$root.$on(this.customValidationEventName, () => {
       if (this.project !== null) {
-        this.loadSetupNextSteps().then(() => {
-          this.$root.$emit('StepValid')
-          this.$root.$emit('IsLoaded')
-          this.displayErrorMessage = false
-        })
+        this.$root.$emit('StepValid')
+        this.$root.$emit('IsLoaded')
+        this.displayErrorMessage = false
       } else {
         this.$root.$emit(this.validationErrorEventName)
         this.$root.$emit('IsLoaded')

@@ -1,21 +1,17 @@
-import AbstractForm from "../form";
+import AbstractForm from "../abstractForm";
 
 export default class FinalGiftForm extends AbstractForm {
-  form = {
-    tabs: [
-      {
+  steps = [
+    {
+      tab: {
         hide: true,
         title: "default.stepper.header.thanks"
-      }
-    ],
-    steps: [
-      {
-        title: "default.stepper.finalRecipient.title",
-        component: "FinalRecipientStep",
-        validate: true,
-        back: false,
-        last: true
-      }
-    ]
-  }
+      },
+      title: "default.stepper.finalRecipient.title",
+      component: "FinalRecipientStep",
+      validate: true,
+      back: false,
+      last: true
+    }
+  ]
 }

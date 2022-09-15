@@ -1,7 +1,8 @@
-import AbstractForm from "../form";
+import AbstractForm from "../abstractForm";
 import ProjectEnum from "@/enums/projectEnum";
 
 export default class AdoptionForm extends AbstractForm {
+
   steps = [
     {
       tab: {

@@ -48,6 +48,7 @@ import adoptionMixin from "../../../../mixins/adoptionMixin";
 import BtnTooltip from "../../../utils/BtnTooltip";
 import SetupBtn from "../SetupBtn";
 import validationMixin from "@/mixins/validationMixin";
+import ActionEnum from "@/enums/actionEnum";
 
 export default {
   name: "setup-step",
@@ -68,17 +69,17 @@ export default {
       return this.target === this.adoptionConstants.friend
     },
     isDonation() {
-      return this.target === "donation"
+      return this.target === ActionEnum.donation
     }
   },
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      loadSetupNextSteps: "loadSetupNextSteps",
-      incrementStep: "incrementStep"
+      resetForm: "resetForm"
     })
   },
   mounted() {
+    this.resetForm()
     this.$root.$on(this.customValidationEventName, () => {
       if (this.target !== null) {
         this.$root.$emit('StepValid')

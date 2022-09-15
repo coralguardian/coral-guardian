@@ -1,22 +1,18 @@
-import AbstractForm from "../form";
+import AbstractForm from "../abstractForm";
 
-export default class RecipientForm extends AbstractForm{
-  form = {
-    tabs: [
-      {
+export default class RecipientForm extends AbstractForm {
+  steps = [
+    {
+      tab: {
         title: "default.stepper.header.recipients"
-      }
-    ],
-    steps: [
-      {
-        component: "MultipleRecipientStep",
-        validate: true,
-        back: false,
-        api: {
-          method: "post",
-          endpoint: "adoption/gift/friend"
-        }
       },
-    ]
-  }
+      component: "MultipleRecipientStep",
+      validate: true,
+      back: false,
+      api: {
+        method: "post",
+        endpoint: "adoption/gift/friend"
+      }
+    },
+  ]
 }

@@ -12,4 +12,8 @@ export default class AbstractForm {
       throw new Error("Form must have steps")
     }
   }
+  // method qui valide le passage au formulaire suivant et qui le retourne
+  nextForm() {
+    throw "Implement 'nextForm' method !"
+  }
 }

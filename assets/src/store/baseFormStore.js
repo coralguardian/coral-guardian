@@ -2,15 +2,12 @@ import {merge} from "lodash";
 import DonationModel from "../models/donationModel";
 import CustomerModel from "@/models/customerModel";
 import DonationHelper from "@/helpers/donationHelper";
-import donationHelper from "@/helpers/donationHelper";
 
 // public path is from wp, used to set full images path
 /* global publicPath */
 let basePath = (typeof publicPath !== "undefined") && (publicPath !== null) ? publicPath[0] : ""
 /* global apiNamespace */
 let apiPath = (typeof apiNamespace !== "undefined") && (apiNamespace !== null) ? apiNamespace[0] : ""
-// const qparams = new URLSearchParams(window.location.search)
-// const project = qparams.has('prt') ? qparams.get('prt') : 'france'
 
 export default class BaseFormStore {
   constructor() {
@@ -48,76 +45,26 @@ export default class BaseFormStore {
         },
         orderToken: "",
         donation: {
-          type: donationHelper.monthly,
+          type: DonationHelper.monthly,
           price: 0,
           payment_method: {
             type: "credit_card"
           },
           status: null
         }
-      },
-      baseForm: {
-        steps: [
-          {
-            tab: {
-              visible: false,
-              title: null
-            },
-            title: "",
-            component: null,
-            singularTitle: true,
-            classes: null
-          }
-        ]
-      },
+      }
     }
 
     this.getters = {
-      getForm(state) {
-        console.error("implement this method")
-        return state.baseForm
+      getForm: () => {
+        throw "implement this method"
       },
       step: state => state.data.step,
-      getCurrentStep: (state, getters) => {
-        return getters.getForm.steps[state.data.step]
-      },
+      getCurrentStep: (state, getters) => getters.getForm.steps[state.data.step],
       stepCount: (state, getters) => getters.getForm.steps.length,
-      getDefaultTranslation: state => "default." + state.data.order.productType,
-      getPaymentData: state => {
-        return {
-          customAmount: state.data.customAmount,
-          donationAmount: state.data.donationAmount
-        }
-      },
-      // getDonationAmount: state => state.data.donationAmount,
-      // getDonationType: state => state.data.donationType,
-      hasDonationTypeSetByShortcode: state => state.data.isDonationTypeSetByShortcode,
-      getApiData: (state, getters) => {
-        return getters.getCurrentStep.api ? getters.getCurrentStep.api : null;
-      },
+      getApiData: (state, getters) => getters.getCurrentStep.api ? getters.getCurrentStep.api : null,
       getOrderToken: state => state.data.orderToken,
-      getBillingDetails: state => {
-        const adopter = state.data.adopter
-        return {
-          address: {
-            city: adopter.city,
-            line1: adopter.address,
-            postal_code: adopter.postal_code
-          },
-          name: adopter.first_name + " " + adopter.last_name,
-          email: adopter.email
-        }
-      },
       getPostPaymentDataDonation: state => new DonationModel(state.data),
-      // getFiscalReduction(state) {
-      //   console.log(state.data.adopter.type)
-      //   const fiscalReduction = fiscalHelper[state.data.adopter.type]
-      //   if (!fiscalReduction) {
-      //     alert("Cette réduction fiscale n'existe pas.")
-      //     return;
-      //   }
-      //   return fiscalReduction;
-      // },
       getAdopter: state => state.data.adopter,
       getCustomerModel: state => new CustomerModel(state.data),
       getOrder: state => state.data.order,
@@ -148,7 +95,11 @@ export default class BaseFormStore {
         })
       },
       incrementStep(context) {
-        context.commit('incrementStep')
+        if (context.state.data.step === context.state.form.steps.length) {
+          context.dispatch("loadNextForm").then(() => context.commit('incrementStep'))
+        } else {
+          context.commit('incrementStep')
+        }
       },
       decrementStep(context) {
         if (context.state.data.step > 0) {
@@ -161,6 +112,11 @@ export default class BaseFormStore {
           context.dispatch("updateForm", dataObject).then(() => {
             resolve()
           })
+        })
+      },
+      loadNextForm(context) {
+        return new Promise(resolve => {
+          context.state.form.nextForm(context).then(() => resolve())
         })
       }
     }
