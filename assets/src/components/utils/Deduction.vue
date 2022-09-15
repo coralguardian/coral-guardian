@@ -27,7 +27,7 @@ export default {
       if (!FiscalEnum.isPropertyValid(this.adopter.type)) {
         throw "Cette réduction fiscale n'existe pas !"
       }
-      return fiscalReductions
+      return fiscalReductions[this.adopter.type]
     },
     options() {
       return {
