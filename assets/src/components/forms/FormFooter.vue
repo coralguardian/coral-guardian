@@ -41,7 +41,7 @@ export default {
       currentStep: 'getCurrentStep'
     }),
     displayPreviousButton() {
-      return this.step > 0 && this.currentStep.back !== false && !this.customPreviousHide
+      return this.step > 1 && this.currentStep.back !== false && !this.customPreviousHide
     }
   },
   methods: {

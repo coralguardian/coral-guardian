@@ -22,8 +22,6 @@ export default class OrderModel {
       order.donationOrdered = [new DonationOrderModel(data)]
     }
 
-    console.log(order)
-
     return order;
   }
 }
