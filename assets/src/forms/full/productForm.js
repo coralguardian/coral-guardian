@@ -29,6 +29,13 @@ export default class ProductForm extends AbstractForm {
     })
   }
 
+  unload(state) {
+    return new Promise(resolve => {
+      state.data.order.productType = null
+      resolve()
+    })
+  }
+
   steps = [
     {
       tab: {

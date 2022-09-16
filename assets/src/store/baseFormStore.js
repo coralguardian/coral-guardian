@@ -1,4 +1,4 @@
-import {merge} from "lodash";
+import {concat, merge} from "lodash";
 import DonationModel from "../models/donationModel";
 import CustomerModel from "@/models/customerModel";
 import DonationHelper from "@/helpers/donationHelper";
@@ -56,12 +56,16 @@ export default class BaseFormStore {
     }
 
     this.getters = {
-      getForm: () => {
-        throw "implement this method"
+      getSteps: state => {
+        let steps = []
+        state.forms.forEach(form => {
+          steps = concat(steps, form.getSteps())
+        })
+        return steps
       },
       step: state => state.data.step,
-      getCurrentStep: (state, getters) => getters.getForm.steps[state.data.step],
-      stepCount: (state, getters) => getters.getForm.steps.length,
+      getCurrentStep: (state, getters) => getters.getSteps[state.data.step],
+      stepCount: (state, getters) => getters.getSteps.length,
       getApiData: (state, getters) => getters.getCurrentStep.api ? getters.getCurrentStep.api : null,
       getOrderToken: state => state.data.orderToken,
       getPostPaymentDataDonation: state => new DonationModel(state.data),
@@ -96,7 +100,7 @@ export default class BaseFormStore {
       },
       incrementStep(context) {
         return new Promise(resolve => {
-          if (context.state.data.step === context.state.form.steps.length) {
+          if (context.state.data.step === context.getters.getSteps.length) {
             context.dispatch("loadNextForm")
               .then(() => {
                 context.commit('incrementStep')
@@ -110,7 +114,12 @@ export default class BaseFormStore {
       },
       decrementStep(context) {
         if (context.state.data.step > 0) {
+          let formToUnload = null;
+          if (!Object.is(context.getters.getCurrentForm, context.getters.getPreviousForm)) {
+            formToUnload = context.getters.getCurrentForm
+          }
           context.commit('decrementStep')
+          context.commit('unloadForm', formToUnload)
         }
       },
       redirectToPaymentStep(context, data) {
@@ -123,7 +132,7 @@ export default class BaseFormStore {
       },
       loadNextForm(context) {
         return new Promise(resolve => {
-          context.state.form.nextForm(context).then(() => resolve())
+          context.getters.getCurrentForm.nextForm(context).then(() => resolve())
         })
       }
     }

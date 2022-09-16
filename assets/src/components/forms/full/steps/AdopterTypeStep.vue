@@ -52,12 +52,8 @@ export default {
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      resetForm: "resetForm",
       incrementStep: "incrementStep"
     })
-  },
-  mounted() {
-    this.resetForm()
   }
 }
 </script>

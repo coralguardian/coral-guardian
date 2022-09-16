@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {BaseAdoptionFormStore} from "@/store/baseAdoptionFormStore";
-import {cloneDeep} from "lodash";
 import adoptionHelper from "../helpers/adoptionHelper";
 import AbstractForm from "../forms/abstractForm";
 import RecipientFullForm from "../forms/full/recipientFullForm";
@@ -13,7 +12,6 @@ import FinalGiftForm from "@/forms/full/finalGiftForm";
 import GiftMessageModel from "@/models/giftMessageModel";
 import axios from "axios";
 import {checkStepsToDisplay} from "@/helpers/functionHelper";
-import EmptyForm from "@/forms/full/emptyForm";
 import ActionEnum from "@/enums/actionEnum";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
@@ -48,15 +46,34 @@ export default new Vuex.Store({
       },
       project: null
     },
-    baseForm: new EmptyForm(),
-    form: new EmptyForm(),
+    forms: [],
     products: null
   },
   getters: {
     ...baseStore.getters,
-    getForm: state => state.form,
     getCurrentStep: (state, getters) => {
-      return getters.getForm.steps[state.data.step - 1]
+      return getters.getSteps[state.data.step - 1]
+    },
+    getStepsNumbers: (state) => state.forms.map(form => form.getSteps().length),
+    getCurrentForm: (state, getters) => {
+      let stepsNumbers = getters.getStepsNumbers
+      let value = 0;
+      for (let i = 0; i < stepsNumbers.length; i++) {
+        value += stepsNumbers[i]
+        if (value >= state.data.step) {
+          return state.forms[i]
+        }
+      }
+    },
+    getPreviousForm: (state, getters) => {
+      let stepsNumbers = getters.getStepsNumbers
+      let value = 1;
+      for (let i = 0; i < stepsNumbers.length; i++) {
+        value += stepsNumbers[i]
+        if (value >= state.data.step) {
+          return state.forms[i]
+        }
+      }
     },
     getDefaultTranslation: state => {
       let defaultTranslation = 'default.'
@@ -76,17 +93,13 @@ export default new Vuex.Store({
   },
   mutations: {
     ...baseStore.mutations,
-    loadSpecificForm(state, {form, steps}) {
-      let stateSteps = state.form.getSteps()
-      form.steps = stateSteps.concat(steps)
-      state.form = form
-      if (state.baseForm instanceof EmptyForm) {
-        state.baseForm = form
-      }
+    loadSpecificForm(state, form) {
+      state.forms.push(form)
     },
-    resetForm(state) {
-      state.form = cloneDeep(state.baseForm)
-      state.data.order.productType = null
+    unloadForm(state, formToUnload) {
+      formToUnload.unload(state).then(() => {
+        state.forms = state.forms.filter(form => !Object.is(form, formToUnload))
+      })
     },
     updateProducts(state, products) {
       state.data.products = products
@@ -125,15 +138,15 @@ export default new Vuex.Store({
           let steps = checkStepsToDisplay(form, context.state)
           if (steps.length === 0 && form !== null) {
             form.nextForm(context).then(() => resolve())
+          } else if (form === null) {
+            throw "Form should not be null"
           } else {
-            context.commit("loadSpecificForm", {form, steps})
+            form.steps = steps
+            context.commit("loadSpecificForm", form)
             resolve()
           }
         }
       })
-    },
-    resetForm(context) {
-      context.commit("resetForm")
     },
     loadProducts(context) {
       return new Promise((resolve, reject) => {

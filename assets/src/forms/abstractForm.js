@@ -16,4 +16,13 @@ export default class AbstractForm {
   nextForm() {
     throw "Implement 'nextForm' method !"
   }
+  // method exécutée lors du déchargement d'un formulaire
+  /**
+   * @property state - le state du store
+   * @returns {Promise<unknown>}
+   */
+  unload() {
+    console.log("You should Implement 'unload' method !")
+    return new Promise(resolve => resolve())
+  }
 }

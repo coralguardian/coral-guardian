@@ -11,13 +11,13 @@
         <div v-for="index in stepCount" :key="index">
 
           <v-stepper-step
-              v-show="!form.steps[index - 1].tab.hide || stepNumber >= index"
+              v-show="!steps[index - 1].tab.hide || stepNumber >= index"
               color="tertiary"
               :complete="stepNumber > index"
               :step="index"
               :key="'tab' + index"
           >
-            {{ $t(form.steps[index - 1].tab.title) }}
+            {{ $t(steps[index - 1].tab.title) }}
           </v-stepper-step>
 
           <v-stepper-content
@@ -26,26 +26,26 @@
           >
             <transition
                 name="fade"
-                v-if="form.steps[index - 1].component === currentStep.component && index === stepNumber"
+                v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
             >
 
               <step
-                  :class="form.steps[index - 1].larger ? 'large-step' : ''"
-                  :title="form.steps[index - 1].title ? form.steps[index - 1].title : ''"
-                  :is-singular="form.steps[index - 1].singularTitle"
-                  :is-specific="form.steps[index - 1].specificTitle"
-                  :id="form.steps[index - 1].component"
+                  :class="steps[index - 1].larger ? 'large-step' : ''"
+                  :title="steps[index - 1].title ? steps[index - 1].title : ''"
+                  :is-singular="steps[index - 1].singularTitle"
+                  :is-specific="steps[index - 1].specificTitle"
+                  :id="steps[index - 1].component"
               >
 
                 <component
-                    :is="form.steps[index - 1].component"
-                    v-bind="form.steps[index - 1].props"
-                    v-if="form.steps[index - 1].component === currentStep.component && index === stepNumber"
+                    :is="steps[index - 1].component"
+                    v-bind="steps[index - 1].props"
+                    v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
                 />
 
                 <form-footer
                     class="mt-5"
-                    v-if="currentStep.component !== 'AdopterTypeStep' && form.steps[index - 1].component === currentStep.component && index === stepNumber"
+                    v-if="currentStep.component !== 'AdopterTypeStep' && steps[index - 1].component === currentStep.component && index === stepNumber"
                 />
               </step>
 
@@ -84,7 +84,7 @@ export default {
   props: {},
   computed: {
     ...mapGetters({
-      form: 'getForm',
+      steps: 'getSteps',
       stepNumber: "step",
       currentStep: "getCurrentStep",
       stepCount: "stepCount"

@@ -71,18 +71,9 @@ export class BaseAdoptionFormStore {
 
     this.getters = {
       ...baseForm.getters,
-      // getForm: state => {
-      //   if (state.data.target === null) {
-      //     return state.baseForm
-      //   }
-      //   let form = cloneDeep(state.forms.find(form => form.target === state.data.target))
-      //   let baseForm = cloneDeep(state.baseForm);
-      //   return mergeWith(baseForm, form, customizerMergeObjectWithArrays)
-      // },
       getTarget: state => state.data.target,
-      // count: state => state.data.count,
       getCurrentStep: (state, getters) => {
-        return getters.getForm.steps[state.data.step]
+        return getters.getSteps[state.data.step]
       },
       getPostPaymentDataAdoption(state) {
         if (state.data.order.type === "gift") {
@@ -109,24 +100,24 @@ export class BaseAdoptionFormStore {
         state.data.order.quantity--
         state.data.order.price = state.data.order.quantity * state.data.baseElementPrice
       },
-      resetState(state) {
-        state.data.target = null
-        state.data.order.quantity = 1
-        state.data.order.price = state.data.baseElementPrice
-        state.data.order.customAmount = false
-      }
+      // resetState(state) {
+      //   state.data.target = null
+      //   state.data.order.quantity = 1
+      //   state.data.order.price = state.data.baseElementPrice
+      //   state.data.order.customAmount = false
+      // }
     };
 
     this.actions = {
       ...baseForm.actions,
-      decrementStep(context) {
-        if (context.state.data.step === 1) {
-          context.commit('decrementStep')
-          context.commit('resetState')
-        } else if (context.state.data.step > 0) {
-          context.commit('decrementStep')
-        }
-      },
+      // decrementStep(context) {
+      //   if (context.state.data.step === 1) {
+      //     context.commit('decrementStep')
+      //     context.commit('resetState')
+      //   } else if (context.state.data.step > 0) {
+      //     context.commit('decrementStep')
+      //   }
+      // },
       incrementCount(context) {
         context.commit('incrementCount')
       },

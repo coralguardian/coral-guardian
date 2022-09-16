@@ -65,11 +65,9 @@ export default {
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      resetForm: "resetForm"
     })
   },
   mounted() {
-    this.resetForm()
     this.$root.$on(this.customValidationEventName, () => {
       if (this.project !== null) {
         this.$root.$emit('StepValid')
