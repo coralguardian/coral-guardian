@@ -91,14 +91,6 @@ export class BaseAdoptionFormStore {
           return new AdoptionModel(state.data)
         }
       },
-      getPaymentData: state => {
-        return {
-          count: state.data.count,
-          price: state.data.price,
-          customAmount: state.data.customAmount,
-          donationAmount: state.data.donationAmount
-        }
-      },
       getPostAdoptionsData(state) {
         return new AdopteeModel(state.data)
       },

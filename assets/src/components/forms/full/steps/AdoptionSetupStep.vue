@@ -64,17 +64,17 @@ export default {
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      loadAdoptionStep: "loadAdoptionStep"
+      // loadAdoptionStep: "loadAdoptionStep"
     })
   },
   mounted() {
     this.$root.$on(this.customValidationEventName, () => {
       if (this.isCoral || this.isReef) {
-        this.loadAdoptionStep().then(() => {
+        // this.loadAdoptionStep().then(() => {
           this.$root.$emit('StepValid')
           this.$root.$emit('IsLoaded')
           this.displayErrorMessage = false
-        })
+        // })
       } else {
         this.$root.$emit(this.validationErrorEventName)
         this.$root.$emit('IsLoaded')

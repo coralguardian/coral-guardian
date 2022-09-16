@@ -76,9 +76,8 @@ export default new Vuex.Store({
   },
   mutations: {
     ...baseStore.mutations,
-    loadSpecificForm(state, form) {
+    loadSpecificForm(state, {form, steps}) {
       let stateSteps = state.form.getSteps()
-      let steps = checkStepsToDisplay(form, state)
       form.steps = stateSteps.concat(steps)
       state.form = form
       if (state.baseForm instanceof EmptyForm) {
@@ -87,17 +86,7 @@ export default new Vuex.Store({
     },
     resetForm(state) {
       state.form = cloneDeep(state.baseForm)
-    },
-    loadAdoptionStep(state) {
-      const type = state.data.order.productType
-      let form = state.form.getForm()
-      for (let i = 0; i < form.steps.length; i++) {
-        let step = form.steps[i]
-        if (step.componentType && step.componentType === "adoption") {
-          step.component = type === "coral" ? "CoralAdoptionStep" : "ReefAdoptionStep"
-          break
-        }
-      }
+      state.data.order.productType = null
     },
     updateProducts(state, products) {
       state.data.products = products
@@ -105,12 +94,6 @@ export default new Vuex.Store({
   },
   actions: {
     ...baseStore.actions,
-    loadAdoptionStep(context) {
-      return new Promise((resolve) => {
-        context.commit('loadAdoptionStep')
-        resolve()
-      })
-    },
     loadPaymentNextSteps(context) {
       return new Promise((resolve) => {
         if (context.state.data.order.payment_method.type === "bank_transfert") {
@@ -139,8 +122,13 @@ export default new Vuex.Store({
         if (!(form instanceof AbstractForm)) {
           reject('Formulaire incomplet')
         } else {
-          context.commit("loadSpecificForm", form)
-          resolve()
+          let steps = checkStepsToDisplay(form, context.state)
+          if (steps.length === 0 && form !== null) {
+            form.nextForm(context).then(() => resolve())
+          } else {
+            context.commit("loadSpecificForm", {form, steps})
+            resolve()
+          }
         }
       })
     },
@@ -155,7 +143,12 @@ export default new Vuex.Store({
         axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject)
           .then(resp => {
             context.commit("updateProducts", resp.data)
-            resolve()
+            const uniqueTypes = [...new Set(resp.data.map(product => product.key))];
+            if (uniqueTypes.length === 1) {
+              context.dispatch("updateForm", {order: {productType: uniqueTypes.join()}}).then(() => resolve())
+            } else {
+              resolve()
+            }
           })
           .catch(err => {
             reject(err)

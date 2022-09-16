@@ -71,7 +71,6 @@ export default {
   mounted() {
     this.resetForm()
     this.$root.$on(this.customValidationEventName, () => {
-      console.log("cocuo")
       if (this.project !== null) {
         this.$root.$emit('StepValid')
         this.displayErrorMessage = false

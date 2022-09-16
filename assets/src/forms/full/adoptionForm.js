@@ -1,18 +1,17 @@
 import AbstractForm from "../abstractForm";
-import ProjectEnum from "@/enums/projectEnum";
+import ProductEnum from "@/enums/productEnum";
 
 export default class AdoptionForm extends AbstractForm {
 
   steps = [
     {
       tab: {
-        title: "default.stepper.header.full.adoption"
+        title: "default.stepper.header.adoption"
       },
-      component: "AdoptionSetupStep",
-      validate: true,
-      customValidation: true,
+      title: "default.stepper.adoption.title",
+      component: "ReefAdoptionStep",
       display: (state) => {
-        return state.data.project !== ProjectEnum.spain
+        return state.data.order.productType === ProductEnum.reef
       }
     },
     {
@@ -20,8 +19,10 @@ export default class AdoptionForm extends AbstractForm {
         title: "default.stepper.header.adoption"
       },
       title: "default.stepper.adoption.title",
-      component: null,
-      componentType: "adoption"
+      component: "CoralAdoptionStep",
+      display: (state) => {
+        return state.data.order.productType === ProductEnum.coral
+      }
     },
     {
       tab: {

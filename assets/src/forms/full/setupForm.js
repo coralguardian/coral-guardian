@@ -1,9 +1,8 @@
 import AbstractForm from "../abstractForm";
 import adoptionHelper from "@/helpers/adoptionHelper";
-import AdoptionForm from "@/forms/full/adoptionForm";
-import GiftForm from "@/forms/full/giftForm";
 import DonationForm from "@/forms/full/donationForm";
 import donationHelper from "@/helpers/donationHelper";
+import ProductForm from "@/forms/full/productForm";
 
 export default class SetupForm extends AbstractForm {
 
@@ -21,7 +20,7 @@ export default class SetupForm extends AbstractForm {
           case adoptionHelper.me:
             context.dispatch('loadProducts')
               .then(() => {
-                context.dispatch('loadForm', new AdoptionForm())
+                context.dispatch('loadForm', new ProductForm())
                   .then(() => {
                     context.dispatch('updateForm', {order: {type: 'regular'}})
                       .then(() => resolve())
@@ -35,7 +34,7 @@ export default class SetupForm extends AbstractForm {
           case adoptionHelper.friend:
             context.dispatch('loadProducts')
               .then(() => {
-                context.dispatch('loadForm', new GiftForm())
+                context.dispatch('loadForm', new ProductForm())
                   .then(() => {
                     context.dispatch('updateForm', {order: {type: 'gift'}})
                       .then(() => resolve())
