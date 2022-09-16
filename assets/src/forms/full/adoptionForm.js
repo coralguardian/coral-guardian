@@ -15,6 +15,10 @@ export default class AdoptionForm extends AbstractForm {
     const lowestPrice = Math.min(...products.map(product => product.price))
     state.data.order.price = lowestPrice
     state.data.baseElementPrice = lowestPrice
+
+    if (products.length === 1) {
+      state.data.selectedProduct = products[0]
+    }
   }
 
   steps = [
@@ -44,11 +48,7 @@ export default class AdoptionForm extends AbstractForm {
       },
       title: "default.stepper.information.title",
       component: "InformationStep",
-      validate: true,
-      api: {
-        method: "post",
-        endpoint: "customer"
-      }
+      validate: true
     },
     {
       tab: {
@@ -60,7 +60,7 @@ export default class AdoptionForm extends AbstractForm {
       customValidation: true,
       api: {
         method: "post",
-        endpoint: "adoption"
+        endpoint: "createOrder"
       }
     }
   ]

@@ -55,7 +55,7 @@ export default {
       return new Promise((resolve, reject) => {
         let data;
         if (this.mode === 'adoption') {
-          data = this.postPaymentData
+          data = this.$store.getters.getOrderModel
         } else {
           data = this.$store.getters.getPostPaymentDataDonation
         }

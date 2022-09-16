@@ -154,21 +154,12 @@ export default {
         adopter: this.adopter
       })
     })
-    this.$root.$on(this.apiEventName, () => {
-      this.post(this.customerModel, this.apiData.endpoint)
-          .then((resp) => {
-            this.updateForm({
-              adopter: {id: resp.data.uuid}
-            }).then(() => this.$root.$emit('ApiValid'))
-          })
-    })
     this.$root.$on(this.validationErrorEventName, () => {
       this.$vuetify.goTo('#country-input', {container: '#InformationStep'})
     })
   },
   beforeDestroy() {
     this.$root.$off(this.validationEventName);
-    this.$root.$off(this.apiEventName);
     this.$root.$off(this.validationErrorEventName);
   }
 }

@@ -1,7 +1,6 @@
 import AbstractForm from "../abstractForm";
 import adoptionHelper from "@/helpers/adoptionHelper";
 import DonationForm from "@/forms/full/donationForm";
-import donationHelper from "@/helpers/donationHelper";
 import ProductForm from "@/forms/full/productForm";
 
 export default class SetupForm extends AbstractForm {
@@ -44,7 +43,7 @@ export default class SetupForm extends AbstractForm {
           case "donation":
             context.dispatch('loadForm', new DonationForm(context.state.data.project))
               .then(() => {
-                context.dispatch('updateForm', {donation: {type: donationHelper.oneshot}})
+                context.dispatch('updateForm')
                   .then(() => resolve())
               })
             break;

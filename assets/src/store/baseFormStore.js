@@ -1,7 +1,8 @@
 import {concat, merge} from "lodash";
 import DonationModel from "../models/donationModel";
 import CustomerModel from "@/models/customerModel";
-import DonationHelper from "@/helpers/donationHelper";
+import OrderModel from "@/models/orderModel";
+import DonationEnum from "@/enums/donationEnum";
 
 // public path is from wp, used to set full images path
 /* global publicPath */
@@ -45,7 +46,7 @@ export default class BaseFormStore {
         },
         orderToken: "",
         donation: {
-          type: DonationHelper.monthly,
+          type: DonationEnum.monthly,
           price: 0,
           payment_method: {
             type: "credit_card"
@@ -76,7 +77,7 @@ export default class BaseFormStore {
       getDonation: state => state.data.donation,
       getFormType: state => state.formType,
       getApiNamespace: state => state.apiNamespace,
-      getDonationEnum: () => DonationHelper
+      getOrderModel: (state) => new OrderModel(state.data)
     };
 
     this.mutations = {

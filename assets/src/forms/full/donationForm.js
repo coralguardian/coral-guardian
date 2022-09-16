@@ -19,11 +19,7 @@ export default class DonationForm extends AbstractForm {
         },
         title: "default.stepper.information.title",
         component: "InformationStep",
-        validate: true,
-        api: {
-          method: "post",
-          endpoint: "customer"
-        }
+        validate: true
       },
       {
         tab: {

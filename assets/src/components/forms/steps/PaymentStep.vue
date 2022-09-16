@@ -49,6 +49,7 @@ import {mapActions, mapGetters, mapState} from "vuex";
 import apiMixin from "../../../mixins/apiMixin";
 import GtagService from "../../../services/gtagService";
 import AdopterEnum from "@/enums/adopterEnum";
+import DonationEnum from "@/enums/donationEnum";
 
 export default {
   name: "payment-step",
@@ -83,7 +84,6 @@ export default {
       order: "getOrder",
       donation: "getDonation",
       formType: "getFormType",
-      donationEnum: "getDonationEnum",
       adopter: "getAdopter"
     }),
     ...mapState({
@@ -149,7 +149,7 @@ export default {
           this.updateElementStatus("success")
           this.$root.$off(this.customValidationEventName)
           this.$root.$on(this.customValidationEventName, () => {
-            if (this.element.type !== this.donationEnum.monthly && this.formType === "advanced") {
+            if (this.element.type !== DonationEnum.monthly && this.formType === "advanced") {
               this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
             } // cas du don suite à une adoption, on a plus d'étape à charger
             else {
@@ -229,13 +229,12 @@ export default {
       if (this.element.payment_method.type === "bank_transfert") {
         let data;
         if (this.mode === 'adoption') {
-          data = this.$store.getters.getPostPaymentDataAdoption
+          data = this.$store.getters.getOrderModel
         } else {
           data = this.$store.getters.getPostPaymentDataDonation
         }
         this[this.apiData.method](data, this.apiData.endpoint)
             .then((resp) => {
-              console.log(resp)
               const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}
               this.updateForm(data).then(() => {
                 this.loadPaymentNextSteps().then(() => this.$root.$emit('ApiValid'))
@@ -260,7 +259,7 @@ export default {
   },
   mounted() {
     (new GtagService()).executeTag(this.element, this.mode);
-    if (this.adopter.type === AdopterEnum.company && !this.element.clientSecret && this.element.type !== this.donationEnum.monthly) {
+    if (this.adopter.type === AdopterEnum.company && !this.element.clientSecret && this.element.type !== DonationEnum.monthly) {
       this.displayPaymentMethod = true
     } else {
       this.displayCard()

@@ -2,7 +2,7 @@ import BaseFormStore from "../store/baseFormStore";
 import AdoptionModel from "../models/adoptionModel";
 import GiftAdoptionModel from "../models/giftAdoptionModel";
 import AdopteeModel from "@/models/adopteeModel";
-import donationHelper from "@/helpers/donationHelper";
+import ActionEnum from "@/enums/actionEnum";
 
 const baseForm = new BaseFormStore()
 
@@ -43,9 +43,9 @@ export class BaseAdoptionFormStore {
             message: ""
           },
           donation: {
-            ...baseForm.state.data.donation,
-            type: donationHelper.monthly
-          }
+            ...baseForm.state.data.donation
+          },
+          selectedProduct: null
         },
         baseForm: {
           tabs: [
@@ -76,7 +76,7 @@ export class BaseAdoptionFormStore {
         return getters.getSteps[state.data.step]
       },
       getPostPaymentDataAdoption(state) {
-        if (state.data.order.type === "gift") {
+        if (state.data.order.type === ActionEnum.gift) {
           return new GiftAdoptionModel(state.data)
         } else {
           return new AdoptionModel(state.data)
