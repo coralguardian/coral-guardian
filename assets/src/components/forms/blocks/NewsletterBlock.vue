@@ -4,11 +4,11 @@
       {{ $t("default.newsletter.title") }}
     </p>
     <p>
-      {{ $t("default.newsletter.description") }}
+      {{ $t(description) }}
     </p>
     <v-checkbox color="tertiary" class="mt-0" :input-value="value" @change="$emit('input', $event)">
       <template v-slot:label>
-        <p class="black--text">{{ $t("default.newsletter.label") }}</p>
+        <p class="black--text">{{ $t(label) }}</p>
       </template>
     </v-checkbox>
     <div v-if="full && value">
@@ -24,6 +24,7 @@
 <script>
 import TextInput from "../../utils/TextInput";
 import {mapGetters} from "vuex";
+import ActionEnum from "@/enums/actionEnum";
 
 export default {
   name: "newsletter-block",
@@ -39,8 +40,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      adopter: "getAdopter"
-    })
+      adopter: "getAdopter",
+      target: "getTarget"
+    }),
+    label() {
+      return this.target === ActionEnum.getTarget(ActionEnum.adoption) ? "default.newsletter.label.adoption" : "default.newsletter.label.other"
+    },
+    description() {
+      return this.target === ActionEnum.getTarget(ActionEnum.adoption) ? "default.newsletter.description.adoption" : "default.newsletter.description.other"
+    }
   }
 }
 </script>

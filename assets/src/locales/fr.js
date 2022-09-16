@@ -377,9 +377,15 @@ export default {
     }
   },
   newsletter: {
-    title: "Inscrivez-vous à la newsletter",
-    description: "Recevez des nouvelles de l'avancée de nos projets tous les mois.",
-    label: "Je souhaite m'inscrire à la newsletter mensuelle de Coral Guardian",
+    title: "Petit bonus : inscrivez-vous à notre newsletter",
+    description: {
+      adoption: "Recevez des nouvelles de votre adoption et de l'avancée des projets de Coral Guardian",
+      other: "Recevez des nouvelles de l'avancée de nos projets tous les mois."
+    },
+    label: {
+      adoption: "Je souhaite m'inscrire aux nouvelles envoyées par Coral Guardian",
+      other: "Je souhaite m'inscrire à la newsletter mensuelle de Coral Guardian",
+    },
     otherEmail: {
       description: "Si vous souhaitez vous inscrire avec <b>une autre adresse email</b> que celle renseignée dans le formulaire," +
         " merci de renseigner le champ ci-dessous.",
