@@ -84,7 +84,8 @@ export default {
       order: "getOrder",
       donation: "getDonation",
       formType: "getFormType",
-      adopter: "getAdopter"
+      adopter: "getAdopter",
+      project: "getProject"
     }),
     ...mapState({
       baseElementPrice: state => state.data.baseElementPrice,
@@ -108,12 +109,12 @@ export default {
     paymentDescription() {
       let description = ''
       if (this.mode === 'adoption') {
-        description = this.$tc('default.stepper.payment.reminder.adoption.description', this.order.quantity, {
+        description = this.$tc('default.stepper.payment.reminder.adoption.description.' + this.project, this.order.quantity, {
           count: this.order.quantity,
           item: this.specificTranslation ? this.specific.item : this.translation.item
         })
       } else {
-        description = this.$t('default.stepper.payment.reminder.donation.description', {
+        description = this.$t('default.stepper.payment.reminder.donation.description.' + this.project, {
           item: this.$t('default.' + this.donation.type)
         })
       }

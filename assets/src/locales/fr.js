@@ -275,7 +275,10 @@ export default {
       reminder: {
         title: "Rappel de votre don",
         adoption: {
-          description: "{count} {item} transplanté sur l'île d'Hatamin en Indonésie. | {count} {item} transplantés sur l'île d'Hatamin en Indonésie."
+          description: {
+            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indonésie. | {count} {item} adoptés sur l'île d'Hatamin en Indonésie.",
+            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée. | {count} {item} adoptés à Punta de la Mona en Méditerranée."
+          }
         },
         donation: {
           description: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions."
