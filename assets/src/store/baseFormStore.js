@@ -59,8 +59,8 @@ export default class BaseFormStore {
     this.getters = {
       getSteps: state => {
         let steps = []
-        state.forms.forEach(form => {
-          steps = concat(steps, form.getSteps())
+        state.data.forms.forEach(form => {
+          steps = concat(steps, form.steps)
         })
         return steps
       },
@@ -82,7 +82,14 @@ export default class BaseFormStore {
 
     this.mutations = {
       updateForm(state, data) {
+        // console.log(data)
+        // state.data = data
         merge(state.data, data)
+      },
+      forceUpdate(state, data) {
+        // console.log(data)
+        state.data = data
+        // merge(state.data, data)
       },
       incrementStep(state) {
         state.data.step++
@@ -93,6 +100,13 @@ export default class BaseFormStore {
     };
 
     this.actions = {
+      forceUpdate(context, data) {
+        console.log(data)
+        return new Promise((resolve) => {
+          context.commit('forceUpdate', data)
+          resolve()
+        })
+      },
       updateForm(context, data) {
         return new Promise((resolve) => {
           context.commit('updateForm', data)

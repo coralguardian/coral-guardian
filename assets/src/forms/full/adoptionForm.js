@@ -11,7 +11,7 @@ export default class AdoptionForm extends AbstractForm {
   }
 
   onload(state) {
-    const products = state.data.products.filter(product => product.key === state.data.order.productType)
+    const products = state.products.filter(product => product.key === state.data.order.productType)
     const lowestPrice = Math.min(...products.map(product => product.price))
     state.data.order.price = lowestPrice
     state.data.baseElementPrice = lowestPrice

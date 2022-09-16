@@ -62,8 +62,7 @@ export class BaseAdoptionFormStore {
               classes: "choice-step"
             }
           ]
-        },
-        forms: []
+        }
       }
     }
 

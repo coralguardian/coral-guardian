@@ -45,9 +45,9 @@ export default new Vuex.Store({
         message: "",
         toSendOn: null
       },
-      project: null
+      project: null,
+      forms: []
     },
-    forms: [],
     products: null
   },
   getters: {
@@ -55,14 +55,21 @@ export default new Vuex.Store({
     getCurrentStep: (state, getters) => {
       return getters.getSteps[state.data.step - 1]
     },
-    getStepsNumbers: (state) => state.forms.map(form => form.getSteps().length),
+    getStepsNumbers: (state) => {
+      if (state.data.forms.length) {
+        return state.data.forms.map(form => {
+          return form.steps.length
+        })
+      }
+      return []
+    },
     getCurrentForm: (state, getters) => {
       let stepsNumbers = getters.getStepsNumbers
       let value = 0;
       for (let i = 0; i < stepsNumbers.length; i++) {
         value += stepsNumbers[i]
         if (value >= state.data.step) {
-          return state.forms[i]
+          return state.data.forms[i]
         }
       }
     },
@@ -72,7 +79,7 @@ export default new Vuex.Store({
       for (let i = 0; i < stepsNumbers.length; i++) {
         value += stepsNumbers[i]
         if (value >= state.data.step) {
-          return state.forms[i]
+          return state.data.forms[i]
         }
       }
     },
@@ -91,21 +98,21 @@ export default new Vuex.Store({
     getGiftModel: state => new GiftModel(state.data),
     getGiftMessageModel: state => new GiftMessageModel(state.data),
     getProject: state => state.data.project,
-    getProducts: (state) => state.data.products.filter(product => product.key === state.data.order.productType)
+    getProducts: (state) => state.products.filter(product => product.key === state.data.order.productType)
   },
   mutations: {
     ...baseStore.mutations,
     loadSpecificForm(state, form) {
-      state.forms.push(form)
+      state.data.forms.push(form)
       form.onload(state)
     },
     unloadForm(state, formToUnload) {
       formToUnload.unload(state).then(() => {
-        state.forms = state.forms.filter(form => !Object.is(form, formToUnload))
+        state.data.forms = state.data.forms.filter(form => !Object.is(form, formToUnload))
       })
     },
     updateProducts(state, products) {
-      state.data.products = products
+      state.products = products
     }
   },
   actions: {

@@ -124,17 +124,18 @@ export default {
   //     }
   //   }
   // },
+  beforeCreate() {
+
+  },
   created() {
     this.fillState()
   },
   beforeMount() {
-    this.loadForm(new SetupForm())
-        .then(() => {
-          this.handleRedirection()
-        })
+    if (this.handleRedirection() === false) {
+      this.loadForm(new SetupForm())
+    }
   },
   mounted() {
-    // this.handleRedirection()
     // this.compare(fr, en)
   }
 }

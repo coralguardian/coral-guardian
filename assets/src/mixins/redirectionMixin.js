@@ -2,7 +2,6 @@ import {mapActions} from "vuex";
 import {isEmpty, merge} from "lodash";
 import adoptionHelper from "../helpers/adoptionHelper";
 import apiMixin from "./apiMixin";
-import FinalGiftForm from "@/forms/full/finalGiftForm";
 import AdopterEnum from "@/enums/adopterEnum";
 import ActionEnum from "@/enums/actionEnum";
 import ProjectEnum from "@/enums/projectEnum";
@@ -18,9 +17,9 @@ export default {
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      loadSetupNextSteps: "loadSetupNextSteps",
       loadPaymentNextSteps: "loadPaymentNextSteps",
-      loadFormSteps: "loadForm"
+      loadFormSteps: "loadForm",
+      forceUpdate: "forceUpdate"
     }),
     fillParams() {
       new URLSearchParams(window.location.search)
@@ -50,27 +49,18 @@ export default {
       if (isEmpty(this.params)) {
         this.fillParams()
       }
+      if (!this.params.payment_intent_client_secret && !this.params.adoptionUuid && !this.params.step) {
+        return false
+      }
       return new Promise((resolve, reject) => {
         // Redirection paiement
         if (this.params.payment_intent_client_secret) {
           let data = localStorage.getItem(this.params.payment_intent_client_secret);
           if (data) {
             data = JSON.parse(data)
-            this.updateForm({target: data.target})
-              .then(() => this.loadSetupNextSteps()
-                .then(() => {
-                  // si on est sur une étape après le paiement de la commande
-                  // on a payé un don
-                  if (data.step > 7) {
-                    this.updateForm({order: data.order})
-                      .then(() => this.loadPaymentNextSteps()
-                        .then(() => this.updateForm(data)
-                          .then(() => this.loadFormSteps(new FinalGiftForm())
-                            .then(() => resolve()))))
-                  } else {
-                    this.updateForm(data).then(() => resolve())
-                  }
-                }))
+            this.forceUpdate(data).then(() => {
+              resolve()
+            })
           } else {
             reject()
           }
