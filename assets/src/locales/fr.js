@@ -65,7 +65,7 @@ export default {
           company: "Adopter un récif entier à partir de 30 coraux sur notre page dédiée \"<a href='/adoptez-un-recif-entreprises/'>Adopter un récif</a>\" !"
         }
       },
-      reefs: {
+      reef: {
         lady: {
           title: "Demoiselle Bleue",
           description: "Récif Demoiselle Bleue de <b>30 coraux</b> (base de 900 €)"

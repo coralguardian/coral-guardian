@@ -15,7 +15,8 @@ export default {
   mixins: [itemTranslationMixin],
   computed: {
     ...mapGetters({
-      order: "getOrder"
+      order: "getOrder",
+      products: "getProducts"
     }),
     ...mapState({
       maxCount: state => state.data.max

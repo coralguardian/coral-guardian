@@ -8,7 +8,7 @@ export default {
         friend: adoptionHelper.friend,
         offered: adoptionHelper.offered
       },
-      reefs: adoptionHelper.reefs
+      reef: adoptionHelper.reef
     }
   }
 }

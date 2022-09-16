@@ -119,7 +119,9 @@ export default class BaseFormStore {
             formToUnload = context.getters.getCurrentForm
           }
           context.commit('decrementStep')
-          context.commit('unloadForm', formToUnload)
+          if (formToUnload !== null) {
+            context.commit('unloadForm', formToUnload)
+          }
         }
       },
       redirectToPaymentStep(context, data) {

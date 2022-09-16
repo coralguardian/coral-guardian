@@ -100,24 +100,10 @@ export class BaseAdoptionFormStore {
         state.data.order.quantity--
         state.data.order.price = state.data.order.quantity * state.data.baseElementPrice
       },
-      // resetState(state) {
-      //   state.data.target = null
-      //   state.data.order.quantity = 1
-      //   state.data.order.price = state.data.baseElementPrice
-      //   state.data.order.customAmount = false
-      // }
     };
 
     this.actions = {
       ...baseForm.actions,
-      // decrementStep(context) {
-      //   if (context.state.data.step === 1) {
-      //     context.commit('decrementStep')
-      //     context.commit('resetState')
-      //   } else if (context.state.data.step > 0) {
-      //     context.commit('decrementStep')
-      //   }
-      // },
       incrementCount(context) {
         context.commit('incrementCount')
       },

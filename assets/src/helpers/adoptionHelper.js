@@ -2,7 +2,7 @@ const adoptionHelper = {
   me: 0,
   friend: 1,
   offered: 2,
-  reefs: {
+  reef: {
     lady: {
       baseElementPrice: 900,
       specificType: "reef.lady"

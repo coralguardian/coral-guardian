@@ -10,15 +10,21 @@
         active-class="tab-active"
         :vertical="windowWidth <= 450"
     >
-      <v-tab @click="updateForm(reefs.lady)">{{ $t('default.stepper.adoption.reefs.lady.title') }}</v-tab>
-      <v-tab @click="updateForm(reefs.butterfly)">{{ $t('default.stepper.adoption.reefs.butterfly.title') }}</v-tab>
-      <v-tab @click="updateForm(reefs.napoleon)">{{ $t('default.stepper.adoption.reefs.napoleon.title') }}</v-tab>
+      <v-tab
+          v-for="product in products"
+          @click="updateForm(product)"
+          :key="product.key"
+      >
+        {{ $t('default.stepper.adoption.' + product.key + '.' + product.variant + '.title') }}
+      </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab" class="text-body-2">
-      <v-tab-item v-html="$t('default.stepper.adoption.reefs.lady.description')"/>
-      <v-tab-item v-html="$t('default.stepper.adoption.reefs.butterfly.description')"/>
-      <v-tab-item v-html="$t('default.stepper.adoption.reefs.napoleon.description')"/>
+      <v-tab-item
+          v-for="product in products"
+          :key="product.key"
+          v-html="$t('default.stepper.adoption.' + product.key + '.' + product.variant + '.description')"
+      />
     </v-tabs-items>
 
     <adoption-count-block :options="localOptions"/>
@@ -46,7 +52,7 @@ export default {
       options.item = this.translation.item;
       if (this.count === this.maxCount) {
         options.displayAlert = true;
-        options.message = this.$t('default.stepper.adoption.reefs.max', {max: this.maxCount, item: this.plural.item})
+        options.message = this.$t('default.stepper.adoption.reef.max', {max: this.maxCount, item: this.plural.item})
         this.$vuetify.goTo('#deduction', { container: '#ReefAdoptionStep' })
       }
       return options
@@ -55,10 +61,13 @@ export default {
   methods: {
     updateForm(reefType) {
       let data = {
-        ...reefType,
+        selectedProduct: {
+          ...reefType
+        },
         order: {
-          price: this.order.quantity * reefType.baseElementPrice
-        }
+          price: this.order.quantity * reefType.price
+        },
+        baseElementPrice: reefType.price
       }
       this.$store.dispatch("updateForm", data)
     },

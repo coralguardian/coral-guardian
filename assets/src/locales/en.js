@@ -59,7 +59,7 @@ export default {
           company: "Adopt an entire reef of 30 corals by clicking here \"<a href='/en/adopt-a-reef-company/'>Adopt a reef</a>\"!"
         }
       },
-      reefs: {
+      reef: {
         lady: {
           title: "Damsel Fish",
           description: "Damsel Fish Reef of <b>30 corals</b> (from 900 €)"

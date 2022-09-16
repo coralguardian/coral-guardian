@@ -13,6 +13,7 @@ import GiftMessageModel from "@/models/giftMessageModel";
 import axios from "axios";
 import {checkStepsToDisplay} from "@/helpers/functionHelper";
 import ActionEnum from "@/enums/actionEnum";
+import ProductEnum from "@/enums/productEnum";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -81,7 +82,7 @@ export default new Vuex.Store({
         case ActionEnum.donation:
           return defaultTranslation + state.data.donation.type
         default:
-          return defaultTranslation + state.data.order.productType + (state.data.order.productType === 'reef' ? ".base" : "")
+          return defaultTranslation + state.data.order.productType + (state.data.order.productType === ProductEnum.reef ? ".base" : "")
       }
     },
     getSpecificTranslation: state => state.data.specificType ? 'default.' + state.data.specificType : null,
@@ -89,12 +90,14 @@ export default new Vuex.Store({
     getGift: state => state.data.gift,
     getGiftModel: state => new GiftModel(state.data),
     getGiftMessageModel: state => new GiftMessageModel(state.data),
-    getProject: state => state.data.project
+    getProject: state => state.data.project,
+    getProducts: (state) => state.data.products.filter(product => product.key === state.data.order.productType)
   },
   mutations: {
     ...baseStore.mutations,
     loadSpecificForm(state, form) {
       state.forms.push(form)
+      form.onload(state)
     },
     unloadForm(state, formToUnload) {
       formToUnload.unload(state).then(() => {
