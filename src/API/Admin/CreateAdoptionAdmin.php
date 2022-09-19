@@ -6,7 +6,7 @@ use D4rk0snet\Adoption\Entity\GiftAdoption;
 use D4rk0snet\Adoption\Models\AdoptionModel;
 use D4rk0snet\Adoption\Models\GiftAdoptionModel;
 use D4rk0snet\Adoption\Service\AdoptionService;
-use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
+use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
 use D4rk0snet\Coralguardian\Entity\CustomerEntity;
 use D4rk0snet\NamingFileImport\Service\NamingFileService;
 use D4rk0snet\NamingFileImport\Service\RecipientFileService;

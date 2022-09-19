@@ -11,7 +11,7 @@ use D4rk0snet\Coralguardian\Entity\CustomerEntity;
 use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\Donation\Entity\DonationEntity;
 use D4rk0snet\Donation\Entity\RecurringDonationEntity;
-use D4rk0snet\Donation\Enums\PaymentMethod;
+use D4rk0snet\CoralOrder\Enums\PaymentMethod;
 use D4rk0snet\GiftCode\Entity\GiftCodeEntity;
 use DateTime;
 use Doctrine\DBAL\Connection;

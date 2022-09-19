@@ -4,7 +4,7 @@ namespace D4rk0snet\Coralguardian\Event;
 
 use D4rk0snet\Adoption\Entity\AdoptionEntity;
 use D4rk0snet\Adoption\Service\RedirectionService;
-use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
+use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
 use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
 

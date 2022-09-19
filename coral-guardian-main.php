@@ -9,8 +9,17 @@
  * Author URI:
  * Licence: GPLv2
  */
-add_action('plugins_loaded', [\D4rk0snet\Coralguardian\Plugin::class, "launchActions"]);
-add_action('admin_menu', [\D4rk0snet\Coralguardian\Service\AdminService::class, "addTopMenu"]);
-add_action("admin_notices", [\D4rk0snet\Coralguardian\Service\AdminService::class, "handleAdminNotices"]);
-add_action("init", [\D4rk0snet\Coralguardian\Service\AdminService::class, "init"]);
-add_action('cli_init', [\D4rk0snet\Coralguardian\Plugin::class,'addCliCommand']);
+
+use D4rk0snet\Adoption\Enums\CoralAdoptionActions;
+use D4rk0snet\Coralguardian\Listener\NewAdoptionListener;
+use D4rk0snet\Coralguardian\Listener\NewGiftAdoptionListener;
+use D4rk0snet\Coralguardian\Plugin;
+use D4rk0snet\Coralguardian\Service\AdminService;
+
+add_action('plugins_loaded', [Plugin::class, "launchActions"]);
+add_action('admin_menu', [AdminService::class, "addTopMenu"]);
+add_action("admin_notices", [AdminService::class, "handleAdminNotices"]);
+add_action("init", [AdminService::class, "init"]);
+add_action('cli_init', [Plugin::class,'addCliCommand']);
+add_action(CoralAdoptionActions::NEW_GIFT_ADOPTION->value, [NewGiftAdoptionListener::class, 'doAction', 10, 2]);
+add_action(CoralAdoptionActions::NEW_ADOPTION->value, [NewAdoptionListener::class, 'doAction', 10, 2]);
