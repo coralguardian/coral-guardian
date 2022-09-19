@@ -2,7 +2,7 @@
 
 namespace D4rk0snet\Coralguardian\API\Admin;
 
-use D4rk0snet\Coralguardian\Entity\CompanyCustomerEntity;
+use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
 use D4rk0snet\Coralguardian\Entity\CustomerEntity;
 use D4rk0snet\Donation\Enums\DonationRecurrencyEnum;
 use D4rk0snet\Donation\Models\DonationModel;
