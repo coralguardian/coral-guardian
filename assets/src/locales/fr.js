@@ -270,15 +270,30 @@ export default {
             " Une fois validé, vous recevrez un email vous permettant de continuer votre commande."
         }
       },
+      donation: {
+        title: "Soutenez nos actions au quotidien",
+        description: "Pour accompagner votre adoption, soutenez nos actions au quotidien avec un don mensuel optionnel <b>à partir de 2€</b> !",
+        label: "Mon don mensuel",
+        buttons: {
+          through: "Passer cette étape",
+          confirm: "Valider"
+        }
+      },
       title: "Procédez au paiement",
       description: "Le paiement est sécurisé avec Stripe 🔒",
       reminder: {
         title: "Rappel de votre don",
         adoption: {
-          description: "{count} {item} transplanté sur l'île d'Hatamin en Indonésie. | {count} {item} transplantés sur l'île d'Hatamin en Indonésie."
+          description: {
+            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indonésie. | {count} {item} adoptés sur l'île d'Hatamin en Indonésie.",
+            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée. | {count} {item} adoptés à Punta de la Mona en Méditerranée."
+          }
         },
         donation: {
-          description: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions."
+          description: {
+            indonesia: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions.",
+            spain: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions."
+          }
         }
       },
       errors: {
@@ -377,9 +392,15 @@ export default {
     }
   },
   newsletter: {
-    title: "Inscrivez-vous à la newsletter",
-    description: "Recevez des nouvelles de l'avancée de nos projets tous les mois.",
-    label: "Je souhaite m'inscrire à la newsletter mensuelle de Coral Guardian",
+    title: "Petit bonus : inscrivez-vous à notre newsletter",
+    description: {
+      adoption: "Recevez des nouvelles de votre adoption et de l'avancée des projets de Coral Guardian",
+      other: "Recevez des nouvelles de l'avancée de nos projets tous les mois."
+    },
+    label: {
+      adoption: "Je souhaite m'inscrire aux nouvelles envoyées par Coral Guardian",
+      other: "Je souhaite m'inscrire à la newsletter mensuelle de Coral Guardian",
+    },
     otherEmail: {
       description: "Si vous souhaitez vous inscrire avec <b>une autre adresse email</b> que celle renseignée dans le formulaire," +
         " merci de renseigner le champ ci-dessous.",

@@ -45,7 +45,7 @@
 
                 <form-footer
                     class="mt-5"
-                    v-if="currentStep.component !== 'AdopterTypeStep' && steps[index - 1].component === currentStep.component && index === stepNumber"
+                    v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
                 />
               </step>
 
@@ -124,9 +124,6 @@ export default {
   //     }
   //   }
   // },
-  beforeCreate() {
-
-  },
   created() {
     this.fillState()
   },

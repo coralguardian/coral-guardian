@@ -9,7 +9,7 @@ export default class OrderModel {
       customer: new CustomerModel(data),
       productsOrdered: [],
       donationOrdered: [],
-      totalAmount: data.order.price,
+      totalAmount: data.order.price + data.donation.price,
       lang: i18n.locale,
       paymentMethod: data.order.payment_method.type
     }
@@ -21,8 +21,6 @@ export default class OrderModel {
     if (data.donation.price > 0) {
       order.donationOrdered = [new DonationOrderModel(data)]
     }
-
-    console.log(order)
 
     return order;
   }

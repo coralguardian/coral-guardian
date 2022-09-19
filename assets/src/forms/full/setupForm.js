@@ -59,6 +59,8 @@ export default class SetupForm extends AbstractForm {
         title: "default.stepper.header.adopterType",
       },
       component: "AdopterTypeStep",
+      validate: true,
+      customValidation: true,
       display: (state) => {
         return state.data.adopter.type === null
       }

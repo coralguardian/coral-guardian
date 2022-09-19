@@ -16,12 +16,6 @@
       </setup-btn>
 
     </div>
-    <div v-if="isIndividual || isCompany" class="text-right mt-5">
-      <v-btn color="secondary black--text" @click="incrementStep">
-        Continuer
-      </v-btn>
-    </div>
-
   </div>
 </template>
 
@@ -29,9 +23,11 @@
 import {mapActions, mapGetters} from "vuex";
 import SetupBtn from "../SetupBtn";
 import AdopterEnum from "@/enums/adopterEnum";
+import validationMixin from "@/mixins/validationMixin";
 
 export default {
   name: "adopter-type-step",
+  mixins: [validationMixin],
   components: {
     SetupBtn
   },
@@ -51,9 +47,23 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateForm: "updateForm",
-      incrementStep: "incrementStep"
+      updateForm: "updateForm"
     })
+  },
+  mounted() {
+    this.$root.$on(this.customValidationEventName, () => {
+      if (this.adopter.type !== null) {
+        this.$root.$emit('StepValid')
+        this.displayErrorMessage = false
+      } else {
+        this.$root.$emit(this.validationErrorEventName)
+        this.$root.$emit('IsLoaded')
+        this.displayErrorMessage = true
+      }
+    })
+  },
+  beforeDestroy() {
+    this.$root.$off(this.customValidationEventName)
   }
 }
 </script>

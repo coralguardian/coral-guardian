@@ -70,6 +70,7 @@ p {
 
 .v-stepper--vertical .v-stepper__content {
   padding: unset !important;
+  border-left: unset !important;
 }
 
 .v-btn.secondary {
@@ -88,4 +89,8 @@ p {
   @media (max-width: 450px) {
     flex-direction: column;
   }
+}
+
+#paymentStep .v-stepper, #paymentStep .v-stepper__header {
+  box-shadow: none !important;
 }
