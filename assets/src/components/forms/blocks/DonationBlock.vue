@@ -2,18 +2,13 @@
   <div id="donationBlock" class="d-flex justify-center align-center">
 
     <div>
-      <div v-if="final">
-        <p class="mt-5">* * * * * * *</p>
-        <p class="text-subtitle-1 font-weight-bold mt-4">
-          {{ $t('default.donation.monthly.description') }}
-        </p>
-      </div>
-
       <div>
-        <price-button title="5 €" @click="updateCustomAmount(5)"/>
-        <price-button title="10 €" @click="updateCustomAmount(10)"/>
-        <price-button title="20 €" @click="updateCustomAmount(20)"/>
-        <price-button title="50 €" @click="updateCustomAmount(50)"/>
+        <price-button
+            v-for="price in prices"
+            :title="price + ' €'"
+            @click="updateCustomAmount(price)"
+            :key="price"
+        />
       </div>
 
       <custom-amount
@@ -45,9 +40,13 @@ export default {
   },
   mixins: [ValidationMixin],
   props: {
-    final: {
-      type: Boolean,
-      default: false
+    prices: {
+      type: Array,
+      default: () => [5, 10, 20, 50]
+    },
+    min: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
@@ -66,7 +65,7 @@ export default {
     }
   },
   mounted() {
-    this.$refs.customAmount.setMinInput(0)
+    this.$refs.customAmount.setMinInput(this.min)
   }
 }
 </script>

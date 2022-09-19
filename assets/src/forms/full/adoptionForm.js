@@ -52,6 +52,16 @@ export default class AdoptionForm extends AbstractForm {
     },
     {
       tab: {
+        title: "default.stepper.header.bonusDonation"
+      },
+      // title: "default.stepper.payment.title",
+      component: "PrePaymentDonationStep",
+      validate: true,
+      customValidation: true,
+      ignorable: true
+    },
+    {
+      tab: {
         title: "default.stepper.header.payment"
       },
       title: "default.stepper.payment.title",
