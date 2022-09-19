@@ -23,7 +23,6 @@ class Plugin
         ShortcodeService::registerShortcode(ReefAdoptionFormShortcode::class);
         ShortcodeService::registerShortcode(DonationFormShortcode::class);
         ShortcodeService::registerShortcode(GiftCodeFormShortcode::class);
-        do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CustomerEndpoint());
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new SetAdoptionAsPaidEndPoint());
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CreateAdoptionAdmin());
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CreateDonationAdmin());
