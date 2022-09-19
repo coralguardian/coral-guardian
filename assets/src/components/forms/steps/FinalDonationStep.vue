@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p v-if="donation.type === donationEnum.oneshot && donation.payment_method.type === 'credit_card'" v-html="$t('default.stepper.finalDonation.description')" />
+    <p v-if="donation.type === donationEnum.oneshot && donation.payment_method.type === paymentMethodEnum.creditCard" v-html="$t('default.stepper.finalDonation.description')" />
     <p v-else-if="donation.type === donationEnum.monthly" v-html="$t('default.stepper.finalRecurrentDonation.description')"/>
-    <p v-else-if="donation.payment_method.type === 'bank_transfert'">
+    <p v-else-if="donation.payment_method.type === paymentMethodEnum.bankTransfer">
       {{$t('default.stepper.finalDonation.bankTransfer')}}
     </p>
   </div>
@@ -13,6 +13,8 @@ import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
 import {mapGetters} from "vuex";
 import paymentMixin from "../../../mixins/paymentMixin";
+import DonationEnum from "@/enums/donationEnum";
+import PaymentMethodEnum from "@/enums/paymentMethodEnum";
 
 export default {
   name: "final-donation-step",
@@ -20,8 +22,13 @@ export default {
   computed: {
     ...mapGetters({
       donation: "getDonation",
-      donationEnum: "getDonationEnum"
-    })
+    }),
+    donationEnum() {
+      return DonationEnum
+    },
+    paymentMethodEnum() {
+      return PaymentMethodEnum
+    }
   },
   mounted() {
     this.cleanLocalStorage()

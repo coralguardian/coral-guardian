@@ -50,6 +50,7 @@ import apiMixin from "@/mixins/apiMixin";
 import GtagService from "@/services/gtagService";
 import AdopterEnum from "@/enums/adopterEnum";
 import DonationEnum from "@/enums/donationEnum";
+import PaymentMethodEnum from "@/enums/paymentMethodEnum";
 
 export default {
   name: "payment-step",
@@ -194,7 +195,7 @@ export default {
       this.message = {text: ""}
       // cas du paiement par virement
       // il n'y a rien de particulier à vérifier
-      if (this.element.payment_method.type === "bank_transfert") {
+      if (this.element.payment_method.type === PaymentMethodEnum.bankTransfer) {
         this.$root.$emit('StepValid')
         // cas du paiement par carte
       } else {
@@ -226,7 +227,7 @@ export default {
     purchase() {
       this.updateElementStatus("pending")
       // cas du paiement par virement
-      if (this.element.payment_method.type === "bank_transfert") {
+      if (this.element.payment_method.type === PaymentMethodEnum.bankTransfer) {
         let data;
         data = this.$store.getters.getOrderModel
         this[this.apiData.method](data, this.apiData.endpoint)

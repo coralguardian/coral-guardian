@@ -3,6 +3,7 @@ import DonationModel from "../models/donationModel";
 import CustomerModel from "@/models/customerModel";
 import OrderModel from "@/models/orderModel";
 import DonationEnum from "@/enums/donationEnum";
+import PaymentMethodEnum from "@/enums/paymentMethodEnum";
 
 // public path is from wp, used to set full images path
 /* global publicPath */
@@ -41,7 +42,7 @@ export default class BaseFormStore {
           customAmount: false,
           quantity: 1,
           payment_method: {
-            type: 'credit_card'
+            type: PaymentMethodEnum.creditCard
           },
           status: null
         },
@@ -50,7 +51,7 @@ export default class BaseFormStore {
           type: DonationEnum.monthly,
           price: 0,
           payment_method: {
-            type: "credit_card"
+            type: PaymentMethodEnum.creditCard
           },
           status: null
         }

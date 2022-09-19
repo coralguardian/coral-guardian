@@ -148,7 +148,7 @@ export default {
     },
     donation: {
       title: {
-        france: "Soutenez Coral Guardian",
+        indonesia: "Soutenez Coral Guardian",
         spain: "Soutenez le projet S.O.S Corales"
       },
       description: "Votre don nous aidera à poursuivre l'ensemble de nos actions.",
