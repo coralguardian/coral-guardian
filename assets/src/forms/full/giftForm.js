@@ -47,10 +47,7 @@ export default class GiftForm extends AbstractForm {
       },
       title: "default.stepper.information.title",
       component: "InformationStep",
-      validate: true,
-      props: {
-        isGiftCustom: true
-      }
+      validate: true
     },
     {
       tab: {
@@ -71,10 +68,7 @@ export default class GiftForm extends AbstractForm {
       customValidation: true,
       api: {
         method: "post",
-        endpoint: "adoption/gift"
-      },
-      props: {
-        bankTransfer: true
+        endpoint: "createOrder"
       }
     }
   ]
