@@ -97,10 +97,11 @@ export default {
   computed: {
     ...mapGetters({
       adoption: "getAdoption",
-      adoptionModel: "getPostAdoptionsData"
+      adoptionModel: "getPostAdoptionsData",
+      order: "getOrder"
     }),
     adoptionFileUrl() {
-      return this.baseUrl + "namingFile?adoption_uuid=" + this.adoptionModel.adoptionUuid
+      return this.baseUrl + "namingFile?stripePaymentIntentId=" + this.order.stripePaymentIntentId
     }
   },
   methods: {

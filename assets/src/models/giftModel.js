@@ -10,7 +10,7 @@ export default class GiftModel {
     })
     return {
       friends: friends,
-      adoption_uuid: data.order.uuid,
+      stripePaymentIntentId: data.order.stripePaymentIntentId,
       message: data.gift.message,
       sendOn: data.gift.toSendOn ? data.gift.toSendOn.replaceAll("-", "") : null
     }

@@ -107,7 +107,7 @@ export default {
       giftModel: "getGiftModel"
     }),
     recipientFileUrl() {
-      return this.baseUrl + "recipientsFile?adoption_uuid=" + this.order.uuid
+      return this.baseUrl + "recipientsFile?stripePaymentIntentId=" + this.order.stripePaymentIntentId
     }
   },
   methods: {

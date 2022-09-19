@@ -49,7 +49,7 @@ export default {
       if (isEmpty(this.params)) {
         this.fillParams()
       }
-      if (!this.params.payment_intent_client_secret && !this.params.adoptionUuid && !this.params.step) {
+      if (!this.params.payment_intent_client_secret && !this.params.stripePaymentIntentId && !this.params.step) {
         return false
       }
       return new Promise((resolve, reject) => {
@@ -66,11 +66,11 @@ export default {
           }
         }
         // redirection fichiers
-        else if (this.params.adoptionUuid && this.params.step) {
+        else if (this.params.stripePaymentIntentId && this.params.step) {
           this.loading = true
           let url = this.getGetUrlNoApiData(
             {
-              adoptionUuid: this.params.adoptionUuid,
+              stripePaymentIntentId: this.params.stripePaymentIntentId,
               step: this.params.step
             },
             "adoption/redirection")
