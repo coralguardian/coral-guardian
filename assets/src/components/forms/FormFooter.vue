@@ -1,7 +1,7 @@
 <template>
   <div
       class="app-stepper-footer d-flex"
-      :class="{justifyEnd: !displayPreviousButton, justifySpaceBetween: displayPreviousButton, flexColum: windowWidth <= 600}"
+      :class="{'justify-end': !displayPreviousButton, 'justify-space-between': displayPreviousButton, 'flex-column': windowWidth <= 600}"
   >
     <v-btn
         v-if="displayPreviousButton"

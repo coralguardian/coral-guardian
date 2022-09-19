@@ -2,11 +2,16 @@
   <div>
     <p class="text-left text-body-1" v-html='$t("default.stepper.payment.donation.description")'/>
 
+    <v-form
+        :ref="formRefName"
+        v-model="valid"
+    >
     <donation-block
         class="mt-3"
         :min="2"
         :prices="[2, 5, 10, 20]"
     />
+    </v-form>
 
     <donation-explanation-dialog/>
 
@@ -18,6 +23,7 @@ import DonationBlock from "@/components/forms/blocks/DonationBlock";
 import DonationExplanationDialog from "@/components/forms/misc/DonationExplanationDialog";
 import {mapActions, mapGetters} from "vuex";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
+import validationMixin from "@/mixins/validationMixin";
 import screenMixin from "@/mixins/screenMixin";
 
 export default {
@@ -26,7 +32,7 @@ export default {
     DonationBlock,
     DonationExplanationDialog
   },
-  mixins: [itemTranslationMixin, screenMixin],
+  mixins: [itemTranslationMixin, validationMixin, screenMixin],
   data() {
     return {}
   },

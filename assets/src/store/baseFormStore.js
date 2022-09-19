@@ -101,7 +101,6 @@ export default class BaseFormStore {
 
     this.actions = {
       forceUpdate(context, data) {
-        console.log(data)
         return new Promise((resolve) => {
           context.commit('forceUpdate', data)
           resolve()

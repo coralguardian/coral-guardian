@@ -282,15 +282,12 @@ export default {
         title: "Rappel de votre don",
         adoption: {
           description: {
-            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indonésie. | {count} {item} adoptés sur l'île d'Hatamin en Indonésie.",
-            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée. | {count} {item} adoptés à Punta de la Mona en Méditerranée."
+            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indonésie : {price} € | {count} {item} adoptés sur l'île d'Hatamin en Indonésie : {price} €",
+            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée : {price} € | {count} {item} adoptés à Punta de la Mona en Méditerranée : {price} €"
           }
         },
         donation: {
-          description: {
-            indonesia: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions.",
-            spain: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions."
-          }
+          description: "Un don {item} : {price} €"
         }
       },
       errors: {

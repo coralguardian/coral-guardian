@@ -57,7 +57,8 @@
               outlined
           >
             <div>
-              <span class="text-body-1">{{ paymentDescription }}</span>
+              <p v-if="productDescription" class="text-body-1 ma-0">{{ productDescription }}</p>
+              <p v-if="donationDescription" class="text-body-1 ma-0">{{ donationDescription }}</p>
             </div>
 
             <div class="paymentDetail text-body-1">
@@ -120,7 +121,8 @@ export default {
       donation: "getDonation",
       formType: "getFormType",
       adopter: "getAdopter",
-      project: "getProject"
+      project: "getProject",
+      orderModel: "getOrderModel"
     }),
     ...mapState({
       baseElementPrice: state => state.data.baseElementPrice,
@@ -129,31 +131,28 @@ export default {
       return this.mode === "adoption" ? this.order : this.donation
     },
     paymentReminder() {
-      let reminder = "";
-      if (this.mode === 'adoption') {
-        if (this.order.customAmount) {
-          reminder = this.$t("default.stepper.adoption.customAmount.label") + " " + this.order.price
-        } else {
-          reminder = this.order.quantity + " * " + this.baseElementPrice + " = " + this.order.price
-        }
-      } else {
-        reminder = this.$t("default.stepper.adoption.customAmount.label") + " " + this.donation.price
-      }
-      return reminder + ' €'
+      return "Total : " + this.orderModel.totalAmount + ' €'
     },
-    paymentDescription() {
-      let description = ''
-      if (this.mode === 'adoption') {
-        description = this.$tc('default.stepper.payment.reminder.adoption.description.' + this.project, this.order.quantity, {
-          count: this.order.quantity,
-          item: this.specificTranslation ? this.specific.item : this.translation.item
-        })
-      } else {
-        description = this.$t('default.stepper.payment.reminder.donation.description.' + this.project, {
-          item: this.$t('default.' + this.donation.type)
+    productDescription() {
+      if (this.orderModel.productsOrdered.length) {
+        let order = this.orderModel.productsOrdered[0]
+        return this.$tc('default.stepper.payment.reminder.adoption.description.' + this.project, order.quantity, {
+          count: order.quantity,
+          item: this.specificTranslation ? this.specific.item : this.translation.item,
+          price: this.order.price
         })
       }
-      return description
+
+      return null
+    },
+    donationDescription() {
+      if (this.orderModel.donationOrdered.length) {
+        return this.$t('default.stepper.payment.reminder.donation.description', {
+          item: this.$t('default.' + this.donation.type),
+          price: this.donation.price
+        })
+      }
+      return null
     },
   },
   methods: {

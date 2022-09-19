@@ -1,22 +1,45 @@
 import AbstractForm from "../abstractForm";
+import ProductEnum from "@/enums/productEnum";
 
 export default class GiftForm extends AbstractForm {
+  unload(state) {
+    return new Promise(resolve => {
+      state.data.order.productType = null
+      resolve()
+    })
+  }
+
+  onload(state) {
+    const products = state.products.filter(product => product.key === state.data.order.productType)
+    const lowestPrice = Math.min(...products.map(product => product.price))
+    state.data.order.price = lowestPrice
+    state.data.baseElementPrice = lowestPrice
+
+    if (products.length === 1) {
+      state.data.selectedProduct = products[0]
+    }
+  }
+
   steps = [
     {
       tab: {
-        title: "default.stepper.header.full.adoption",
+        title: "default.stepper.header.adoption"
       },
-      component: "AdoptionSetupStep",
-      validate: true,
-      customValidation: true
+      title: "default.stepper.adoption.title",
+      component: "ReefAdoptionStep",
+      display: (state) => {
+        return state.data.order.productType === ProductEnum.reef
+      }
     },
     {
       tab: {
-        title: "default.stepper.header.adoption",
+        title: "default.stepper.header.adoption"
       },
       title: "default.stepper.adoption.title",
-      component: null,
-      componentType: "adoption"
+      component: "CoralAdoptionStep",
+      display: (state) => {
+        return state.data.order.productType === ProductEnum.coral
+      }
     },
     {
       tab: {
@@ -25,15 +48,18 @@ export default class GiftForm extends AbstractForm {
       title: "default.stepper.information.title",
       component: "InformationStep",
       validate: true,
-      api: {
-        method: "post",
-        endpoint: "customer"
-      },
       props: {
-        newsletterFullBlock: true,
-        isCompany: true,
         isGiftCustom: true
       }
+    },
+    {
+      tab: {
+        title: "default.stepper.header.bonusDonation"
+      },
+      // title: "default.stepper.payment.title",
+      component: "PrePaymentDonationStep",
+      validate: true,
+      ignorable: true
     },
     {
       tab: {
