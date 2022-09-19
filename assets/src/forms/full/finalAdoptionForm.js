@@ -1,6 +1,11 @@
 import AbstractForm from "../abstractForm";
 
 export default class FinalAdoptionForm extends AbstractForm {
+
+  nextForm() {
+    return null;
+  }
+
   steps = [
     {
       tab: {
