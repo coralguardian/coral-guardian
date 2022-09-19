@@ -136,6 +136,7 @@ export default {
       this.createStripe()
       const clientSecret = this.element.clientSecret
       const {paymentIntent} = await this.stripe.retrievePaymentIntent(clientSecret);
+      this.updateForm({order: {clientSecret: paymentIntent.client_secret, stripePaymentIntentId: paymentIntent.id}})
       let displayCardForm = false;
       switch (paymentIntent.status) {
         case "succeeded":

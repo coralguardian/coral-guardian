@@ -36,6 +36,7 @@ export default class BaseFormStore {
           uuid: null,
           type: "regular",
           clientSecret: null,
+          stripePaymentIntentId: null,
           price: null,
           customAmount: false,
           quantity: 1,
