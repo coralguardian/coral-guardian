@@ -14,6 +14,7 @@ import axios from "axios";
 import {checkStepsToDisplay} from "@/helpers/functionHelper";
 import ActionEnum from "@/enums/actionEnum";
 import ProductEnum from "@/enums/productEnum";
+import DonationEnum from "@/enums/donationEnum";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -38,7 +39,7 @@ export default new Vuex.Store({
       },
       donation: {
         ...baseStore.state.data.donation,
-        type: null
+        type: DonationEnum.monthly
       },
       gift: {
         recipients: [],

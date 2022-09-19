@@ -270,6 +270,15 @@ export default {
             " Une fois validé, vous recevrez un email vous permettant de continuer votre commande."
         }
       },
+      donation: {
+        title: "Soutenez nos actions au quotidien",
+        description: "Pour accompagner votre adoption, soutenez nos actions au quotidien avec un don mensuel optionnel <b>à partir de 2€</b> !",
+        label: "Mon don mensuel",
+        buttons: {
+          through: "Passer cette étape",
+          confirm: "Valider"
+        }
+      },
       title: "Procédez au paiement",
       description: "Le paiement est sécurisé avec Stripe 🔒",
       reminder: {
@@ -281,7 +290,10 @@ export default {
           }
         },
         donation: {
-          description: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions."
+          description: {
+            indonesia: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions.",
+            spain: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions."
+          }
         }
       },
       errors: {

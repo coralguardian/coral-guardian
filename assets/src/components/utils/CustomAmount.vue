@@ -1,13 +1,38 @@
 <template>
   <div class="custom-amount">
-    <v-row
-        class="align-center justify-center"
-        dense
-    >
-      <v-col cols="6" sm="4">
+
+    <div v-if="!inline">
+      <v-row
+          class="align-center justify-center"
+          dense
+      >
+        <v-col cols="6" sm="4">
+          <span class="text-body-2">{{ $t('default.stepper.adoption.customAmount.label') }}</span>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+              ref="customAmountInput"
+              :value="value"
+              class="input-right"
+              type="number"
+              color="tertiary"
+              suffix="€"
+              @change="emit"
+              :rules="[rules.minValue, rules.required]"
+          />
+        </v-col>
+        <v-col cols="1" v-if="hint">*</v-col>
+      </v-row>
+
+      <v-row dense class="text-caption" v-if="hint">
+        * {{ $t('default.stepper.adoption.customAmount.hint') }}
+      </v-row>
+    </div>
+    <div v-else class="d-flex justify-space-between align-center">
+      <v-col>
         <span class="text-body-2">{{ $t('default.stepper.adoption.customAmount.label') }}</span>
       </v-col>
-      <v-col cols="3">
+      <v-col>
         <v-text-field
             ref="customAmountInput"
             :value="value"
@@ -16,15 +41,11 @@
             color="tertiary"
             suffix="€"
             @change="emit"
-            :rules="[rules.minValue, rules.required]"
+            dense
         />
       </v-col>
-      <v-col cols="1" v-if="hint">*</v-col>
-    </v-row>
 
-    <v-row dense class="text-caption" v-if="hint">
-      * {{ $t('default.stepper.adoption.customAmount.hint') }}
-    </v-row>
+    </div>
 
   </div>
 </template>
@@ -42,7 +63,11 @@ export default {
     hint: {
       type: Boolean,
       default: true
-    }
+    },
+    inline: {
+      type: Boolean,
+      default: false
+    },
   },
   mixins: [validationMixin],
   data() {

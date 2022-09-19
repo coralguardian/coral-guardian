@@ -54,11 +54,11 @@ export default {
     createPaymentIntent() {
       return new Promise((resolve, reject) => {
         let data;
-        if (this.mode === 'adoption') {
+        // if (this.mode === 'adoption') {
           data = this.$store.getters.getOrderModel
-        } else {
-          data = this.$store.getters.getPostPaymentDataDonation
-        }
+        // } else {
+        //   data = this.$store.getters.getPostPaymentDataDonation
+        // }
         this[this.apiData.method](data, this.apiData.endpoint)
             .then((resp) => {
               const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}

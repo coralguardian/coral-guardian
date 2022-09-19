@@ -34,7 +34,7 @@ export default class DonationForm extends AbstractForm {
         },
         api: {
           method: "post",
-          endpoint: "donate"
+          endpoint: "createOrder"
         }
       },
       {

@@ -1,40 +1,73 @@
 <template>
-  <div>
+  <div id="paymentStep">
 
-    <div v-if="cardDisplay">
-      <p>{{ $t("default.stepper.payment.description") }}</p>
-      <stripe-card-data :mode="mode" ref="cardData"/>
-    </div>
+<!--    <v-stepper-->
+<!--        v-model="step"-->
+<!--        vertical-->
+<!--    >-->
 
-    <v-alert
-        v-else-if="message.text !== ''"
-        dense
-        text
-        :type="message.type"
-        :class="message.class"
-    >
-      {{ $t("default." + message.text) }}
-    </v-alert>
+<!--      <v-stepper-step-->
+<!--          color="tertiary"-->
+<!--          :complete="step > 1"-->
+<!--          :step="1"-->
+<!--      >-->
+<!--        {{$t('default.stepper.payment.donation.title')}}-->
+<!--      </v-stepper-step>-->
 
-    <payment-method-block v-if="displayPaymentMethod" ref="paymentMethod" :mode="mode"/>
+<!--      <v-stepper-content-->
+<!--          :step="1"-->
+<!--      >-->
+<!--        <MonthlyDonationBlock/>-->
+<!--      </v-stepper-content>-->
 
-    <div class="text-left">
-      <p class="mt-4 mb-4 text-h6 font-weight-bold poppins-police">
-        {{ $t('default.stepper.payment.reminder.title') }}
-      </p>
+<!--      <v-stepper-step-->
+<!--          color="tertiary"-->
+<!--          :complete="step > 2"-->
+<!--          :step="2"-->
+<!--      >-->
+<!--        {{$t('default.stepper.header.payment')}}-->
+<!--      </v-stepper-step>-->
 
-      <v-card
-          outlined
-      >
-        <div>
-          <span class="text-body-1">{{ paymentDescription }}</span>
+<!--      <v-stepper-content-->
+<!--          :step="2"-->
+<!--      >-->
+        <div v-if="cardDisplay">
+          <p>{{ $t("default.stepper.payment.description") }}</p>
+          <stripe-card-data :mode="mode" ref="cardData"/>
         </div>
 
-        <div class="paymentDetail text-body-1">
-          {{ paymentReminder }}
+        <v-alert
+            v-else-if="message.text !== ''"
+            dense
+            text
+            :type="message.type"
+            :class="message.class"
+        >
+          {{ $t("default." + message.text) }}
+        </v-alert>
+
+        <payment-method-block v-if="displayPaymentMethod" ref="paymentMethod" :mode="mode"/>
+
+        <div class="text-left">
+          <p class="mt-4 mb-4 text-h6 font-weight-bold poppins-police">
+            {{ $t('default.stepper.payment.reminder.title') }}
+          </p>
+
+          <v-card
+              outlined
+          >
+            <div>
+              <span class="text-body-1">{{ paymentDescription }}</span>
+            </div>
+
+            <div class="paymentDetail text-body-1">
+              {{ paymentReminder }}
+            </div>
+          </v-card>
         </div>
-      </v-card>
-    </div>
+<!--      </v-stepper-content>-->
+
+<!--    </v-stepper>-->
 
   </div>
 </template>
@@ -50,12 +83,13 @@ import apiMixin from "../../../mixins/apiMixin";
 import GtagService from "../../../services/gtagService";
 import AdopterEnum from "@/enums/adopterEnum";
 import DonationEnum from "@/enums/donationEnum";
+// import MonthlyDonationBlock from "@/components/forms/blocks/MonthlyDonationBlock";
 
 export default {
   name: "payment-step",
   components: {
     StripeCardData,
-    PaymentMethodBlock
+    PaymentMethodBlock,
   },
   mixins: [itemTranslationMixin, validationMixin, paymentMixin, apiMixin],
   props: {
@@ -70,6 +104,7 @@ export default {
   },
   data() {
     return {
+      step: 1,
       displayPaymentMethod: false,
       cardDisplay: false,
       message: {
@@ -229,11 +264,11 @@ export default {
       // cas du paiement par virement
       if (this.element.payment_method.type === "bank_transfert") {
         let data;
-        if (this.mode === 'adoption') {
+        // if (this.mode === 'adoption') {
           data = this.$store.getters.getOrderModel
-        } else {
-          data = this.$store.getters.getPostPaymentDataDonation
-        }
+        // } else {
+        //   data = this.$store.getters.getPostPaymentDataDonation
+        // }
         this[this.apiData.method](data, this.apiData.endpoint)
             .then((resp) => {
               const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}
