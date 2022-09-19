@@ -12,7 +12,8 @@ export default {
   monthly: "mensuel",
   ui: {
     continue: "Continuer",
-    previous: "Précédent"
+    previous: "Précédent",
+    through: "Passer cette étape"
   },
   rules: {
     required: "Ce champ est requis",
@@ -37,6 +38,7 @@ export default {
     header: {
       adopterType: "Vous êtes ?",
       adoption: "Adoption",
+      bonusDonation: "Soutenez nos actions au quotidien",
       customization: "Personnalisation",
       donation: "Don",
       information: "Informations",
@@ -271,13 +273,8 @@ export default {
         }
       },
       donation: {
-        title: "Soutenez nos actions au quotidien",
         description: "Pour accompagner votre adoption, soutenez nos actions au quotidien avec un don mensuel optionnel <b>à partir de 2€</b> !",
-        label: "Mon don mensuel",
-        buttons: {
-          through: "Passer cette étape",
-          confirm: "Valider"
-        }
+        label: "Mon don mensuel"
       },
       title: "Procédez au paiement",
       description: "Le paiement est sécurisé avec Stripe 🔒",

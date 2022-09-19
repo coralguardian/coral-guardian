@@ -35,6 +35,7 @@ import {mapActions, mapGetters} from "vuex";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 import validationMixin from "../../../mixins/validationMixin";
 import screenMixin from "@/mixins/screenMixin";
+import DonationEnum from "@/enums/donationEnum";
 
 export default {
   name: "donation-step",
@@ -48,9 +49,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      donation: "getDonation",
-      donationEnum: "getDonationEnum"
-    })
+      donation: "getDonation"
+    }),
+    donationEnum() {
+      return DonationEnum
+    }
   },
   methods: {
     ...mapActions({

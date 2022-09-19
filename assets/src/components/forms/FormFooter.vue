@@ -1,13 +1,21 @@
 <template>
   <div
       class="app-stepper-footer d-flex"
-      :class="!displayPreviousButton ? 'justify-end': 'justify-space-between'"
+      :class="{justifyEnd: !displayPreviousButton, justifySpaceBetween: displayPreviousButton, flexColum: windowWidth <= 600}"
   >
     <v-btn
         v-if="displayPreviousButton"
         @click="decrementStep"
     >
       {{ $t("default.ui.previous") }}
+    </v-btn>
+
+    <v-btn
+        v-if="currentStep.ignorable"
+        @click="ignoreStep"
+        color="primary"
+    >
+      {{ $t("default.ui.through") }}
     </v-btn>
 
     <v-btn
@@ -25,9 +33,11 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import screenMixin from "@/mixins/screenMixin";
 
 export default {
   name: "form-footer",
+  mixins: [screenMixin],
   data() {
     return {
       isLoading: false,
@@ -59,6 +69,9 @@ export default {
           this.customPreviousHide = false
         })
       }
+    },
+    ignoreStep() {
+      this.$root.$emit("ignoreStep")
     }
   },
   mounted() {

@@ -14,6 +14,7 @@ import BankTransferThanksStep from "./BankTransferThanksStep";
 import FinalRecipientStep from "../steps/FinalRecipientStep";
 import AdopterTypeStep from "@/components/forms/full/steps/AdopterTypeStep";
 import ProjectStep from "@/components/forms/full/steps/ProjectStep";
+import PrePaymentDonationStep from "@/components/forms/steps/PrePaymentDonationStep";
 
 export default {
   SetupStep,
@@ -31,5 +32,6 @@ export default {
   BankTransferThanksStep,
   FinalRecipientStep,
   AdopterTypeStep,
-  ProjectStep
+  ProjectStep,
+  PrePaymentDonationStep
 }
