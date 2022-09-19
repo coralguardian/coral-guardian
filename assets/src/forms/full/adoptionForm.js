@@ -11,6 +11,10 @@ export default class AdoptionForm extends AbstractForm {
   }
 
   onload(state) {
+    // cas d'une redirection de fichiers, on ne connait pas les produits et on n'en a pas besoin
+    if (!state.products) {
+      return
+    }
     const products = state.products.filter(product => product.key === state.data.order.productType)
     const lowestPrice = Math.min(...products.map(product => product.price))
     state.data.order.price = lowestPrice

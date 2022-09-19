@@ -5,6 +5,8 @@ import apiMixin from "./apiMixin";
 import AdopterEnum from "@/enums/adopterEnum";
 import ActionEnum from "@/enums/actionEnum";
 import ProjectEnum from "@/enums/projectEnum";
+import SetupForm from "@/forms/full/setupForm";
+import AdoptionForm from "@/forms/full/adoptionForm";
 
 export default {
   mixins: [apiMixin],
@@ -82,53 +84,55 @@ export default {
                 order: {
                   uuid: resp.data.uuid,
                   productType: types[0],
-                  quantity: resp.data.quantity
+                  quantity: resp.data.quantity,
+                  stripePaymentIntentId: this.params.stripePaymentIntentId
                 }
               }
               if (types[1] !== undefined) {
                 data.order.specificType = types[1]
               }
+              let order
+              let step
               switch (this.params.step) {
                 // redirection fichier nommage adoption
                 case "adoption": {
                   data = {
                     ...data,
-                    step: 8,
                     adoption: {
                       type: 'file',
                       locked: true
-                    }
+                    },
+                    target: adoptionHelper.me
                   }
-                  this.updateForm({target: adoptionHelper.me})
-                    .then(() => this.loadSetupNextSteps()
-                      .then(() => this.updateForm({order: {type: "regular"}})
-                        .then(() => this.loadPaymentNextSteps()
-                          .then(() => this.updateForm(data)
-                            .then(() => resolve())))))
+                  order = {order: {type: "regular"}}
+                  step = {step: 7}
                   break;
                 }
                 // redirection fichier nommage destinataire
                 case "recipient": {
                   data = {
                     ...data,
-                    step: 9,
                     recipient: {
                       type: 'file',
                       locked: true
-                    }
+                    },
+                    target: adoptionHelper.friend
                   }
-                  this.updateForm({target: adoptionHelper.friend})
-                    .then(() => this.loadSetupNextSteps()
-                      .then(() => this.updateForm({order: {type: "gift"}, adopter: {send_to_friend: true}})
-                        .then(() => this.loadPaymentNextSteps()
-                          .then(() => this.updateForm(data)
-                            .then(() => resolve())))))
+                  order = {order: {type: "gift"}, adopter: {send_to_friend: true}}
+                  step = {step: 8}
                   break;
                 }
                 default: {
                   reject()
                 }
               }
+              this.updateForm(data)
+                .then(() => this.loadFormSteps(new SetupForm())
+                  .then(() => this.loadFormSteps(new AdoptionForm())
+                    .then(() => this.updateForm(order)
+                      .then(() => this.loadPaymentNextSteps()
+                        .then(() => this.updateForm(step)
+                          .then(() => resolve()))))))
             })
             .catch(err => {
               this.loading = false
