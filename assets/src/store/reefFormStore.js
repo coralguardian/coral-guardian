@@ -12,7 +12,7 @@ export default new Vuex.Store({
     ...form.state,
     data: {
       ...form.state.data,
-      specificType: adoptionHelper.reefs.lady.specificType
+      specificType: adoptionHelper.reef.lady.specificType
     },
     forms: [
       {

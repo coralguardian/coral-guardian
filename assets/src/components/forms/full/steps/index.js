@@ -12,6 +12,8 @@ import MultipleRecipientStep from "../steps/MultipleRecipientStep";
 import DonationStep from "../../steps/DonationStep";
 import BankTransferThanksStep from "./BankTransferThanksStep";
 import FinalRecipientStep from "../steps/FinalRecipientStep";
+import AdopterTypeStep from "@/components/forms/full/steps/AdopterTypeStep";
+import ProjectStep from "@/components/forms/full/steps/ProjectStep";
 
 export default {
   SetupStep,
@@ -27,5 +29,7 @@ export default {
   MultipleRecipientStep,
   DonationStep,
   BankTransferThanksStep,
-  FinalRecipientStep
+  FinalRecipientStep,
+  AdopterTypeStep,
+  ProjectStep
 }

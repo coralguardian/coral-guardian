@@ -1,46 +1,17 @@
-import AbstractForm from "../form";
+import AbstractForm from "../abstractForm";
 
 export default class FinalGiftForm extends AbstractForm {
-  form = {
-    tabs: [
-      {
+  steps = [
+    {
+      tab: {
         hide: true,
         title: "default.stepper.header.thanks"
       },
-      {
-        hide: true,
-        title: "default.stepper.header.payment"
-      },
-      {
-        hide: true,
-        title: "default.stepper.header.thanks"
-      }
-    ],
-    steps: [
-      {
-        title: "default.stepper.finalRecipient.title",
-        component: "FinalRecipientStep",
-        validate: true,
-        back: false
-      },
-      {
-        title: "default.stepper.payment.title",
-        component: "PaymentStep",
-        props: {
-          mode: 'donation'
-        },
-        validate: true,
-        customValidation: true,
-        api: {
-          method: "post",
-          endpoint: "donate"
-        }
-      },
-      {
-        title: "default.stepper.finalDonation.title",
-        component: "FinalDonationStep",
-        back: false
-      }
-    ]
-  }
+      title: "default.stepper.finalRecipient.title",
+      component: "FinalRecipientStep",
+      validate: true,
+      back: false,
+      last: true
+    }
+  ]
 }

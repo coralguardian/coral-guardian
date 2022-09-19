@@ -1,21 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {BaseAdoptionFormStore} from "@/store/baseAdoptionFormStore";
-import {cloneDeep} from "lodash";
-import AdoptionForm from "../forms/full/adoptionForm";
-import GiftForm from "../forms/full/giftForm";
-import DonationForm from "../forms/full/donationForm";
-import SetupForm from "../forms/full/setupForm";
 import adoptionHelper from "../helpers/adoptionHelper";
-import AbstractForm from "../forms/form";
+import AbstractForm from "../forms/abstractForm";
 import RecipientFullForm from "../forms/full/recipientFullForm";
 import FinalAdoptionForm from "../forms/full/finalAdoptionForm";
 import BankTransferThanksForm from "../forms/full/bankTransferThanksForm";
 import GiftModel from "../models/giftModel";
-import donationHelper from "@/helpers/donationHelper";
 import AdoptionModel from "@/models/adoptionModel";
 import FinalGiftForm from "@/forms/full/finalGiftForm";
 import GiftMessageModel from "@/models/giftMessageModel";
+import axios from "axios";
+import {checkStepsToDisplay} from "@/helpers/functionHelper";
+import ActionEnum from "@/enums/actionEnum";
+import ProductEnum from "@/enums/productEnum";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -32,8 +30,7 @@ export default new Vuex.Store({
         ...baseStore.state.data.adopter,
         alternate_newsletter_email: null,
         send_to_friend: null,
-        company_name: "",
-        type: "company"
+        company_name: ""
       },
       order: {
         ...baseStore.state.data.order,
@@ -47,92 +44,79 @@ export default new Vuex.Store({
         recipients: [],
         message: "",
         toSendOn: null
-      }
+      },
+      project: null,
+      forms: []
     },
-    baseForm: new SetupForm(),
-    form: new SetupForm()
+    products: null
   },
   getters: {
     ...baseStore.getters,
-    getForm: state => state.form.getForm(),
     getCurrentStep: (state, getters) => {
-      return getters.getForm.steps[state.data.step - 1]
+      return getters.getSteps[state.data.step - 1]
+    },
+    getStepsNumbers: (state) => {
+      if (state.data.forms.length) {
+        return state.data.forms.map(form => {
+          return form.steps.length
+        })
+      }
+      return []
+    },
+    getCurrentForm: (state, getters) => {
+      let stepsNumbers = getters.getStepsNumbers
+      let value = 0;
+      for (let i = 0; i < stepsNumbers.length; i++) {
+        value += stepsNumbers[i]
+        if (value >= state.data.step) {
+          return state.data.forms[i]
+        }
+      }
+    },
+    getPreviousForm: (state, getters) => {
+      let stepsNumbers = getters.getStepsNumbers
+      let value = 1;
+      for (let i = 0; i < stepsNumbers.length; i++) {
+        value += stepsNumbers[i]
+        if (value >= state.data.step) {
+          return state.data.forms[i]
+        }
+      }
     },
     getDefaultTranslation: state => {
       let defaultTranslation = 'default.'
       switch (state.data.target) {
-        case "donation":
+        case ActionEnum.donation:
           return defaultTranslation + state.data.donation.type
         default:
-          return defaultTranslation + state.data.order.productType + (state.data.order.productType === 'reef' ? ".base" : "")
+          return defaultTranslation + state.data.order.productType + (state.data.order.productType === ProductEnum.reef ? ".base" : "")
       }
     },
     getSpecificTranslation: state => state.data.specificType ? 'default.' + state.data.specificType : null,
     getPostPaymentDataAdoption: state => new AdoptionModel(state.data),
     getGift: state => state.data.gift,
     getGiftModel: state => new GiftModel(state.data),
-    getGiftMessageModel: state => new GiftMessageModel(state.data)
+    getGiftMessageModel: state => new GiftMessageModel(state.data),
+    getProject: state => state.data.project,
+    getProducts: (state) => state.products.filter(product => product.key === state.data.order.productType)
   },
   mutations: {
     ...baseStore.mutations,
     loadSpecificForm(state, form) {
-      let stateForm = state.form.getForm()
-      let newForm = form.getForm()
-      stateForm.tabs = stateForm.tabs.concat(newForm.tabs)
-      stateForm.steps = stateForm.steps.concat(newForm.steps)
+      state.data.forms.push(form)
+      form.onload(state)
     },
-    resetForm(state) {
-      state.form = cloneDeep(state.baseForm)
+    unloadForm(state, formToUnload) {
+      formToUnload.unload(state).then(() => {
+        state.data.forms = state.data.forms.filter(form => !Object.is(form, formToUnload))
+      })
     },
-    loadAdoptionStep(state) {
-      const type = state.data.order.productType
-      let form = state.form.getForm()
-      for (let i = 0; i < form.steps.length; i++) {
-        let step = form.steps[i]
-        if (step.componentType && step.componentType === "adoption") {
-          step.component = type === "coral" ? "CoralAdoptionStep" : "ReefAdoptionStep"
-          break
-        }
-      }
+    updateProducts(state, products) {
+      state.products = products
     }
   },
   actions: {
     ...baseStore.actions,
-    loadSetupNextSteps(context) {
-      return new Promise((resolve, reject) => {
-        if (context.state.data.target === null) {
-          reject("Aucune action sélectionnée")
-        }
-        switch (context.state.data.target) {
-          case adoptionHelper.me:
-            context.dispatch('loadForm', new AdoptionForm())
-              .then(() => {context.dispatch('updateForm', {order: {type: 'regular'}, donation: {type: donationHelper.monthly}})
-                  .then(() => resolve())
-              });
-            break;
-          case adoptionHelper.friend:
-            context.dispatch('loadForm', new GiftForm())
-              .then(() => {context.dispatch('updateForm', {order: {type: 'gift'}, donation: {type: donationHelper.monthly}})
-                  .then(() => resolve())
-              })
-            break;
-          case "donation":
-            context.dispatch('loadForm', new DonationForm(context.state.data.donation.project_key))
-              .then(() => {context.dispatch('updateForm', {donation: {type: donationHelper.oneshot}})
-                  .then(() => resolve())
-              })
-            break;
-          default:
-            reject("Formulaire non trouvé")
-        }
-      })
-    },
-    loadAdoptionStep(context) {
-      return new Promise((resolve) => {
-        context.commit('loadAdoptionStep')
-        resolve()
-      })
-    },
     loadPaymentNextSteps(context) {
       return new Promise((resolve) => {
         if (context.state.data.order.payment_method.type === "bank_transfert") {
@@ -144,7 +128,8 @@ export default new Vuex.Store({
           context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new FinalGiftForm())
             .then(() => {
               resolve()
-            }).catch((err) => console.log(err))
+            })
+            .catch((err) => console.log(err))
         } else if (context.state.data.target === adoptionHelper.me) {
           context.dispatch("loadForm", new FinalAdoptionForm())
             .then(() => {
@@ -160,13 +145,38 @@ export default new Vuex.Store({
         if (!(form instanceof AbstractForm)) {
           reject('Formulaire incomplet')
         } else {
-          context.commit("loadSpecificForm", form)
-          resolve()
+          let steps = checkStepsToDisplay(form, context.state)
+          if (steps.length === 0 && form !== null) {
+            form.nextForm(context).then(() => resolve())
+          } else if (form === null) {
+            throw "Form should not be null"
+          } else {
+            form.steps = steps
+            context.commit("loadSpecificForm", form)
+            resolve()
+          }
         }
       })
     },
-    resetForm(context) {
-      context.commit("resetForm")
+    loadProducts(context) {
+      return new Promise((resolve, reject) => {
+        if (context.state.data.project === null) {
+          reject("Un projet doit être sélectionné !")
+        }
+        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject)
+          .then(resp => {
+            context.commit("updateProducts", resp.data)
+            const uniqueTypes = [...new Set(resp.data.map(product => product.key))];
+            if (uniqueTypes.length === 1) {
+              context.dispatch("updateForm", {order: {productType: uniqueTypes.join()}}).then(() => resolve())
+            } else {
+              resolve()
+            }
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
     }
   }
 })

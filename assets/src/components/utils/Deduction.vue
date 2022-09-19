@@ -4,6 +4,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import FiscalEnum from "@/enums/fiscalEnum";
 
 export default {
   name: "deduction",
@@ -19,8 +20,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      fiscalReduction: 'getFiscalReduction'
+      adopter: 'getAdopter'
     }),
+    fiscalReduction() {
+      const fiscalReductions = FiscalEnum
+      if (!FiscalEnum.isPropertyValid(this.adopter.type)) {
+        throw "Cette réduction fiscale n'existe pas !"
+      }
+      return fiscalReductions[this.adopter.type]
+    },
     options() {
       return {
         donation: this.donation,

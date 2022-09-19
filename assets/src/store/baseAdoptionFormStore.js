@@ -1,10 +1,8 @@
-import {mergeWith, cloneDeep} from "lodash";
-import customizerMergeObjectWithArrays from "@/helpers/functionHelper";
 import BaseFormStore from "../store/baseFormStore";
 import AdoptionModel from "../models/adoptionModel";
 import GiftAdoptionModel from "../models/giftAdoptionModel";
 import AdopteeModel from "@/models/adopteeModel";
-import donationHelper from "@/helpers/donationHelper";
+import ActionEnum from "@/enums/actionEnum";
 
 const baseForm = new BaseFormStore()
 
@@ -45,9 +43,9 @@ export class BaseAdoptionFormStore {
             message: ""
           },
           donation: {
-            ...baseForm.state.data.donation,
-            type: donationHelper.monthly
-          }
+            ...baseForm.state.data.donation
+          },
+          selectedProduct: null
         },
         baseForm: {
           tabs: [
@@ -64,8 +62,7 @@ export class BaseAdoptionFormStore {
               classes: "choice-step"
             }
           ]
-        },
-        forms: []
+        }
       }
     }
 
@@ -73,32 +70,15 @@ export class BaseAdoptionFormStore {
 
     this.getters = {
       ...baseForm.getters,
-      getForm: state => {
-        if (state.data.target === null) {
-          return state.baseForm
-        }
-        let form = cloneDeep(state.forms.find(form => form.target === state.data.target))
-        let baseForm = cloneDeep(state.baseForm);
-        return mergeWith(baseForm, form, customizerMergeObjectWithArrays)
-      },
       getTarget: state => state.data.target,
-      // count: state => state.data.count,
       getCurrentStep: (state, getters) => {
-        return getters.getForm.steps[state.data.step]
+        return getters.getSteps[state.data.step]
       },
       getPostPaymentDataAdoption(state) {
-        if (state.data.order.type === "gift") {
+        if (state.data.order.type === ActionEnum.gift) {
           return new GiftAdoptionModel(state.data)
         } else {
           return new AdoptionModel(state.data)
-        }
-      },
-      getPaymentData: state => {
-        return {
-          count: state.data.count,
-          price: state.data.price,
-          customAmount: state.data.customAmount,
-          donationAmount: state.data.donationAmount
         }
       },
       getPostAdoptionsData(state) {
@@ -119,24 +99,10 @@ export class BaseAdoptionFormStore {
         state.data.order.quantity--
         state.data.order.price = state.data.order.quantity * state.data.baseElementPrice
       },
-      resetState(state) {
-        state.data.target = null
-        state.data.order.quantity = 1
-        state.data.order.price = state.data.baseElementPrice
-        state.data.order.customAmount = false
-      }
     };
 
     this.actions = {
       ...baseForm.actions,
-      decrementStep(context) {
-        if (context.state.data.step === 1) {
-          context.commit('decrementStep')
-          context.commit('resetState')
-        } else if (context.state.data.step > 0) {
-          context.commit('decrementStep')
-        }
-      },
       incrementCount(context) {
         context.commit('incrementCount')
       },

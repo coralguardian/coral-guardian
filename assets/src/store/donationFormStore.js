@@ -35,7 +35,7 @@ export default new Vuex.Store({
       ],
       steps: [
         {
-          title: "default.stepper.donation.title." + form.state.data.donation.project_key,
+          title: "default.stepper.donation.title." + form.state.data.project,
           component: "DonationStep",
           validate: true
         },
@@ -76,14 +76,7 @@ export default new Vuex.Store({
     ...form.getters,
     getDefaultTranslation: state => "default." + state.data.donation.type,
     getForm: state => state.form,
-    getDonation: state => state.data.donation,
-    // getApiData: (state, getters) => {
-    //   return getters.getCurrentStep.api ? {
-    //     method: getters.getCurrentStep.api.method,
-    //     endpoint: "gifts/" + state.data.donation.type + "/" + getters.getCurrentStep.api.endpoint,
-    //     confirmEndpoint: "gifts/" + state.data.donation.type + "/" + getters.getCurrentStep.api.confirmEndpoint
-    //   } : null;
-    // }
+    getDonation: state => state.data.donation
   },
   mutations: {
     ...form.mutations

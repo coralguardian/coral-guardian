@@ -1,4 +1,4 @@
-import AbstractForm from "./form";
+import AbstractForm from "./abstractForm";
 
 export default class GiftCodeForm extends AbstractForm {
   form = {

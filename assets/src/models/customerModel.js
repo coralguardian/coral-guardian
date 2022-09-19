@@ -11,7 +11,7 @@ export default class CustomerModel {
       city: data.adopter.city,
       country: data.adopter.country,
       email: data.adopter.email,
-      type: data.adopter.type,
+      customerType: data.adopter.type,
       wantsNewsletter: data.adopter.wants_newsletter,
       language: i18n.locale
     }

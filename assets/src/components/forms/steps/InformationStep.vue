@@ -97,7 +97,7 @@
         </div>
 
         <div class="col-12">
-          <newsletter-block v-model="adopter.wants_newsletter" :full="newsletterFullBlock"/>
+          <newsletter-block v-model="adopter.wants_newsletter" :full="isCompany"/>
         </div>
 
       </div>
@@ -112,6 +112,7 @@ import validationMixin from "@/mixins/validationMixin";
 import NewsletterBlock from "@/components/forms/blocks/NewsletterBlock";
 import apiMixin from "../../../mixins/apiMixin";
 import GiftCustomBlock from "../blocks/GiftCustomBlock";
+import AdopterEnum from "@/enums/adopterEnum";
 
 export default {
   name: "information-step",
@@ -122,14 +123,6 @@ export default {
   },
   mixins: [validationMixin, apiMixin],
   props: {
-    newsletterFullBlock: {
-      type: Boolean,
-      default: false
-    },
-    isCompany: {
-      type: Boolean,
-      default: false
-    },
     isGiftCustom: {
       type: Boolean,
       default: false
@@ -144,7 +137,10 @@ export default {
       customerModel: "getCustomerModel"
     }),
     informationSubstring() {
-      return this.newsletterFullBlock ? "company." : ""
+      return this.isCompany ? "company." : ""
+    },
+    isCompany() {
+      return this.adopter.type === AdopterEnum.company;
     }
   },
   methods: {
@@ -158,21 +154,12 @@ export default {
         adopter: this.adopter
       })
     })
-    this.$root.$on(this.apiEventName, () => {
-      this.post(this.customerModel, this.apiData.endpoint)
-          .then((resp) => {
-            this.updateForm({
-              adopter: {id: resp.data.uuid}
-            }).then(() => this.$root.$emit('ApiValid'))
-          })
-    })
     this.$root.$on(this.validationErrorEventName, () => {
       this.$vuetify.goTo('#country-input', {container: '#InformationStep'})
     })
   },
   beforeDestroy() {
     this.$root.$off(this.validationEventName);
-    this.$root.$off(this.apiEventName);
     this.$root.$off(this.validationErrorEventName);
   }
 }
