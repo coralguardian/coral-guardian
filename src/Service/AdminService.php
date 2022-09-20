@@ -78,7 +78,7 @@ class AdminService
     {
         self::getTwig()->load("Admin/tracking.twig")->display([
             'items' => self::getOrderModels(),
-            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "https")
+            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http")
         ]);
     }
 
@@ -86,7 +86,7 @@ class AdminService
     {
         self::getTwig()->load("Admin/giftCodes.twig")->display([
             'items' => self::getGiftCodeModels(),
-            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "https")
+            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http")
         ]);
     }
 
@@ -102,7 +102,7 @@ class AdminService
         }
 
         self::getTwig()->load("Admin/forms/create-adoption.twig")->display([
-            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "https"),
+            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http"),
             'adoption_file' => GetNamingFileEndPoint::getUrl(),
             'recipient_file' => GetRecipientsFileEndPoint::getUrl(),
             "products" => $products,
@@ -113,7 +113,7 @@ class AdminService
     public static function coralCreateDonationPage()
     {
         self::getTwig()->load("Admin/forms/create-donation.twig")->display([
-            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "https"),
+            'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http"),
             "action" => CreateDonationAdmin::getUrl()
         ]);
     }

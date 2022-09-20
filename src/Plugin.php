@@ -5,7 +5,6 @@ namespace D4rk0snet\Coralguardian;
 use D4rk0snet\Coralguardian\API\Admin\CreateAdoptionAdmin;
 use D4rk0snet\Coralguardian\API\Admin\CreateDonationAdmin;
 use D4rk0snet\Coralguardian\API\Admin\SetAdoptionAsPaidEndPoint;
-use D4rk0snet\Coralguardian\API\CustomerEndpoint;
 use D4rk0snet\Coralguardian\Service\ShortcodeService;
 use D4rk0snet\Coralguardian\Shortcodes\CoralAdoptionFormShortcode;
 use D4rk0snet\Coralguardian\Shortcodes\DonationFormShortcode;
