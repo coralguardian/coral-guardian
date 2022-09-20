@@ -37,6 +37,16 @@
                   :id="steps[index - 1].component"
               >
 
+                <transition name="fade">
+                  <v-alert
+                      v-if="displayAlert"
+                      class="tooltip white--text"
+                      color="red"
+                      dismissible
+                  >{{ $t(alert, {singular}) }}
+                  </v-alert>
+                </transition>
+
                 <component
                     :is="steps[index - 1].component"
                     v-bind="steps[index - 1].props"
@@ -82,6 +92,12 @@ export default {
     ...components
   },
   props: {},
+  data() {
+    return {
+      displayAlert: false,
+      alert: ""
+    }
+  },
   computed: {
     ...mapGetters({
       steps: 'getSteps',
@@ -107,23 +123,6 @@ export default {
       a.dispatchEvent(e);
     }
   },
-  // methods: {
-  //   hasPayment() {
-  //     const clientSecret = new URLSearchParams(window.location.search).get(
-  //         "payment_intent_client_secret"
-  //     );
-  //     if (!clientSecret) {
-  //       return;
-  //     }
-  //     let data = localStorage.getItem(clientSecret);
-  //     if (data) {
-  //       data = JSON.parse(data)
-  //       this.updateForm({target: data.target}).then(() => this.loadSetupNextSteps().then(() => this.updateForm(data)))
-  //     } else {
-  //       this.cleanLocalStorage()
-  //     }
-  //   }
-  // },
   created() {
     this.fillState()
   },
@@ -134,6 +133,14 @@ export default {
   },
   mounted() {
     // this.compare(fr, en)
+    this.$root.$on('displayError', (payload) => {
+      this.alert = payload ? "default.errors." + payload : 'default.errors.base'
+      this.displayAlert = true
+      this.$root.$emit("IsLoaded")
+      setTimeout(() => {
+        this.displayAlert = false
+      }, 5000)
+    })
   }
 }
 </script>

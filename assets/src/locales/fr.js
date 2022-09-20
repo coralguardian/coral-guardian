@@ -364,6 +364,7 @@ export default {
     select_date: "Veuillez sélectionner une date si vous souhaitez préciser la date d'envoi.",
     incorrect_file_data: "Les données du fichier semblent incorrects, veuillez vérifier vos informations et réessayer.",
     code_not_found: "Le code cadeau semble invalide. Si le problème persiste, veuillez nous contacter directement.",
+    adoption_not_found: "Une erreur est survenue lors de la récupération de votre adoption, veuillez nous contacter directement."
   },
   donation: {
     monthly: {

@@ -93,7 +93,9 @@ export default {
         })
       })
       this.$root.$on('IsLoaded', () => {
-        this.customPreviousHide = false
+        if (this.displayPreviousButton) {
+          this.customPreviousHide = false
+        }
         this.isLoading = false
       })
       this.$root.$on('hidePreviousButton', () => this.customPreviousHide = true)

@@ -78,7 +78,9 @@ export default {
         text: "",
         type: "success",
         class: "green--text"
-      }
+      },
+      adoptionCheckingInterval: null,
+      adoptionCheckingTimeout: null
     }
   },
   computed: {
@@ -150,11 +152,10 @@ export default {
           this.updateElementStatus("success")
           this.$root.$off(this.customValidationEventName)
           this.$root.$on(this.customValidationEventName, () => {
-            if (this.element.type !== DonationEnum.monthly && this.formType === "advanced") {
+            if (this.mode === "donation") {
               this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
-            } // cas du don suite à une adoption, on a plus d'étape à charger
-            else {
-              this.$root.$emit("ApiValid")
+            } else {
+              this.checkForAdoptionTimeout()
             }
           })
           break
@@ -252,6 +253,27 @@ export default {
     updateElementStatus(status) {
       let data = this.mode === "adoption" ? {order: {status: status}} : {donation: {status: status}}
       this.updateForm(data)
+    },
+    checkForAdoptionTimeout() {
+      this.adoptionCheckingInterval = setInterval(() => {
+        this.checkForAdoptionUuid()
+      }, 1000)
+      this.adoptionCheckingTimeout = setTimeout(() => {
+        clearInterval(this.adoptionCheckingInterval)
+        this.$root.$emit("displayError", 'adoption_not_found')
+      }, 10000)
+
+    },
+    checkForAdoptionUuid() {
+      this.getByUrl(this.getGetUrlNoApiData({stripePaymentIntentId: this.order.stripePaymentIntentId}, "adoption/uuid"))
+          .then((resp) => {
+            console.log(resp)
+            clearInterval(this.adoptionCheckingInterval)
+            clearTimeout(this.adoptionCheckingTimeout)
+            this.updateForm({order: {uuid: resp.uuid}}).then(() => {
+              this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
+            })
+          })
     }
   },
   mounted() {
