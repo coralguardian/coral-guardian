@@ -267,10 +267,9 @@ export default {
     checkForAdoptionUuid() {
       this.getByUrl(this.getGetUrlNoApiData({stripePaymentIntentId: this.order.stripePaymentIntentId}, "adoption/uuid"))
           .then((resp) => {
-            console.log(resp)
             clearInterval(this.adoptionCheckingInterval)
             clearTimeout(this.adoptionCheckingTimeout)
-            this.updateForm({order: {uuid: resp.uuid}}).then(() => {
+            this.updateForm({order: {uuid: resp.data.uuid}}).then(() => {
               this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
             })
           })

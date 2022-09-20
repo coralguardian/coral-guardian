@@ -51,7 +51,7 @@ export default {
       if (isEmpty(this.params)) {
         this.fillParams()
       }
-      if (!this.params.payment_intent_client_secret && !this.params.stripePaymentIntentId && !this.params.step) {
+      if (!this.params.payment_intent_client_secret && !this.params.adoptionUuid && !this.params.step) {
         return false
       }
       return new Promise((resolve, reject) => {
@@ -68,11 +68,11 @@ export default {
           }
         }
         // redirection fichiers
-        else if (this.params.stripePaymentIntentId && this.params.step) {
+        else if (this.params.adoptionUuid && this.params.step) {
           this.loading = true
           let url = this.getGetUrlNoApiData(
             {
-              stripePaymentIntentId: this.params.stripePaymentIntentId,
+              adoptionUuid: this.params.adoptionUuid,
               step: this.params.step
             },
             "adoption/redirection")
@@ -84,8 +84,7 @@ export default {
                 order: {
                   uuid: resp.data.uuid,
                   productType: types[0],
-                  quantity: resp.data.quantity,
-                  stripePaymentIntentId: this.params.stripePaymentIntentId
+                  quantity: resp.data.quantity
                 }
               }
               if (types[1] !== undefined) {

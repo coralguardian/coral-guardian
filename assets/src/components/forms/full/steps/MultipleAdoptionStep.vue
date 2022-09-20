@@ -101,7 +101,7 @@ export default {
       order: "getOrder"
     }),
     adoptionFileUrl() {
-      return this.baseUrl + "namingFile?stripePaymentIntentId=" + this.order.stripePaymentIntentId
+      return this.baseUrl + "namingFile?adoptionUuid=" + this.adoptionModel.adoptionUuid
     }
   },
   methods: {

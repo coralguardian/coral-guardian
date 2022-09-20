@@ -2,7 +2,7 @@ export default class AdopteeModel {
   constructor(data) {
     let adoptee = {
       names: data.adoption.names,
-      stripePaymentIntentId: data.order.stripePaymentIntentId,
+      adoptionUuid: data.order.uuid,
     }
 
     if (data.order.giftCode) {
