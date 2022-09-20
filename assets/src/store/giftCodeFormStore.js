@@ -14,7 +14,10 @@ export default new Vuex.Store({
   },
   getters: {
     ...form.getters,
-    getForm: state => state.form.getForm(),
+    getForm: state => state.form.form,
+    getSteps: state => {
+      return state.form.form.steps
+    },
     getDefaultTranslation: state => {
       let defaultTranslation = 'default.'
       return defaultTranslation + state.data.order.productType + (state.data.order.productType === 'reef' ? ".base" : "")

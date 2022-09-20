@@ -20,14 +20,6 @@ export default {
       form: 'getForm'
     })
   },
-  methods: {
-  },
-  mounted() {
-    if (this.donatorNature.length) {
-      this.$store.commit("updateForm", {adopter: {type: this.donatorNature}})
-    }
-    this.hasPayment()
-  }
 }
 </script>
 
