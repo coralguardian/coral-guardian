@@ -7,10 +7,10 @@
         v-model="paymentTab"
         active-class="tertiary-tab-active"
     >
-      <v-tab @change="updateForm(getData('credit_card'))">
+      <v-tab @change="updateForm(getData(paymentMethodEnum.creditCard))">
         {{ $t('default.stepper.payment.methods.card.tab') }}
       </v-tab>
-      <v-tab @change="updateForm(getData('bank_transfert'))">
+      <v-tab @change="updateForm(getData(paymentMethodEnum.bankTransfer))">
         {{ $t('default.stepper.payment.methods.bank.tab') }}
       </v-tab>
 
@@ -39,6 +39,7 @@
 import StripeCardData from "../../utils/StripeCardData";
 import BankTransferBlock from "./BankTransferBlock";
 import {mapActions} from "vuex";
+import PaymentMethodEnum from "@/enums/paymentMethodEnum";
 
 export default {
   name: "payment-method-block",
@@ -56,6 +57,11 @@ export default {
     mode: {
       type: String,
       default: "adoption"
+    }
+  },
+  computed: {
+    paymentMethodEnum() {
+      return PaymentMethodEnum
     }
   },
   methods: {

@@ -69,6 +69,8 @@ export default {
         },
         baseElementPrice: reefType.price
       }
+
+      console.log(data)
       this.$store.dispatch("updateForm", data)
     },
   }

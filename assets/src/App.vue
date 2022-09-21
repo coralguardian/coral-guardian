@@ -16,26 +16,11 @@ export default {
   components: {
     BaseForm
   },
-  props: {
-    donatorNature: {
-      type: String,
-      default: ""
-    }
-  },
   computed: {
     ...mapGetters({
       form: 'getForm'
     })
   },
-  methods: {
-
-  },
-  mounted() {
-    if (this.donatorNature.length) {
-      this.$store.commit("updateForm", {adopter: {type: this.donatorNature}})
-    }
-    this.checkPaymentStepForBasicForms()
-  }
 }
 </script>
 

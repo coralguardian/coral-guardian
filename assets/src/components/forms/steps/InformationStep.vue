@@ -113,6 +113,7 @@ import NewsletterBlock from "@/components/forms/blocks/NewsletterBlock";
 import apiMixin from "../../../mixins/apiMixin";
 import GiftCustomBlock from "../blocks/GiftCustomBlock";
 import AdopterEnum from "@/enums/adopterEnum";
+import ActionEnum from "@/enums/actionEnum";
 
 export default {
   name: "information-step",
@@ -122,25 +123,23 @@ export default {
     GiftCustomBlock
   },
   mixins: [validationMixin, apiMixin],
-  props: {
-    isGiftCustom: {
-      type: Boolean,
-      default: false
-    },
-  },
   data() {
     return {}
   },
   computed: {
     ...mapGetters({
       adopter: "getAdopter",
-      customerModel: "getCustomerModel"
+      customerModel: "getCustomerModel",
+      order: "getOrder"
     }),
     informationSubstring() {
       return this.isCompany ? "company." : ""
     },
     isCompany() {
       return this.adopter.type === AdopterEnum.company;
+    },
+    isGiftCustom() {
+      return this.order.type === ActionEnum.gift
     }
   },
   methods: {

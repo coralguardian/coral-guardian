@@ -3,10 +3,11 @@
 namespace D4rk0snet\Coralguardian\API\Admin;
 
 use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
-use D4rk0snet\Coralguardian\Entity\CustomerEntity;
+use D4rk0snet\CoralCustomer\Entity\CustomerEntity;
+use D4rk0snet\Coralguardian\Enums\Language;
+use D4rk0snet\CoralOrder\Enums\PaymentMethod;
+use D4rk0snet\Donation\Entity\DonationEntity;
 use D4rk0snet\Donation\Enums\DonationRecurrencyEnum;
-use D4rk0snet\Donation\Models\DonationModel;
-use D4rk0snet\Donation\Service\DonationService;
 use Hyperion\Doctrine\Service\DoctrineService;
 use Hyperion\RestAPI\APIEnpointAbstract;
 use Hyperion\RestAPI\APIManagement;
@@ -48,17 +49,14 @@ class CreateDonationAdmin extends APIEnpointAbstract
         DoctrineService::getEntityManager()->persist($customerEntity);
         DoctrineService::getEntityManager()->flush();
 
-        $donationModel = new DonationModel();
-        $donationModel
-            ->setAmount($data['donation']['amount'])
-            ->setLang($data['donation']['lang'])
-            ->setCustomerUUID($customerEntity->getUuid())
-            ->setPaymentMethod($data['donation']['payment_method'])
-            ->setDonationRecurrency(DonationRecurrencyEnum::ONESHOT->value)
-            ->setDate(date_create_from_format("Y-m-d", $data['donation']['donation_date']));
-
-        $donation = DonationService::createDonation($donationModel);
-        $donation->setIsPaid(true);
+        $donation = new DonationEntity(
+            $customerEntity,
+            date_create_from_format("Y-m-d", $data['donation']['donation_date']),
+            (float)$data['donation']['amount'],
+            Language::from($data['donation']['lang']),
+            true,
+            PaymentMethod::from($data['donation']['payment_method'])
+        );
 
         DoctrineService::getEntityManager()->persist($donation);
         DoctrineService::getEntityManager()->flush();

@@ -15,6 +15,7 @@ import {checkStepsToDisplay} from "@/helpers/functionHelper";
 import ActionEnum from "@/enums/actionEnum";
 import ProductEnum from "@/enums/productEnum";
 import DonationEnum from "@/enums/donationEnum";
+import PaymentMethodEnum from "@/enums/paymentMethodEnum";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -120,7 +121,7 @@ export default new Vuex.Store({
     ...baseStore.actions,
     loadPaymentNextSteps(context) {
       return new Promise((resolve) => {
-        if (context.state.data.order.payment_method.type === "bank_transfert") {
+        if (context.state.data.order.payment_method.type === PaymentMethodEnum.bankTransfer) {
           context.dispatch("loadForm", new BankTransferThanksForm())
             .then(() => {
               resolve()

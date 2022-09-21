@@ -1,73 +1,40 @@
 <template>
   <div id="paymentStep">
+    <div v-if="cardDisplay">
+      <p>{{ $t("default.stepper.payment.description") }}</p>
+      <stripe-card-data :mode="mode" ref="cardData"/>
+    </div>
 
-<!--    <v-stepper-->
-<!--        v-model="step"-->
-<!--        vertical-->
-<!--    >-->
+    <v-alert
+        v-else-if="message.text !== ''"
+        dense
+        text
+        :type="message.type"
+        :class="message.class"
+    >
+      {{ $t("default." + message.text) }}
+    </v-alert>
 
-<!--      <v-stepper-step-->
-<!--          color="tertiary"-->
-<!--          :complete="step > 1"-->
-<!--          :step="1"-->
-<!--      >-->
-<!--        {{$t('default.stepper.payment.donation.title')}}-->
-<!--      </v-stepper-step>-->
+    <payment-method-block v-if="displayPaymentMethod" ref="paymentMethod" :mode="mode"/>
 
-<!--      <v-stepper-content-->
-<!--          :step="1"-->
-<!--      >-->
-<!--        <MonthlyDonationBlock/>-->
-<!--      </v-stepper-content>-->
+    <div class="text-left">
+      <p class="mt-4 mb-4 text-h6 font-weight-bold poppins-police">
+        {{ $t('default.stepper.payment.reminder.title') }}
+      </p>
 
-<!--      <v-stepper-step-->
-<!--          color="tertiary"-->
-<!--          :complete="step > 2"-->
-<!--          :step="2"-->
-<!--      >-->
-<!--        {{$t('default.stepper.header.payment')}}-->
-<!--      </v-stepper-step>-->
-
-<!--      <v-stepper-content-->
-<!--          :step="2"-->
-<!--      >-->
-        <div v-if="cardDisplay">
-          <p>{{ $t("default.stepper.payment.description") }}</p>
-          <stripe-card-data :mode="mode" ref="cardData"/>
+      <v-card
+          outlined
+      >
+        <div>
+          <p v-if="productDescription" class="text-body-1 ma-0 text-right">{{ productDescription }}</p>
+          <p v-if="donationDescription" class="text-body-1 ma-0 text-right">{{ donationDescription }}</p>
         </div>
 
-        <v-alert
-            v-else-if="message.text !== ''"
-            dense
-            text
-            :type="message.type"
-            :class="message.class"
-        >
-          {{ $t("default." + message.text) }}
-        </v-alert>
-
-        <payment-method-block v-if="displayPaymentMethod" ref="paymentMethod" :mode="mode"/>
-
-        <div class="text-left">
-          <p class="mt-4 mb-4 text-h6 font-weight-bold poppins-police">
-            {{ $t('default.stepper.payment.reminder.title') }}
-          </p>
-
-          <v-card
-              outlined
-          >
-            <div>
-              <span class="text-body-1">{{ paymentDescription }}</span>
-            </div>
-
-            <div class="paymentDetail text-body-1">
-              {{ paymentReminder }}
-            </div>
-          </v-card>
+        <div class="paymentDetail text-body-1">
+          {{ paymentReminder }}
         </div>
-<!--      </v-stepper-content>-->
-
-<!--    </v-stepper>-->
+      </v-card>
+    </div>
 
   </div>
 </template>
@@ -76,14 +43,14 @@
 import StripeCardData from "@/components/utils/StripeCardData";
 import PaymentMethodBlock from "../blocks/PaymentMethodBlock";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
-import validationMixin from "../../../mixins/validationMixin";
-import paymentMixin from "../../../mixins/paymentMixin";
+import validationMixin from "@/mixins/validationMixin";
+import paymentMixin from "@/mixins/paymentMixin";
 import {mapActions, mapGetters, mapState} from "vuex";
-import apiMixin from "../../../mixins/apiMixin";
-import GtagService from "../../../services/gtagService";
+import apiMixin from "@/mixins/apiMixin";
+import GtagService from "@/services/gtagService";
 import AdopterEnum from "@/enums/adopterEnum";
 import DonationEnum from "@/enums/donationEnum";
-// import MonthlyDonationBlock from "@/components/forms/blocks/MonthlyDonationBlock";
+import PaymentMethodEnum from "@/enums/paymentMethodEnum";
 
 export default {
   name: "payment-step",
@@ -111,7 +78,9 @@ export default {
         text: "",
         type: "success",
         class: "green--text"
-      }
+      },
+      adoptionCheckingInterval: null,
+      adoptionCheckingTimeout: null
     }
   },
   computed: {
@@ -120,7 +89,8 @@ export default {
       donation: "getDonation",
       formType: "getFormType",
       adopter: "getAdopter",
-      project: "getProject"
+      project: "getProject",
+      orderModel: "getOrderModel"
     }),
     ...mapState({
       baseElementPrice: state => state.data.baseElementPrice,
@@ -129,31 +99,27 @@ export default {
       return this.mode === "adoption" ? this.order : this.donation
     },
     paymentReminder() {
-      let reminder = "";
-      if (this.mode === 'adoption') {
-        if (this.order.customAmount) {
-          reminder = this.$t("default.stepper.adoption.customAmount.label") + " " + this.order.price
-        } else {
-          reminder = this.order.quantity + " * " + this.baseElementPrice + " = " + this.order.price
-        }
-      } else {
-        reminder = this.$t("default.stepper.adoption.customAmount.label") + " " + this.donation.price
-      }
-      return reminder + ' €'
+      return "Total : " + this.orderModel.totalAmount + ' €'
     },
-    paymentDescription() {
-      let description = ''
-      if (this.mode === 'adoption') {
-        description = this.$tc('default.stepper.payment.reminder.adoption.description.' + this.project, this.order.quantity, {
-          count: this.order.quantity,
-          item: this.specificTranslation ? this.specific.item : this.translation.item
-        })
-      } else {
-        description = this.$t('default.stepper.payment.reminder.donation.description.' + this.project, {
-          item: this.$t('default.' + this.donation.type)
+    productDescription() {
+      if (this.orderModel.productsOrdered.length) {
+        let order = this.orderModel.productsOrdered[0]
+        return this.$tc('default.stepper.payment.reminder.adoption.description.' + this.project, order.quantity, {
+          count: order.quantity,
+          item: this.specificTranslation ? this.specific.item : this.translation.item,
+          price: this.order.price
         })
       }
-      return description
+      return null
+    },
+    donationDescription() {
+      if (this.orderModel.donationOrdered.length) {
+        return this.$t('default.stepper.payment.reminder.donation.description', {
+          item: this.$t('default.' + this.donation.type),
+          price: this.donation.price
+        })
+      }
+      return null
     },
   },
   methods: {
@@ -173,6 +139,7 @@ export default {
       this.createStripe()
       const clientSecret = this.element.clientSecret
       const {paymentIntent} = await this.stripe.retrievePaymentIntent(clientSecret);
+      this.updateForm({order: {clientSecret: paymentIntent.client_secret, stripePaymentIntentId: paymentIntent.id}})
       let displayCardForm = false;
       switch (paymentIntent.status) {
         case "succeeded":
@@ -185,11 +152,10 @@ export default {
           this.updateElementStatus("success")
           this.$root.$off(this.customValidationEventName)
           this.$root.$on(this.customValidationEventName, () => {
-            if (this.element.type !== DonationEnum.monthly && this.formType === "advanced") {
+            if (this.mode === "donation") {
               this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
-            } // cas du don suite à une adoption, on a plus d'étape à charger
-            else {
-              this.$root.$emit("ApiValid")
+            } else {
+              this.checkForAdoptionTimeout()
             }
           })
           break
@@ -230,7 +196,7 @@ export default {
       this.message = {text: ""}
       // cas du paiement par virement
       // il n'y a rien de particulier à vérifier
-      if (this.element.payment_method.type === "bank_transfert") {
+      if (this.element.payment_method.type === PaymentMethodEnum.bankTransfer) {
         this.$root.$emit('StepValid')
         // cas du paiement par carte
       } else {
@@ -262,13 +228,9 @@ export default {
     purchase() {
       this.updateElementStatus("pending")
       // cas du paiement par virement
-      if (this.element.payment_method.type === "bank_transfert") {
+      if (this.element.payment_method.type === PaymentMethodEnum.bankTransfer) {
         let data;
-        // if (this.mode === 'adoption') {
-          data = this.$store.getters.getOrderModel
-        // } else {
-        //   data = this.$store.getters.getPostPaymentDataDonation
-        // }
+        data = this.$store.getters.getOrderModel
         this[this.apiData.method](data, this.apiData.endpoint)
             .then((resp) => {
               const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}
@@ -291,6 +253,26 @@ export default {
     updateElementStatus(status) {
       let data = this.mode === "adoption" ? {order: {status: status}} : {donation: {status: status}}
       this.updateForm(data)
+    },
+    checkForAdoptionTimeout() {
+      this.adoptionCheckingInterval = setInterval(() => {
+        this.checkForAdoptionUuid()
+      }, 1000)
+      this.adoptionCheckingTimeout = setTimeout(() => {
+        clearInterval(this.adoptionCheckingInterval)
+        this.$root.$emit("displayError", 'adoption_not_found')
+      }, 10000)
+
+    },
+    checkForAdoptionUuid() {
+      this.getByUrl(this.getGetUrlNoApiData({stripePaymentIntentId: this.order.stripePaymentIntentId}, "adoption/uuid"))
+          .then((resp) => {
+            clearInterval(this.adoptionCheckingInterval)
+            clearTimeout(this.adoptionCheckingTimeout)
+            this.updateForm({order: {uuid: resp.data.uuid}}).then(() => {
+              this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
+            })
+          })
     }
   },
   mounted() {

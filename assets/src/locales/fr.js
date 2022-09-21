@@ -148,7 +148,7 @@ export default {
     },
     donation: {
       title: {
-        france: "Soutenez Coral Guardian",
+        indonesia: "Soutenez Coral Guardian",
         spain: "Soutenez le projet S.O.S Corales"
       },
       description: "Votre don nous aidera à poursuivre l'ensemble de nos actions.",
@@ -282,15 +282,12 @@ export default {
         title: "Rappel de votre don",
         adoption: {
           description: {
-            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indonésie. | {count} {item} adoptés sur l'île d'Hatamin en Indonésie.",
-            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée. | {count} {item} adoptés à Punta de la Mona en Méditerranée."
+            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indonésie : {price} € | {count} {item} adoptés sur l'île d'Hatamin en Indonésie : {price} €",
+            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée : {price} € | {count} {item} adoptés à Punta de la Mona en Méditerranée : {price} €"
           }
         },
         donation: {
-          description: {
-            indonesia: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions.",
-            spain: "Votre don {item} nous aidera à poursuivre l'ensemble de nos actions."
-          }
+          description: "Un don {item} : {price} €"
         }
       },
       errors: {
@@ -367,6 +364,7 @@ export default {
     select_date: "Veuillez sélectionner une date si vous souhaitez préciser la date d'envoi.",
     incorrect_file_data: "Les données du fichier semblent incorrects, veuillez vérifier vos informations et réessayer.",
     code_not_found: "Le code cadeau semble invalide. Si le problème persiste, veuillez nous contacter directement.",
+    adoption_not_found: "Une erreur est survenue lors de la récupération de votre adoption, veuillez nous contacter directement."
   },
   donation: {
     monthly: {

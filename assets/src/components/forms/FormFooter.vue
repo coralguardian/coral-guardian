@@ -1,7 +1,7 @@
 <template>
   <div
       class="app-stepper-footer d-flex"
-      :class="{justifyEnd: !displayPreviousButton, justifySpaceBetween: displayPreviousButton, flexColum: windowWidth <= 600}"
+      :class="{'justify-end': !displayPreviousButton, 'justify-space-between': displayPreviousButton, 'flex-column': windowWidth <= 600}"
   >
     <v-btn
         v-if="displayPreviousButton"
@@ -93,7 +93,9 @@ export default {
         })
       })
       this.$root.$on('IsLoaded', () => {
-        this.customPreviousHide = false
+        if (this.displayPreviousButton) {
+          this.customPreviousHide = false
+        }
         this.isLoading = false
       })
       this.$root.$on('hidePreviousButton', () => this.customPreviousHide = true)

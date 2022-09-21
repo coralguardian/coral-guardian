@@ -2,6 +2,7 @@ import i18n from "@/plugins/i18n";
 import CustomerModel from "@/models/customerModel";
 import ProductOrderModel from "@/models/productOrderModel";
 import DonationOrderModel from "@/models/donationOrderModel";
+import ActionEnum from "@/enums/actionEnum";
 
 export default class OrderModel {
   constructor(data) {
@@ -12,6 +13,10 @@ export default class OrderModel {
       totalAmount: data.order.price + data.donation.price,
       lang: i18n.locale,
       paymentMethod: data.order.payment_method.type
+    }
+
+    if (data.order.type === ActionEnum.gift) {
+      order.sendToFriend = data.adopter.send_to_friend !== null ? data.adopter.send_to_friend : true
     }
 
     if (data.selectedProduct !== null) {
