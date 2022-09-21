@@ -26,20 +26,6 @@ export default {
       if (this.order.clientSecret) {
         localStorage.removeItem(this.order.clientSecret)
       }
-    },
-    checkPaymentStepForBasicForms() {
-      const clientSecret = new URLSearchParams(window.location.search).get(
-        "payment_intent_client_secret"
-      );
-      if (!clientSecret) {
-        return;
-      }
-      let data = localStorage.getItem(clientSecret);
-      if (data) {
-        this.$store.dispatch("redirectToPaymentStep", data)
-      } else {
-        this.cleanLocalStorage()
-      }
     }
   }
 }
