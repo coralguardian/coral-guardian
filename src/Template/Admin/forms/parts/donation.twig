@@ -1,6 +1,12 @@
 <div class="form-block">
     <h2>Informations du don</h2>
 
+    <label for="donation-project">Projet *</label><br>
+    <select id="donation-project" name="donation[project]" required>
+        <option value="indonesia">Indonésie</option>
+        <option value="spain">Espagne</option>
+    </select>
+
     <div id="donation-unique-date-block">
         <label for="donation-date">Date du don *</label><br>
         <input type="date" id="donation-date" name="donation[donation_date]" required><br>

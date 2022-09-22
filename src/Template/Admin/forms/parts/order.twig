@@ -7,12 +7,29 @@
         <option value="gift">Pour offrir</option>
     </select>
 
-    <label for="order-product">Produit *</label><br>
-    <select id="order-product" name="order[product_key]" required>
-        {% for product in products %}
-            <option value="{{ product.key }}">{{ product.value }}</option>
-        {% endfor %}
+    <label for="donation-project">Projet *</label><br>
+    <select id="donation-project" name="donation[project]" required>
+        <option value="indonesia">Indonésie</option>
+        <option value="spain">Espagne</option>
     </select>
+
+    <div id="block-indonesia-products">
+        <label for="order-product">Produit *</label><br>
+        <select id="order-product" name="order[product_key]" required>
+            {% for product in indonesiaProducts %}
+                <option value="{{ product.key }}">{{ product.value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div id="block-spain-products">
+        <label for="order-product">Produit *</label><br>
+        <select id="order-product" name="order[product_key]" required>
+            {% for product in spainProducts %}
+                <option value="{{ product.key }}">{{ product.value }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
     <label for="order-quantity">Quantité *</label><br>
     <input type="text" id="order-quantity" name="order[quantity]" required><br>

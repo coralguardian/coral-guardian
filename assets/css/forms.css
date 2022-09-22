@@ -13,6 +13,6 @@ select, input[type="text"], input[type="date"] {
     width: 100%;
 }
 
-#donation-recurrent-date-block, #customer-company-name-block, #block-file-recipients {
+#donation-recurrent-date-block, #customer-company-name-block, #block-file-recipients, #block-spain-products {
     display: none;
 }

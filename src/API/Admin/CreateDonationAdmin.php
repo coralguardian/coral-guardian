@@ -6,6 +6,7 @@ use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
 use D4rk0snet\CoralCustomer\Entity\CustomerEntity;
 use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\CoralOrder\Enums\PaymentMethod;
+use D4rk0snet\CoralOrder\Enums\Project;
 use D4rk0snet\Donation\Entity\DonationEntity;
 use D4rk0snet\Donation\Enums\DonationRecurrencyEnum;
 use Hyperion\Doctrine\Service\DoctrineService;
@@ -55,7 +56,8 @@ class CreateDonationAdmin extends APIEnpointAbstract
             (float)$data['donation']['amount'],
             Language::from($data['donation']['lang']),
             true,
-            PaymentMethod::from($data['donation']['payment_method'])
+            PaymentMethod::from($data['donation']['payment_method']),
+            Project::from($data['donation']['project'])
         );
 
         DoctrineService::getEntityManager()->persist($donation);
