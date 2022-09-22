@@ -12,6 +12,7 @@ use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
 use D4rk0snet\CoralCustomer\Entity\CustomerEntity;
 use D4rk0snet\Coralguardian\Enums\Language;
 use D4rk0snet\CoralOrder\Enums\PaymentMethod;
+use D4rk0snet\CoralOrder\Enums\Project;
 use D4rk0snet\GiftCode\Entity\GiftCodeEntity;
 use D4rk0snet\GiftCode\Service\GiftCodeService;
 use D4rk0snet\NamingFileImport\Service\NamingFileService;
@@ -64,7 +65,8 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
                 AdoptedProduct::from($data['order']['product_key']),
                 (int)$data['order']['quantity'],
                 PaymentMethod::from($data['order']['payment_method']),
-                true
+                true,
+                Project::from($data['donation']['project'])
             );
             DoctrineService::getEntityManager()->persist($adoption);
             DoctrineService::getEntityManager()->flush();

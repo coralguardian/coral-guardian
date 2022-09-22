@@ -11,6 +11,7 @@ use D4rk0snet\Coralguardian\API\Admin\CreateAdoptionAdmin;
 use D4rk0snet\Coralguardian\API\Admin\CreateDonationAdmin;
 use D4rk0snet\Coralguardian\API\Admin\SetAdoptionAsPaidEndPoint;
 use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
+use D4rk0snet\CoralOrder\Enums\Project;
 use D4rk0snet\Donation\Entity\DonationEntity;
 use D4rk0snet\Donation\Entity\RecurringDonationEntity;
 use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
@@ -92,10 +93,19 @@ class AdminService
 
     public static function coralCreateAdoptionPage()
     {
-        $products = [];
+        //petit hack pour ne pas utiliser d'api pour une partie très peu utilisée du BO
+        $indonesiaProducts = [];
+        $spainProducts = [];
 
-        foreach (AdoptedProduct::getAllAdoptedProduct() as $k => $v) {
-            $products[] = [
+        foreach (AdoptedProduct::getAllAdoptedProduct(Project::INDONESIA) as $k => $v) {
+            $indonesiaProducts[] = [
+                'key' => $v,
+                'value' => $k
+            ];
+        }
+
+        foreach (AdoptedProduct::getAllAdoptedProduct(Project::SPAIN) as $k => $v) {
+            $spainProducts[] = [
                 'key' => $v,
                 'value' => $k
             ];
@@ -105,7 +115,8 @@ class AdminService
             'assets_path' => home_url("/app/plugins/coralguardian/assets/", "http"),
             'adoption_file' => GetNamingFileEndPoint::getUrl(),
             'recipient_file' => GetRecipientsFileEndPoint::getUrl(),
-            "products" => $products,
+            "spainProducts" => $spainProducts,
+            "indonesiaProducts" => $indonesiaProducts,
             "action" => CreateAdoptionAdmin::getUrl()
         ]);
     }

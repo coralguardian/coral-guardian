@@ -50,4 +50,23 @@ $(document).ready(function () {
 
     }
   })
+
+  $("#donation-project").on('change', function (item) {
+    var spainProducts = $("#block-spain-products")
+    var indonesiaProducts = $("#block-indonesia-products")
+    // var adoptionsFileBlock = $("#block-file-adoptions")
+    if ($(this).val() === "indonesia") {
+      spainProducts.hide()
+      indonesiaProducts.show()
+      $("#block-indonesia-products input").attr("required", "required")
+      $("#block-spain-products input").attr("required", false)
+
+    } else {
+      spainProducts.show()
+      indonesiaProducts.hide()
+      $("#block-indonesia-products input").attr("required", false)
+      $("#block-spain-products input").attr("required", "required")
+
+    }
+  })
 })
