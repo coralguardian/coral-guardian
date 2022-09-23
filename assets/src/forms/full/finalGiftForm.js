@@ -16,7 +16,7 @@ export default class FinalGiftForm extends AbstractForm {
       component: "FinalRecipientStep",
       validate: true,
       back: false,
-      last: true
+      isLast: true
     }
   ]
 }

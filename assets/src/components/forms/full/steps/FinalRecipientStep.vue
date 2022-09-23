@@ -2,19 +2,12 @@
   <div>
     <p v-html="description"/>
     <social-share-block/>
-    <v-form
-        :ref="formRefName"
-        v-model="valid"
-    >
-      <donation-block final/>
-    </v-form>
   </div>
 </template>
 
 <script>
 import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
-import DonationBlock from "@/components/forms/blocks/DonationBlock";
 import SocialShareBlock from "../../blocks/SocialShareBlock";
 import validationMixin from "../../../../mixins/validationMixin";
 import itemTranslationMixin from "../../../../mixins/itemTranslationMixin";
@@ -24,7 +17,6 @@ import paymentMixin from "@/mixins/paymentMixin";
 export default {
   name: "final-adoption-step",
   components: {
-    DonationBlock,
     SocialShareBlock
   },
   mixins: [apiMixin, finalStepMixin, validationMixin, itemTranslationMixin, paymentMixin],

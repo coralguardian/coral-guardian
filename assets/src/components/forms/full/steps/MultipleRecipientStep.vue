@@ -82,7 +82,6 @@ import RecipientBlock from "../../blocks/RecipientBlock";
 import {mapActions, mapGetters} from "vuex";
 import validationMixin from "../../../../mixins/validationMixin";
 import apiMixin from "../../../../mixins/apiMixin";
-import FinalGiftForm from "../../../../forms/full/finalGiftForm";
 import redirectionMixin from "../../../../mixins/redirectionMixin";
 
 export default {
@@ -139,18 +138,10 @@ export default {
         }
         let formData = new FormData();
         formData.append("recipient_file", this.namesFile);
-        if (this.giftModel.to_send_on !== null) {
-          formData.append("to_send_on", this.giftModel.to_send_on);
-        }
-        if (this.giftModel.message !== "") {
-          formData.append("message", this.giftModel.message);
-        }
         this.post(formData, "recipientFileImport", options)
             .then(() => {
-              this.loadForm(new FinalGiftForm()).then(() => {
                 this.cleanUrl()
                 this.$root.$emit('ApiValid')
-              })
             })
             .catch(() => {
               this.fileError = this.$t('default.errors.incorrect_file_data')
@@ -159,10 +150,8 @@ export default {
       } else {
         this[this.apiData.method](this.giftModel, this.apiData.endpoint)
             .then(() => {
-              this.loadForm(new FinalGiftForm()).then(() => {
                 this.cleanUrl()
                 this.$root.$emit('ApiValid')
-              })
             })
             .catch(err => {
               console.error(err)
@@ -174,9 +163,8 @@ export default {
       // cas d'une redirection sur l'étape pour continuer le process
       if (this.recipient.locked) {
         this.tab = 1
-      } else {
-        this.createRecipients()
       }
+      this.createRecipients()
     }
   },
   mounted() {
