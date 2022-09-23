@@ -10,14 +10,8 @@ export default class ProductForm extends AbstractForm {
       let state = context.state
       switch (state.data.target) {
         case adoptionHelper.me:
-          context.dispatch('loadForm', new AdoptionForm())
-            .then(() => resolve())
-            .catch((err) => {
-              reject(err)
-            })
-          break;
         case adoptionHelper.friend:
-          context.dispatch('loadForm', new GiftForm())
+          context.dispatch('loadForm', new AdoptionForm())
             .then(() => resolve())
             .catch((err) => {
               reject(err)

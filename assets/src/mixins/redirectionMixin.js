@@ -19,7 +19,6 @@ export default {
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      loadPaymentNextSteps: "loadPaymentNextSteps",
       loadFormSteps: "loadForm",
       forceUpdate: "forceUpdate"
     }),
@@ -125,11 +124,12 @@ export default {
                   reject()
                 }
               }
+              const adoptionForm = new AdoptionForm()
               this.updateForm(data)
                 .then(() => this.loadFormSteps(new SetupForm())
-                  .then(() => this.loadFormSteps(new AdoptionForm())
+                  .then(() => this.loadFormSteps(adoptionForm)
                     .then(() => this.updateForm(order)
-                      .then(() => this.loadPaymentNextSteps()
+                      .then(() => adoptionForm.nextForm(this.$store)
                         .then(() => this.updateForm(step)
                           .then(() => resolve()))))))
             })

@@ -51,6 +51,7 @@ import GtagService from "@/services/gtagService";
 import AdopterEnum from "@/enums/adopterEnum";
 import DonationEnum from "@/enums/donationEnum";
 import PaymentMethodEnum from "@/enums/paymentMethodEnum";
+import AdoptionForm from "@/forms/full/adoptionForm";
 
 export default {
   name: "payment-step",
@@ -125,7 +126,6 @@ export default {
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      loadPaymentNextSteps: "loadPaymentNextSteps",
       loadForm: "loadForm"
     }),
     displayCard() {
@@ -154,7 +154,7 @@ export default {
           this.$root.$off(this.customValidationEventName)
           this.$root.$on(this.customValidationEventName, () => {
             if (this.mode === "donation") {
-              this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
+              this.$root.$emit("ApiValid")
             } else {
               this.checkForAdoptionTimeout()
             }
@@ -234,10 +234,14 @@ export default {
         data = this.$store.getters.getOrderModel
         this[this.apiData.method](data, this.apiData.endpoint)
             .then((resp) => {
-              const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}
-              this.updateForm(data).then(() => {
-                this.loadPaymentNextSteps().then(() => this.$root.$emit('ApiValid'))
-              })
+              if (resp.data) {
+                const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}
+                this.updateForm(data).then(() => {
+                  this.$root.$emit('ApiValid')
+                })
+              } else {
+                this.$root.$emit('ApiValid')
+              }
             })
             .catch(() => {
               console.log("erreur")
@@ -271,7 +275,9 @@ export default {
             clearInterval(this.adoptionCheckingInterval)
             clearTimeout(this.adoptionCheckingTimeout)
             this.updateForm({order: {uuid: resp.data.uuid}}).then(() => {
-              this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
+              (new AdoptionForm()).nextForm(this.$store).then(() => {
+                this.$root.$emit("ApiValid")
+              })
             })
           })
     }

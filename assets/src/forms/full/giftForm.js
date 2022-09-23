@@ -1,7 +1,29 @@
 import AbstractForm from "../abstractForm";
 import ProductEnum from "@/enums/productEnum";
+import PaymentMethodEnum from "@/enums/paymentMethodEnum";
+import BankTransferThanksForm from "@/forms/full/bankTransferThanksForm";
+import RecipientFullForm from "@/forms/full/recipientFullForm";
+import FinalGiftForm from "@/forms/full/finalGiftForm";
 
 export default class GiftForm extends AbstractForm {
+
+  nextForm() {
+    return new Promise((resolve) => {
+      if (context.state.data.order.payment_method.type === PaymentMethodEnum.bankTransfer) {
+        context.dispatch("loadForm", new BankTransferThanksForm())
+          .then(() => {
+            resolve()
+          })
+      } else {
+        context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new FinalGiftForm())
+          .then(() => {
+            resolve()
+          })
+          .catch((err) => console.log(err))
+      }
+    })
+  }
+
   unload(state) {
     return new Promise(resolve => {
       state.data.order.productType = null
