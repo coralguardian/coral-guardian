@@ -283,7 +283,11 @@ export default {
     }
   },
   mounted() {
-    if (this.adopter.type === AdopterEnum.company && !this.element.clientSecret && this.element.type !== DonationEnum.monthly) {
+    if (this.adopter.type === AdopterEnum.company &&
+        !this.element.clientSecret &&
+        // this.element.type !== DonationEnum.monthly &&
+        (!this.orderModel.donationOrdered.length || this.orderModel.donationOrdered[0].donationRecurrency !== DonationEnum.monthly)) // si on fait un don mensuel on ne peut pas payer par virement
+    {
       this.displayPaymentMethod = true
     } else {
       this.displayCard()
