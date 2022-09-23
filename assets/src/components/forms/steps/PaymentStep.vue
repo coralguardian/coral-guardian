@@ -143,6 +143,7 @@ export default {
       let displayCardForm = false;
       switch (paymentIntent.status) {
         case "succeeded":
+          (new GtagService()).executeTag(this.element, this.mode);
           this.message = {
             text: "stripe.payment.success",
             type: "success",
@@ -276,7 +277,6 @@ export default {
     }
   },
   mounted() {
-    (new GtagService()).executeTag(this.element, this.mode);
     if (this.adopter.type === AdopterEnum.company && !this.element.clientSecret && this.element.type !== DonationEnum.monthly) {
       this.displayPaymentMethod = true
     } else {
