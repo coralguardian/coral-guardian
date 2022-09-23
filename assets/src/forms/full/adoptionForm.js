@@ -11,7 +11,7 @@ export default class AdoptionForm extends AbstractForm {
 
   nextForm(context) {
     return new Promise((resolve, reject) => {
-      if (context.state.data.order.payment_method.type === PaymentMethodEnum.bankTransfer) {
+      if (context.state.data.payment_method === PaymentMethodEnum.bankTransfer) {
         context.dispatch("loadForm", new BankTransferThanksForm())
           .then(() => {
             resolve()

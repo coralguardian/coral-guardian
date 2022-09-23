@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import {BaseAdoptionFormStore} from "@/store/baseAdoptionFormStore";
 import AbstractForm from "../forms/abstractForm";
 import GiftModel from "../models/giftModel";
-import AdoptionModel from "@/models/adoptionModel";
 import GiftMessageModel from "@/models/giftMessageModel";
 import axios from "axios";
 import {checkStepsToDisplay} from "@/helpers/functionHelper";
@@ -89,7 +88,6 @@ export default new Vuex.Store({
       }
     },
     getSpecificTranslation: state => state.data.specificType ? 'default.' + state.data.specificType : null,
-    getPostPaymentDataAdoption: state => new AdoptionModel(state.data),
     getGift: state => state.data.gift,
     getGiftModel: state => new GiftModel(state.data),
     getGiftMessageModel: state => new GiftMessageModel(state.data),

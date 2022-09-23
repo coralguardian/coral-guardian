@@ -39,7 +39,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      postPaymentData: "getPostPaymentDataAdoption",
       donation: "getDonation",
       order: "getOrder"
     }),
@@ -54,11 +53,7 @@ export default {
     createPaymentIntent() {
       return new Promise((resolve, reject) => {
         let data;
-        // if (this.mode === 'adoption') {
-          data = this.$store.getters.getOrderModel
-        // } else {
-        //   data = this.$store.getters.getPostPaymentDataDonation
-        // }
+        data = this.$store.getters.getOrderModel
         this[this.apiData.method](data, this.apiData.endpoint)
             .then((resp) => {
               const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}

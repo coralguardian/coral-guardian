@@ -40,20 +40,15 @@ export default class BaseFormStore {
           price: null,
           customAmount: false,
           quantity: 1,
-          payment_method: {
-            type: PaymentMethodEnum.creditCard
-          },
           status: null
         },
         orderToken: "",
         donation: {
           type: DonationEnum.monthly,
           price: 0,
-          payment_method: {
-            type: PaymentMethodEnum.creditCard
-          },
           status: null
-        }
+        },
+        payment_method: PaymentMethodEnum.creditCard
       }
     }
 
