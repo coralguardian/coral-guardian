@@ -7,7 +7,7 @@
         :ref="formRefName"
         v-model="valid"
     >
-      <donation-block final :min="1"/>
+      <donation-block final/>
     </v-form>
   </div>
 </template>

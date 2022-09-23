@@ -18,17 +18,12 @@
         />
       </div>
 
-      <v-form
-          :ref="formRefName"
-          v-model="valid"
-      >
-        <custom-amount
-            ref="customAmount"
-            :value="donation.price"
-            :hint="false"
-            @input="updateForm({donation: {price: $event}})"
-        />
-      </v-form>
+      <custom-amount
+          ref="customAmount"
+          :value="donation.price"
+          :hint="false"
+          @input="updateForm({donation: {price: $event}})"
+      />
 
       <deduction :donation="donation.price"/>
     </div>
