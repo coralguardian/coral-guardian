@@ -18,6 +18,8 @@ export default class GtagService {
     gtag('event', 'conversion', {
       'send_to': tag,
       'transaction_id': '',
+      'value': element.price,
+      'currency': "EUR",
       'event_callback': this.reportConversion
     });
     return false;
