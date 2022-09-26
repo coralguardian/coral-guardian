@@ -185,6 +185,7 @@ class AdminService
                 "price" => (string)$donation->getAmount(),
                 "link" => "",//getenv('WP_HOME') . "/wp/wp-admin/post.php?post=" . $postId . "&action=edit",
                 "isPaid" => $donation->isPaid() ? "Confirmé" : SetAdoptionAsPaidEndPoint::getUrl() . "?" . SetAdoptionAsPaidEndPoint::ORDER_UUID_PARAM . "=" . $donation->getUuid(),
+                "project" => $donation->getProject()->value
             ];
 
             if ($donation->isPaid()) {
