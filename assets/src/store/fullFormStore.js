@@ -1,21 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {BaseAdoptionFormStore} from "@/store/baseAdoptionFormStore";
-import adoptionHelper from "../helpers/adoptionHelper";
 import AbstractForm from "../forms/abstractForm";
-import RecipientFullForm from "../forms/full/recipientFullForm";
-import FinalAdoptionForm from "../forms/full/finalAdoptionForm";
-import BankTransferThanksForm from "../forms/full/bankTransferThanksForm";
 import GiftModel from "../models/giftModel";
-import AdoptionModel from "@/models/adoptionModel";
-import FinalGiftForm from "@/forms/full/finalGiftForm";
 import GiftMessageModel from "@/models/giftMessageModel";
 import axios from "axios";
 import {checkStepsToDisplay} from "@/helpers/functionHelper";
 import ActionEnum from "@/enums/actionEnum";
 import ProductEnum from "@/enums/productEnum";
 import DonationEnum from "@/enums/donationEnum";
-import PaymentMethodEnum from "@/enums/paymentMethodEnum";
 
 const baseStore = new BaseAdoptionFormStore(null, null, null)
 
@@ -95,7 +88,6 @@ export default new Vuex.Store({
       }
     },
     getSpecificTranslation: state => state.data.specificType ? 'default.' + state.data.specificType : null,
-    getPostPaymentDataAdoption: state => new AdoptionModel(state.data),
     getGift: state => state.data.gift,
     getGiftModel: state => new GiftModel(state.data),
     getGiftMessageModel: state => new GiftMessageModel(state.data),
@@ -119,29 +111,6 @@ export default new Vuex.Store({
   },
   actions: {
     ...baseStore.actions,
-    loadPaymentNextSteps(context) {
-      return new Promise((resolve) => {
-        if (context.state.data.order.payment_method.type === PaymentMethodEnum.bankTransfer) {
-          context.dispatch("loadForm", new BankTransferThanksForm())
-            .then(() => {
-              resolve()
-            })
-        } else if (context.state.data.target === adoptionHelper.friend) {
-          context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new FinalGiftForm())
-            .then(() => {
-              resolve()
-            })
-            .catch((err) => console.log(err))
-        } else if (context.state.data.target === adoptionHelper.me) {
-          context.dispatch("loadForm", new FinalAdoptionForm())
-            .then(() => {
-              resolve()
-            })
-        } else {
-          resolve()
-        }
-      })
-    },
     loadForm(context, form) {
       return new Promise((resolve, reject) => {
         if (!(form instanceof AbstractForm)) {

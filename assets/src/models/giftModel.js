@@ -10,9 +10,7 @@ export default class GiftModel {
     })
     return {
       friends: friends,
-      adoption_uuid: data.order.uuid,
-      message: data.gift.message,
-      sendOn: data.gift.toSendOn ? data.gift.toSendOn.replaceAll("-", "") : null
+      adoptionUuid: data.order.uuid
     }
   }
 }

@@ -1,19 +1,16 @@
 import AbstractForm from "../abstractForm";
 
 export default class BankTransferThanksForm extends AbstractForm {
-  form = {
-    tabs: [
-      {
+
+  steps = [
+    {
+      tab: {
         title: "default.stepper.header.thanks",
-      }
-    ],
-    steps: [
-      {
-        title: "default.stepper.bankTransferThanks.title",
-        component: "BankTransferThanksStep",
-        back: false,
-        isLast: true
-      }
-    ]
-  }
+      },
+      title: "default.stepper.bankTransferThanks.title",
+      component: "BankTransferThanksStep",
+      back: false,
+      isLast: true
+    }
+  ]
 }

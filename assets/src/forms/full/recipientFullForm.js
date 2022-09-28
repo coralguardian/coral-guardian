@@ -1,6 +1,14 @@
 import AbstractForm from "../abstractForm";
+import FinalGiftForm from "@/forms/full/finalGiftForm";
 
 export default class RecipientFullForm extends AbstractForm {
+
+  nextForm(context) {
+    return new Promise((resolve) => {
+      context.dispatch('loadForm', new FinalGiftForm()).then(() => resolve())
+    })
+  }
+
   steps = [
     {
       tab: {

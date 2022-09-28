@@ -7,10 +7,10 @@
         v-model="paymentTab"
         active-class="tertiary-tab-active"
     >
-      <v-tab @change="updateForm(getData(paymentMethodEnum.creditCard))">
+      <v-tab @change="updatePaymentMethod(paymentMethodEnum.creditCard)">
         {{ $t('default.stepper.payment.methods.card.tab') }}
       </v-tab>
-      <v-tab @change="updateForm(getData(paymentMethodEnum.bankTransfer))">
+      <v-tab @change="updatePaymentMethod(paymentMethodEnum.bankTransfer)">
         {{ $t('default.stepper.payment.methods.bank.tab') }}
       </v-tab>
 
@@ -68,10 +68,9 @@ export default {
     ...mapActions({
       updateForm: "updateForm"
     }),
-    getData(paymentMethod) {
-      return this.mode === "adoption" ?
-          {order: {payment_method: {type: paymentMethod}}} :
-          {donation: {payment_method: {type: paymentMethod}}}
+    updatePaymentMethod(paymentMethod) {
+      let data = {payment_method: paymentMethod}
+      this.updateForm(data)
     }
   }
 }

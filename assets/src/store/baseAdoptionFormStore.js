@@ -1,8 +1,5 @@
 import BaseFormStore from "../store/baseFormStore";
-import AdoptionModel from "../models/adoptionModel";
-import GiftAdoptionModel from "../models/giftAdoptionModel";
 import AdopteeModel from "@/models/adopteeModel";
-import ActionEnum from "@/enums/actionEnum";
 
 const baseForm = new BaseFormStore()
 
@@ -74,19 +71,13 @@ export class BaseAdoptionFormStore {
       getCurrentStep: (state, getters) => {
         return getters.getSteps[state.data.step]
       },
-      getPostPaymentDataAdoption(state) {
-        if (state.data.order.type === ActionEnum.gift) {
-          return new GiftAdoptionModel(state.data)
-        } else {
-          return new AdoptionModel(state.data)
-        }
-      },
       getPostAdoptionsData(state) {
         return new AdopteeModel(state.data)
       },
       getAdoption: state => state.data.adoption,
       getRecipient: state => state.data.recipient,
-      getFriend: state => state.data.friend
+      getFriend: state => state.data.friend,
+      getPaymentMethod: state => state.data.payment_method
     };
 
     this.mutations = {

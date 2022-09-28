@@ -1,5 +1,4 @@
 import {concat, merge} from "lodash";
-import DonationModel from "../models/donationModel";
 import CustomerModel from "@/models/customerModel";
 import OrderModel from "@/models/orderModel";
 import DonationEnum from "@/enums/donationEnum";
@@ -41,20 +40,15 @@ export default class BaseFormStore {
           price: null,
           customAmount: false,
           quantity: 1,
-          payment_method: {
-            type: PaymentMethodEnum.creditCard
-          },
           status: null
         },
         orderToken: "",
         donation: {
           type: DonationEnum.monthly,
           price: 0,
-          payment_method: {
-            type: PaymentMethodEnum.creditCard
-          },
           status: null
-        }
+        },
+        payment_method: PaymentMethodEnum.creditCard
       }
     }
 
@@ -71,7 +65,6 @@ export default class BaseFormStore {
       stepCount: (state, getters) => getters.getSteps.length,
       getApiData: (state, getters) => getters.getCurrentStep.api ? getters.getCurrentStep.api : null,
       getOrderToken: state => state.data.orderToken,
-      getPostPaymentDataDonation: state => new DonationModel(state.data),
       getAdopter: state => state.data.adopter,
       getCustomerModel: state => new CustomerModel(state.data),
       getOrder: state => state.data.order,
@@ -139,14 +132,6 @@ export default class BaseFormStore {
             context.commit('unloadForm', formToUnload)
           }
         }
-      },
-      redirectToPaymentStep(context, data) {
-        return new Promise((resolve) => {
-          const dataObject = JSON.parse(data)
-          context.dispatch("updateForm", dataObject).then(() => {
-            resolve()
-          })
-        })
       },
       loadNextForm(context) {
         return new Promise(resolve => {

@@ -12,7 +12,7 @@ export default class OrderModel {
       donationOrdered: [],
       totalAmount: data.order.price + data.donation.price,
       lang: i18n.locale,
-      paymentMethod: data.order.payment_method.type
+      paymentMethod: data.payment_method
     }
 
     if (data.order.type === ActionEnum.gift) {

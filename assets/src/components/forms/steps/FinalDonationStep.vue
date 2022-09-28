@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p v-if="donation.type === donationEnum.oneshot && donation.payment_method.type === paymentMethodEnum.creditCard" v-html="$t('default.stepper.finalDonation.description')" />
+    <p v-if="donation.type === donationEnum.oneshot && paymentMethod === paymentMethodEnum.creditCard" v-html="$t('default.stepper.finalDonation.description')" />
     <p v-else-if="donation.type === donationEnum.monthly" v-html="$t('default.stepper.finalRecurrentDonation.description')"/>
-    <p v-else-if="donation.payment_method.type === paymentMethodEnum.bankTransfer">
+    <p v-else-if="paymentMethod === paymentMethodEnum.bankTransfer">
       {{$t('default.stepper.finalDonation.bankTransfer')}}
     </p>
   </div>
@@ -22,6 +22,7 @@ export default {
   computed: {
     ...mapGetters({
       donation: "getDonation",
+      paymentMethod: "getPaymentMethod"
     }),
     donationEnum() {
       return DonationEnum

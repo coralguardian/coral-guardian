@@ -2,6 +2,13 @@
   <div id="donationBlock" class="d-flex justify-center align-center">
 
     <div>
+      <div v-if="final">
+        <p class="mt-5">* * * * * * *</p>
+        <p class="text-subtitle-1 font-weight-bold mt-4">
+          {{ $t('default.donation.monthly.description') }}
+        </p>
+      </div>
+
       <div>
         <price-button
             v-for="price in prices"
@@ -40,6 +47,10 @@ export default {
   },
   mixins: [ValidationMixin],
   props: {
+    final: {
+      type: Boolean,
+      default: false
+    },
     prices: {
       type: Array,
       default: () => [5, 10, 20, 50]

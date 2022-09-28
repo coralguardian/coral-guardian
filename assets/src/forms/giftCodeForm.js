@@ -57,7 +57,8 @@ export default class GiftCodeForm extends AbstractForm {
         api: {
           method: "get",
           endpoint: "getCertificatesByGift"
-        }
+        },
+        validate: true
       },
       {
         title: "default.stepper.information.title",

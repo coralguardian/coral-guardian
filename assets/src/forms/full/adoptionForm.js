@@ -1,7 +1,37 @@
 import AbstractForm from "../abstractForm";
 import ProductEnum from "@/enums/productEnum";
+import PaymentMethodEnum from "@/enums/paymentMethodEnum";
+import BankTransferThanksForm from "@/forms/full/bankTransferThanksForm";
+import adoptionHelper from "@/helpers/adoptionHelper";
+import RecipientFullForm from "@/forms/full/recipientFullForm";
+import FinalGiftForm from "@/forms/full/finalGiftForm";
+import FinalAdoptionForm from "@/forms/full/finalAdoptionForm";
 
 export default class AdoptionForm extends AbstractForm {
+
+  nextForm(context) {
+    return new Promise((resolve, reject) => {
+      if (context.state.data.payment_method === PaymentMethodEnum.bankTransfer) {
+        context.dispatch("loadForm", new BankTransferThanksForm())
+          .then(() => {
+            resolve()
+          })
+      } else if (context.state.data.target === adoptionHelper.friend) {
+        context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new FinalGiftForm())
+          .then(() => {
+            resolve()
+          })
+          .catch((err) => console.log(err))
+      } else if (context.state.data.target === adoptionHelper.me) {
+        context.dispatch("loadForm", new FinalAdoptionForm())
+          .then(() => {
+            resolve()
+          })
+      } else {
+        reject("Can't load next form !")
+      }
+    })
+  }
 
   unload(state) {
     return new Promise(resolve => {

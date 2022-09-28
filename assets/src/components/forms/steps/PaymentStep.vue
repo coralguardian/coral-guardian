@@ -51,6 +51,7 @@ import GtagService from "@/services/gtagService";
 import AdopterEnum from "@/enums/adopterEnum";
 import DonationEnum from "@/enums/donationEnum";
 import PaymentMethodEnum from "@/enums/paymentMethodEnum";
+import AdoptionForm from "@/forms/full/adoptionForm";
 
 export default {
   name: "payment-step",
@@ -87,10 +88,10 @@ export default {
     ...mapGetters({
       order: "getOrder",
       donation: "getDonation",
-      formType: "getFormType",
       adopter: "getAdopter",
       project: "getProject",
-      orderModel: "getOrderModel"
+      orderModel: "getOrderModel",
+      paymentMethod: "getPaymentMethod"
     }),
     ...mapState({
       baseElementPrice: state => state.data.baseElementPrice,
@@ -125,7 +126,6 @@ export default {
   methods: {
     ...mapActions({
       updateForm: "updateForm",
-      loadPaymentNextSteps: "loadPaymentNextSteps",
       loadForm: "loadForm"
     }),
     displayCard() {
@@ -154,7 +154,7 @@ export default {
           this.$root.$off(this.customValidationEventName)
           this.$root.$on(this.customValidationEventName, () => {
             if (this.mode === "donation") {
-              this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
+              this.$root.$emit("ApiValid")
             } else {
               this.checkForAdoptionTimeout()
             }
@@ -197,7 +197,7 @@ export default {
       this.message = {text: ""}
       // cas du paiement par virement
       // il n'y a rien de particulier à vérifier
-      if (this.element.payment_method.type === PaymentMethodEnum.bankTransfer) {
+      if (this.paymentMethod === PaymentMethodEnum.bankTransfer) {
         this.$root.$emit('StepValid')
         // cas du paiement par carte
       } else {
@@ -229,15 +229,19 @@ export default {
     purchase() {
       this.updateElementStatus("pending")
       // cas du paiement par virement
-      if (this.element.payment_method.type === PaymentMethodEnum.bankTransfer) {
+      if (this.paymentMethod === PaymentMethodEnum.bankTransfer) {
         let data;
         data = this.$store.getters.getOrderModel
         this[this.apiData.method](data, this.apiData.endpoint)
             .then((resp) => {
-              const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}
-              this.updateForm(data).then(() => {
-                this.loadPaymentNextSteps().then(() => this.$root.$emit('ApiValid'))
-              })
+              if (resp.data) {
+                const data = this.mode === "adoption" ? {order: resp.data} : {donation: resp.data}
+                this.updateForm(data).then(() => {
+                  this.$root.$emit('ApiValid')
+                })
+              } else {
+                this.$root.$emit('ApiValid')
+              }
             })
             .catch(() => {
               console.log("erreur")
@@ -271,13 +275,19 @@ export default {
             clearInterval(this.adoptionCheckingInterval)
             clearTimeout(this.adoptionCheckingTimeout)
             this.updateForm({order: {uuid: resp.data.uuid}}).then(() => {
-              this.loadPaymentNextSteps().then(() => this.$root.$emit("ApiValid"))
+              (new AdoptionForm()).nextForm(this.$store).then(() => {
+                this.$root.$emit("ApiValid")
+              })
             })
           })
     }
   },
   mounted() {
-    if (this.adopter.type === AdopterEnum.company && !this.element.clientSecret && this.element.type !== DonationEnum.monthly) {
+    if (this.adopter.type === AdopterEnum.company &&
+        !this.element.clientSecret &&
+        // this.element.type !== DonationEnum.monthly &&
+        (!this.orderModel.donationOrdered.length || this.orderModel.donationOrdered[0].donationRecurrency !== DonationEnum.monthly)) // si on fait un don mensuel on ne peut pas payer par virement
+    {
       this.displayPaymentMethod = true
     } else {
       this.displayCard()
