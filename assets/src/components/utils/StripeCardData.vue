@@ -75,7 +75,7 @@ export default {
     async purchase() {
       this.storePaymentData()
       const elements = this.elements
-      const { error } = await this.stripe.confirmPayment({
+      const { error } = await this.stripe.confirmSetup({
         elements,
         confirmParams: {
           return_url: window.location.href,
