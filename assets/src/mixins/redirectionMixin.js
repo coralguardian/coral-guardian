@@ -50,13 +50,13 @@ export default {
       if (isEmpty(this.params)) {
         this.fillParams()
       }
-      if (!this.params.payment_intent_client_secret && !this.params.adoptionUuid && !this.params.step) {
+      if (!this.params.setup_intent_client_secret && !this.params.adoptionUuid && !this.params.step) {
         return false
       }
       return new Promise((resolve, reject) => {
         // Redirection paiement
-        if (this.params.payment_intent_client_secret) {
-          let data = localStorage.getItem(this.params.payment_intent_client_secret);
+        if (this.params.setup_intent_client_secret) {
+          let data = localStorage.getItem(this.params.setup_intent_client_secret);
           if (data) {
             data = JSON.parse(data)
             this.forceUpdate(data).then(() => {

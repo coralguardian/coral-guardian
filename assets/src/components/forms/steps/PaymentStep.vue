@@ -138,10 +138,10 @@ export default {
     async checkPaymentStatus() {
       this.createStripe()
       const clientSecret = this.element.clientSecret
-      const {paymentIntent} = await this.stripe.retrievePaymentIntent(clientSecret);
-      this.updateForm({order: {clientSecret: paymentIntent.client_secret, stripePaymentIntentId: paymentIntent.id}})
+      const {setupIntent} = await this.stripe.retrieveSetupIntent(clientSecret);
+      this.updateForm({order: {clientSecret: setupIntent.client_secret, stripePaymentIntentId: setupIntent.id}})
       let displayCardForm = false;
-      switch (paymentIntent.status) {
+      switch (setupIntent.status) {
         case "succeeded":
           (new GtagService()).executeTag(this.element, this.mode);
           this.message = {
