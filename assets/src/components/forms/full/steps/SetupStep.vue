@@ -49,6 +49,7 @@ import BtnTooltip from "../../../utils/BtnTooltip";
 import SetupBtn from "../SetupBtn";
 import validationMixin from "@/mixins/validationMixin";
 import ActionEnum from "@/enums/actionEnum";
+import ProjectEnum from "@/enums/projectEnum";
 
 export default {
   name: "setup-step",
@@ -60,7 +61,8 @@ export default {
   computed: {
     ...mapGetters({
       target: "getTarget",
-      path: "getImgPath"
+      path: "getImgPath",
+      project: "getProject"
     }),
     isAdoptionForMe() {
       return this.target === this.adoptionConstants.me
@@ -70,6 +72,9 @@ export default {
     },
     isDonation() {
       return this.target === ActionEnum.donation
+    },
+    projectEnum() {
+      return ProjectEnum
     }
   },
   methods: {

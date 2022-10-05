@@ -1,56 +1,36 @@
 import AbstractForm from "../abstractForm";
 import adoptionHelper from "@/helpers/adoptionHelper";
 import DonationForm from "@/forms/full/donationForm";
-import ProductForm from "@/forms/full/productForm";
+import ProjectEnum from "@/enums/projectEnum";
+import ActionEnum from "@/enums/actionEnum";
+import ProjectForm from "@/forms/full/projectForm";
 
 export default class SetupForm extends AbstractForm {
 
   nextForm(context) {
     return new Promise((resolve, reject) => {
-        let state = context.state
+      let state = context.state
 
-        if (state.data.adopter.type === null ||
-          state.data.target === null ||
-          state.data.project === null) {
-          throw "Les données nécessaires ne sont pas disponibles !"
-        }
+      if (state.data.adopter.type === null ||
+        state.data.target === null) {
+        throw "Les données nécessaires ne sont pas disponibles !"
+      }
 
-        switch (state.data.target) {
-          case adoptionHelper.me:
-            context.dispatch('loadProducts')
-              .then(() => {
-                context.dispatch('loadForm', new ProductForm())
-                  .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'regular'}})
-                      .then(() => resolve())
-                  });
-              })
-              .catch((err) => {
-                console.error(err)
-              })
-
-            break;
-          case adoptionHelper.friend:
-            context.dispatch('loadProducts')
-              .then(() => {
-                context.dispatch('loadForm', new ProductForm())
-                  .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'gift'}})
-                      .then(() => resolve())
-                  })
-              })
-            break;
-          case "donation":
-            context.dispatch('loadForm', new DonationForm(context.state.data.project))
-              .then(() => {
-                context.dispatch('updateForm')
-                  .then(() => resolve())
-              })
-            break;
-          default:
-            reject("Formulaire non trouvé")
-        }
-      })
+      switch (state.data.target) {
+        case adoptionHelper.me:
+        case adoptionHelper.friend:
+          context.dispatch('loadForm', new ProjectForm())
+            .then(() => resolve())
+          break;
+        case ActionEnum.donation:
+          context.dispatch('updateForm', {project: ProjectEnum.indonesia})
+          context.dispatch('loadForm', new DonationForm(context.state.data.project))
+            .then(() => resolve())
+          break;
+        default:
+          reject("Formulaire non trouvé")
+      }
+    })
   }
 
   steps = [
@@ -75,17 +55,6 @@ export default class SetupForm extends AbstractForm {
       customValidation: true,
       display: (state) => {
         return state.data.target === null
-      }
-    },
-    {
-      tab: {
-        title: "default.stepper.header.project",
-      },
-      component: "ProjectStep",
-      validate: true,
-      customValidation: true,
-      display: (state) => {
-        return state.data.project === null
       }
     }
   ]
