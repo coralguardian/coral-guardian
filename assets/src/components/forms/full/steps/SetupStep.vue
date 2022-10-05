@@ -36,6 +36,12 @@
       >
         <img class="form-icon" :src="path + 'img/icons/don.svg'" alt="">
         {{ $t("default.stepper.setup.donation") }}
+
+        <btn-tooltip>
+          <div class="text-center">
+            <span>{{ $t('default.stepper.setup.tooltips.donation') }}</span>
+          </div>
+        </btn-tooltip>
       </setup-btn>
     </div>
 
