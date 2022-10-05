@@ -151,7 +151,7 @@ export default {
         indonesia: "Soutenez Coral Guardian",
         spain: "Soutenez le projet S.O.S Corales"
       },
-      description: "Votre don nous aidera à poursuivre l'ensemble de nos actions.",
+      description: "Si vous le pouvez, privilégiez le don mensuel même modeste à un don ponctuel plus important afin de nous aider à planifier nos actions dans le temps.",
       buttons: {
         unique: "Je donne une fois",
         recurrent: "Je donne tous les mois"
