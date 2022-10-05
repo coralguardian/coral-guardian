@@ -5,6 +5,7 @@
           v-model="isIndividual"
           @click="updateForm({adopter: {type: adopterType.individual}})"
       >
+        <img class="form-icon" :src="path + 'img/icons/individual.svg'" alt="">
         {{$t("default.stepper.adopterType.individual")}}
       </setup-btn>
 
@@ -12,6 +13,7 @@
           v-model="isCompany"
           @click="updateForm({adopter: {type: adopterType.company}})"
       >
+        <img class="form-icon" :src="path + 'img/icons/company.svg'" alt="">
         {{$t("default.stepper.adopterType.company")}}
       </setup-btn>
 
@@ -33,7 +35,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      adopter: "getAdopter"
+      adopter: "getAdopter",
+      path: "getImgPath"
     }),
     adopterType() {
       return AdopterEnum
