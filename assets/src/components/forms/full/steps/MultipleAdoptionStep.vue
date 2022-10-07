@@ -1,6 +1,6 @@
 <template>
   <div id="multipleAdoption" class="row text-left">
-    <div class="col-12">
+    <div class="col-12" v-if="adopter.type === adopterEnum.company">
       <p v-html="$tc('default.stepper.multipleAdoption.description', order.quantity, translation)"/>
       <v-tabs
           fixed-tabs
@@ -71,6 +71,25 @@
 
       </v-tabs-items>
     </div>
+    <div class="col-12" v-else>
+      <v-form
+          :ref="formRefName"
+          v-model="valid"
+      >
+        <div class="row">
+          <div
+              v-for="n in order.quantity"
+              :key="n"
+              :class="order.quantity > 1 ? 'col-6' : 'col-12'"
+          >
+            <adoption-name-block
+                v-model="adoption.names[n-1]"
+                :n="n"
+            />
+          </div>
+        </div>
+      </v-form>
+    </div>
   </div>
 </template>
 
@@ -81,6 +100,7 @@ import validationMixin from "../../../../mixins/validationMixin";
 import itemTranslationMixin from "../../../../mixins/itemTranslationMixin";
 import apiMixin from "../../../../mixins/apiMixin";
 import redirectionMixin from "../../../../mixins/redirectionMixin";
+import AdopterEnum from "@/enums/adopterEnum";
 
 export default {
   name: "multiple-adoption-step",
@@ -98,10 +118,14 @@ export default {
     ...mapGetters({
       adoption: "getAdoption",
       adoptionModel: "getPostAdoptionsData",
-      order: "getOrder"
+      order: "getOrder",
+      adopter: "getAdopter"
     }),
     adoptionFileUrl() {
       return this.baseUrl + "namingFile?adoptionUuid=" + this.adoptionModel.adoptionUuid
+    },
+    adopterEnum() {
+      return AdopterEnum
     }
   },
   methods: {
