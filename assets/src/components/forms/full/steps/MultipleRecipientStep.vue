@@ -2,76 +2,102 @@
   <div id="multipleRecipient" class="row text-left">
     <div class="col-12">
       <p v-html="$t('default.stepper.multipleRecipient.description')"/>
-      <v-tabs
-          fixed-tabs
-          background-color="primary"
-          class="black--text mt-5"
-          v-model="tab"
-          active-class="tertiary-tab-active"
-      >
-        <v-tab @change="updateForm({recipient: {type: 'fields'}})">
-          {{ $t('default.stepper.multipleRecipient.tabs.fields.title') }}
-        </v-tab>
-        <v-tab @change="updateForm({recipient: {type: 'file'}})">
-          {{ $t('default.stepper.multipleRecipient.tabs.file.title') }}
-        </v-tab>
-      </v-tabs>
 
-      <v-tabs-items v-model="tab">
+      <div v-if="adopter.type === adopterEnum.company">
+        <v-tabs
+            fixed-tabs
+            background-color="primary"
+            class="black--text mt-5"
+            v-model="tab"
+            active-class="tertiary-tab-active"
+        >
+          <v-tab @change="updateForm({recipient: {type: 'fields'}})">
+            {{ $t('default.stepper.multipleRecipient.tabs.fields.title') }}
+          </v-tab>
+          <v-tab @change="updateForm({recipient: {type: 'file'}})">
+            {{ $t('default.stepper.multipleRecipient.tabs.file.title') }}
+          </v-tab>
+        </v-tabs>
 
-        <v-tab-item class="recipients">
-          <p class="my-5">
-            {{ $t('default.stepper.multipleRecipient.tabs.fields.description') }}
-          </p>
-          <v-form
-              v-if="tab === 0"
-              :ref="formRefName"
-              v-model="valid"
-          >
-            <div
-                v-for="(recipient, index) in recipients"
-                :key="index"
+        <v-tabs-items v-model="tab">
+
+          <v-tab-item class="recipients">
+            <p class="my-5">
+              {{ $t('default.stepper.multipleRecipient.tabs.fields.description') }}
+            </p>
+            <v-form
+                v-if="tab === 0"
+                :ref="formRefName"
+                v-model="valid"
             >
-              <p class="mb-1">
-                {{ $t('default.stepper.multipleRecipient.tabs.fields.recipient', {index: index + 1}) }}
-              </p>
-              <recipient-block
-                  :value="recipient"
-                  @input="updateRecipients"
+              <div
+                  v-for="(recipient, index) in recipients"
+                  :key="index"
+              >
+                <p class="mb-1">
+                  {{ $t('default.stepper.multipleRecipient.tabs.fields.recipient', {index: index + 1}) }}
+                </p>
+                <recipient-block
+                    :value="recipient"
+                    @input="updateRecipients"
+                />
+              </div>
+            </v-form>
+
+          </v-tab-item>
+
+          <v-tab-item>
+
+            <p class="font-weight-bold my-5">{{ $t('default.stepper.multipleRecipient.tabs.file.subtitle') }}</p>
+            <p>{{ $t('default.stepper.multipleRecipient.tabs.file.description') }}</p>
+            <v-btn color="secondary" class="mt-5" :href="recipientFileUrl" target="_blank">
+              {{ $t('default.stepper.multipleRecipient.tabs.file.button') }}
+            </v-btn>
+
+            <v-form
+                v-if="tab === 1"
+                :ref="formRefName"
+                v-model="valid"
+            >
+              <p class="my-5">{{ $t('default.stepper.multipleRecipient.tabs.file.upload.description') }}</p>
+              <v-file-input
+                  v-model="namesFile"
+                  chips
+                  :label="$t('default.stepper.multipleRecipient.tabs.file.upload.label')"
+                  outlined
+                  dense
+                  :rules="[rules.required]"
+                  accept=".xlsx"
               />
-            </div>
-          </v-form>
+              <error-display :message="fileError"/>
+            </v-form>
+          </v-tab-item>
 
-        </v-tab-item>
-
-        <v-tab-item>
-
-          <p class="font-weight-bold my-5">{{ $t('default.stepper.multipleRecipient.tabs.file.subtitle') }}</p>
-          <p>{{ $t('default.stepper.multipleRecipient.tabs.file.description') }}</p>
-          <v-btn color="secondary" class="mt-5" :href="recipientFileUrl" target="_blank">
-            {{ $t('default.stepper.multipleRecipient.tabs.file.button') }}
-          </v-btn>
-
-          <v-form
-              v-if="tab === 1"
-              :ref="formRefName"
-              v-model="valid"
+        </v-tabs-items>
+      </div>
+      <div
+          v-else
+          class="recipients"
+      >
+        <v-form
+            :ref="formRefName"
+            v-model="valid"
+        >
+          <div
+              v-for="(recipient, index) in recipients"
+              :key="index"
           >
-            <p class="my-5">{{ $t('default.stepper.multipleRecipient.tabs.file.upload.description') }}</p>
-            <v-file-input
-                v-model="namesFile"
-                chips
-                :label="$t('default.stepper.multipleRecipient.tabs.file.upload.label')"
-                outlined
-                dense
-                :rules="[rules.required]"
-                accept=".xlsx"
+            <p class="mb-1">
+              {{ $t('default.stepper.multipleRecipient.tabs.fields.recipient', {index: index + 1}) }}
+            </p>
+            <recipient-block
+                :value="recipient"
+                @input="updateRecipients"
             />
-            <error-display :message="fileError"/>
-          </v-form>
-        </v-tab-item>
+          </div>
+        </v-form>
+      </div>
 
-      </v-tabs-items>
     </div>
   </div>
 </template>
@@ -83,6 +109,7 @@ import {mapActions, mapGetters} from "vuex";
 import validationMixin from "../../../../mixins/validationMixin";
 import apiMixin from "../../../../mixins/apiMixin";
 import redirectionMixin from "../../../../mixins/redirectionMixin";
+import AdopterEnum from "@/enums/adopterEnum";
 
 export default {
   name: "multiple-recipient-step",
@@ -103,10 +130,14 @@ export default {
     ...mapGetters({
       order: "getOrder",
       recipient: "getRecipient",
-      giftModel: "getGiftModel"
+      giftModel: "getGiftModel",
+      adopter: "getAdopter"
     }),
     recipientFileUrl() {
       return this.baseUrl + "recipientsFile?adoptionUuid=" + this.order.uuid
+    },
+    adopterEnum() {
+      return AdopterEnum
     }
   },
   methods: {

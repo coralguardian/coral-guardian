@@ -84,6 +84,9 @@ export default {
                   uuid: resp.data.uuid,
                   productType: types[0],
                   quantity: resp.data.quantity
+                },
+                adopter: {
+                  type: AdopterEnum.company
                 }
               }
               if (types[1] !== undefined) {
@@ -103,7 +106,7 @@ export default {
                     target: adoptionHelper.me
                   }
                   order = {order: {type: "regular"}}
-                  step = {step: 7}
+                  step = {step: 6}
                   break;
                 }
                 // redirection fichier nommage destinataire
@@ -117,7 +120,7 @@ export default {
                     target: adoptionHelper.friend
                   }
                   order = {order: {type: "gift"}, adopter: {send_to_friend: true}}
-                  step = {step: 8}
+                  step = {step: 7}
                   break;
                 }
                 default: {

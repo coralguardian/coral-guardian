@@ -1,94 +1,97 @@
 <template>
   <div id="multipleAdoption" class="row text-left">
-    <div class="col-12" v-if="adopter.type === adopterEnum.company">
+    <div class="col-12">
       <p v-html="$tc('default.stepper.multipleAdoption.description', order.quantity, translation)"/>
-      <v-tabs
-          fixed-tabs
-          background-color="primary"
-          class="black--text mt-5"
-          v-model="tab"
-          active-class="tertiary-tab-active"
-      >
-        <v-tab @change="updateForm({adoption: {type: 'fields'}})">
-          {{ $t('default.stepper.multipleAdoption.tabs.fields.title') }}
-        </v-tab>
-        <v-tab @change="updateForm({adoption: {type: 'file'}})">
-          {{ $t('default.stepper.multipleAdoption.tabs.file.title') }}
-        </v-tab>
+      <div class="col-12" v-if="adopter.type === adopterEnum.company">
+        <v-tabs
+            fixed-tabs
+            background-color="primary"
+            class="black--text mt-5"
+            v-model="tab"
+            active-class="tertiary-tab-active"
+        >
+          <v-tab @change="updateForm({adoption: {type: 'fields'}})">
+            {{ $t('default.stepper.multipleAdoption.tabs.fields.title') }}
+          </v-tab>
+          <v-tab @change="updateForm({adoption: {type: 'file'}})">
+            {{ $t('default.stepper.multipleAdoption.tabs.file.title') }}
+          </v-tab>
 
-      </v-tabs>
+        </v-tabs>
 
-      <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="tab">
 
-        <v-tab-item class="adoptions">
-          <p class="my-5">{{ $t('default.stepper.multipleAdoption.tabs.fields.description', singular) }}</p>
-          <v-form
-              v-if="tab === 0"
-              :ref="formRefName"
-              v-model="valid"
-          >
-            <div class="row">
-              <div
-                  v-for="n in order.quantity"
-                  :key="n"
-                  :class="order.quantity > 1 ? 'col-6' : 'col-12'"
-              >
-                <adoption-name-block
-                    v-model="adoption.names[n-1]"
-                    :n="n"
-                />
+          <v-tab-item class="adoptions">
+            <p class="my-5">{{ $t('default.stepper.multipleAdoption.tabs.fields.description', singular) }}</p>
+            <v-form
+                v-if="tab === 0"
+                :ref="formRefName"
+                v-model="valid"
+            >
+              <div class="row">
+                <div
+                    v-for="n in order.quantity"
+                    :key="n"
+                    :class="order.quantity > 1 ? 'col-6' : 'col-12'"
+                >
+                  <adoption-name-block
+                      v-model="adoption.names[n-1]"
+                      :n="n"
+                  />
+                </div>
               </div>
+            </v-form>
+
+          </v-tab-item>
+
+          <v-tab-item>
+
+            <p class="font-weight-bold my-5">{{ $t('default.stepper.multipleAdoption.tabs.file.subtitle', plural) }}</p>
+            <p>{{ $t('default.stepper.multipleAdoption.tabs.file.description') }}</p>
+            <v-btn color="secondary" class="mt-5" :href="adoptionFileUrl" target="_blank">
+              {{ $t('default.stepper.multipleAdoption.tabs.file.button') }}
+            </v-btn>
+
+            <v-form
+                v-if="tab === 1"
+                :ref="formRefName"
+                v-model="valid"
+            >
+              <p class="my-5">{{ $t('default.stepper.multipleAdoption.tabs.file.upload.description') }}</p>
+              <v-file-input
+                  v-model="namesFile"
+                  chips
+                  :label="$t('default.stepper.multipleAdoption.tabs.file.upload.label')"
+                  outlined
+                  dense
+                  :rules="[rules.required]"
+                  accept=".xlsx"
+              />
+            </v-form>
+          </v-tab-item>
+
+        </v-tabs-items>
+      </div>
+      <div v-else class="adoptions">
+        <v-form
+            :ref="formRefName"
+            v-model="valid"
+        >
+          <div class="row">
+            <div
+                v-for="n in order.quantity"
+                :key="n"
+                :class="order.quantity > 1 ? 'col-6' : 'col-12'"
+            >
+              <adoption-name-block
+                  v-model="adoption.names[n-1]"
+                  :n="n"
+              />
             </div>
-          </v-form>
-
-        </v-tab-item>
-
-        <v-tab-item>
-
-          <p class="font-weight-bold my-5">{{ $t('default.stepper.multipleAdoption.tabs.file.subtitle', plural) }}</p>
-          <p>{{ $t('default.stepper.multipleAdoption.tabs.file.description') }}</p>
-          <v-btn color="secondary" class="mt-5" :href="adoptionFileUrl" target="_blank">
-            {{ $t('default.stepper.multipleAdoption.tabs.file.button') }}
-          </v-btn>
-
-          <v-form
-              v-if="tab === 1"
-              :ref="formRefName"
-              v-model="valid"
-          >
-            <p class="my-5">{{ $t('default.stepper.multipleAdoption.tabs.file.upload.description') }}</p>
-            <v-file-input
-                v-model="namesFile"
-                chips
-                :label="$t('default.stepper.multipleAdoption.tabs.file.upload.label')"
-                outlined
-                dense
-                :rules="[rules.required]"
-                accept=".xlsx"
-            />
-          </v-form>
-        </v-tab-item>
-
-      </v-tabs-items>
-    </div>
-    <div class="col-12" v-else>
-      <v-form
-          :ref="formRefName"
-          v-model="valid"
-      >
-        <div class="row">
-          <div
-              v-for="n in order.quantity"
-              :key="n"
-              :class="order.quantity > 1 ? 'col-6' : 'col-12'"
-          >
-            <adoption-name-block
-                v-model="adoption.names[n-1]"
-                :n="n"
-            />
           </div>
-        </div>
-      </v-form>
+        </v-form>
+      </div>
+
     </div>
   </div>
 </template>
