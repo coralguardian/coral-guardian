@@ -36,6 +36,8 @@ export default class AdoptionForm extends AbstractForm {
   unload(state) {
     return new Promise(resolve => {
       state.data.order.productType = null
+      state.data.order.quantity = 1
+      state.data.order.price = null
       resolve()
     })
   }
