@@ -1,6 +1,14 @@
 import AbstractForm from "../abstractForm";
 
 export default class DonationForm extends AbstractForm {
+
+  unload(state) {
+    return new Promise(resolve => {
+      state.data.project = null;
+      resolve()
+    })
+  }
+
   constructor(project) {
     super();
     this.project = project

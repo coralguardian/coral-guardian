@@ -1,6 +1,6 @@
 import AbstractForm from "@/forms/abstractForm";
 
-function customizerMergeObjectWithArrays(objValue, srcValue) {
+export function customizerMergeObjectWithArrays(objValue, srcValue) {
   if (Array.isArray(objValue)) {
     return objValue.concat(srcValue);
   }
@@ -14,5 +14,3 @@ export function checkStepsToDisplay(formToCheck, state) {
 
   return steps.filter(step => typeof step.display !== "function" || step.display(state))
 }
-
-export default customizerMergeObjectWithArrays

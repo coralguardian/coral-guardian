@@ -1,23 +1,7 @@
 <template>
   <div id="paymentStep">
-    <div v-if="cardDisplay">
-      <p>{{ $t("default.stepper.payment.description") }}</p>
-      <stripe-card-data :mode="mode" ref="cardData"/>
-    </div>
 
-    <v-alert
-        v-else-if="message.text !== ''"
-        dense
-        text
-        :type="message.type"
-        :class="message.class"
-    >
-      {{ $t("default." + message.text) }}
-    </v-alert>
-
-    <payment-method-block v-if="displayPaymentMethod" ref="paymentMethod" :mode="mode"/>
-
-    <div class="text-left">
+    <div class="text-left mb-4">
       <p class="mt-4 mb-4 text-h6 font-weight-bold poppins-police">
         {{ $t('default.stepper.payment.reminder.title') }}
       </p>
@@ -35,6 +19,23 @@
         </div>
       </v-card>
     </div>
+
+    <div v-if="cardDisplay">
+      <p>{{ $t("default.stepper.payment.description") }}</p>
+      <stripe-card-data :mode="mode" ref="cardData"/>
+    </div>
+
+    <v-alert
+        v-else-if="message.text !== ''"
+        dense
+        text
+        :type="message.type"
+        :class="message.class"
+    >
+      {{ $t("default." + message.text) }}
+    </v-alert>
+
+    <payment-method-block v-if="displayPaymentMethod" ref="paymentMethod" :mode="mode"/>
 
   </div>
 </template>
@@ -138,10 +139,10 @@ export default {
     async checkPaymentStatus() {
       this.createStripe()
       const clientSecret = this.element.clientSecret
-      const {paymentIntent} = await this.stripe.retrievePaymentIntent(clientSecret);
-      this.updateForm({order: {clientSecret: paymentIntent.client_secret, stripePaymentIntentId: paymentIntent.id}})
+      const {setupIntent} = await this.stripe.retrieveSetupIntent(clientSecret);
+      this.updateForm({order: {clientSecret: setupIntent.client_secret, stripePaymentIntentId: setupIntent.id}})
       let displayCardForm = false;
-      switch (paymentIntent.status) {
+      switch (setupIntent.status) {
         case "succeeded":
           (new GtagService()).executeTag(this.element, this.mode);
           this.message = {

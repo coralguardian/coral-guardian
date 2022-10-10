@@ -9,6 +9,7 @@
         :vertical="windowWidth <= 450"
     >
       <v-tab class="text-no-transform" @click="updateForm({donation: {type: donationEnum.monthly}})">
+        <img class="heart-icon" :src="path + 'img/icons/coeur.svg'" alt="coeur">
         {{ $t("default.stepper.donation.buttons.recurrent") }}
       </v-tab>
       <v-tab class="text-no-transform" @click="updateForm({donation: {type: donationEnum.oneshot}})">
@@ -23,14 +24,11 @@
       <donation-block/>
     </v-form>
 
-    <donation-explanation-dialog/>
-
   </div>
 </template>
 
 <script>
 import DonationBlock from "@/components/forms/blocks/DonationBlock";
-import DonationExplanationDialog from "@/components/forms/misc/DonationExplanationDialog";
 import {mapActions, mapGetters} from "vuex";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 import validationMixin from "../../../mixins/validationMixin";
@@ -40,8 +38,7 @@ import DonationEnum from "@/enums/donationEnum";
 export default {
   name: "donation-step",
   components: {
-    DonationBlock,
-    DonationExplanationDialog
+    DonationBlock
   },
   mixins: [itemTranslationMixin, validationMixin, screenMixin],
   data() {
@@ -49,7 +46,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      donation: "getDonation"
+      donation: "getDonation",
+      path: "getImgPath"
     }),
     donationEnum() {
       return DonationEnum
@@ -66,5 +64,10 @@ export default {
 <style lang="scss" scoped>
 .v-tabs {
   padding: 2rem 0;
+}
+
+.heart-icon {
+  width: 20px;
+  margin-right: 5px;
 }
 </style>

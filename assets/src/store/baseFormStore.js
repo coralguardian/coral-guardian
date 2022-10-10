@@ -70,21 +70,16 @@ export default class BaseFormStore {
       getOrder: state => state.data.order,
       getImgPath: state => state.baseImgPath,
       getDonation: state => state.data.donation,
-      getFormType: state => state.formType,
       getApiNamespace: state => state.apiNamespace,
       getOrderModel: (state) => new OrderModel(state.data)
     };
 
     this.mutations = {
       updateForm(state, data) {
-        // console.log(data)
-        // state.data = data
         merge(state.data, data)
       },
       forceUpdate(state, data) {
-        // console.log(data)
         state.data = data
-        // merge(state.data, data)
       },
       incrementStep(state) {
         state.data.step++

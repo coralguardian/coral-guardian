@@ -151,7 +151,7 @@ export default {
         indonesia: "Soutenez Coral Guardian",
         spain: "Soutenez le projet S.O.S Corales"
       },
-      description: "Votre don nous aidera à poursuivre l'ensemble de nos actions.",
+      description: "Si vous le pouvez, privilégiez le don mensuel même modeste à un don ponctuel plus important afin de nous aider à planifier nos actions dans le temps.",
       buttons: {
         unique: "Je donne une fois",
         recurrent: "Je donne tous les mois"
@@ -171,8 +171,9 @@ export default {
       offer: "J'offre",
       donation: "Je fais un don",
       tooltips: {
-        me: "Vous pourrez choisir vous même le nom de votre ou de vos adoptions et télécharger directement le(s) certificat(s) d'adoption personnalisé(s).",
-        recipient: "Votre ou vos destinataire(s) recevront immédiatement ou en différé un code leur permettant de choisir le(s) nom(s) du ou des coraux/récifs adopté(s) et télécharger le(s) certificat(s) correspondant(s)."
+        me: "Vous pourrez choisir vous même le nom du ou des coraux/récifs adopté(s) et télécharger directement le(s) certificat(s) d'adoption personnalisé(s).",
+        recipient: "Votre ou vos destinataire(s) recevront immédiatement ou en différé un code leur permettant de choisir le(s) nom(s) du ou des coraux/récifs adopté(s) et télécharger le(s) certificat(s) correspondant(s).",
+        donation: "Je donne une fois ou tous les mois le montant de mon choix."
       }
     },
     gift: {
@@ -282,8 +283,8 @@ export default {
         title: "Rappel de votre don",
         adoption: {
           description: {
-            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indonésie : {price} € | {count} {item} adoptés sur l'île d'Hatamin en Indonésie : {price} €",
-            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée : {price} € | {count} {item} adoptés à Punta de la Mona en Méditerranée : {price} €"
+            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indo-Pacifique : {price}€ | {count} {item} adoptés sur l'île d'Hatamin en Indo-Pacifique : {price}€",
+            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée : {price}€ | {count} {item} adoptés à Punta de la Mona en Méditerranée : {price}€"
           }
         },
         donation: {
@@ -378,7 +379,7 @@ export default {
         labels: {
           program: "Programmes de conservation marine",
           awareness: "Sensibilisation",
-          science: "Science/Recherche",
+          science: "Recherche",
           communication: "Communication",
           fundraisingCosts: "Frais de collectes de fonds",
           managementCosts: "Frais de gestion et d'administration"
@@ -387,9 +388,9 @@ export default {
     }
   },
   newsletter: {
-    title: "Petit bonus : inscrivez-vous à notre newsletter",
+    title: "Petit bonus : inscrivez-vous à notre newsletter !",
     description: {
-      adoption: "Recevez des nouvelles de votre adoption et de l'avancée des projets de Coral Guardian",
+      adoption: "Recevez des nouvelles de votre adoption et de l'avancée des projets de Coral Guardian.",
       other: "Recevez des nouvelles de l'avancée de nos projets tous les mois."
     },
     label: {
