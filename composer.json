@@ -21,7 +21,7 @@
     ],
 
     "require": {
-      "hyperion/sendinblue": "dev-dev"
+      "hyperion/sendinblue": "dev-prod"
     },
     "minimum-stability": "dev"
 }
