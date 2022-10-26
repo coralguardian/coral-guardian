@@ -120,12 +120,25 @@ export default {
       }
     },
     customization: {
-      title: "Nommez votre {item} | Nommez vos {item}",
-      description: "Donnez un nom à votre {item} adopté, vous pouvez choisir celui que vous souhaitez ! |" +
-        "Donnez un nom à chacun de vos {item} adoptés, vous pouvez choisir ceux que vous souhaitez !",
+      title: {
+        indonesia: "Nommez votre {item} | Nommez vos {item}",
+        spain: "Personnalisez votre certificat | Personnalisez vos certificats",
+        default: "Personnalisez votre certificat | Personnalisez vos certificats"
+      },
+      description: {
+        indonesia: "Donnez un nom à votre {item} adopté, vous pouvez choisir celui que vous souhaitez ! |" +
+          "Donnez un nom à chacun de vos {item} adoptés, vous pouvez choisir ceux que vous souhaitez !",
+        spain: "Vous pouvez choisir le nom que vous souhaitez ! | Vous pouvez choisir les noms que vous souhaitez !"
+      },
       input: {
-        label: "Nom de votre {item} | Certificat n°{number}",
-        placeholder: "Nom de votre {item}"
+        label: {
+          indonesia: "Nom de votre {item} | Certificat n°{number}",
+          spain: "Nom personnalisé de votre certificat | Certificat n°{number}"
+        },
+        placeholder: {
+          indonesia: "Nom de votre {item}",
+          spain: "Nom de votre certificat"
+        }
       },
       downloadCsv: {
         label: "En cliquant sur le bouton suivant vous pourrez télécharger un fichier excel afin de nommer vos coraux." +
@@ -220,12 +233,19 @@ export default {
       description: "Assurez la poursuite de nos actions de recherche, de restauration et de sensibilisation au quotidien avec un don mensuel."
     },
     multipleAdoption: {
-      description: "Donnez un nom à votre {item}, vous pouvez choisir celui que vous souhaitez ! Deux solutions s'offrent à vous : | " +
-        "Donnez un nom à chacun de vos {item}, vous pouvez choisir ceux que vous souhaitez ! Deux solutions s'offrent à vous :",
+      description: {
+        indonesia: "Donnez un nom à votre {item} adopté, vous pouvez choisir celui que vous souhaitez ! |" +
+          "Donnez un nom à chacun de vos {item} adoptés, vous pouvez choisir ceux que vous souhaitez !",
+        spain: "Vous pouvez choisir le nom que vous souhaitez ! | Vous pouvez choisir les noms que vous souhaitez !",
+        company: "Deux solutions s'offrent à vous :"
+      },
       tabs: {
         fields: {
           title: "Je remplis les champs",
-          description: "Je renseigne chaque nom de {item} dans les champs ci-dessous :",
+          description: {
+            indonesia: "Je renseigne chaque nom de {item} dans les champs ci-dessous :",
+            spain: "Je renseigne chaque nom dans les champs ci-dessous :"
+          }
         },
         file: {
           title: "J'envoie un fichier",
@@ -322,7 +342,7 @@ export default {
     },
     finalFriendAdoption: {
       title: "Bravo et merci, vous avez adopté {count} {item} pour votre destinataire",
-      description: "Votre reçu fiscal a été envoyé par email."+
+      description: "Votre reçu fiscal a été envoyé par email." +
         "<br><br>Le code cadeau de votre destinataire est le suivant : {orderToken}" +
         "<br><br>Il/elle recevra un email pour personnaliser votre cadeau !"
     },

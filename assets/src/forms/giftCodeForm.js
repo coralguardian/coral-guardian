@@ -41,7 +41,7 @@ export default class GiftCodeForm extends AbstractForm {
         }
       },
       {
-        title: "default.stepper.customization.title",
+        title: "default.stepper.customization.title.default",
         component: "CustomizationStep",
         validate: true,
         back: false,

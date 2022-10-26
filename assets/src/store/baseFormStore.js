@@ -48,7 +48,8 @@ export default class BaseFormStore {
           price: 0,
           status: null
         },
-        payment_method: PaymentMethodEnum.creditCard
+        payment_method: PaymentMethodEnum.creditCard,
+        project: null,
       }
     }
 
@@ -71,7 +72,8 @@ export default class BaseFormStore {
       getImgPath: state => state.baseImgPath,
       getDonation: state => state.data.donation,
       getApiNamespace: state => state.apiNamespace,
-      getOrderModel: (state) => new OrderModel(state.data)
+      getOrderModel: (state) => new OrderModel(state.data),
+      getProject: state => state.data.project
     };
 
     this.mutations = {
