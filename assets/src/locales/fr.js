@@ -296,7 +296,7 @@ export default {
       }
     },
     project: {
-      spain: "Méditerrannée",
+      spain: "Méditerranée",
       indonesia: "Indo-Pacifique",
       tooltips: {
         spain: "📍 À Punta de la Mona, en Espagne<br>" +
@@ -372,10 +372,13 @@ export default {
       description: "Continuez à soutenir nos actions au quotidien pour les océans avec un don mensuel !"
     },
     dialog: {
-      activation: "A quoi sert un don ?",
+      activation: "A quoi sert votre don ?",
       title: "Comment sont utilisés vos dons à Coral Guardian ?",
       button: "J'ai compris",
       chart: {
+        description: "Si chaque personne qui adopte un corail faisait don de 2€ par mois à Coral Guardian, " +
+          "cela nous permettrait de faire prospérer nos différentes actions de conservation, de sensibilisation, " +
+          "et de suivis scientifiques pendant des années.",
         labels: {
           program: "Programmes de conservation marine",
           awareness: "Sensibilisation",

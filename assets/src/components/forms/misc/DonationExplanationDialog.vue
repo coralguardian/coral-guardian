@@ -19,8 +19,11 @@
           {{ $t('default.donation.dialog.title') }}
         </v-card-title>
 
-        <v-card-text>
-          <Pie :chart-data="chartData" :chart-options="options"/>
+        <v-card-text class="donation-explanation-content">
+          <p class="text-center mb-2">{{ $t('default.donation.dialog.chart.description') }}</p>
+          <div class="chart-container">
+            <Pie :chart-data="chartData" :chart-options="options"/>
+          </div>
         </v-card-text>
 
         <v-divider></v-divider>
@@ -67,8 +70,8 @@ export default {
           this.$t('default.donation.dialog.chart.labels.managementCosts')
         ],
         datasets: [{
-          backgroundColor: ['#42a5f5', '#a5d6a7',
-            '#fbc02d', '#ffeb3b', '#f48fb1', '#ce93d8'
+          backgroundColor: ['#e6b295', '#cabaac',
+            '#818b83', '#99bbc9', '#66919F', '#28335f'
           ],
           data: [42.5, 18.5, 2.7, 8.7, 14.8, 12.8],
         }]
@@ -99,6 +102,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.chart-container {
+  margin: auto;
+  max-width: 400px;
+}
 </style>
