@@ -73,19 +73,17 @@
 <script>
 import FormFooter from "./components/forms/FormFooter";
 import paymentMixin from "./mixins/paymentMixin";
+import missingTranslationsMixin from "@/mixins/missingTranslationsMixin";
 import components from "@/components/forms/full/steps";
 import Step from "./components/utils/Step";
 
 import {mapGetters, mapActions} from "vuex";
 import redirectionMixin from "./mixins/redirectionMixin";
-import {merge} from "lodash";
 import SetupForm from "@/forms/full/setupForm";
-// import fr from "@/locales/fr"
-// import en from "@/locales/en"
 
 export default {
   name: "full-form",
-  mixins: [paymentMixin, redirectionMixin],
+  mixins: [paymentMixin, redirectionMixin, missingTranslationsMixin],
   components: {
     FormFooter,
     Step,
@@ -109,19 +107,7 @@ export default {
   methods: {
     ...mapActions({
       loadForm: "loadForm"
-    }),
-    compare(one, two) {
-      merge(one, two)
-      const data = JSON.stringify(one)
-      const blob = new Blob([data], {type: 'text/plain'})
-      const e = document.createEvent('MouseEvents'),
-          a = document.createElement('a');
-      a.download = "test.json";
-      a.href = window.URL.createObjectURL(blob);
-      a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-      e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-      a.dispatchEvent(e);
-    }
+    })
   },
   created() {
     this.fillState()
@@ -132,7 +118,6 @@ export default {
     }
   },
   mounted() {
-    // this.compare(fr, en)
     this.$root.$on('displayError', (payload) => {
       this.alert = payload ? "default.errors." + payload : 'default.errors.base'
       this.displayAlert = true
