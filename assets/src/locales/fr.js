@@ -392,7 +392,7 @@ export default {
       description: "Continuez à soutenir nos actions au quotidien pour les océans avec un don mensuel !"
     },
     dialog: {
-      activation: "A quoi sert votre don ?",
+      activation: "À quoi sert votre don ?",
       title: "Comment sont utilisés vos dons à Coral Guardian ?",
       button: "J'ai compris",
       chart: {
