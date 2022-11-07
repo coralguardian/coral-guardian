@@ -15,9 +15,9 @@ export default {
     compare(one, two) {
       let translationObject = {}
       for (let key in one) {
-        if (typeof one[key] === "object") {
-          translationObject[key] = this.compare(one[key], typeof two[key] === "object" ? two[key] : {})
-        } else if (two && !Object.getOwnPropertyDescriptor(two, key)) {
+        if (two && typeof one[key] === "object") {
+          translationObject[key] = this.compare(one[key], typeof two[key] === "object" ? two[key] : null)
+        } else if (two && two[key]) {
           translationObject[key] = two[key]
         } else {
           translationObject[key] = one[key]

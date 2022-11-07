@@ -4,8 +4,6 @@ export default class GtagService {
   donationTag = "AW-962379492/RODNCK7buZoCEOT98soD";
 
   executeTag(element, mode) {
-    this.installGtag()
-
     let tag;
     if (mode !== "adoption") {
       tag = this.donationTag
@@ -33,14 +31,5 @@ export default class GtagService {
         window.location = url;
       }
     }
-  }
-
-  installGtag() {
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-28782686-1');
-    gtag('config', 'AW-962379492');
   }
 }

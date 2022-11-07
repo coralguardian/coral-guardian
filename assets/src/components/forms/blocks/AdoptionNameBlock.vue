@@ -37,9 +37,6 @@ export default {
     placeholder() {
       return 'default.stepper.customization.input.placeholder.' + this.project
     }
-  },
-  mounted() {
-    console.log(this.project)
   }
 }
 </script>
