@@ -56,7 +56,8 @@ export default {
               },
               adopter: {
                 send_to_friend: resp.data.sendToFriend
-              }
+              },
+              project: resp.data.project
             }
             if (types[1] !== undefined) {
               data.order.specificType = types[1]

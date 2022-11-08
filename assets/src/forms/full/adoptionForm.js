@@ -23,7 +23,7 @@ export default class AdoptionForm extends AbstractForm {
           })
           .catch((err) => console.log(err))
       } else if (context.state.data.target === adoptionHelper.me) {
-        context.dispatch("loadForm", new FinalAdoptionForm())
+        context.dispatch("loadForm", new FinalAdoptionForm(context.state.data.project))
           .then(() => {
             resolve()
           })

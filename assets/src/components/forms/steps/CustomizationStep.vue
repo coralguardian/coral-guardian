@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-html="$tc('default.stepper.customization.description', order.quantity, translation)"/>
+    <p v-html="$tc('default.stepper.customization.description.' + project, order.quantity, translation)"/>
 
     <v-form
         :ref="formRefName"
@@ -28,8 +28,8 @@
         >
           <text-input
               :rules="[rules.required, rules.minLength, rules.specialChar]"
-              :label="$tc('default.stepper.customization.input.label', order.quantity, {number: n, item: translation.item})"
-              :placeholder="$t('default.stepper.customization.input.placeholder', singular)"
+              :label="$tc('default.stepper.customization.input.label.' + project, order.quantity, {number: n, item: translation.item})"
+              :placeholder="$t('default.stepper.customization.input.placeholder.' + project, singular)"
               v-model="names[n-1]"
           />
         </div>
@@ -63,7 +63,8 @@ export default {
     ...mapGetters({
       order: 'getOrder',
       postAdoptionData: 'getPostAdoptionsData',
-      orderToken: 'getOrderToken'
+      orderToken: 'getOrderToken',
+      project: "getProject"
     })
   },
   methods: {
