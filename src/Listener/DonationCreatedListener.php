@@ -9,9 +9,13 @@ use D4rk0snet\Donation\Entity\RecurringDonationEntity;
 
 class DonationCreatedListener
 {
-    public static function doAction($donationEntity)
+    public static function doAction($donationEntity, bool $shouldNotSendEmail)
     {
         // Envoie du mail
+        if($shouldNotSendEmail) {
+            return;
+        }
+
         if($donationEntity instanceof RecurringDonationEntity) {
             SubscriptionOrder::sendEvent($donationEntity);
         } elseif ($donationEntity instanceof DonationEntity) {

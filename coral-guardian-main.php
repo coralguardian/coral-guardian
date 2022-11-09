@@ -26,4 +26,4 @@ add_action("init", [AdminService::class, "init"]);
 add_action('cli_init', [Plugin::class,'addCliCommand']);
 add_action(CoralGiftActions::GIFTADOPTION_GIFTCODE_CREATED->value, [NewGiftAdoptionListener::class, 'doAction'], 10, 2);
 add_action(CoralAdoptionActions::ADOPTION_CREATED->value, [NewAdoptionListener::class, 'doAction'], 10, 2);
-add_action(CoralDonationActions::DONATION_CREATED, [DonationCreatedListener::class, 'doAction'], 10, 1);
+add_action(CoralDonationActions::DONATION_CREATED->value, [DonationCreatedListener::class, 'doAction'], 10, 2);
