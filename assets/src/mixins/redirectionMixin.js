@@ -86,8 +86,9 @@ export default {
                   quantity: resp.data.quantity
                 },
                 adopter: {
-                  type: AdopterEnum.company
-                }
+                  type: resp.data.customer
+                },
+                project: resp.data.project
               }
               if (types[1] !== undefined) {
                 data.order.specificType = types[1]
