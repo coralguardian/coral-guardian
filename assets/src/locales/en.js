@@ -255,7 +255,8 @@ export default {
       }
     },
     multipleRecipient: {
-      description: "Fill in the details of your recipients so that they receive their respective gift codes. You have two options:",
+      description: "Fill in the details of your recipients so that they receive their respective gift codes.",
+      company: "You have two options:",
       tabs: {
         fields: {
           title: "Fill in the fields",

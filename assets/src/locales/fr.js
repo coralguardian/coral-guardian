@@ -255,7 +255,8 @@ export default {
       }
     },
     multipleRecipient: {
-      description: "Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif. Deux solutions s'offrent à vous :",
+      description: "Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif.",
+      company: "Deux solutions s'offrent à vous :",
       tabs: {
         fields: {
           title: "Je remplis les champs",
