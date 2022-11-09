@@ -16,18 +16,6 @@ export default class GiftCodeForm extends AbstractForm {
       {
         visible: false,
         title: null
-      },
-      {
-        visible: false,
-        title: null
-      },
-      {
-        visible: false,
-        title: null
-      },
-      {
-        visible: false,
-        title: null
       }
     ],
     steps: [
@@ -59,33 +47,6 @@ export default class GiftCodeForm extends AbstractForm {
           endpoint: "getCertificatesByGift"
         },
         validate: true
-      },
-      {
-        title: "default.stepper.information.title",
-        component: "InformationStep",
-        validate: true,
-        api: {
-          method: "post",
-          endpoint: "customer"
-        }
-      },
-      {
-        title: "default.stepper.payment.title",
-        component: "PaymentStep",
-        props: {
-          mode: 'donation'
-        },
-        validate: true,
-        customValidation: true,
-        api: {
-          method: "post",
-          endpoint: "donate"
-        }
-      },
-      {
-        title: "default.stepper.finalDonation.title",
-        component: "FinalDonationStep",
-        back: false
       }
     ]
   }
