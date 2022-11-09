@@ -48,21 +48,31 @@ class CreateDonationAdmin extends APIEnpointAbstract
         }
 
         DoctrineService::getEntityManager()->persist($customerEntity);
-        DoctrineService::getEntityManager()->flush();
 
+        /**
+         * @todo : Attention ici on reprends les infos du customer.
+         * @todo : L'idéal serait de permettre de modifier ces infos comme sur le front.
+         */
         $donation = new DonationEntity(
-            $customerEntity,
-            date_create_from_format("Y-m-d", $data['donation']['donation_date']),
-            (float)$data['donation']['amount'],
-            Language::from($data['donation']['lang']),
-            true,
-            PaymentMethod::from($data['donation']['payment_method']),
-            Project::from($data['donation']['project'])
+            customer: $customerEntity,
+            date: date_create_from_format("Y-m-d", $data['donation']['donation_date']),
+            amount: (float)$data['donation']['amount'],
+            lang: Language::from($data['donation']['lang']),
+            isPaid: true,
+            paymentMethod: PaymentMethod::from($data['donation']['payment_method']),
+            project: Project::from($data['donation']['project']),
+            address: $data['customer']['address'],
+            postalCode: $data['customer']['postal_code'],
+            city: $data['customer']['city'],
+            country: $data['customer']['country'],
+            firstname: $data['customer']['first_name'],
+            lastname: $data['customer']['last_name']
         );
 
         DoctrineService::getEntityManager()->persist($donation);
         DoctrineService::getEntityManager()->flush();
         $_SESSION["success_notice"] = "Don ajouté avec succès.";
+
         return APIManagement::APIRedirect(admin_url("admin.php?page=coralguardian"));
     }
 
