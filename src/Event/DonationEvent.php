@@ -11,9 +11,10 @@ class DonationEvent extends AbstractEmailEvent
     private static function send(
         string $email,
         string $fiscalReceiptUrl,
-        string $lang
+        string $lang,
+        string $project
     ) {
-        self::sendQuery($email, compact('lang', 'fiscalReceiptUrl'));
+        self::sendQuery($email, compact('project','lang', 'fiscalReceiptUrl'));
     }
 
     protected static function getEventName(): SIBEvent
@@ -27,6 +28,7 @@ class DonationEvent extends AbstractEmailEvent
             email: $entity->getCustomer()->getEmail(),
             fiscalReceiptUrl: FiscalReceiptService::getURl($entity->getUuid()),
             lang: $entity->getLang()->value,
+            project: $entity->getProject()->value
         );
     }
 }

@@ -18,9 +18,10 @@ class NamingDone extends AbstractEmailEvent
                                  int            $quantity,
                                  string         $fiscalReceiptUrl,
                                  string         $certificateUrl,
-                                 bool           $fromGift)
+                                 bool           $fromGift,
+                                 string         $project)
     {
-        self::sendQuery($email, compact('lang', 'adoptedProduct', 'quantity', 'fiscalReceiptUrl', 'certificateUrl', 'fromGift'));
+        self::sendQuery($email, compact('project','lang', 'adoptedProduct', 'quantity', 'fiscalReceiptUrl', 'certificateUrl', 'fromGift'));
     }
 
     public static function sendEvent(mixed $entity)
@@ -34,7 +35,8 @@ class NamingDone extends AbstractEmailEvent
                 quantity: $entity->getProductQuantity(),
                 fiscalReceiptUrl: "",
                 certificateUrl: CertificateService::getUrl($entity->getGiftCode(), true),
-                fromGift: true
+                fromGift: 1,
+                project: $entity->getGiftAdoption()->getProject()->value
             );
         } else {
             self::send(
@@ -44,7 +46,8 @@ class NamingDone extends AbstractEmailEvent
                 quantity: $entity->getQuantity(),
                 fiscalReceiptUrl: FiscalReceiptService::getUrl($entity->getUuid()),
                 certificateUrl: CertificateService::getUrl($entity->getUuid()),
-                fromGift: false
+                fromGift: 0,
+                project: $entity->getGiftAdoption()->getProject()->value
             );
         }
 
