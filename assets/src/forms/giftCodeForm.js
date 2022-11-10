@@ -46,7 +46,7 @@ export default class GiftCodeForm extends AbstractForm {
           method: "get",
           endpoint: "getCertificatesByGift"
         },
-        validate: true
+        isLast: true
       }
     ]
   }
