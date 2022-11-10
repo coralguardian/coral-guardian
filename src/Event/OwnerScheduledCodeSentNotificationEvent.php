@@ -10,9 +10,11 @@ class OwnerScheduledCodeSentNotificationEvent extends AbstractEmailEvent
 {
     private static function send(string   $email,
                                 Language $lang,
-                                int      $quantity)
+                                int      $quantity,
+                                string   $project
+    )
     {
-        self::sendQuery($email, compact('lang', 'quantity'));
+        self::sendQuery($email, compact('project', 'lang', 'quantity'));
     }
 
     public static function sendEvent(GiftCodeEntity $giftCodeEntity)
@@ -20,7 +22,8 @@ class OwnerScheduledCodeSentNotificationEvent extends AbstractEmailEvent
         self::send(
             email: $giftCodeEntity->getGiftAdoption()->getCustomer()->getEmail(),
             lang: $giftCodeEntity->getGiftAdoption()->getLang(),
-            quantity: $giftCodeEntity->getGiftAdoption()->getQuantity()
+            quantity: $giftCodeEntity->getGiftAdoption()->getQuantity(),
+            project: $giftCodeEntity->getGiftAdoption()->getProject()->value
         );
     }
 

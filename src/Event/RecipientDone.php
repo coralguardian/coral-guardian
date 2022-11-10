@@ -18,12 +18,13 @@ class RecipientDone extends AbstractEmailEvent
         AdoptedProduct $adoptedProduct,
         int $quantity,
         ?DateTime $giftDate,
-        string $fiscalReceiptUrl
+        string $fiscalReceiptUrl,
+        string $project
     )
     {
         self::sendQuery($email,
             array_merge(
-                compact('lang', 'adoptedProduct', 'quantity', 'fiscalReceiptUrl'),
+                compact('lang', 'adoptedProduct', 'quantity', 'fiscalReceiptUrl', 'project'),
                 [
                     "giftDate" => $giftDate ? $giftDate->format("d/m/Y") : "",
                     "isToday" => $giftDate === null
@@ -39,7 +40,8 @@ class RecipientDone extends AbstractEmailEvent
             $adoptionEntity->getAdoptedProduct(),
             $adoptionEntity->getQuantity(),
             $adoptionEntity->getSendOn(),
-            FiscalReceiptService::getURl($adoptionEntity->getUuid())
+            FiscalReceiptService::getURl($adoptionEntity->getUuid()),
+            $adoptionEntity->getProject()->value
         );
     }
 

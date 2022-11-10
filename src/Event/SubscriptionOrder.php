@@ -9,9 +9,10 @@ class SubscriptionOrder extends AbstractEmailEvent
 {
     private static function send(
         string $email,
-        string $lang
+        string $lang,
+        string $project
     ) {
-        self::sendQuery($email, compact('lang'));
+        self::sendQuery($email, compact('lang', 'project'));
     }
 
     public static function sendEvent(RecurringDonationEntity $entity)
@@ -19,6 +20,7 @@ class SubscriptionOrder extends AbstractEmailEvent
         self::send(
             email: $entity->getCustomer()->getEmail(),
             lang: $entity->getLang()->value,
+            project: $entity->getProject()->value
         );
     }
 
