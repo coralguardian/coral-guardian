@@ -137,6 +137,7 @@ export default {
       }
     },
     async checkPaymentStatus() {
+      this.$vuetify.goTo('#PaymentStep', {offset: 200, duration: 500})
       this.createStripe()
       const clientSecret = this.element.clientSecret
       const {setupIntent} = await this.stripe.retrieveSetupIntent(clientSecret);
