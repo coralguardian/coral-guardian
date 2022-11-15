@@ -5,9 +5,6 @@ namespace D4rk0snet\Coralguardian\API\Admin;
 use D4rk0snet\Adoption\Entity\AdoptionEntity;
 use D4rk0snet\Adoption\Entity\GiftAdoption;
 use D4rk0snet\Adoption\Enums\AdoptedProduct;
-use D4rk0snet\Adoption\Models\AdoptionModel;
-use D4rk0snet\Adoption\Models\GiftAdoptionModel;
-use D4rk0snet\Adoption\Service\AdoptionService;
 use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
 use D4rk0snet\CoralCustomer\Entity\CustomerEntity;
 use D4rk0snet\Coralguardian\Enums\Language;
@@ -56,38 +53,51 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
 
         DoctrineService::getEntityManager()->persist($customerEntity);
 
+        /**
+         * @todo : Attention ici on reprends les infos du customer.
+         * @todo : L'idéal serait de permettre de modifier ces infos comme sur le front.
+         */
+
         if ($data['order']['type'] === "regular") {
             $adoption = new AdoptionEntity(
-                $customerEntity,
-                new \DateTime(),
-                (float)$data['order']['price'],
-                Language::from($data['order']['lang']),
-                AdoptedProduct::from($data['order']['product_key']),
-                (int)$data['order']['quantity'],
-                PaymentMethod::from($data['order']['payment_method']),
-                true,
-                Project::from($data['donation']['project'])
+                customer: $customerEntity,
+                date: new \DateTime(),
+                amount: (float)$data['order']['price'],
+                lang: Language::from($data['order']['lang']),
+                adoptedProduct: AdoptedProduct::from($data['order']['product_key']),
+                quantity: (int)$data['order']['quantity'],
+                paymentMethod: PaymentMethod::from($data['order']['payment_method']),
+                isPaid: true,
+                project: Project::from($data['donation']['project']),
+                address: $data['customer']['address'],
+                postalCode: $data['customer']['postal_code'],
+                city: $data['customer']['city'],
+                country: $data['customer']['country'],
+                firstName: $data['customer']['first_name'],
+                lastName: $data['customer']['last_name']
             );
-            DoctrineService::getEntityManager()->persist($adoption);
-            DoctrineService::getEntityManager()->flush();
         } else {
             $adoptedProduct = AdoptedProduct::from($data['order']['product_key']);
             $adoption = new GiftAdoption(
-                $customerEntity,
-                new \DateTime(),
-                (float)$data['order']['price'],
-                Language::from($data['order']['lang']),
-                $adoptedProduct,
-                (int)$data['order']['quantity'],
-                PaymentMethod::from($data['order']['payment_method']),
-                true,
-                true,
-                Project::from($data['donation']['project']),
-                null,
-                null
+                customer: $customerEntity,
+                date: new \DateTime(),
+                amount: (float)$data['order']['price'],
+                lang: Language::from($data['order']['lang']),
+                adoptedProduct: $adoptedProduct,
+                quantity: (int)$data['order']['quantity'],
+                paymentMethod: PaymentMethod::from($data['order']['payment_method']),
+                isPaid: true,
+                sendToFriend: true,
+                project: Project::from($data['donation']['project']),
+                sendOn: null,
+                message: null,
+                address: $data['customer']['address'],
+                postalCode: $data['customer']['postal_code'],
+                city: $data['customer']['city'],
+                country: $data['customer']['country'],
+                firstName: $data['customer']['first_name'],
+                lastName: $data['customer']['last_name']
             );
-            DoctrineService::getEntityManager()->persist($adoption);
-            DoctrineService::getEntityManager()->flush();
 
             for ($i = 0; $i < $adoption->getQuantity(); $i++) {
                 $giftCode = new GiftCodeEntity(
@@ -99,6 +109,9 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
             }
         }
 
+        DoctrineService::getEntityManager()->persist($adoption);
+        DoctrineService::getEntityManager()->flush();
+
         $adoptionFilename = self::saveFileFromRequest($_FILES["file"]["tmp_name"]['adoptions']);
         NamingFileService::importDataFromFile($adoptionFilename, $adoption);
 
@@ -107,6 +120,7 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
             RecipientFileService::importDataFromFile($recipientFilename, $adoption);
         }
         $_SESSION["success_notice"] = "Adoption ajoutée avec succès.";
+
         return APIManagement::APIRedirect(admin_url("admin.php?page=coralguardian"));
     }
 

@@ -2,7 +2,7 @@
   <div id="multipleRecipient" class="row text-left">
     <div class="col-12">
       <p v-html="$t('default.stepper.multipleRecipient.description')"/>
-
+      <p v-if="adopter.type === adopterEnum.company" v-html="$t('default.stepper.multipleAdoption.description.company')"/>
       <div v-if="adopter.type === adopterEnum.company">
         <v-tabs
             fixed-tabs
@@ -77,7 +77,7 @@
       </div>
       <div
           v-else
-          class="recipients"
+          class="recipients mt-5"
       >
         <v-form
             :ref="formRefName"

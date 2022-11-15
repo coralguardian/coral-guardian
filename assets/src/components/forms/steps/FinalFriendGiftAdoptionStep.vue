@@ -2,30 +2,17 @@
   <div>
     <p v-if="adopter.send_to_friend">{{ $tc('default.stepper.certificate.gift.email', order.quantity) }}</p>
     <p v-html="description"/>
-
-    <v-form
-        :ref="formRefName"
-        v-model="valid"
-    >
-      <donation-block final/>
-    </v-form>
   </div>
 </template>
 
 <script>
 import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
-import DonationBlock from "@/components/forms/blocks/DonationBlock";
-import validationMixin from "../../../mixins/validationMixin";
-import paymentMixin from "@/mixins/paymentMixin";
 import {mapGetters} from "vuex";
 
 export default {
   name: "final-friend-gift-adoption-step",
-  mixins: [apiMixin, finalStepMixin, validationMixin, paymentMixin],
-  components: {
-    DonationBlock
-  },
+  mixins: [apiMixin, finalStepMixin],
   computed: {
     ...mapGetters({
       adopter: "getAdopter"
@@ -37,9 +24,6 @@ export default {
         return this.$tc('default.stepper.finalFriendGift.descriptionNoEmail', null, {link: this.getGetUrl({gift_code: this.order.giftCode})})
       }
     }
-  },
-  mounted() {
-    this.cleanLocalStorage()
   }
 }
 </script>

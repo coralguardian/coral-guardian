@@ -3,7 +3,7 @@
       class="btn-tooltip"
       color="tertiary"
       max-width="350"
-      attach="#full-form"
+      :attach="attach"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-icon
@@ -22,6 +22,12 @@
 <script>
 export default {
   name: "btn-tooltip",
+  props: {
+    attach: {
+      type: String,
+      default: "#full-form"
+    }
+  },
   data() {
     return {
       show: true

@@ -40,7 +40,6 @@ export default new Vuex.Store({
         message: "",
         toSendOn: null
       },
-      project: null,
       forms: []
     },
     products: null
@@ -91,7 +90,6 @@ export default new Vuex.Store({
     getGift: state => state.data.gift,
     getGiftModel: state => new GiftModel(state.data),
     getGiftMessageModel: state => new GiftMessageModel(state.data),
-    getProject: state => state.data.project,
     getProducts: (state) => state.products.filter(product => product.key === state.data.order.productType)
   },
   mutations: {

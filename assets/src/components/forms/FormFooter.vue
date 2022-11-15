@@ -75,31 +75,29 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.$root.$on('StepValid', () => {
-        if (this.currentStep.api) {
-          this.$root.$emit(this.currentStep.component + 'Api')
-        } else {
-          this.incrementStep().then(() => {
-            this.customPreviousHide = false
-            this.isLoading = false
-          })
-        }
-      })
-      this.$root.$on('ApiValid', () => {
+    this.$root.$on('StepValid', () => {
+      if (this.currentStep.api) {
+        this.$root.$emit(this.currentStep.component + 'Api')
+      } else {
         this.incrementStep().then(() => {
           this.customPreviousHide = false
           this.isLoading = false
         })
-      })
-      this.$root.$on('IsLoaded', () => {
-        if (this.displayPreviousButton) {
-          this.customPreviousHide = false
-        }
+      }
+    })
+    this.$root.$on('ApiValid', () => {
+      this.incrementStep().then(() => {
+        this.customPreviousHide = false
         this.isLoading = false
       })
-      this.$root.$on('hidePreviousButton', () => this.customPreviousHide = true)
-    }, 100)
+    })
+    this.$root.$on('IsLoaded', () => {
+      if (this.displayPreviousButton) {
+        this.customPreviousHide = false
+      }
+      this.isLoading = false
+    })
+    this.$root.$on('hidePreviousButton', () => this.customPreviousHide = true)
   },
   beforeDestroy() {
     this.$root.$off('StepValid')

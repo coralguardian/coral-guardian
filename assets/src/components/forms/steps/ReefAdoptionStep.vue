@@ -43,7 +43,8 @@ export default {
   mixins: [adoptionMixin, screenMixin],
   data() {
     return {
-      tab: 0
+      tab: 0,
+      maxCount: 5
     }
   },
   computed: {
@@ -69,8 +70,6 @@ export default {
         },
         baseElementPrice: reefType.price
       }
-
-      console.log(data)
       this.$store.dispatch("updateForm", data)
     },
   }

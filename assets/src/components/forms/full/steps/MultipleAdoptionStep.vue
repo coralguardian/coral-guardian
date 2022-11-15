@@ -1,7 +1,8 @@
 <template>
   <div id="multipleAdoption" class="row text-left">
     <div class="col-12">
-      <p v-html="$tc('default.stepper.multipleAdoption.description', order.quantity, translation)"/>
+      <p v-html="$tc('default.stepper.multipleAdoption.description.' + project, order.quantity, translation)"/>
+      <p v-if="adopter.type === adopterEnum.company" v-html="$tc('default.stepper.multipleAdoption.description.company', order.quantity)"/>
       <div class="col-12" v-if="adopter.type === adopterEnum.company">
         <v-tabs
             fixed-tabs
@@ -22,7 +23,7 @@
         <v-tabs-items v-model="tab">
 
           <v-tab-item class="adoptions">
-            <p class="my-5">{{ $t('default.stepper.multipleAdoption.tabs.fields.description', singular) }}</p>
+            <p class="my-5">{{ $t('default.stepper.multipleAdoption.tabs.fields.description.' + project, singular) }}</p>
             <v-form
                 v-if="tab === 0"
                 :ref="formRefName"
@@ -122,7 +123,8 @@ export default {
       adoption: "getAdoption",
       adoptionModel: "getPostAdoptionsData",
       order: "getOrder",
-      adopter: "getAdopter"
+      adopter: "getAdopter",
+      project: "getProject"
     }),
     adoptionFileUrl() {
       return this.baseUrl + "namingFile?adoptionUuid=" + this.adoptionModel.adoptionUuid

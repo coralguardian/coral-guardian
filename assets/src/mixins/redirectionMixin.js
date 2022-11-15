@@ -86,8 +86,9 @@ export default {
                   quantity: resp.data.quantity
                 },
                 adopter: {
-                  type: AdopterEnum.company
-                }
+                  type: resp.data.customer
+                },
+                project: resp.data.project
               }
               if (types[1] !== undefined) {
                 data.order.specificType = types[1]
@@ -106,7 +107,7 @@ export default {
                     target: adoptionHelper.me
                   }
                   order = {order: {type: "regular"}}
-                  step = {step: 6}
+                  step = {step: 5}
                   break;
                 }
                 // redirection fichier nommage destinataire
@@ -120,7 +121,7 @@ export default {
                     target: adoptionHelper.friend
                   }
                   order = {order: {type: "gift"}, adopter: {send_to_friend: true}}
-                  step = {step: 7}
+                  step = {step: 6}
                   break;
                 }
                 default: {
@@ -130,11 +131,10 @@ export default {
               const adoptionForm = new AdoptionForm()
               this.updateForm(data)
                 .then(() => this.loadFormSteps(new SetupForm())
-                  .then(() => this.loadFormSteps(adoptionForm)
                     .then(() => this.updateForm(order)
                       .then(() => adoptionForm.nextForm(this.$store)
                         .then(() => this.updateForm(step)
-                          .then(() => resolve()))))))
+                          .then(() => resolve())))))
             })
             .catch(err => {
               this.loading = false

@@ -15,15 +15,16 @@ class RecipientDone extends AbstractEmailEvent
     private static function send(
         string $email,
         Language $lang,
-        AdoptedProduct $adoptedProduct,
+        string $adoptedProduct,
         int $quantity,
         ?DateTime $giftDate,
-        string $fiscalReceiptUrl
+        string $fiscalReceiptUrl,
+        string $project
     )
     {
         self::sendQuery($email,
             array_merge(
-                compact('lang', 'adoptedProduct', 'quantity', 'fiscalReceiptUrl'),
+                compact('lang', 'adoptedProduct', 'quantity', 'fiscalReceiptUrl', 'project'),
                 [
                     "giftDate" => $giftDate ? $giftDate->format("d/m/Y") : "",
                     "isToday" => $giftDate === null
@@ -36,10 +37,11 @@ class RecipientDone extends AbstractEmailEvent
         self::send(
             $adoptionEntity->getCustomer()->getEmail(),
             $adoptionEntity->getLang(),
-            $adoptionEntity->getAdoptedProduct(),
+            $adoptionEntity->getAdoptedProduct()->getProductType(),
             $adoptionEntity->getQuantity(),
             $adoptionEntity->getSendOn(),
-            FiscalReceiptService::getURl($adoptionEntity->getUuid())
+            FiscalReceiptService::getURl($adoptionEntity->getUuid()),
+            $adoptionEntity->getProject()->value
         );
     }
 

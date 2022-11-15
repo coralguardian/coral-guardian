@@ -94,3 +94,12 @@ p {
 #paymentStep .v-stepper, #paymentStep .v-stepper__header {
   box-shadow: none !important;
 }
+
+// empécher les tooltip d'apparaître dans le footer
+.v-tooltip__content {
+  top: 12px !important;
+}
+
+.v-dialog__content {
+  align-items: end !important;
+}
