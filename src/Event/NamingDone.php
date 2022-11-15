@@ -47,7 +47,7 @@ class NamingDone extends AbstractEmailEvent
                 fiscalReceiptUrl: FiscalReceiptService::getUrl($entity->getUuid()),
                 certificateUrl: CertificateService::getUrl($entity->getUuid()),
                 fromGift: 0,
-                project: $entity->getGiftAdoption()->getProject()->value
+                project: $entity->getProject()->value
             );
         }
 
