@@ -294,6 +294,8 @@ export default {
       },
       title: "Procédez au paiement",
       description: "Le paiement est sécurisé avec Stripe 🔒",
+      important: "IMPORTANT : lors de la validation de votre règlement sur l'application mobile de votre banque, le montant affiché sera de 0€. \n" +
+        "Il s'agit d'une demande de pré-autorisation bancaire mais le montant prélevé correspond bien au montant total de votre commande indiqué ci-dessus.",
       reminder: {
         title: "Rappel de votre don",
         adoption: {

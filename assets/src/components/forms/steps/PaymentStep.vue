@@ -22,6 +22,7 @@
 
     <div v-if="cardDisplay">
       <p>{{ $t("default.stepper.payment.description") }}</p>
+      <p class="font-weight-bold text-left mt-1">{{ $t("default.stepper.payment.important") }}</p>
       <stripe-card-data :mode="mode" ref="cardData"/>
     </div>
 
