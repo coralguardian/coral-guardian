@@ -29,6 +29,7 @@ class Plugin
 
     public static function addCliCommand()
     {
-        WP_CLI::add_command('migrate_old_site', ['\D4rk0snet\Coralguardian\Command\MigrationScript','runCommand']);
+        WP_CLI::add_command('fix_donation_contact_information',
+                            ['\D4rk0snet\Coralguardian\Command\UpdateAdoptionWithCustomerInformation','runCommand']);
     }
 }
