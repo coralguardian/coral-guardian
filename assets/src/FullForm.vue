@@ -56,6 +56,7 @@
                 <form-footer
                     class="mt-5"
                     v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
+                    :offset="steps[index - 1].offset ? steps[index - 1].offset : 400"
                 />
               </step>
 

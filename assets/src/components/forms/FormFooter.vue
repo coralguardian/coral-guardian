@@ -20,7 +20,8 @@
 
     <v-btn
         v-if="!currentStep.isLast"
-        class="black--text align-self-end"
+        class="black--text"
+        :class="{'align-self-end': !displayPreviousButton}"
         color="secondary"
         :loading="isLoading"
         @click="validate"
@@ -42,6 +43,12 @@ export default {
     return {
       isLoading: false,
       customPreviousHide: false
+    }
+  },
+  props: {
+    offset: {
+      type: Number,
+      default: 400
     }
   },
   computed: {
@@ -90,6 +97,9 @@ export default {
     }
   },
   mounted() {
+    setTimeout(() => {
+      this.$vuetify.goTo('#' + this.currentStep.component, {offset: this.windowWidth <= 600 ? 200 : 300})
+    }, 200)
     this.$root.$on('StepValid', () => {
       if (this.currentStep.api) {
         this.$root.$emit(this.currentStep.component + 'Api')

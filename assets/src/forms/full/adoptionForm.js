@@ -81,7 +81,8 @@ export default class AdoptionForm extends AbstractForm {
       },
       title: "default.stepper.information.title",
       component: "InformationStep",
-      validate: true
+      validate: true,
+      offset: 600
     },
     {
       tab: {
@@ -90,7 +91,8 @@ export default class AdoptionForm extends AbstractForm {
       // title: "default.stepper.payment.title",
       component: "PrePaymentDonationStep",
       validate: true,
-      ignorable: true
+      ignorable: true,
+      offset: 700
     },
     {
       tab: {
@@ -103,7 +105,8 @@ export default class AdoptionForm extends AbstractForm {
       api: {
         method: "post",
         endpoint: "createOrder"
-      }
+      },
+      offset: 600
     }
   ]
 }
