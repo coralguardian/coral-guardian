@@ -5,7 +5,7 @@
   >
     <v-btn
         v-if="displayPreviousButton"
-        @click="decrementStep"
+        @click="previousStep"
     >
       {{ $t("default.ui.previous") }}
     </v-btn>
@@ -65,13 +65,28 @@ export default {
         this.$root.$emit(this.currentStep.component + 'Validation', this.currentStep.customValidation)
       } else {
         this.customPreviousHide = false
-        this.incrementStep().then(() => {
-          this.customPreviousHide = false
-        })
+        this.nextStep()
       }
     },
     ignoreStep() {
       this.$root.$emit("ignoreStep")
+    },
+    clearEvents() {
+      this.$root.$off('StepValid')
+      this.$root.$off('ApiValid')
+      this.$root.$off('IsLoaded')
+      this.$root.$off('hidePreviousButton')
+    },
+    previousStep() {
+      this.clearEvents()
+      this.decrementStep()
+    },
+    nextStep() {
+      this.clearEvents()
+      this.incrementStep().then(() => {
+        this.customPreviousHide = false
+        this.isLoading = false
+      })
     }
   },
   mounted() {
@@ -79,17 +94,11 @@ export default {
       if (this.currentStep.api) {
         this.$root.$emit(this.currentStep.component + 'Api')
       } else {
-        this.incrementStep().then(() => {
-          this.customPreviousHide = false
-          this.isLoading = false
-        })
+        this.nextStep()
       }
     })
     this.$root.$on('ApiValid', () => {
-      this.incrementStep().then(() => {
-        this.customPreviousHide = false
-        this.isLoading = false
-      })
+      this.nextStep()
     })
     this.$root.$on('IsLoaded', () => {
       if (this.displayPreviousButton) {
@@ -98,12 +107,6 @@ export default {
       this.isLoading = false
     })
     this.$root.$on('hidePreviousButton', () => this.customPreviousHide = true)
-  },
-  beforeDestroy() {
-    this.$root.$off('StepValid')
-    this.$root.$off('ApiValid')
-    this.$root.$off('IsLoaded')
-    this.$root.$off('hidePreviousButton')
   }
 }
 </script>
