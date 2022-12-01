@@ -50,7 +50,8 @@ export default class BaseFormStore {
         },
         payment_method: PaymentMethodEnum.creditCard,
         project: null,
-      }
+      },
+      isInitialized: false
     }
 
     this.getters = {
@@ -73,7 +74,8 @@ export default class BaseFormStore {
       getDonation: state => state.data.donation,
       getApiNamespace: state => state.apiNamespace,
       getOrderModel: (state) => new OrderModel(state.data),
-      getProject: state => state.data.project
+      getProject: state => state.data.project,
+      isInitialized: state => state.isInitialized
     };
 
     this.mutations = {
@@ -88,6 +90,9 @@ export default class BaseFormStore {
       },
       decrementStep(state) {
         state.data.step--
+      },
+      initializeForm(state) {
+        state.isInitialized = true
       }
     };
 
@@ -134,6 +139,11 @@ export default class BaseFormStore {
         return new Promise(resolve => {
           context.getters.getCurrentForm.nextForm(context).then(() => resolve())
         })
+      },
+      initializeForm(context) {
+        if (!context.state.isInitialized) {
+          context.commit("initializeForm")
+        }
       }
     }
   }

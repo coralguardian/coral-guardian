@@ -55,7 +55,8 @@ export default {
     ...mapGetters({
       step: 'step',
       stepCount: 'stepCount',
-      currentStep: 'getCurrentStep'
+      currentStep: 'getCurrentStep',
+      isFormInitialized: 'isInitialized'
     }),
     displayPreviousButton() {
       return this.step > 1 && this.currentStep.back !== false && !this.customPreviousHide
@@ -64,7 +65,8 @@ export default {
   methods: {
     ...mapActions({
       incrementStep: "incrementStep",
-      decrementStep: "decrementStep"
+      decrementStep: "decrementStep",
+      initializeForm: "initializeForm"
     }),
     validate() {
       if (this.currentStep.validate) {
@@ -97,9 +99,13 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.$vuetify.goTo('#' + this.currentStep.component, {offset: this.windowWidth <= 600 ? 200 : 300})
-    }, 200)
+    if (this.isFormInitialized) {
+      setTimeout(() => {
+        this.$vuetify.goTo('#' + this.currentStep.component, {offset: this.windowWidth <= 600 ? 200 : 300})
+      }, 200)
+    } else {
+      this.initializeForm()
+    }
     this.$root.$on('StepValid', () => {
       if (this.currentStep.api) {
         this.$root.$emit(this.currentStep.component + 'Api')
