@@ -371,7 +371,7 @@ export default {
       description: "Support our daily actions for coral reefs with a monthly donation!"
     },
     dialog: {
-      activation: "What is your donation used for?",
+      activation: "Why donate monthly?",
       title: "How are your donations used?",
       button: "Back",
       chart: {

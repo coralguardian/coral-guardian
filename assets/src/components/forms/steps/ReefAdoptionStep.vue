@@ -11,9 +11,9 @@
         :vertical="windowWidth <= 450"
     >
       <v-tab
-          v-for="product in products"
-          @click="updateForm(product)"
-          :key="product.key"
+          v-for="(product, index) in products"
+          @change="updateForm(product)"
+          :key="index"
       >
         {{ $t('default.stepper.adoption.' + product.key + '.' + product.variant + '.title') }}
       </v-tab>
@@ -21,8 +21,8 @@
 
     <v-tabs-items v-model="tab" class="text-body-2">
       <v-tab-item
-          v-for="product in products"
-          :key="product.key"
+          v-for="(product, index) in products"
+          :key="index"
           v-html="$t('default.stepper.adoption.' + product.key + '.' + product.variant + '.description')"
       />
     </v-tabs-items>
