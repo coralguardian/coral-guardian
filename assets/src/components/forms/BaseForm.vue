@@ -55,7 +55,7 @@
 
       </v-tabs-items>
 
-      <form-footer v-if="currentStep.component !== 'ChoiceStep'"/>
+      <form-footer v-if="currentStep.component !== 'ChoiceStep'" :destroy="false"/>
 
     </div>
 

@@ -49,6 +49,11 @@ export default {
     offset: {
       type: Number,
       default: 400
+    },
+    // pour prévenir de clear les events lorsque le form footer est permanent d'une étape à une autre
+    destroy: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -81,10 +86,13 @@ export default {
       this.$root.$emit("ignoreStep")
     },
     clearEvents() {
-      this.$root.$off('StepValid')
-      this.$root.$off('ApiValid')
-      this.$root.$off('IsLoaded')
-      this.$root.$off('hidePreviousButton')
+      if (this.destroy) {
+        console.log("aa")
+        this.$root.$off('StepValid')
+        this.$root.$off('ApiValid')
+        this.$root.$off('IsLoaded')
+        this.$root.$off('hidePreviousButton')
+      }
     },
     previousStep() {
       this.clearEvents()
