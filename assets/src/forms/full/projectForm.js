@@ -54,6 +54,7 @@ export default class ProjectForm extends AbstractForm {
       component: "ProjectStep",
       validate: true,
       customValidation: true,
+      larger: true,
       display: (state) => {
         return state.data.project === null && state.data.target !== ActionEnum.donation
       }
