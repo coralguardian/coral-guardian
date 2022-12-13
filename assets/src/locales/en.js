@@ -313,8 +313,8 @@ export default {
       }
     },
     project: {
-      spain: "Mediterranean",
-      indonesia: "Indo-Pacific",
+      spain: "Mediterranean Sea, Spain",
+      indonesia: "Flores Sea, Indonesia",
       tooltips: {
         spain: "📍 At Punta de la Mona, in Spain<br>🤝 In collaboration with the local nonprofit Coral Soul<br>⚠️ High levels of pollution in the Mediterranean<br>🌊 Actions to restore the coral ecosystem, clean the seabed, monitor and analyse the area scientifically, and raise local awareness",
         indonesia: "📍 At Pulau Hatamin, in Indonesia<br>🤝 In collaboration with the local nonprofit WES<br>⚠️ Dynamite fishing<br>🌊 Coral reef restoration actions, protection of the marine protected area, scientific monitoring of the area, and raise local awareness"

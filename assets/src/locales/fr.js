@@ -313,8 +313,8 @@ export default {
       }
     },
     project: {
-      spain: "Méditerranée",
-      indonesia: "Indo-Pacifique",
+      spain: "Mer Méditerranée, Espagne",
+      indonesia: "Mer de Flores, Indonésie",
       tooltips: {
         spain: "📍 À Punta de la Mona, en Espagne<br>🤝 En collaboration avec l’association locale Coral Soul<br>⚠️ La pollution en Méditerranée<br>🌊 Actions de restauration des fonds coralliens, nettoyage des fonds marins, suivis et analyses scientifiques de la zone, et sensibilisation locale",
         indonesia: "📍 À Pulau Hatamin, en Indonésie<br>🤝 En collaboration avec l’association locale WES<br>⚠️ La pêche à la dynamite<br>🌊 Actions de restauration du récif corallien, protection de l’aire marine protégée, suivis scientifiques de la zone, et sensibilisation locale"

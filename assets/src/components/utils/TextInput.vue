@@ -13,6 +13,8 @@
         :placeholder="placeholder"
         :rules="rules"
         :value="value"
+        :maxLength="maxLength"
+        :counter="counter"
         @input="$emit('input', $event)"
     />
   </div>
@@ -33,6 +35,13 @@ export default {
     },
     rules: {
       type: Array
+    },
+    counter: {
+      default: false
+    },
+    maxLength: {
+      type: Number,
+      default: null
     }
   }
 }

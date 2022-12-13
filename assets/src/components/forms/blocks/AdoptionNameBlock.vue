@@ -3,6 +3,8 @@
         :rules="[rules.required, rules.minLength, rules.specialChar]"
         :label="$tc(label, order.quantity, {number: n, item: translation.item})"
         :placeholder="$t(placeholder, singular)"
+        :max-length="30"
+        :counter="true"
         v-model="value"
         @input="$emit('input', value)"
     />
