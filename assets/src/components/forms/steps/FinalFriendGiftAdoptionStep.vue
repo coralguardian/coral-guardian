@@ -24,9 +24,6 @@ export default {
         return this.$tc('default.stepper.finalFriendGift.descriptionNoEmail', null, {link: this.getGetUrl({gift_code: this.order.giftCode})})
       }
     }
-  },
-  mounted() {
-    this.cleanLocalStorage()
   }
 }
 </script>

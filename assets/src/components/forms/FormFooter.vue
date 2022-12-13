@@ -5,7 +5,7 @@
   >
     <v-btn
         v-if="displayPreviousButton"
-        @click="decrementStep"
+        @click="previousStep"
     >
       {{ $t("default.ui.previous") }}
     </v-btn>
@@ -20,7 +20,8 @@
 
     <v-btn
         v-if="!currentStep.isLast"
-        class="black--text align-self-end"
+        class="black--text"
+        :class="{'align-self-end': !displayPreviousButton}"
         color="secondary"
         :loading="isLoading"
         @click="validate"
@@ -44,11 +45,23 @@ export default {
       customPreviousHide: false
     }
   },
+  props: {
+    offset: {
+      type: Number,
+      default: 400
+    },
+    // pour prévenir de clear les events lorsque le form footer est permanent d'une étape à une autre
+    destroy: {
+      type: Boolean,
+      default: true
+    }
+  },
   computed: {
     ...mapGetters({
       step: 'step',
       stepCount: 'stepCount',
-      currentStep: 'getCurrentStep'
+      currentStep: 'getCurrentStep',
+      isFormInitialized: 'isInitialized'
     }),
     displayPreviousButton() {
       return this.step > 1 && this.currentStep.back !== false && !this.customPreviousHide
@@ -57,7 +70,8 @@ export default {
   methods: {
     ...mapActions({
       incrementStep: "incrementStep",
-      decrementStep: "decrementStep"
+      decrementStep: "decrementStep",
+      initializeForm: "initializeForm"
     }),
     validate() {
       if (this.currentStep.validate) {
@@ -65,47 +79,58 @@ export default {
         this.$root.$emit(this.currentStep.component + 'Validation', this.currentStep.customValidation)
       } else {
         this.customPreviousHide = false
-        this.incrementStep().then(() => {
-          this.customPreviousHide = false
-        })
+        this.nextStep()
       }
     },
     ignoreStep() {
       this.$root.$emit("ignoreStep")
+    },
+    clearEvents() {
+      if (this.destroy) {
+        console.log("aa")
+        this.$root.$off('StepValid')
+        this.$root.$off('ApiValid')
+        this.$root.$off('IsLoaded')
+        this.$root.$off('hidePreviousButton')
+      }
+    },
+    previousStep() {
+      this.clearEvents()
+      this.decrementStep()
+    },
+    nextStep() {
+      this.clearEvents()
+      this.incrementStep().then(() => {
+        this.customPreviousHide = false
+        this.isLoading = false
+      })
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.$root.$on('StepValid', () => {
-        if (this.currentStep.api) {
-          this.$root.$emit(this.currentStep.component + 'Api')
-        } else {
-          this.incrementStep().then(() => {
-            this.customPreviousHide = false
-            this.isLoading = false
-          })
-        }
-      })
-      this.$root.$on('ApiValid', () => {
-        this.incrementStep().then(() => {
-          this.customPreviousHide = false
-          this.isLoading = false
-        })
-      })
-      this.$root.$on('IsLoaded', () => {
-        if (this.displayPreviousButton) {
-          this.customPreviousHide = false
-        }
-        this.isLoading = false
-      })
-      this.$root.$on('hidePreviousButton', () => this.customPreviousHide = true)
-    }, 100)
-  },
-  beforeDestroy() {
-    this.$root.$off('StepValid')
-    this.$root.$off('ApiValid')
-    this.$root.$off('IsLoaded')
-    this.$root.$off('hidePreviousButton')
+    if (this.isFormInitialized) {
+      setTimeout(() => {
+        this.$vuetify.goTo('#' + this.currentStep.component, {offset: this.windowWidth <= 600 ? 200 : 300})
+      }, 200)
+    } else {
+      this.initializeForm()
+    }
+    this.$root.$on('StepValid', () => {
+      if (this.currentStep.api) {
+        this.$root.$emit(this.currentStep.component + 'Api')
+      } else {
+        this.nextStep()
+      }
+    })
+    this.$root.$on('ApiValid', () => {
+      this.nextStep()
+    })
+    this.$root.$on('IsLoaded', () => {
+      if (this.displayPreviousButton) {
+        this.customPreviousHide = false
+      }
+      this.isLoading = false
+    })
+    this.$root.$on('hidePreviousButton', () => this.customPreviousHide = true)
   }
 }
 </script>

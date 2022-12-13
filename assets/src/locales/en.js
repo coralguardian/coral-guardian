@@ -294,6 +294,8 @@ export default {
       },
       title: "Proceed to payment",
       description: "The payment is secured through the Stripe payment module 🔒",
+      important: "IMPORTANT: when validating your payment on your bank's mobile application, the amount displayed will be 0€. " +
+        "This is a request for bank pre-authorization but the amount debited corresponds to the total amount of your order indicated above.",
       reminder: {
         title: "Review your donation",
         adoption: {
@@ -369,7 +371,7 @@ export default {
       description: "Support our daily actions for coral reefs with a monthly donation!"
     },
     dialog: {
-      activation: "What is your donation used for?",
+      activation: "Why donate monthly?",
       title: "How are your donations used?",
       button: "Back",
       chart: {

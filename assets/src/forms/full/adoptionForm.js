@@ -6,6 +6,7 @@ import adoptionHelper from "@/helpers/adoptionHelper";
 import RecipientFullForm from "@/forms/full/recipientFullForm";
 import FinalGiftForm from "@/forms/full/finalGiftForm";
 import FinalAdoptionForm from "@/forms/full/finalAdoptionForm";
+import {clone} from "lodash";
 
 export default class AdoptionForm extends AbstractForm {
 
@@ -51,7 +52,7 @@ export default class AdoptionForm extends AbstractForm {
     const lowestPrice = Math.min(...products.map(product => product.price))
     state.data.order.price = lowestPrice
     state.data.baseElementPrice = lowestPrice
-    state.data.selectedProduct = products[0]
+    state.data.selectedProduct = clone(products[0])
   }
 
   steps = [
@@ -81,7 +82,8 @@ export default class AdoptionForm extends AbstractForm {
       },
       title: "default.stepper.information.title",
       component: "InformationStep",
-      validate: true
+      validate: true,
+      offset: 600
     },
     {
       tab: {
@@ -90,7 +92,8 @@ export default class AdoptionForm extends AbstractForm {
       // title: "default.stepper.payment.title",
       component: "PrePaymentDonationStep",
       validate: true,
-      ignorable: true
+      ignorable: true,
+      offset: 700
     },
     {
       tab: {
@@ -103,7 +106,8 @@ export default class AdoptionForm extends AbstractForm {
       api: {
         method: "post",
         endpoint: "createOrder"
-      }
+      },
+      offset: 600
     }
   ]
 }
