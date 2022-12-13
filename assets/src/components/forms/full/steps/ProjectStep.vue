@@ -5,7 +5,6 @@
           v-model="isIndonesia"
           @click="updateForm({project: projectConstant.indonesia})"
       >
-        <img class="form-icon" :src="path + 'img/icons/indonesia.svg'" alt="">
         {{ $t("default.stepper.project.indonesia") }}
 
         <btn-tooltip>
@@ -19,7 +18,6 @@
           v-model="isSpain"
           @click="updateForm({project: projectConstant.spain})"
       >
-        <img class="form-icon" :src="path + 'img/icons/spain.svg'" alt="">
         {{ $t("default.stepper.project.spain") }}
 
         <btn-tooltip>
