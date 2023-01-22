@@ -3,31 +3,21 @@
 namespace D4rk0snet\Coralguardian\Event;
 
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
-use D4rk0snet\Donation\Entity\RecurringDonationEntity;
-use D4rk0snet\FiscalReceipt\Endpoint\GetFiscalReceiptEndpoint;
 
-/**
- * @todo : PEnser a modifier le service fiscal receipt pour gérer les subscriptions !
- * @todo : gérer les reçus fiscaux pour les dons mensuels
- */
 class SubscriptionSummary extends AbstractEmailEvent
 {
     private static function send(
         string $email,
-        string $lang,
-        string $fiscalReceiptUrl,
-        string $project
+        string $fiscalReceiptUrl
     ) {
-        self::sendQuery($email, compact('project','lang', 'fiscalReceiptUrl'));
+        self::sendQuery($email, compact('fiscalReceiptUrl'));
     }
 
-    public static function sendEvent(RecurringDonationEntity $entity)
+    public static function sendEvent(string $email, string $fiscalReceiptUrl)
     {
         self::send(
-            email: $entity->getCustomer()->getEmail(),
-            lang: $entity->getLang()->value,
-            fiscalReceiptUrl: GetFiscalReceiptEndpoint::getUrl([GetFiscalReceiptEndpoint::ORDER_UUID_PARAM => $entity->getUuid()]),
-            project: $entity->getProject()->value
+            email: $email,
+            fiscalReceiptUrl: $fiscalReceiptUrl
         );
     }
 
