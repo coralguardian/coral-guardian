@@ -1,35 +1,29 @@
-export default class GtagService {
-  coralTag = "AW-962379492/tJtfCI3JwJoCEOT98soD";
-  reefTag = "AW-962379492/kg71COCr2IwCEOT98soD";
-  donationTag = "AW-962379492/RODNCK7buZoCEOT98soD";
+import ActionEnum from "@/enums/actionEnum";
 
-  executeTag(element, mode) {
-    let tag;
+export default class GtagService {
+
+  executeTag(element, mode, adopter) {
+    let item_category = '';
+    let item_name = '';
     if (mode !== "adoption") {
-      tag = this.donationTag
+      item_category = element.type
+      item_name = 'donation';
     } else {
-      if (element.productType === "coral") {
-        tag = this.coralTag
+      if (element.type === ActionEnum.gift) {
+        item_name = 'gift';
       } else {
-        tag = this.reefTag
+        item_name = 'adoption';
       }
     }
     // eslint-disable-next-line
-    gtag('event', 'conversion', {
-      'send_to': tag,
-      'transaction_id': '',
-      'value': element.price,
-      'currency': "EUR",
-      'event_callback': this.reportConversion
+    gtag('event', 'purchase', {
+      transaction_id: '',
+      value: element.price,
+      currency: "EUR",
+      item_category: item_category,
+      item_category2: adopter.type,
+      item_name: item_name
     });
     return false;
-  }
-
-  reportConversion(url) {
-    return function () {
-      if (typeof (url) != 'undefined') {
-        window.location = url;
-      }
-    }
   }
 }
