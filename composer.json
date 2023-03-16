@@ -12,14 +12,6 @@
             "email": "gregory@d4rk0s.net"
         }
     ],
-    "repositories": [
-      {
-        "type" : "vcs",
-        "url": "git@github.com:ds-hyperion/sendinblue.git",
-        "no-api": true
-      }
-    ],
-
     "require": {
       "wordpress-hyperion/sendinblue": "1.*"
     },
