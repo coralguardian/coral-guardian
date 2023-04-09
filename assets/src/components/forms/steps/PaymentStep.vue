@@ -1,28 +1,10 @@
 <template>
   <div id="paymentStep">
 
-    <div class="text-left mb-4">
-      <p class="mt-4 mb-4 text-h6 font-weight-bold poppins-police">
-        {{ $t('default.stepper.payment.reminder.title') }}
-      </p>
-
-      <v-card
-          outlined
-      >
-        <div>
-          <p v-if="productDescription" class="text-body-1 ma-0 text-right">{{ productDescription }}</p>
-          <p v-if="donationDescription" class="text-body-1 ma-0 text-right">{{ donationDescription }}</p>
-        </div>
-
-        <div class="paymentDetail text-body-1">
-          {{ paymentReminder }}
-        </div>
-      </v-card>
-    </div>
-
     <div v-if="cardDisplay">
-      <p>{{ $t("default.stepper.payment.description") }}</p>
-      <p class="font-weight-bold text-left mt-1">{{ $t("default.stepper.payment.important") }}</p>
+      <hint type="danger">
+        <p class="cg-base-text" v-html="$t('default.stepper.payment.important')"/>
+      </hint>
       <stripe-card-data :mode="mode" ref="cardData"/>
     </div>
 
@@ -53,11 +35,12 @@ import GtagService from "@/services/gtagService";
 import AdopterEnum from "@/enums/adopterEnum";
 import DonationEnum from "@/enums/donationEnum";
 import PaymentMethodEnum from "@/enums/paymentMethodEnum";
-import AdoptionForm from "@/forms/full/adoptionForm";
+import Hint from "@/components/utils/Hint.vue";
 
 export default {
   name: "payment-step",
   components: {
+    Hint,
     StripeCardData,
     PaymentMethodBlock,
   },
@@ -100,30 +83,7 @@ export default {
     }),
     element() {
       return this.mode === "adoption" ? this.order : this.donation
-    },
-    paymentReminder() {
-      return "Total : " + this.orderModel.totalAmount + ' €'
-    },
-    productDescription() {
-      if (this.orderModel.productsOrdered.length) {
-        let order = this.orderModel.productsOrdered[0]
-        return this.$tc('default.stepper.payment.reminder.adoption.description.' + this.project, order.quantity, {
-          count: order.quantity,
-          item: this.specificTranslation ? this.specific.item : this.translation.item,
-          price: this.order.price
-        })
-      }
-      return null
-    },
-    donationDescription() {
-      if (this.orderModel.donationOrdered.length) {
-        return this.$t('default.stepper.payment.reminder.donation.description', {
-          item: this.$t('default.' + this.donation.type),
-          price: this.donation.price
-        })
-      }
-      return null
-    },
+    }
   },
   methods: {
     ...mapActions({
@@ -277,9 +237,7 @@ export default {
             clearInterval(this.adoptionCheckingInterval)
             clearTimeout(this.adoptionCheckingTimeout)
             this.updateForm({order: {uuid: resp.data.uuid}}).then(() => {
-              (new AdoptionForm()).nextForm(this.$store).then(() => {
-                this.$root.$emit("ApiValid")
-              })
+              this.$root.$emit("ApiValid")
             })
           })
     }

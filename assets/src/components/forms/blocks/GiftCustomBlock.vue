@@ -1,6 +1,6 @@
 <template>
-  <div class="text-left">
-    <p class="subtitles poppins-police">
+  <div>
+    <p class="cg-title">
       {{ $t("default.giftCustom.title") }}
     </p>
 
@@ -9,19 +9,17 @@
         :rules="[rules.notNull]"
     >
       <v-radio
-          color="tertiary"
-          :value="false"
+-          :value="false"
       >
         <template v-slot:label>
-          <p>{{ $t('default.giftCustom.radios.dont') }}</p>
+          <p class="cg-base-text">{{ $t('default.giftCustom.radios.dont') }}</p>
         </template>
       </v-radio>
       <v-radio
-          color="tertiary"
           :value="true"
       >
         <template v-slot:label>
-          <p>{{ $t('default.giftCustom.radios.send') }}</p>
+          <p class="cg-base-text">{{ $t('default.giftCustom.radios.send') }}</p>
         </template>
       </v-radio>
     </v-radio-group>

@@ -31,9 +31,18 @@ export default {
       refused: "Votre paiement a été refusé, veuillez réessayer."
     }
   },
-  deduction: {
-    description: "Je fais <b>un don</b> de {donation}€,<br><b>soit {deduction}€</b> après déduction fiscale en France."
+  breadcrumb: {
+    base: "Merci ! Vous souhaitez <b>{type}</b> un corail ou un récif.",
+    project: "Merci ! Vous souhaitez <b>{type}</b> un corail ou un récif en <b>{project}</b>.",
+    product: "Merci ! Vous souhaitez <b>{type}</b> un <b>{product}</b> en <b>{project}</b>.",
+    price: "Merci ! Vous souhaitez <b>{type} {quantity} {product}</b> en <b>{project}</b> pour <b>{price}€</b>.",
+    monthlyDonation: "Vous avez généreusement ajouté un <b>don mensuel de {donation}€</b>.",
+    types: {
+      regular: "adopter",
+      gift: "offrir"
+    }
   },
+  share: 'Partagez sur',
   stepper: {
     header: {
       adopterType: "Vous êtes ?",
@@ -59,8 +68,8 @@ export default {
       company: "Une entreprise"
     },
     adoption: {
-      title: "Adoptez un {item} | Adoptez des {item}",
-      description: "<b>Pour {donation}€</b>, redonnez vie aux écosystèmes marins en danger.",
+      title: "Choisissez un nombre de {item}",
+      description: "Vous redonnez vie aux écosystèmes marins en danger si vous faites un <b>don</b> de {donation} €, <b>soit {reducedPrice}€</b> après déduction fiscale en France.",
       corals: {
         hint: {
           individual: "Adopter un récif entier à partir de 30 coraux sur notre page dédiée \"<a href='/adopter-un-recif-particuliers/'>Adopter un récif</a>\" !",
@@ -83,7 +92,11 @@ export default {
         max: "Vous souhaitez adopter plus de {max} {item} ? <a href='mailto:n.radouane@coralguardian.org'>Contactez-nous directement</a> !"
       },
       customAmount: {
-        label: "Montant :",
+        label: "Montant",
+        hint: "Le surplus de don sera utilisé pour soutenir l'ensemble de nos actions."
+      },
+      quantity: {
+        label: "Quantité",
         hint: "Le surplus de don sera utilisé pour soutenir l'ensemble de nos actions."
       }
     },
@@ -94,6 +107,9 @@ export default {
       title: "Votre paiement par virement est en attente",
       description: "Dès que votre virement sera validé, vous recevrez un email contenant un lien vous permettant de continuer le processus d'adoption personnalisé.",
       seeYouSoon: "À très vite !"
+    },
+    bonusDonation: {
+      title: "Optionnel : Soutenez nos actions au quotidien"
     },
     certificate: {
       gift: {
@@ -183,6 +199,11 @@ export default {
         me: "Vous pourrez choisir le(s) nom(s) sur votre certificat(s) et le(s) télécharger directement.",
         recipient: "Votre destinataire(s) recevra un code cadeau, à la date de votre choix, lui permettant de choisir le nom sur leur(s) certificat(s) et le(s) télécharger directement.",
         donation: "Je donne une fois ou tous les mois le montant de mon choix."
+      },
+      switch: {
+        donation: "Vous pouvez aussi faire un don",
+        individual: "Vous êtes un particulier ?",
+        company: "Vous êtes une entreprise ?"
       }
     },
     gift: {
@@ -292,18 +313,10 @@ export default {
         description: "Pour accompagner votre adoption, soutenez nos actions au quotidien avec un don mensuel optionnel <b>à partir de 2€</b> !",
         label: "Mon don mensuel"
       },
-      title: "Procédez au paiement",
-      description: "Le paiement est sécurisé avec Stripe 🔒",
-      important: "IMPORTANT : lors de la validation de votre règlement sur l'application mobile de votre banque, le montant affiché sera de 0€. \n" +
+      title: "Enfin, procédez au paiement <span class='font-weight-regular cg-base-text'>(sécurisé avec Stripe)</span>",
+      important: "<b>Important</b> : lors de la validation de votre règlement sur l'application mobile de votre banque, le montant affiché sera de 0€. \n" +
         "Il s'agit d'une demande de pré-autorisation bancaire mais le montant prélevé correspond bien au montant total de votre commande indiqué ci-dessus.",
       reminder: {
-        title: "Rappel de votre don",
-        adoption: {
-          description: {
-            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indo-Pacifique : {price}€ | {count} {item} adoptés sur l'île d'Hatamin en Indo-Pacifique : {price}€",
-            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée : {price}€ | {count} {item} adoptés à Punta de la Mona en Méditerranée : {price}€"
-          }
-        },
         donation: {
           description: "Un don {item} : {price}€"
         }
@@ -321,8 +334,9 @@ export default {
       }
     },
     finalAdoption: {
-      title: "Bravo et merci, vous avez adopté {count} {item}",
-      description: "Vous pouvez aussi directement télécharger le certificat en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>.|Vous pouvez aussi directement télécharger les certificats en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>.",
+      title: "Bravo et merci !",
+      hint: "Vous avez adopté {count} {item} !",
+      download: "Téléchargez les certificats",
       description_no_certif: "Votre reçu fiscal a été envoyé par email. Vous recevrez votre certificat par email une fois que vous nous aurez retourné votre fichier de noms.| Votre reçu fiscal a été envoyé par email. Vous recevrez vos certificats par email une fois que vous nous aurez retourné votre fichier de noms.",
       description_file: "Votre reçu fiscal et votre certificat ont été envoyés par email.| Votre reçu fiscal et vos certificats ont été envoyés par email."
     },

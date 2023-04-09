@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p class="text-left text-body-1" v-html='$t("default.stepper.payment.donation.description")'/>
+    <hint>
+      <p class="cg-base-text" v-html='$t("default.stepper.payment.donation.description")'/>
+    </hint>
 
     <v-form
         :ref="formRefName"
@@ -25,10 +27,12 @@ import {mapActions, mapGetters} from "vuex";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 import validationMixin from "@/mixins/validationMixin";
 import screenMixin from "@/mixins/screenMixin";
+import Hint from "@/components/utils/Hint.vue";
 
 export default {
   name: "pre-payment-donation-step",
   components: {
+    Hint,
     DonationBlock,
     DonationExplanationDialog
   },

@@ -90,6 +90,10 @@ export class BaseAdoptionFormStore {
         state.data.order.quantity--
         state.data.order.price = state.data.order.quantity * state.data.baseElementPrice
       },
+      setQuantity(state, quantity) {
+        state.data.order.quantity = Number(quantity)
+        state.data.order.price = Number(quantity) * state.data.baseElementPrice
+      }
     };
 
     this.actions = {
@@ -101,6 +105,9 @@ export class BaseAdoptionFormStore {
         if (context.state.data.order.quantity > 0) {
           context.commit('decrementCount')
         }
+      },
+      setQuantity(context, data) {
+        context.commit('setQuantity', data)
       }
     }
   }

@@ -1,6 +1,7 @@
 import AbstractForm from "../abstractForm";
 import adoptionHelper from "@/helpers/adoptionHelper";
 import AdoptionForm from "@/forms/full/adoptionForm";
+import Step from "@/forms/Step";
 
 export default class ProductForm extends AbstractForm {
 
@@ -10,7 +11,7 @@ export default class ProductForm extends AbstractForm {
       switch (state.data.target) {
         case adoptionHelper.me:
         case adoptionHelper.friend:
-          context.dispatch('loadForm', new AdoptionForm())
+          context.dispatch('loadForm', new AdoptionForm(context.state.data.project))
             .then(() => resolve())
             .catch((err) => {
               reject(err)
@@ -30,16 +31,17 @@ export default class ProductForm extends AbstractForm {
   }
 
   steps = [
-    {
-      tab: {
-        title: "default.stepper.header.full.adoption"
-      },
-      component: "AdoptionSetupStep",
-      validate: true,
-      customValidation: true,
-      display: (state) => {
+    new Step(
+      "default.stepper.header.full.adoption",
+      1,
+      "AdoptionSetupStep",
+      (state) => {
         return state.data.order.productType === null
-      }
-    }
+      },
+      true,
+      false,
+      true,
+      true
+    )
   ]
 }

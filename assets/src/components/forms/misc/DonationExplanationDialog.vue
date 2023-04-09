@@ -1,44 +1,52 @@
 <template>
-  <div class="text-center mt-3">
+  <div class="mt-6">
     <v-dialog
         v-model="dialog"
-        width="500"
+        width="650"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-            color="primary"
+            depressed
+            class="href-button"
             v-bind="attrs"
             v-on="on"
         >
-          {{ $t('default.donation.dialog.activation') }}
+          <span class="href-button-text">
+            {{ $t('default.donation.dialog.activation') }}
+          </span>
+          <v-icon
+              color="primary"
+          >
+            mdi-information
+          </v-icon>
         </v-btn>
       </template>
 
-      <v-card>
-        <v-card-title class="text-h5">
+      <div
+          class="donation-dialog"
+      >
+
+        <p class="cg-title">
           {{ $t('default.donation.dialog.title') }}
-        </v-card-title>
+        </p>
 
-        <v-card-text class="donation-explanation-content">
-          <p class="text-center mb-2">{{ $t('default.donation.dialog.chart.description') }}</p>
-          <div class="chart-container">
-            <Pie :chart-data="chartData" :chart-options="options"/>
-          </div>
-        </v-card-text>
+        <p class="cg-base-text mb-2">{{ $t('default.donation.dialog.chart.description') }}</p>
+        <div class="chart-container">
+          <Pie :chart-data="chartData" :chart-options="options"/>
+        </div>
 
-        <v-divider></v-divider>
+        <v-divider class="my-4"></v-divider>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
+        <div class="action-container">
           <v-btn
               color="primary"
-              class="black--text"
+              class="cg-btn"
               @click="dialog = false"
           >
             {{ $t('default.donation.dialog.button') }}
           </v-btn>
-        </v-card-actions>
-      </v-card>
+        </div>
+      </div>
     </v-dialog>
   </div>
 </template>
@@ -70,8 +78,8 @@ export default {
           this.$t('default.donation.dialog.chart.labels.managementCosts')
         ],
         datasets: [{
-          backgroundColor: ['#e6b295', '#cabaac',
-            '#818b83', '#99bbc9', '#66919F', '#28335f'
+          backgroundColor: ['#00AC8C', '#A7B7DA',
+            '#FF9940', '#E1000F', '#1B446B', '#4A3AFF'
           ],
           data: [42.5, 18.5, 2.7, 8.7, 14.8, 12.8],
         }]
@@ -81,7 +89,7 @@ export default {
   computed: {
     options() {
       return {
-        aspectRatio: this.windowWidth <= 450 ? 0.5 : 1,
+        aspectRatio: this.windowWidth <= 650 ? 0.5 : 1,
         plugins: {
           legend: {
             align: 'left'
@@ -91,8 +99,8 @@ export default {
             font: {
               weight: 'bold'
             },
-            formatter: function (value) {
-              return value + '%';
+            formatter: function () {
+              return ''
             }
           }
         }
@@ -102,9 +110,39 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+.donation-dialog {
+  background: white;
+  width: unset !important;
+  padding: 20px;
+}
+
 .chart-container {
   margin: auto;
-  max-width: 400px;
+  max-width: 450px;
+}
+
+.action-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.href-button {
+  text-transform: unset;
+  color: $primary !important;
+  background: white !important;
+  font-weight: 400;
+  font-size: 16px !important;
+  line-height: 24px !important;
+
+  .href-button-text {
+    text-decoration: underline;
+  }
+
+  i {
+    font-size: 18px !important;
+    margin-left: 10px;
+  }
 }
 </style>

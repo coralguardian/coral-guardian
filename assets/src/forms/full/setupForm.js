@@ -4,6 +4,7 @@ import DonationForm from "@/forms/full/donationForm";
 import ProjectEnum from "@/enums/projectEnum";
 import ActionEnum from "@/enums/actionEnum";
 import ProjectForm from "@/forms/full/projectForm";
+import Step from "@/forms/Step";
 
 export default class SetupForm extends AbstractForm {
 
@@ -34,28 +35,29 @@ export default class SetupForm extends AbstractForm {
   }
 
   steps = [
-    {
-      tab: {
-        title: "default.stepper.header.adopterType",
-      },
-      component: "AdopterTypeStep",
-      validate: true,
-      customValidation: true,
-      display: (state) => {
+    new Step(
+      "default.stepper.header.adopterType",
+      1,
+      "AdopterTypeStep",
+      (state) => {
         return state.data.adopter.type === null
-      }
-    },
-    {
-      tab: {
-        title: "default.stepper.header.full.setup",
       },
-      component: "SetupStep",
-      larger: true,
-      validate: true,
-      customValidation: true,
-      display: (state) => {
+      true,
+      false,
+      true,
+      true
+    ),
+    new Step(
+      "default.stepper.header.full.setup",
+      1,
+      "SetupStep",
+      (state) => {
         return state.data.target === null
-      }
-    }
+      },
+      true,
+      false,
+      true,
+      true
+    )
   ]
 }

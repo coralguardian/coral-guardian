@@ -1,60 +1,25 @@
 <template>
   <div class="custom-amount">
-
-    <div v-if="!inline">
-      <v-row
-          class="align-center justify-center"
-          dense
-      >
-        <v-col cols="6" sm="4">
-          <span class="text-body-2">{{ $t('default.stepper.adoption.customAmount.label') }}</span>
-        </v-col>
-        <v-col cols="3">
-          <v-text-field
-              ref="customAmountInput"
-              :value="value"
-              class="input-right"
-              type="number"
-              color="tertiary"
-              suffix="€"
-              @change="emit"
-              :rules="[rules.minValue, rules.required]"
-          />
-        </v-col>
-        <v-col cols="1" v-if="hint">*</v-col>
-      </v-row>
-
-      <v-row dense class="text-caption" v-if="hint">
-        * {{ $t('default.stepper.adoption.customAmount.hint') }}
-      </v-row>
-    </div>
-    <div v-else class="d-flex justify-space-between align-center">
-      <v-col>
-        <span class="text-body-2">{{ $t('default.stepper.adoption.customAmount.label') }}</span>
-      </v-col>
-      <v-col>
-        <v-text-field
-            ref="customAmountInput"
-            :value="value"
-            class="input-right"
-            type="number"
-            color="tertiary"
-            suffix="€"
-            @change="emit"
-            dense
-        />
-      </v-col>
-
-    </div>
-
+    <text-input
+        :value="value"
+        :label="$t('default.stepper.adoption.customAmount.label')"
+        type="number"
+        @input="$emit('input', Number($event))"
+        :tooltip="hint ? $t('default.stepper.adoption.customAmount.hint') : null"
+        :rules="[rules.minValue, rules.required]"
+        :min="minAmount"
+    />
   </div>
 </template>
 
 <script>
 import validationMixin from "@/mixins/validationMixin";
+import TextInput from "@/components/utils/TextInput.vue";
 
 export default {
   name: "custom-amount",
+  components: {TextInput},
+  mixins: [validationMixin],
   props: {
     value: {
       validator: prop => typeof prop === 'number' || prop === null,
@@ -68,25 +33,9 @@ export default {
       type: Boolean,
       default: false
     },
-  },
-  mixins: [validationMixin],
-  data() {
-    return {}
-  },
-  methods: {
-    setMinInput(value) {
-      this.min = value
-      this.getInput().$el.querySelector('input').min = value
-    },
-    getInput() {
-      return this.$refs.customAmountInput
-    },
-    emit(value) {
-      if (value < this.min) {
-        this.getInput().$data.lazyValue = this.min
-        value = this.min
-      }
-      this.$emit('input', Number(value))
+    minAmount: {
+      type: Number,
+      default: 0
     }
   }
 }

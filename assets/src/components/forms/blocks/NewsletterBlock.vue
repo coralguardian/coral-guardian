@@ -1,14 +1,14 @@
 <template>
-  <div class="text-left">
-    <p class="subtitles poppins-police">
+  <div>
+    <p class="cg-title">
       {{ $t("default.newsletter.title") }}
     </p>
-    <p>
-      {{ $t(description) }}
-    </p>
-    <v-checkbox color="tertiary" class="mt-0" :input-value="value" @change="$emit('input', $event)">
+    <!--    <p>-->
+    <!--      {{ $t(description) }}-->
+    <!--    </p>-->
+    <v-checkbox class="mt-0" :input-value="value" @change="$emit('input', $event)">
       <template v-slot:label>
-        <p class="black--text">{{ $t(label) }}</p>
+        <p class="cg-base-text">{{ $t(label) }}</p>
       </template>
     </v-checkbox>
     <div v-if="full && value">
@@ -18,6 +18,7 @@
           v-model="adopter.alternate_newsletter_email"
       />
     </div>
+
   </div>
 </template>
 

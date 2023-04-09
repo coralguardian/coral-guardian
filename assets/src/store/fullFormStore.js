@@ -25,7 +25,8 @@ export default new Vuex.Store({
         ...baseStore.state.data.adopter,
         alternate_newsletter_email: null,
         send_to_friend: null,
-        company_name: ""
+        company_name: "",
+        siret: null
       },
       order: {
         ...baseStore.state.data.order,

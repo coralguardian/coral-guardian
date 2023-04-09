@@ -1,9 +1,11 @@
 <template>
   <div id="multipleAdoption" class="row text-left">
     <div class="col-12">
-      <p v-html="$tc('default.stepper.multipleAdoption.description.' + project, order.quantity, translation)"/>
-      <p v-if="adopter.type === adopterEnum.company" v-html="$tc('default.stepper.multipleAdoption.description.company', order.quantity)"/>
       <div class="col-12" v-if="adopter.type === adopterEnum.company">
+        <hint>
+          <p v-html="$tc('default.stepper.multipleAdoption.description.' + project, order.quantity, translation)"/>
+          <p v-if="adopter.type === adopterEnum.company" v-html="$tc('default.stepper.multipleAdoption.description.company', order.quantity)"/>
+        </hint>
         <v-tabs
             fixed-tabs
             background-color="primary"
@@ -29,18 +31,18 @@
                 :ref="formRefName"
                 v-model="valid"
             >
-              <div class="row">
-                <div
+              <v-row>
+                <v-col
+                    cols="6"
                     v-for="n in order.quantity"
                     :key="n"
-                    :class="order.quantity > 1 ? 'col-6' : 'col-12'"
                 >
                   <adoption-name-block
                       v-model="adoption.names[n-1]"
                       :n="n"
                   />
-                </div>
-              </div>
+                </v-col>
+              </v-row>
             </v-form>
 
           </v-tab-item>
@@ -74,22 +76,25 @@
         </v-tabs-items>
       </div>
       <div v-else class="adoptions">
+        <hint>
+          <p v-html="$tc('default.stepper.multipleAdoption.description.' + project, order.quantity, translation)"/>
+        </hint>
         <v-form
             :ref="formRefName"
             v-model="valid"
         >
-          <div class="row">
-            <div
+          <v-row>
+            <v-col
+                cols="6"
                 v-for="n in order.quantity"
                 :key="n"
-                :class="order.quantity > 1 ? 'col-6' : 'col-12'"
             >
               <adoption-name-block
                   v-model="adoption.names[n-1]"
                   :n="n"
               />
-            </div>
-          </div>
+            </v-col>
+          </v-row>
         </v-form>
       </div>
 
@@ -105,11 +110,13 @@ import itemTranslationMixin from "../../../../mixins/itemTranslationMixin";
 import apiMixin from "../../../../mixins/apiMixin";
 import redirectionMixin from "../../../../mixins/redirectionMixin";
 import AdopterEnum from "@/enums/adopterEnum";
+import Hint from "@/components/utils/Hint.vue";
 
 export default {
   name: "multiple-adoption-step",
   mixins: [validationMixin, itemTranslationMixin, apiMixin, redirectionMixin],
   components: {
+    Hint,
     AdoptionNameBlock
   },
   data() {

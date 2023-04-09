@@ -1,21 +1,24 @@
 <template>
   <v-tooltip
       class="btn-tooltip"
-      color="tertiary"
+      color="primary"
       max-width="350"
       :attach="attach"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-icon
           class="setup-tooltip-icon"
+          color="primary"
           v-bind="attrs"
           v-on="on"
           small
       >
-        mdi-information-outline
+        mdi-information
       </v-icon>
     </template>
-    <slot></slot>
+    <div class="tooltip-container">
+      <slot></slot>
+    </div>
   </v-tooltip>
 </template>
 
@@ -36,10 +39,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .setup-tooltip-icon {
-  position: absolute;
-  right: -15px;
-  top: -5px;
+  color: $primary;
+  margin-left: 16px;
+  font-size: 20px !important;
+}
+
+.tooltip-container {
+  color: white;
+  line-height: 24px;
+  font-size: 16px;
+  padding: 10px;
 }
 </style>
