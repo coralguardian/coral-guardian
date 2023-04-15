@@ -1,13 +1,15 @@
 <template>
   <div>
-
-    <v-alert
-        v-if="options.displayAlert"
-        text
-        color="tertiary"
-        v-html="options.message"
-        class="text-body-2"
-    />
+    <hint
+        class="my-2"
+        v-if="alert"
+        type="danger"
+    >
+      <p
+          class="cg-base-text"
+          v-html="alert"
+      />
+    </hint>
 
     <v-row>
       <v-col cols="6">
@@ -17,6 +19,7 @@
             type="number"
             @input="updateQuantity($event)"
             :min="1"
+            :max="max"
             :rules="[rules.minValue, rules.required]"
         />
       </v-col>
@@ -41,22 +44,24 @@ import {mapGetters, mapActions} from "vuex";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 import TextInput from "@/components/utils/TextInput.vue";
 import validationMixin from "@/mixins/validationMixin";
+import Hint from "@/components/utils/Hint.vue";
 
 export default {
   name: "adoption-count-block",
   components: {
+    Hint,
     TextInput,
     CustomAmount
   },
   mixins: [itemTranslationMixin, validationMixin],
   props: {
-    options: {
-      type: Object,
-      required: true
+    alert: {
+      type: String,
+      default: ""
     },
-    big: {
-      type: Boolean,
-      default: false
+    max: {
+      type: Number,
+      default: null
     }
   },
   data() {

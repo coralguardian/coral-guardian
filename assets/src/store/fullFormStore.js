@@ -10,7 +10,7 @@ import ActionEnum from "@/enums/actionEnum";
 import ProductEnum from "@/enums/productEnum";
 import DonationEnum from "@/enums/donationEnum";
 
-const baseStore = new BaseAdoptionFormStore(null, null, null)
+const baseStore = new BaseAdoptionFormStore(null, null)
 
 Vue.use(Vuex)
 

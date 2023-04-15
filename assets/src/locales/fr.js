@@ -43,6 +43,9 @@ export default {
     }
   },
   share: 'Partagez sur',
+  deduction: {
+    description: "Je fais <b>un don</b> de {donation} €,<b>soit {deduction }€</b> après déduction fiscale en France."
+  },
   stepper: {
     header: {
       adopterType: "Vous êtes ?",
@@ -69,7 +72,7 @@ export default {
     },
     adoption: {
       title: "Choisissez un nombre de {item}",
-      description: "Vous redonnez vie aux écosystèmes marins en danger si vous faites un <b>don</b> de {donation} €, <b>soit {reducedPrice}€</b> après déduction fiscale en France.",
+      description: "Vous redonnez vie aux écosystèmes marins en danger si vous faites un <b>don</b> de {donation} €, <b>soit {reducedPrice} €</b> après déduction fiscale en France.",
       corals: {
         hint: {
           individual: "Adopter un récif entier à partir de 30 coraux sur notre page dédiée \"<a href='/adopter-un-recif-particuliers/'>Adopter un récif</a>\" !",
@@ -89,7 +92,7 @@ export default {
           title: "Napoléon",
           description: "Récif Napoléon de <b>150 coraux</b> (base de 4500€)"
         },
-        max: "Vous souhaitez adopter plus de {max} {item} ? <a href='mailto:n.radouane@coralguardian.org'>Contactez-nous directement</a> !"
+        max: "Vous souhaitez adopter plus de {max} {item} ?<br><a href='mailto:n.radouane@coralguardian.org'>Contactez-nous directement</a> !"
       },
       customAmount: {
         label: "Montant",

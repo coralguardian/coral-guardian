@@ -4,10 +4,9 @@ import AdopteeModel from "@/models/adopteeModel";
 const baseForm = new BaseFormStore()
 
 export class BaseAdoptionFormStore {
-  constructor(type, price, max) {
+  constructor(type, price) {
     const localType = type;
     const localPrice = price;
-    const localMax = max;
     const getDefaultState = () => {
       return {
         ...baseForm.state,
@@ -20,7 +19,6 @@ export class BaseAdoptionFormStore {
             productType: localType
           },
           // type: localType,
-          max: localMax,
           // price: localPrice,
           target: null,
           // count: 1,

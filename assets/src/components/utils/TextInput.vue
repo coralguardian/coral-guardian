@@ -32,6 +32,7 @@
 
 <script>
 import BtnTooltip from "@/components/utils/BtnTooltip.vue";
+import {nanoid} from 'nanoid';
 
 export default {
   name: "text-input",
@@ -69,6 +70,10 @@ export default {
     min: {
       type: Number,
       default: null
+    },
+    max: {
+      type: Number,
+      default: null
     }
   },
   data() {
@@ -77,8 +82,8 @@ export default {
     }
   },
   methods: {
-    setMinInput(value) {
-      this.getInput().$el.querySelector('input').min = value
+    setInputProperty(property, value) {
+      this.getInput().$el.querySelector('input')[property] = value
     },
     getInput() {
       return this.$refs[this.ref]
@@ -92,11 +97,14 @@ export default {
     }
   },
   beforeMount() {
-    this.ref = crypto.randomUUID();
+    this.ref = nanoid();
   },
   mounted() {
     if (this.min !== null) {
-      this.setMinInput(this.min)
+      this.setInputProperty('min', this.min)
+    }
+    if (this.max !== null) {
+      this.setInputProperty('max', this.max)
     }
   }
 }

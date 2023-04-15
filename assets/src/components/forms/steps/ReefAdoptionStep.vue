@@ -38,7 +38,7 @@
         :ref="formRefName"
         v-model="valid"
     >
-      <adoption-count-block :options="localOptions"/>
+      <adoption-count-block :alert="alert" :max="maxCount"/>
     </v-form>
   </div>
 </template>
@@ -47,43 +47,23 @@
 import AdoptionStep from "@/components/forms/steps/AdoptionStep";
 import adoptionMixin from "@/mixins/adoptionMixin";
 import screenMixin from "@/mixins/screenMixin";
-import validationMixin from "@/mixins/validationMixin";
-import Hint from "@/components/utils/Hint.vue";
-import fiscalReductionMixin from "@/mixins/fiscalReductionMixin";
 
 export default {
   name: "reef-adoption-step",
-  components: {Hint},
   extends: AdoptionStep,
-  mixins: [adoptionMixin, screenMixin, validationMixin, fiscalReductionMixin],
+  mixins: [adoptionMixin, screenMixin],
   data() {
     return {
       tab: 0,
-      reducedPrice: null
-    }
-  },
-  watch: {
-    order: {
-      deep: true,
-      immediate: true,
-      handler(value) {
-        this.reducedPrice = this.getFormattedDeduction(value.price)
-      }
+      maxCount: 5
     }
   },
   computed: {
-    localOptions() {
-      let options = this.options;
-      options.item = this.translation.item;
-      if (this.count === this.maxCount) {
-        options.displayAlert = true;
-        options.message = this.$t('default.stepper.adoption.reef.max', {max: this.maxCount, item: this.plural.item})
-        this.$vuetify.goTo('#deduction', {container: '#ReefAdoptionStep'})
+    alert() {
+      if (this.order.quantity === this.maxCount) {
+        return this.$t('default.stepper.adoption.reef.max', {max: this.maxCount, item: this.plural.item})
       }
-      return options
-    },
-    description() {
-      return this.$t('default.stepper.adoption.description', {donation: this.order.price, reducedPrice: this.reducedPrice})
+      return null
     }
   },
   methods: {
