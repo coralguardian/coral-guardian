@@ -4,35 +4,39 @@
         :ref="formRefName"
         v-model="valid"
     >
-      <div>
-        <p class="">
-          {{ $t('default.stepper.customizationSend.message.title') }}
-        </p>
-        <p v-html="$t('default.stepper.customizationSend.message.description')"/>
+      <multiple-recipient-block/>
 
-        <v-textarea
-            v-model="gift.message"
-            class="mt-5"
-            rows="3"
-            no-resize
-            color="tertiary"
-            outlined
-            :placeholder="$t('default.stepper.customizationSend.message.placeholder')"
-            maxlength="490"
-            counter
-        />
-      </div>
-      <div>
-        <p class="">
-          {{ $t('default.stepper.customizationSend.send.title') }}
-        </p>
-        <p>{{ $t('default.stepper.customizationSend.send.description1') }}</p>
-        <p class="mt-5">{{ $t('default.stepper.customizationSend.send.description2') }}</p>
-        <v-checkbox v-model="scheduled">
-          <template v-slot:label>
-            <p class="black--text">{{ $t('default.stepper.customizationSend.send.checkbox') }}</p>
-          </template>
-        </v-checkbox>
+      <v-divider class="cg-divider my-6"/>
+
+      <p class="cg-title" v-html="$t('default.stepper.header.customizationSend')"/>
+
+      <hint>
+        <p class="cg-base-text" v-html="$t('default.stepper.customizationSend.message.description')"/>
+      </hint>
+
+      <v-textarea
+          v-model="gift.message"
+          class="mt-5 customization-textarea"
+          rows="3"
+          no-resize
+          outlined
+          :placeholder="$t('default.stepper.customizationSend.message.placeholder')"
+          maxlength="490"
+          counter
+      />
+
+      <p class="cg-base-text light" v-html="$t('default.stepper.customizationSend.send.description') "/>
+
+      <v-switch
+          v-model="scheduled"
+          inset
+      >
+        <template v-slot:label>
+          <p class="cg-base-text">{{ $t('default.stepper.customizationSend.send.checkbox') }}</p>
+        </template>
+      </v-switch>
+
+      <v-row>
         <v-date-picker
             v-if="scheduled"
             v-model="gift.toSendOn"
@@ -41,10 +45,9 @@
             :min="tomorrow"
             :max="maxDate"
         />
-        <error-display :message="errorMessage"/>
-      </div>
+      </v-row>
 
-      <multiple-recipient-block/>
+      <error-display :message="errorMessage"/>
 
     </v-form>
   </div>
@@ -56,11 +59,13 @@ import validationMixin from "../../../../mixins/validationMixin";
 import {mapActions, mapGetters} from "vuex";
 import apiMixin from "@/mixins/apiMixin";
 import MultipleRecipientBlock from "@/components/forms/blocks/MultipleRecipientBlock.vue";
+import Hint from "@/components/utils/Hint.vue";
 
 export default {
   name: "recipient-customization-step",
   mixins: [validationMixin, apiMixin],
   components: {
+    Hint,
     ErrorDisplay,
     MultipleRecipientBlock
   },
@@ -130,6 +135,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.customization-textarea textarea {
+  border: 2px solid #EFF0F6 !important;
+  border-radius: 4px !important;
+}
 
 </style>

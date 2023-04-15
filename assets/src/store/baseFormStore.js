@@ -117,12 +117,16 @@ export default class BaseFormStore {
 
           while (stepNumber < context.getters.getSteps.length) {
             // context.getters.getSteps[stepNumber] = nextStep car les étapes ne commencent pas à 0
-            if (context.getters.getSteps[stepNumber].evaluate(context.state)) {
+            if (
+              context.getters.getSteps[stepNumber].evaluate === undefined ||
+              context.getters.getSteps[stepNumber].evaluate(context.state)
+            ) {
               isNextStep = true
               context.commit('incrementStep', stepIncremented)
               resolve()
               break
             }
+            console.log('next')
             stepNumber++
             stepIncremented++
           }

@@ -3,13 +3,13 @@ import Step from "@/forms/Step";
 export default class RecipientCustomizationStep extends Step {
   constructor() {
     super(
-      "default.stepper.header.customizationSend",
+      null,
       4,
       "RecipientCustomizationStep",
       () => true,
       true,
       false,
-      false,
+      true,
       true
     )
   }

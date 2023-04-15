@@ -30,7 +30,7 @@
 
         <v-divider
             v-if="currentStep.number"
-            class="header-divider"
+            class="cg-divider"
         />
 
         <v-stepper
@@ -209,12 +209,6 @@ export default {
         border-top-right-radius: unset !important;
       }
     }
-  }
-
-  .header-divider {
-    background: #D9DBE9;
-    width: 92%;
-    margin-left: 4% !important;
   }
 
   .form-step {

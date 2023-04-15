@@ -63,7 +63,7 @@ export default {
         setup: "Que souhaitez-vous faire ?",
         adoption: "Que souhaitez-vous adopter ?"
       },
-      customizationSend: "Personnalisation de l'envoi",
+      customizationSend: "Personnalisez votre envoi",
       thanks: "Merci !"
     },
     adopterType: {
@@ -163,15 +163,13 @@ export default {
     },
     customizationSend: {
       message: {
-        title: "Écrire un message",
-        description: "Vous pouvez écrire un message à l'intention de vos destinataires.<br>Ce message sera commun à l'ensemble des destinataires.",
+        description: "Vous pouvez écrire un message <b>commun</b> à l'intention de vos destinataires.",
         placeholder: "Votre message"
       },
       send: {
-        title: "Programmer l'envoi",
-        description1: "Vous avez la possibilité de programmer l'envoi des bons cadeaux à vos destinataires à une date ultérieure. L'email sera envoyé le matin du jour sélectionné.",
-        description2: "Si vous ne programmez pas l'envoi, les codes cadeaux seront envoyés immédiatement à la fin de la commande.",
-        checkbox: "Je souhaite programmer mon envoi"
+        description: "Vous avez la possibilité de programmer l'envoi des bons cadeaux à vos destinataires à une date ultérieure. L'email sera envoyé le matin du jour sélectionné. " +
+          "<br>Si vous ne programmez pas l'envoi, les codes cadeaux seront envoyés à la fin de votre commande.",
+        checkbox: "Programmez votre envoi"
       }
     },
     donation: {
@@ -279,6 +277,7 @@ export default {
       }
     },
     multipleRecipient: {
+      title: "À qui offrez-vous le {item} | À qui offrez-vous les {item}",
       description: "Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif.",
       company: "Deux solutions s'offrent à vous :",
       tabs: {
@@ -336,8 +335,10 @@ export default {
         indonesia: "📍 À Pulau Hatamin, en Indonésie<br>🤝 En collaboration avec l’association locale WES<br>⚠️ La pêche à la dynamite<br>🌊 Actions de restauration du récif corallien, protection de l’aire marine protégée, suivis scientifiques de la zone, et sensibilisation locale"
       }
     },
-    finalAdoption: {
+    finalStep: {
       title: "Bravo et merci !",
+    },
+    finalAdoption: {
       hint: "Vous avez adopté {count} {item} !",
       download: "Téléchargez les certificats",
       description_no_certif: "Votre reçu fiscal a été envoyé par email. Vous recevrez votre certificat par email une fois que vous nous aurez retourné votre fichier de noms.| Votre reçu fiscal a été envoyé par email. Vous recevrez vos certificats par email une fois que vous nous aurez retourné votre fichier de noms.",
@@ -362,7 +363,7 @@ export default {
       description: "Votre reçu fiscal récapitulant l’ensemble de vos dons de l’année fiscale en cours vous sera envoyé par email au mois de janvier prochain."
     },
     finalRecipient: {
-      title: "Bravo et merci, vous avez adopté {count} {item} pour votre destinataire | Bravo et merci, vous avez adopté {count} {item} pour vos destinataires",
+      hint: "Vous avez offert {count} {item} !",
       description: {
         base: "Votre reçu fiscal vous a été envoyé par email.<br>Les codes cadeaux ont été envoyés à vos destinataires.",
         sendToMe: "Votre reçu fiscal a été envoyé par email ainsi que l'ensemble des codes cadeaux.<br>En se rendant sur le site Coral Guardian, vos destinataires pourront personnaliser leur cadeau !",

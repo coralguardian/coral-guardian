@@ -1,20 +1,9 @@
 <template>
-  <div class="text-center final-adoption">
-    <div class="image-final-container">
-      <img class="" :src="path + '/img/icons/completed.svg'" alt="">
-    </div>
+  <final-step>
 
-    <p class="cg-title">
-      {{ $t("default.stepper.finalAdoption.title") }}
-    </p>
-
-    <div class="d-inline-block mb-4">
-      <hint icon="mdi-check-circle">
-        <p class="cg-base-text text-bolder">
-          {{ $t("default.stepper.finalAdoption.hint", {count: order.quantity, item: order.productType}) }}
-        </p>
-      </hint>
-    </div>
+    <template v-slot:hint>
+      {{ $t("default.stepper.finalAdoption.hint", {count: order.quantity, item: order.productType}) }}
+    </template>
 
     <p
         v-if="adoption.type === 'file'"
@@ -37,63 +26,33 @@
       </a>
     </div>
 
-    <social-share-block/>
-  </div>
+  </final-step>
 </template>
 
 <script>
 import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
-import SocialShareBlock from "../blocks/SocialShareBlock";
 import {mapGetters} from "vuex";
-import validationMixin from "../../../mixins/validationMixin";
 import itemTranslationMixin from "../../../mixins/itemTranslationMixin";
 import paymentMixin from "../../../mixins/paymentMixin";
-import Hint from "@/components/utils/Hint.vue";
+import FinalStep from "@/components/forms/misc/FinalStep.vue";
 
 export default {
   name: "final-adoption-step",
   components: {
-    Hint,
-    SocialShareBlock
+    FinalStep
   },
-  mixins: [apiMixin, finalStepMixin, validationMixin, itemTranslationMixin, paymentMixin],
+  mixins: [apiMixin, finalStepMixin, itemTranslationMixin, paymentMixin],
   computed: {
     ...mapGetters({
       hasDownloaded: "hasDownloaded",
-      adoption: "getAdoption",
-      path: "getImgPath"
+      adoption: "getAdoption"
     })
-  },
-  mounted() {
-    this.cleanLocalStorage()
-    this.$root.$on(this.apiEventName, () => this.$root.$emit('ApiValid'))
-  },
-  beforeDestroy() {
-    this.$root.$off(this.apiEventName)
   }
 }
 </script>
 
 <style scoped lang="scss">
-.final-adoption {
-  width: 80%;
-  margin: auto;
-  padding: 24px 0;
-}
-
-.image-final-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-
-  img {
-    width: 140px;
-    height: 140px;
-  }
-}
-
 .cg-base-text.light {
   line-height: 25px;
 }
