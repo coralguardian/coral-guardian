@@ -2,8 +2,9 @@ import AbstractForm from "../abstractForm";
 import ProductEnum from "@/enums/productEnum";
 import {clone} from "lodash";
 import Step from "@/forms/Step";
+import RecipientCustomizationStep from "@/forms/steps/RecipientCustomizationStep";
 
-export default class AdoptionForm extends AbstractForm {
+export default class GiftForm extends AbstractForm {
 
   unload(state) {
     return new Promise(resolve => {
@@ -26,7 +27,7 @@ export default class AdoptionForm extends AbstractForm {
     state.data.selectedProduct = clone(products[0])
   }
 
-  constructor(project) {
+  constructor() {
     super();
     this.steps = [
       new Step(
@@ -54,18 +55,8 @@ export default class AdoptionForm extends AbstractForm {
         true
       ),
       new Step(
-        "default.stepper.customization.title." + project,
-        3,
-        "MultipleAdoptionStep",
-        () => true,
-        true,
-        false,
-        false,
-        true
-      ),
-      new Step(
         "default.stepper.information.title",
-        4,
+        3,
         "InformationStep",
         () => true,
         true,
@@ -73,6 +64,7 @@ export default class AdoptionForm extends AbstractForm {
         false,
         true
       ),
+      new RecipientCustomizationStep(),
       new Step(
         "default.stepper.bonusDonation.title",
         5,
@@ -97,13 +89,13 @@ export default class AdoptionForm extends AbstractForm {
       new Step(
         null,
         null,
-        "FinalAdoptionStep",
+        "FinalRecipientStep",
         () => true,
         true,
         false,
         false,
         false,
-        {method: "get", endpoint: "getCertificates"},
+        null,
         false,
         true
       )

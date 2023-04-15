@@ -116,11 +116,10 @@ export default new Vuex.Store({
           reject('Formulaire incomplet')
         } else {
           let steps = checkStepsToDisplay(form, context.state)
-          if (steps.length === 0 && form !== null) {
+          if (steps.length === 0) {
             form.nextForm(context).then(() => resolve())
-          } else if (form === null) {
-            throw "Form should not be null"
-          } else {
+          }
+          else {
             form.steps = steps
             context.commit("loadSpecificForm", form)
             resolve()

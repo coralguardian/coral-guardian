@@ -2,6 +2,7 @@ import AbstractForm from "../abstractForm";
 import adoptionHelper from "@/helpers/adoptionHelper";
 import AdoptionForm from "@/forms/full/adoptionForm";
 import Step from "@/forms/Step";
+import GiftForm from "@/forms/full/giftForm";
 
 export default class ProductForm extends AbstractForm {
 
@@ -10,8 +11,14 @@ export default class ProductForm extends AbstractForm {
       let state = context.state
       switch (state.data.target) {
         case adoptionHelper.me:
-        case adoptionHelper.friend:
           context.dispatch('loadForm', new AdoptionForm(context.state.data.project))
+            .then(() => resolve())
+            .catch((err) => {
+              reject(err)
+            })
+          break;
+        case adoptionHelper.friend:
+          context.dispatch('loadForm', new GiftForm())
             .then(() => resolve())
             .catch((err) => {
               reject(err)

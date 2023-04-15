@@ -28,6 +28,7 @@
         ref="customAmount"
         :value="donation.price"
         :hint="false"
+        :min-amount="min"
         @input="updateFromCustomAmount($event)"
     />
 
@@ -82,7 +83,6 @@ export default {
     updateCustomAmount(amount) {
       this.selectedPrice = amount
       this.updateForm({donation: {price: amount}})
-      // this.$vuetify.goTo('#deduction', {container: '#' + this.currentStep.component})
     },
     updateFromCustomAmount(amount) {
       this.selectedPrice = null
@@ -91,9 +91,6 @@ export default {
     isSelectedPrice(price) {
       return this.selectedPrice === price
     }
-  },
-  mounted() {
-    this.$refs.customAmount.setMinInput(this.min)
   }
 }
 </script>

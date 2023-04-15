@@ -103,12 +103,12 @@
 </template>
 
 <script>
-import ErrorDisplay from "../../../utils/ErrorDisplay";
-import RecipientBlock from "../../blocks/RecipientBlock";
+import ErrorDisplay from "../../utils/ErrorDisplay.vue";
+import RecipientBlock from "./RecipientBlock.vue";
 import {mapActions, mapGetters} from "vuex";
-import validationMixin from "../../../../mixins/validationMixin";
-import apiMixin from "../../../../mixins/apiMixin";
-import redirectionMixin from "../../../../mixins/redirectionMixin";
+import validationMixin from "../../../mixins/validationMixin";
+import apiMixin from "../../../mixins/apiMixin";
+import redirectionMixin from "../../../mixins/redirectionMixin";
 import AdopterEnum from "@/enums/adopterEnum";
 
 export default {

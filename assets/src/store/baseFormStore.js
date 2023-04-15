@@ -85,11 +85,11 @@ export default class BaseFormStore {
       forceUpdate(state, data) {
         state.data = data
       },
-      incrementStep(state) {
-        state.data.step++
+      incrementStep(state, count) {
+        state.data.step = state.data.step + count
       },
-      decrementStep(state) {
-        state.data.step--
+      decrementStep(state, count) {
+        state.data.step = state.data.step - count
       },
       initializeForm(state) {
         state.isInitialized = true
@@ -111,15 +111,27 @@ export default class BaseFormStore {
       },
       incrementStep(context) {
         return new Promise(resolve => {
-          if (context.state.data.step === context.getters.getSteps.length) {
+          let stepNumber = context.getters.step
+          let stepIncremented = 1;
+          let isNextStep = false
+
+          while (stepNumber < context.getters.getSteps.length) {
+            // context.getters.getSteps[stepNumber] = nextStep car les étapes ne commencent pas à 0
+            if (context.getters.getSteps[stepNumber].evaluate(context.state)) {
+              isNextStep = true
+              context.commit('incrementStep', stepIncremented)
+              resolve()
+              break
+            }
+            stepNumber++
+            stepIncremented++
+          }
+          if (!isNextStep) {
             context.dispatch("loadNextForm")
               .then(() => {
-                context.commit('incrementStep')
+                context.commit('incrementStep', 1)
                 resolve()
               })
-          } else {
-            context.commit('incrementStep')
-            resolve()
           }
         })
       },
@@ -129,9 +141,27 @@ export default class BaseFormStore {
           if (!Object.is(context.getters.getCurrentForm, context.getters.getPreviousForm)) {
             formToUnload = context.getters.getCurrentForm
           }
-          context.commit('decrementStep')
-          if (formToUnload !== null) {
-            context.commit('unloadForm', formToUnload)
+
+          let stepNumber = context.getters.step
+          let stepDecreased = 1;
+          let isPreviousStep = false
+
+          while (stepNumber > 0) {
+            // context.getters.getSteps[stepNumber - 2] = previous car les étapes ne commencent pas à 0
+            if (context.getters.getSteps[stepNumber - 2].evaluate(context.state)) {
+              isPreviousStep = true
+              context.commit('decrementStep', stepDecreased)
+              break
+            }
+            stepNumber--
+            stepDecreased++
+          }
+
+          if (!isPreviousStep) {
+            context.commit('decrementStep', 1)
+            if (formToUnload !== null) {
+              context.commit('unloadForm', formToUnload)
+            }
           }
         }
       },

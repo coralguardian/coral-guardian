@@ -7,9 +7,10 @@
     <v-radio-group
         v-model="adopter.send_to_friend"
         :rules="[rules.notNull]"
+        @change="updateForm({adopter: {send_to_friend: $event}})"
     >
       <v-radio
--          :value="false"
+          :value="false"
       >
         <template v-slot:label>
           <p class="cg-base-text">{{ $t('default.giftCustom.radios.dont') }}</p>
@@ -28,14 +29,13 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import validationMixin from "../../../mixins/validationMixin";
 
 export default {
   name: "gift-custom-block",
   mixins: [validationMixin],
-  components: {
-  },
+  components: {},
   props: {
     value: null,
     full: {
@@ -47,10 +47,17 @@ export default {
     ...mapGetters({
       adopter: "getAdopter"
     })
+  },
+  methods: {
+    ...mapActions({
+      updateForm: 'updateForm'
+    })
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.cg-base-text {
+  line-height: 24px;
+}
 </style>

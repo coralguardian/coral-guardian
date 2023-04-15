@@ -39,9 +39,7 @@ export default class SetupForm extends AbstractForm {
       "default.stepper.header.adopterType",
       1,
       "AdopterTypeStep",
-      (state) => {
-        return state.data.adopter.type === null
-      },
+      (state) => state.data.adopter.type === null,
       true,
       false,
       true,
@@ -51,9 +49,7 @@ export default class SetupForm extends AbstractForm {
       "default.stepper.header.full.setup",
       1,
       "SetupStep",
-      (state) => {
-        return state.data.target === null
-      },
+      (state) => state.data.target === null,
       true,
       false,
       true,

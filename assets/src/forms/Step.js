@@ -3,7 +3,7 @@ export default class Step {
     title = "",
     number = null,
     component = "",
-    display = true,
+    display = () => true,
     validate = false,
     ignorable = false,
     customValidation = false,
@@ -23,5 +23,9 @@ export default class Step {
     this.api = api;
     this.back = back;
     this.isLast = isLast;
+  }
+
+  evaluate() {
+    return true
   }
 }
