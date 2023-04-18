@@ -22,7 +22,10 @@ export default {
       urlParams.delete("payment_intent")
       urlParams.delete("redirect_status")
       urlParams.delete("payment_intent_client_secret")
-      window.history.replaceState({}, document.title, window.location.pathname + urlParams.toString())
+
+      let fullUrl = window.location.pathname + urlParams.length > 0 ? "?" + urlParams.toString() : ""
+      window.history.replaceState({}, document.title, fullUrl)
+
       if (this.order.clientSecret) {
         localStorage.removeItem(this.order.clientSecret)
       }

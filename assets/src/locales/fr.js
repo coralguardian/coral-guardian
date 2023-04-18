@@ -107,7 +107,7 @@ export default {
       error: "Veuillez sélectionner un type d'adoption."
     },
     bankTransferThanks: {
-      title: "Votre paiement par virement est en attente",
+      hint: "Votre paiement par virement est en attente",
       description: "Dès que votre virement sera validé, vous recevrez un email contenant un lien vous permettant de continuer le processus d'adoption personnalisé.",
       seeYouSoon: "À très vite !"
     },
@@ -221,6 +221,7 @@ export default {
       company: {
         cols: {
           information: {
+            siret: "Numéro SIRET",
             companyName: "Nom de l'entreprise*",
             firstname: "Prénom du contact principal*",
             name: "Nom du contact principal*",
@@ -251,6 +252,7 @@ export default {
       description: "Assurez la poursuite de nos actions de recherche, de restauration et de sensibilisation au quotidien avec un don mensuel."
     },
     multipleAdoption: {
+      no_idea: "Je n'ai pas d'inspiration, je choisirais donc plus tard.",
       description: {
         indonesia: "Donnez un nom à votre {item} adopté, vous pouvez choisir celui que vous souhaitez ! |Donnez un nom à chacun de vos {item} adoptés, vous pouvez choisir ceux que vous souhaitez !",
         spain: "Vous pouvez choisir le nom que vous souhaitez ! | Vous pouvez choisir les noms que vous souhaitez !",
@@ -258,17 +260,13 @@ export default {
       },
       tabs: {
         fields: {
-          title: "Je remplis les champs",
-          description: {
-            indonesia: "Je renseigne chaque nom de {item} dans les champs ci-dessous :",
-            spain: "Je renseigne chaque nom dans les champs ci-dessous :"
-          }
+          title: "Je remplis les champs"
         },
         file: {
           title: "J'envoie un fichier",
-          subtitle: "J'ai beaucoup de certificats à nommer ? J'envoie un fichier avec les personnalisations.",
-          description: "Je télécharge le fichier Excel mis à ma disposition. Une fois rempli, je me rends à l'adresse communiquée dans le mail de confirmation reçu et je dépose mon fichier dans le champ prévu à cet effet.",
-          button: "Télécharger le fichier",
+          description: "Si vous avez beaucoup de {item} à nommer, téléchargez le fichier Excel ci-dessous.\n" +
+            "Une fois dûment rempli, rendez-vous sur l’adresse communiquée dans l’email de confirmation que vous allez recevoir et importez le fichier.",
+          button: "Télécharger le fichier Excel",
           upload: {
             label: "Votre fichier",
             description: "Déposez votre fichier Excel de noms complété ici :"
@@ -306,8 +304,8 @@ export default {
         },
         bank: {
           tab: "Virement",
-          button: "Télécharger le RIB",
-          description: "Pour payer par virement bancaire, télécharger le RIB de l'association et procédez au paiement via votre établissement bancaire.",
+          title: "Télécharger le RIB de Coral Guardian",
+          description: "Procédez ensuite au paiement via votre établissement bancaire.",
           hint: "Un délai de traitement de 2 à 5 jours est à prévoir le temps de valider le paiement. Une fois validé, vous recevrez un email vous permettant de continuer votre commande."
         }
       },
@@ -340,13 +338,9 @@ export default {
     },
     finalAdoption: {
       hint: "Vous avez adopté {count} {item} !",
-      download: "Téléchargez les certificats",
-      description_no_certif: "Votre reçu fiscal a été envoyé par email. Vous recevrez votre certificat par email une fois que vous nous aurez retourné votre fichier de noms.| Votre reçu fiscal a été envoyé par email. Vous recevrez vos certificats par email une fois que vous nous aurez retourné votre fichier de noms.",
-      description_file: "Votre reçu fiscal et votre certificat ont été envoyés par email.| Votre reçu fiscal et vos certificats ont été envoyés par email."
-    },
-    finalFriendAdoption: {
-      title: "Bravo et merci, vous avez adopté {count} {item} pour votre destinataire",
-      description: "Votre reçu fiscal a été envoyé par email.<br><br>Le code cadeau de votre destinataire est le suivant : {orderToken}<br><br>Il/elle recevra un email pour personnaliser votre cadeau !"
+      download: "Téléchargez le certificat | Téléchargez les certificats",
+      download_description: "Vous pouvez aussi directement télécharger votre certificat. | Vous pouvez aussi directement télécharger vos certificats.",
+      description_not_named: "Votre reçu fiscal a été envoyé par email. Pour obtenir votre certificat, nommez votre {item} via le lien présent dans l'email que vous allez recevoir.| Votre reçu fiscal a été envoyé par email. Pour obtenir vos certificats, nommez vos {item} via le lien présent dans l'email que vous allez recevoir",
     },
     finalFriendGift: {
       title: "Bravo et merci, vous avez adopté {count} {item}",

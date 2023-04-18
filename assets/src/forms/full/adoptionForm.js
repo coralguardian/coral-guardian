@@ -2,6 +2,8 @@ import AbstractForm from "../abstractForm";
 import ProductEnum from "@/enums/productEnum";
 import {clone} from "lodash";
 import Step from "@/forms/Step";
+import BankTransferThanksStep from "@/forms/steps/BankTransfertThanksStep";
+import FinalAdoptionStep from "@/forms/steps/FinalAdoptionStep";
 
 export default class AdoptionForm extends AbstractForm {
 
@@ -94,19 +96,8 @@ export default class AdoptionForm extends AbstractForm {
         true,
         {method: "post", endpoint: "createOrder"},
       ),
-      new Step(
-        null,
-        null,
-        "FinalAdoptionStep",
-        () => true,
-        true,
-        false,
-        false,
-        false,
-        {method: "get", endpoint: "getCertificates"},
-        false,
-        true
-      )
+      new FinalAdoptionStep,
+      new BankTransferThanksStep
     ]
   }
 }

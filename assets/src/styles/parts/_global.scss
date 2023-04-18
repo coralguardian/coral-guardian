@@ -82,8 +82,17 @@ p {
   word-break: inherit;
 }
 
-.tertiary-tab-active {
-  background: $tertiary;
+.v-tab {
+  .cg-base-text {
+    font-size: 16px !important;
+  }
+}
+
+.tab-active {
+  .cg-base-text {
+    color: $primary !important;
+    font-weight: 500;
+  }
 }
 
 .btn-container {

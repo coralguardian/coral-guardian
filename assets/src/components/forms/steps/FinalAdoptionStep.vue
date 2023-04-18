@@ -6,24 +6,25 @@
     </template>
 
     <p
-        v-if="adoption.type === 'file'"
-        v-html="$tc('default.stepper.finalAdoption.description_file', order.quantity, translation)"
-    />
-
-    <p
-        v-else-if="hasDownloaded"
-        v-html="$tc('default.stepper.finalAdoption.description_no_certif', order.quantity)"
+        v-if="adoption.type !== 'fields'"
+        class="cg-base-text light"
+        v-html="$tc('default.stepper.finalAdoption.description_not_named', order.quantity, translation)"
     />
 
     <div v-else>
       <p class="cg-base-text light">{{ $tc('default.stepper.certificate.adoption.email', order.quantity) }}</p>
-      <a
-          class="cg-btn download-certificate-button"
-          target="_blank"
-          :href="this.getGetUrl({order_uuid: order.uuid})"
-      >
-        {{ $t("default.stepper.finalAdoption.download") }}
-      </a>
+
+      <div v-if="order.quantity <= 3">
+        <p class="cg-base-text light">{{ $tc('default.stepper.finalAdoption.download_description', order.quantity) }}</p>
+        <a
+            class="cg-btn download-certificate-button"
+            target="_blank"
+            :href="this.getGetUrl({order_uuid: order.uuid})"
+        >
+          {{ $t("default.stepper.finalAdoption.download") }}
+        </a>
+      </div>
+
     </div>
 
   </final-step>
@@ -45,7 +46,6 @@ export default {
   mixins: [apiMixin, finalStepMixin, itemTranslationMixin, paymentMixin],
   computed: {
     ...mapGetters({
-      hasDownloaded: "hasDownloaded",
       adoption: "getAdoption"
     })
   }

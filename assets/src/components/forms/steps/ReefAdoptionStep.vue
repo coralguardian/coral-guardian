@@ -97,13 +97,6 @@ export default {
   margin-bottom: 1rem;
 }
 
-.tab-active {
-  .cg-base-text {
-    color: $primary;
-    font-weight: 700;
-  }
-}
-
 .reef-tab {
   height: unset !important;
   text-align: center;

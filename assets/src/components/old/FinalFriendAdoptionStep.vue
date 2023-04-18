@@ -7,9 +7,9 @@
 
 <script>
 import finalStepMixin from "@/mixins/finalStepMixin";
-import SocialShareBlock from "../blocks/SocialShareBlock";
-import paymentMixin from "../../../mixins/paymentMixin";
-import validationMixin from "../../../mixins/validationMixin";
+import SocialShareBlock from "../forms/blocks/SocialShareBlock.vue";
+import paymentMixin from "../../mixins/paymentMixin";
+import validationMixin from "../../mixins/validationMixin";
 import apiMixin from "@/mixins/apiMixin";
 
 export default {
