@@ -174,6 +174,11 @@ export default {
         this.$root.$emit('StepValid')
       } else {
         // il me faut les noms
+        if (this.adoption.type === AdoptionTypeEnum.fields) {
+          this.$root.$emit(this.validationEventName)
+        } else {
+          // c'est le fichier faudra parser
+        }
       }
       //   const options = {
       //     headers: {
@@ -206,8 +211,10 @@ export default {
     },
     updateAdoptionType(value) {
       if (value === false) {
+        this.valid = false
         this.updateForm({adoption: {type: AdoptionTypeEnum.fields}})
       } else {
+        this.valid = true
         this.updateForm({adoption: {type: null}})
       }
     }

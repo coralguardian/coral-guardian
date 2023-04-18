@@ -62,7 +62,7 @@ export default class AdoptionForm extends AbstractForm {
         () => true,
         true,
         false,
-        false,
+        true,
         true
       ),
       new Step(

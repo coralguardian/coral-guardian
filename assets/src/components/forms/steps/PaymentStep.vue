@@ -5,7 +5,12 @@
       <hint type="danger">
         <p class="cg-base-text" v-html="$t('default.stepper.payment.important')"/>
       </hint>
-      <stripe-card-data :mode="mode" ref="cardData"/>
+      <stripe-card-data
+          :mode="mode"
+          ref="cardData"
+          @reCaptchaValid="isValidRecaptcha = true"
+          @reCaptchaNotValid="isValidRecaptcha = true"
+      />
     </div>
 
     <v-alert
@@ -66,7 +71,8 @@ export default {
         class: "green--text"
       },
       adoptionCheckingInterval: null,
-      adoptionCheckingTimeout: null
+      adoptionCheckingTimeout: null,
+      isValidRecaptcha: false
     }
   },
   computed: {
@@ -163,6 +169,7 @@ export default {
         this.$root.$emit('StepValid')
         // cas du paiement par carte
       } else {
+        // on check reCAPTCHA
         // si le virement est actif alors on vérifie les infos de la carte dans le composant PaymentMethod
         if (this.displayPaymentMethod) {
           if (!this.$refs.paymentMethod.cardDisplay) {
