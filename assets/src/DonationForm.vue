@@ -1,19 +1,48 @@
 <template>
   <v-app>
-    <base-form v-bind="form"/>
+    <div class="new-form-container">
+      <v-form
+          ref="firstStepForm"
+          :value="firstStepValid"
+      >
+        <div class="step">
+          <donation-step/>
+        </div>
+        <div class="step last">
+          <information-step ref="informationStep"/>
+        </div>
+
+        <v-btn
+            class="cg-btn d-flex mb-6 mx-auto"
+            rounded
+            color="primary"
+            @click="validFirstStep"
+        >
+          {{ $t('default.ui.continue') }}
+        </v-btn>
+      </v-form>
+
+      <div class="step" v-if="displayPaymentStep">
+        <payment-step/>
+      </div>
+    </div>
   </v-app>
 </template>
 
 <script>
-import BaseForm from "@/components/forms/BaseForm";
 import PaymentMixin from "./mixins/paymentMixin";
 import {mapActions, mapGetters} from "vuex";
+import InformationStep from "@/components/forms/steps/InformationStep.vue";
+import DonationStep from "@/components/forms/steps/DonationStep.vue";
+import PaymentStep from "@/components/forms/steps/PaymentStep.vue";
 
 export default {
-  name: "app",
+  name: "donation-form",
   mixins: [PaymentMixin],
   components: {
-    BaseForm
+    InformationStep,
+    DonationStep,
+    PaymentStep
   },
   props: {
     type: {
@@ -25,30 +54,47 @@ export default {
       default: ""
     }
   },
+  data() {
+    return {
+      firstStepValid: false,
+      displayPaymentStep: false
+    }
+  },
   computed: {
     ...mapGetters({
       form: 'getForm',
-    })
+    }),
+    informationStep() {
+      return this.$refs.informationStep
+    }
   },
   methods: {
     ...mapActions({
       updateForm: "updateForm"
-    })
-  },
-  mounted() {
-    if (this.type.length) {
-      this.updateForm({donationType: this.type, isDonationTypeSetByShortcode: true})
+    }),
+    validFirstStep() {
+      if (this.$refs.firstStepForm.validate() && this.validInformationStep()) {
+        this.displayPaymentStep = true
+      }
+    },
+    validInformationStep() {
+      return this.informationStep.$refs[this.informationStep.formRefName].validate()
     }
-    if (this.donatorNature.length) {
-      this.updateForm({donatorNature: this.donatorNature, isDonatorNatureSetByShortcode: true})
-    }
-    this.checkPaymentStepForBasicForms()
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.v-application {
-  background: transparent !important;
+.new-form-container {
+  padding: 55px;
 }
+
+.step {
+  padding-bottom: 55px;
+}
+
+.step.last {
+  padding-bottom: 24px;
+}
+
 </style>

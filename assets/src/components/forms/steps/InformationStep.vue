@@ -60,12 +60,14 @@
             :label="$t('default.stepper.information.cols.contact.postalCode')"
             :rules="[rules.required]"
             v-model="adopter.postal_code"
+            icon="mdi-home-outline"
         />
         <text-input
             class="col-4"
             :label="$t('default.stepper.information.cols.contact.city')"
             :rules="[rules.required]"
             v-model="adopter.city"
+            icon="mdi-home-outline"
         />
         <text-input
             class="col-4"
@@ -73,6 +75,7 @@
             :label="$t('default.stepper.information.cols.contact.country')"
             :rules="[rules.required, rules.minLength]"
             v-model="adopter.country"
+            icon="mdi-home-outline"
         />
       </div>
 

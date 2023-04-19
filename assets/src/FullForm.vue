@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div id="full-form">
+    <div id="full-form" class="new-form-container">
       <v-progress-circular color="tertiary" indeterminate v-if="loading"/>
 
       <div v-else>
@@ -181,12 +181,6 @@ export default {
   background: transparent !important;
 
   #full-form {
-    width: 760px;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid #EFF0F7;
-    border-radius: 30px;
-    text-align: left;
 
     .v-stepper {
       border-radius: 30px !important;

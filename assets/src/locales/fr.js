@@ -181,7 +181,14 @@ export default {
       buttons: {
         unique: "Je donne une fois",
         recurrent: "Je donne tous les mois"
-      }
+      },
+      i_want: "Je souhaite donner",
+      select_duration: {
+        unique: "une fois",
+        recurrent: "tous les mois"
+      },
+      amount: "pour un montant de",
+      other_amount: "autre"
     },
     friend: {
       title: "Renseignez les informations de votre destinataire",

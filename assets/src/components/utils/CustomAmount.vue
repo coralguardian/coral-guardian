@@ -2,7 +2,8 @@
   <div class="custom-amount">
     <text-input
         :value="value"
-        :label="$t('default.stepper.adoption.customAmount.label')"
+        :label="label ? $t(label) : null"
+        :placeholder="placeholder ? $t(placeholder) : null"
         type="number"
         @input="$emit('input', Number($event))"
         :tooltip="hint ? $t('default.stepper.adoption.customAmount.hint') : null"
@@ -36,6 +37,14 @@ export default {
     minAmount: {
       type: Number,
       default: 0
+    },
+    label: {
+      type: String,
+      default: 'default.stepper.adoption.customAmount.label'
+    },
+    placeholder: {
+      type: String,
+      default: null
     }
   }
 }
