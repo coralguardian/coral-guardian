@@ -6,6 +6,7 @@
         <p class="cg-title">{{ $t("default.stepper.donation.i_want") }}</p>
         <div id="donation-type-select">
           <v-select
+              :value="donation.type"
               :items="donationTypes"
               item-text="label"
               item-value="value"
@@ -21,13 +22,14 @@
         <p class="cg-title">{{ $t("default.stepper.donation.amount") }}</p>
         <div id="donation-price-select">
           <v-select
+              :value="basePriceSelect"
               :items="donationAmounts"
               item-text="label"
               item-value="value"
               color="#33A4E4"
               @input="updateAmountFromSelect"
               attach="#donation-price-select"
-              :rules="[rules.required]"
+              :rules="displayCustomAmount ? [] : [rules.required]"
           />
         </div>
       </div>
@@ -63,7 +65,8 @@ export default {
   mixins: [itemTranslationMixin, validationMixin, screenMixin],
   data() {
     return {
-      displayCustomAmount: false
+      displayCustomAmount: false,
+      basePriceSelect: 0
     }
   },
   computed: {
@@ -114,11 +117,24 @@ export default {
     updateAmountFromSelect(amount) {
       this.updateForm({donation: {price: amount}})
       if (amount === null) {
+        this.updateForm({donation: {isCustom: true}})
         this.displayCustomAmount = true
       } else {
+        this.updateForm({donation: {isCustom: false}})
         this.displayCustomAmount = false
       }
+    },
+    setBasePriceSelect() {
+      if (this.donation.isCustom) {
+        this.basePriceSelect = null
+        this.displayCustomAmount = true
+      } else {
+        this.basePriceSelect = this.donation.price
+      }
     }
+  },
+  mounted() {
+    this.setBasePriceSelect()
   }
 }
 </script>

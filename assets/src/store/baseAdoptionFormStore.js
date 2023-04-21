@@ -75,8 +75,7 @@ export class BaseAdoptionFormStore {
       },
       getAdoption: state => state.data.adoption,
       getRecipient: state => state.data.recipient,
-      getFriend: state => state.data.friend,
-      getPaymentMethod: state => state.data.payment_method
+      getFriend: state => state.data.friend
     };
 
     this.mutations = {

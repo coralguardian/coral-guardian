@@ -75,7 +75,8 @@ export default class BaseFormStore {
       getApiNamespace: state => state.apiNamespace,
       getOrderModel: (state) => new OrderModel(state.data),
       getProject: state => state.data.project,
-      isInitialized: state => state.isInitialized
+      isInitialized: state => state.isInitialized,
+      getPaymentMethod: state => state.data.payment_method
     };
 
     this.mutations = {

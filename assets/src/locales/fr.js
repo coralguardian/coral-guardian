@@ -355,6 +355,7 @@ export default {
       descriptionNoEmail: "Vous pouvez télécharger votre certificat directement en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>."
     },
     finalDonation: {
+      hint: "Vous avez fait un don de {price}€",
       title: "Bravo et merci pour votre soutien",
       description: "Votre reçu fiscal a été envoyé par email.",
       bankTransfer: "Votre virement est en attente de réception. Une fois celui-ci validé, vous recevrez un email contenant votre reçu fiscal."

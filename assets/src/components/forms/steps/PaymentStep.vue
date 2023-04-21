@@ -119,6 +119,8 @@ export default {
           }
           this.$root.$emit("hidePreviousButton")
           this.updateElementStatus("success")
+          this.$emit('succeeded')
+          console.log('payment')
           this.$root.$off(this.customValidationEventName)
           this.$root.$on(this.customValidationEventName, () => {
             if (this.mode === "donation") {
