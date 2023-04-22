@@ -371,6 +371,7 @@ export default {
       hint: "Vous avez offert {count} {item} !",
       description: {
         base: "Votre reçu fiscal vous a été envoyé par email.<br>Les codes cadeaux ont été envoyés à vos destinataires.",
+        later: "Votre reçu fiscal vous a été envoyé par email.<br>Pour renseigner les informations de vos destinataires et leur permettre de recevoir leur code cadeaux, suivez le lien présent dans l'email.",
         sendToMe: "Votre reçu fiscal a été envoyé par email ainsi que l'ensemble des codes cadeaux.<br>En se rendant sur le site Coral Guardian, vos destinataires pourront personnaliser leur cadeau !",
         scheduled: "Votre reçu fiscal vous a été envoyé par email.<br>Les codes cadeaux seront envoyés à vos destinataires à la date programmée."
       },
@@ -429,7 +430,11 @@ export default {
     title: "Options d'envoi des codes cadeaux*",
     radios: {
       dont: "Je souhaite recevoir le(s) code(s) cadeau(x) sur mon adresse email",
-      send: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement (l'import d'un fichier de contact est possible)"
+      send: {
+        individual: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement.",
+        company: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement (l'import d'un fichier de contact est possible).",
+      },
+      later: "Je souhaite renseigner les adresses emails de mes destinataires plus tard."
     }
   }
 }

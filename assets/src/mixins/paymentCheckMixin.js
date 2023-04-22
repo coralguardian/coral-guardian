@@ -46,18 +46,19 @@ export default {
       }
     },
     cleanLocalStorage() {
-      this.fillParams()
-      let urlParams= this.params;
+      const urlParams = new URLSearchParams(window.location.search)
 
-      if (urlParams.setup_intent_client_secret) {
-        localStorage.removeItem(urlParams.setup_intent_client_secret)
+      if (urlParams.has("setup_intent_client_secret")) {
+        localStorage.removeItem(urlParams.get("setup_intent_client_secret"))
       }
 
-      delete urlParams.setup_intent
-      delete urlParams.redirect_status
-      delete urlParams.setup_intent_client_secret
+      urlParams.delete("setup_intent")
+      urlParams.delete("redirect_status")
+      urlParams.delete("setup_intent_client_secret")
 
-      let fullUrl = window.location.pathname + (urlParams.length > 0 ? "?" + urlParams.toString() : "")
+      const urlParamsString = urlParams.toString()
+
+      let fullUrl = window.location.pathname + (urlParamsString.length > 0 ? "?" + urlParamsString : "")
 
       window.history.replaceState({}, document.title, fullUrl)
     }

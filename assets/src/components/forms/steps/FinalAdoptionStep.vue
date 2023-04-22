@@ -21,7 +21,7 @@
             target="_blank"
             :href="this.getGetUrl({order_uuid: order.uuid})"
         >
-          {{ $t("default.stepper.finalAdoption.download") }}
+          {{ $tc("default.stepper.finalAdoption.download", order.quantity) }}
         </a>
       </div>
 

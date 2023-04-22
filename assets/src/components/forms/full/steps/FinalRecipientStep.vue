@@ -31,7 +31,9 @@ export default {
     }),
     description() {
       let base = 'default.stepper.finalRecipient.description.';
-      if (!this.adopter.send_to_friend) {
+      if (this.adopter.send_to_friend === null) {
+        base += "later"
+      } else if (this.adopter.send_to_friend === false) {
         base += "sendToMe"
       } else {
         base += this.gift.toSendOn === null ? "base" : "scheduled"

@@ -103,10 +103,11 @@ import StepperHeaderProgress from "@/components/utils/StepperHeaderProgress.vue"
 import paymentCheckMixin from "@/mixins/paymentCheckMixin";
 import PaymentStatusEnum from "@/enums/paymentStatusEnum";
 import GtagService from "@/services/gtagService";
+import fillStateMixin from "@/mixins/fillStateMixin";
 
 export default {
   name: "full-form",
-  mixins: [paymentCheckMixin, missingTranslationsMixin],
+  mixins: [paymentCheckMixin, missingTranslationsMixin, fillStateMixin],
   components: {
     StepperHeaderProgress,
     FormFooter,
@@ -154,35 +155,44 @@ export default {
     displayFooter(index) {
       let step = this.steps[index - 1];
       return (step.back || !step.isLast) && step.component === this.currentStep.component && index === this.stepNumber
+    },
+    checkForPayment() {
+      this.checkForPaymentIntent()
+        .then((status) => {
+          if (status === PaymentStatusEnum.succeeded) {
+            // redirige dernière étape
+            (new GtagService()).executeTag(this.order, 'adoption', this.adopter);
+            this.incrementStep().then(() =>
+            {
+              setTimeout(() => {
+                this.checkingForPayment = false
+              }, 200)
+              setTimeout(() => {
+                this.$vuetify.goTo('#FinalStep', {offset: 400})
+              }, 200)
+            })
+          } else if (status === PaymentStatusEnum.error) {
+            this.checkingForPayment = false
+            // on laisse le cour normal via forceUpdate on retourne à l'étape de payment
+          } else {
+            // il n'y avait pas de query param de paiement, on fait un nouveau form
+            this.startSetupForm()
+          }
+        })
+        .catch(() => {
+          // les données n'ont pas été retrouvées dans le localStorage
+          this.startSetupForm()
+        })
+    },
+    startSetupForm() {
+      this.fillState()
+        .then(() => {
+          this.loadForm(new SetupForm()).then(() => this.checkingForPayment = false)
+        })
     }
   },
   beforeMount() {
-    this.checkForPaymentIntent()
-      .then((status) => {
-        if (status === PaymentStatusEnum.succeeded) {
-          // redirige dernière étape
-          (new GtagService()).executeTag(this.order, 'adoption', this.adopter);
-          this.incrementStep().then(() =>
-          {
-            setTimeout(() => {
-              this.checkingForPayment = false
-            }, 200)
-            setTimeout(() => {
-              this.$vuetify.goTo('#FinalStep', {offset: 400})
-            }, 200)
-          })
-        } else if (status === PaymentStatusEnum.error) {
-          this.checkingForPayment = false
-          // on laisse le cour normal via forceUpdate on retourne à l'étape de payment
-        } else {
-          // il n'y avait pas de query param de paiement, on fait un nouveau form
-          this.loadForm(new SetupForm()).then(() => this.checkingForPayment = false)
-        }
-      })
-      .catch(() => {
-        // les données n'ont pas été retrouvées dans le localStorage
-        this.loadForm(new SetupForm()).then(() => this.checkingForPayment = false)
-      })
+    this.checkForPayment()
   },
   mounted() {
     this.$root.$on('displayError', (payload) => {

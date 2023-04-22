@@ -20,7 +20,14 @@
           :value="true"
       >
         <template v-slot:label>
-          <p class="cg-base-text">{{ $t('default.giftCustom.radios.send') }}</p>
+          <p class="cg-base-text">{{ $t('default.giftCustom.radios.send.' + adopter.type) }}</p>
+        </template>
+      </v-radio>
+      <v-radio
+          :value="null"
+      >
+        <template v-slot:label>
+          <p class="cg-base-text">{{ $t('default.giftCustom.radios.later') }}</p>
         </template>
       </v-radio>
     </v-radio-group>

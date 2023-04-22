@@ -15,6 +15,6 @@ export default class RecipientCustomizationStep extends Step {
   }
 
   evaluate(state) {
-    return state.data.adopter.send_to_friend
+    return state.data.adopter.send_to_friend === true
   }
 }
