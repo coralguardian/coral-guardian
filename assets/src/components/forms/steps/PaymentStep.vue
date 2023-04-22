@@ -145,7 +145,7 @@ export default {
       let displayCardForm = false;
       switch (setupIntent.status) {
         case "succeeded":
-          (new GtagService()).executeTag(this.element, this.mode);
+          (new GtagService()).executeTag(this.element, this.mode, this.adopter);
           this.message = {
             text: "stripe.payment.success",
             type: "success",
