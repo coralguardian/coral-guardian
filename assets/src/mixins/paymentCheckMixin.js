@@ -10,7 +10,8 @@ export default {
     return {
       checkingForPayment: false,
       adoptionCheckingInterval: null,
-      adoptionCheckingTimeout: null
+      adoptionCheckingTimeout: null,
+      mode: 'adoption'
     }
   },
   methods: {
@@ -28,7 +29,7 @@ export default {
             data = JSON.parse(data)
             this.forceUpdate(data).then(() => {
               this.checkPaymentStatus().then((status) => {
-                if (data.order.type === 'regular') {
+                if (this.mode === "adoption" && data.order.type === 'regular') {
                   this.checkForAdoptionTimeout()
                     .then(() => resolve(status))
                     .catch(() => resolve('error'))

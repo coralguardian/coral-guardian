@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import BaseFormStore from "@/store/baseFormStore";
 import PaymentStep from "@/forms/steps/PaymentStep";
 import ProjectEnum from "@/enums/projectEnum";
+import AdopterEnum from "@/enums/adopterEnum";
 
 const baseStore = new BaseFormStore()
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
       step: 1,
       adopter: {
         ...baseStore.state.data.adopter,
+        type: AdopterEnum.individual,
         company_name: "",
         siret: null
       },

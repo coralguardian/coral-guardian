@@ -39,13 +39,15 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapGetters} from "vuex";
 import InformationStep from "@/components/forms/steps/InformationStep.vue";
 import DonationStep from "@/components/forms/steps/DonationStep.vue";
 import PaymentStep from "@/components/forms/steps/PaymentStep.vue";
 import FinalDonationStep from "@/components/forms/steps/FinalDonationStep.vue";
-import AdopterEnum from "@/enums/adopterEnum";
 import GtagService from "@/services/gtagService";
+import paymentCheckMixin from "@/mixins/paymentCheckMixin";
+import fillStateMixin from "@/mixins/fillStateMixin";
+import PaymentStatusEnum from "@/enums/paymentStatusEnum";
 
 export default {
   name: "donation-form",
@@ -55,18 +57,16 @@ export default {
     PaymentStep,
     FinalDonationStep
   },
-  mixins: [],
-  props: {
-  },
+  mixins: [paymentCheckMixin, fillStateMixin],
+  props: {},
   data() {
     return {
       displayForm: false,
       firstStepValid: false,
       displayPaymentStep: false,
-      params: {},
       isLoading: false,
       displayFinalStep: false,
-      paymentSucceeded: false
+      mode: "donation"
     }
   },
   computed: {
@@ -79,16 +79,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      updateForm: "updateForm",
-      forceUpdate: "forceUpdate"
-    }),
-    fillParams() {
-      new URLSearchParams(window.location.search)
-        .forEach((value, key) => {
-          this.params[key] = value
-        })
-    },
     validStep() {
       if (this.displayPaymentStep === false) {
         this.validateFirstStep()
@@ -111,38 +101,6 @@ export default {
       this.isLoading = true
       this.$refs.paymentStep.purchase()
     },
-    checkForPaymentIntent() {
-      return new Promise((resolve, reject) => {
-        if (this.params.setup_intent_client_secret) {
-          let data = localStorage.getItem(this.params.setup_intent_client_secret);
-          if (data) {
-            data = JSON.parse(data)
-            this.forceUpdate(data).then(() => {
-              this.checkPaymentStatus().then(() => resolve())
-            })
-          } else {
-            reject()
-          }
-        } else {
-          resolve()
-        }
-      })
-    },
-    async checkPaymentStatus() {
-      this.createStripe()
-      const {setupIntent} = await this.stripe.retrieveSetupIntent(this.params.setup_intent_client_secret);
-      this.updateForm({order: {clientSecret: setupIntent.client_secret, stripePaymentIntentId: setupIntent.id}})
-      switch (setupIntent.status) {
-        case "succeeded":
-          (new GtagService()).executeTag(this.donation, 'donation', this.adopter);
-          this.paymentSucceeded = true
-          break
-        case "processing":
-        case "requires_payment_method":
-        default:
-          this.displayPaymentStep = true
-      }
-    },
     displayFinalStepAction() {
       this.displayFinalStep = true
       setTimeout(() => {
@@ -151,27 +109,33 @@ export default {
       setTimeout(() => {
         this.$vuetify.goTo('#finalDonationStep', {offset: 400})
       }, 200)
+    },
+    checkForPayment() {
+      this.checkForPaymentIntent()
+        .then((status) => {
+          if (status === PaymentStatusEnum.succeeded) {
+            (new GtagService()).executeTag(this.donation, 'donation', this.adopter);
+            this.displayFinalStepAction()
+          } else if (status === PaymentStatusEnum.error) {
+            this.displayPaymentStep = true
+            this.displayForm = true
+          } else {
+            this.startForm()
+          }
+        })
+        .catch(() => {
+          this.startForm()
+        })
+    },
+    startForm() {
+      this.fillState()
+        .then(() => {
+          this.displayForm = true
+        })
     }
-  },
-  created() {
-    this.fillParams()
-    let data = {adopter: {type: AdopterEnum.individual}}
-    if (this.params.c && AdopterEnum.isValueValid(this.params.c)) {
-      data = {adopter: {type: this.params.c}}
-    }
-    this.updateForm(data)
   },
   mounted() {
-    this.checkForPaymentIntent()
-      .then(() => {
-        if (this.paymentSucceeded) {
-          this.displayFinalStepAction()
-        } else {
-          this.displayForm = true
-        }
-      }).catch(() => {
-      this.displayForm = true
-    })
+    this.checkForPayment()
     this.$root.$on('IsLoaded', () => this.isLoading = false)
   },
   beforeDestroy() {
