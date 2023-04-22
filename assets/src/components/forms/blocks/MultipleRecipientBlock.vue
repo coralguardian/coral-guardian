@@ -7,7 +7,7 @@
       <p class="cg-base-text" v-html="$t('default.stepper.multipleRecipient.description')"/>
     </hint>
 
-    <p v-if="adopter.type === adopterEnum.company" v-html="$t('default.stepper.multipleAdoption.description.company')"/>
+    <p v-if="adopter.type === adopterEnum.company" v-html="$t('default.stepper.namingAdoption.description.company')"/>
     <div v-if="adopter.type === adopterEnum.company">
       <v-tabs
           fixed-tabs

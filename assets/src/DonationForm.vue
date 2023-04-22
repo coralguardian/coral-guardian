@@ -46,7 +46,6 @@ import PaymentStep from "@/components/forms/steps/PaymentStep.vue";
 import FinalDonationStep from "@/components/forms/steps/FinalDonationStep.vue";
 import AdopterEnum from "@/enums/adopterEnum";
 import GtagService from "@/services/gtagService";
-import paymentMixin from "@/mixins/paymentMixin";
 
 export default {
   name: "donation-form",
@@ -56,7 +55,7 @@ export default {
     PaymentStep,
     FinalDonationStep
   },
-  mixins: [paymentMixin],
+  mixins: [],
   props: {
   },
   data() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center final-step">
+  <div class="text-center final-step" id="FinalStep">
     <div class="image-final-container">
       <img class="" :src="path + '/img/icons/completed.svg'" alt="">
     </div>
@@ -27,11 +27,11 @@ import SocialShareBlock from "../blocks/SocialShareBlock";
 import {mapGetters} from "vuex";
 import Hint from "@/components/utils/Hint.vue";
 import apiMixin from "@/mixins/apiMixin";
-import paymentMixin from "@/mixins/paymentMixin";
+import paymentCheckMixin from "@/mixins/paymentCheckMixin";
 
 export default {
   name: "final-step",
-  mixins: [apiMixin, paymentMixin],
+  mixins: [apiMixin, paymentCheckMixin],
   components: {
     Hint,
     SocialShareBlock

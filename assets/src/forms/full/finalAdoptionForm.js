@@ -15,7 +15,7 @@ export default class FinalAdoptionForm extends AbstractForm {
           title: "default.stepper.header.customization",
         },
         title: "default.stepper.customization.title." + project,
-        component: "MultipleAdoptionStep",
+        component: "NamingAdoptionStep",
         validate: true,
         back: false,
         api: {

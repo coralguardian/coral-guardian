@@ -58,7 +58,7 @@ export default class AdoptionForm extends AbstractForm {
       new Step(
         "default.stepper.customization.title." + project,
         3,
-        "MultipleAdoptionStep",
+        "NamingAdoptionStep",
         () => true,
         true,
         false,

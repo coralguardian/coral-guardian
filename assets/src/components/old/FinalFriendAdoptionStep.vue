@@ -8,7 +8,6 @@
 <script>
 import finalStepMixin from "@/mixins/finalStepMixin";
 import SocialShareBlock from "../forms/blocks/SocialShareBlock.vue";
-import paymentMixin from "../../mixins/paymentMixin";
 import validationMixin from "../../mixins/validationMixin";
 import apiMixin from "@/mixins/apiMixin";
 
@@ -17,7 +16,7 @@ export default {
   components: {
     SocialShareBlock
   },
-  mixins: [apiMixin, finalStepMixin, paymentMixin, validationMixin],
+  mixins: [apiMixin, finalStepMixin, validationMixin],
   mounted() {
     this.cleanLocalStorage()
     this.$root.$on(this.apiEventName, () => this.$root.$emit('ApiValid'))

@@ -1,10 +1,7 @@
 <template>
   <v-app>
-    <div id="full-form" class="new-form-container">
-      <v-progress-circular color="tertiary" indeterminate v-if="loading"/>
-
-      <div v-else>
-
+    <div id="full-form" class="new-form-container" v-if="checkingForPayment === false">
+      <div>
         <v-stepper
             v-if="currentStep.number"
             elevation="0"
@@ -96,19 +93,20 @@
 
 <script>
 import FormFooter from "./components/forms/FormFooter";
-import paymentMixin from "./mixins/paymentMixin";
 import missingTranslationsMixin from "@/mixins/missingTranslationsMixin";
 import components from "@/components/forms/full/steps";
 import Step from "./components/utils/Step";
 
 import {mapGetters, mapActions} from "vuex";
-import redirectionMixin from "./mixins/redirectionMixin";
 import SetupForm from "@/forms/full/setupForm";
 import StepperHeaderProgress from "@/components/utils/StepperHeaderProgress.vue";
+import paymentCheckMixin from "@/mixins/paymentCheckMixin";
+import PaymentStatusEnum from "@/enums/paymentStatusEnum";
+import GtagService from "@/services/gtagService";
 
 export default {
   name: "full-form",
-  mixins: [paymentMixin, redirectionMixin, missingTranslationsMixin],
+  mixins: [paymentCheckMixin, missingTranslationsMixin],
   components: {
     StepperHeaderProgress,
     FormFooter,
@@ -129,6 +127,8 @@ export default {
       stepNumber: "step",
       currentStep: "getCurrentStep",
       dynamicStepCount: "stepCount",
+      order: "getOrder",
+      adopter: "getAdopter"
     }),
     topStepper() {
       return this.currentStep.number
@@ -136,7 +136,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadForm: "loadForm"
+      loadForm: "loadForm",
+      incrementStep: "incrementStep"
     }),
     isCompleted(index) {
       return this.topStepper > index
@@ -155,13 +156,33 @@ export default {
       return (step.back || !step.isLast) && step.component === this.currentStep.component && index === this.stepNumber
     }
   },
-  created() {
-    this.fillState()
-  },
   beforeMount() {
-    if (this.handleRedirection() === false) {
-      this.loadForm(new SetupForm())
-    }
+    this.checkForPaymentIntent()
+      .then((status) => {
+        if (status === PaymentStatusEnum.succeeded) {
+          // redirige dernière étape
+          (new GtagService()).executeTag(this.order, 'adoption', this.adopter);
+          this.incrementStep().then(() =>
+          {
+            setTimeout(() => {
+              this.checkingForPayment = false
+            }, 200)
+            setTimeout(() => {
+              this.$vuetify.goTo('#FinalStep', {offset: 400})
+            }, 200)
+          })
+        } else if (status === PaymentStatusEnum.error) {
+          this.checkingForPayment = false
+          // on laisse le cour normal via forceUpdate on retourne à l'étape de payment
+        } else {
+          // il n'y avait pas de query param de paiement, on fait un nouveau form
+          this.loadForm(new SetupForm()).then(() => this.checkingForPayment = false)
+        }
+      })
+      .catch(() => {
+        // les données n'ont pas été retrouvées dans le localStorage
+        this.loadForm(new SetupForm()).then(() => this.checkingForPayment = false)
+      })
   },
   mounted() {
     this.$root.$on('displayError', (payload) => {

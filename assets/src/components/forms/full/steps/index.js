@@ -3,7 +3,7 @@ import AdoptionSetupStep from "./AdoptionSetupStep";
 import CoralAdoptionStep from "../../steps/CoralAdoptionStep";
 import InformationStep from "../../steps/InformationStep";
 import PaymentStep from "../../steps/PaymentStep";
-import MultipleAdoptionStep from "./MultipleAdoptionStep";
+import NamingAdoptionStep from "./NamingAdoptionStep.vue";
 import FinalDonationStep from "../../steps/FinalDonationStep";
 import FinalAdoptionStep from "../../steps/FinalAdoptionStep";
 import ReefAdoptionStep from "../../steps/ReefAdoptionStep";
@@ -22,7 +22,7 @@ export default {
   CoralAdoptionStep,
   InformationStep,
   PaymentStep,
-  MultipleAdoptionStep,
+  NamingAdoptionStep,
   FinalAdoptionStep,
   FinalDonationStep,
   ReefAdoptionStep,

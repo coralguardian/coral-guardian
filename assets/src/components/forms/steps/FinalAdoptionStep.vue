@@ -35,7 +35,6 @@ import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
 import {mapGetters} from "vuex";
 import itemTranslationMixin from "../../../mixins/itemTranslationMixin";
-import paymentMixin from "../../../mixins/paymentMixin";
 import FinalStep from "@/components/forms/misc/FinalStep.vue";
 
 export default {
@@ -43,10 +42,11 @@ export default {
   components: {
     FinalStep
   },
-  mixins: [apiMixin, finalStepMixin, itemTranslationMixin, paymentMixin],
+  mixins: [apiMixin, finalStepMixin, itemTranslationMixin],
   computed: {
     ...mapGetters({
-      adoption: "getAdoption"
+      adoption: "getAdoption",
+      order: "getOrder"
     })
   }
 }

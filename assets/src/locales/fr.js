@@ -258,8 +258,11 @@ export default {
     monthlyDonation: {
       description: "Assurez la poursuite de nos actions de recherche, de restauration et de sensibilisation au quotidien avec un don mensuel."
     },
-    multipleAdoption: {
-      no_idea: "Je n'ai pas d'inspiration, je choisirais donc plus tard.",
+    namingAdoption: {
+      no_idea: {
+        individual: "Je n'ai pas d'inspiration, je choisirais donc plus tard.",
+        company: "Je n'ai pas d'inspiration, je choisirais donc plus tard. L'importation d'un fichier excel sera possible."
+      },
       description: {
         indonesia: "Donnez un nom à votre {item} adopté, vous pouvez choisir celui que vous souhaitez ! |Donnez un nom à chacun de vos {item} adoptés, vous pouvez choisir ceux que vous souhaitez !",
         spain: "Vous pouvez choisir le nom que vous souhaitez ! | Vous pouvez choisir les noms que vous souhaitez !",
@@ -347,7 +350,7 @@ export default {
       hint: "Vous avez adopté {count} {item} !",
       download: "Téléchargez le certificat | Téléchargez les certificats",
       download_description: "Vous pouvez aussi directement télécharger votre certificat. | Vous pouvez aussi directement télécharger vos certificats.",
-      description_not_named: "Votre reçu fiscal a été envoyé par email. Pour obtenir votre certificat, nommez votre {item} via le lien présent dans l'email que vous allez recevoir.| Votre reçu fiscal a été envoyé par email. Pour obtenir vos certificats, nommez vos {item} via le lien présent dans l'email que vous allez recevoir",
+      description_not_named: "Votre reçu fiscal a été envoyé par email. Pour obtenir votre certificat, nommez votre {item} via le lien présent dans l'email que vous allez recevoir.| Votre reçu fiscal a été envoyé par email. Pour obtenir vos certificats, nommez vos {item} via le lien présent dans l'email que vous allez recevoir.",
     },
     finalFriendGift: {
       title: "Bravo et merci, vous avez adopté {count} {item}",

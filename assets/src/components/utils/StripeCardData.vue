@@ -25,13 +25,13 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import apiMixin from "@/mixins/apiMixin";
-import paymentMixin from "../../mixins/paymentMixin";
 import {VueRecaptcha} from "vue-recaptcha";
+import stripeMixin from "@/mixins/stripeMixin";
 
 export default {
   name: "stripe-card-data",
   components: {VueRecaptcha},
-  mixins: [apiMixin, paymentMixin],
+  mixins: [apiMixin, stripeMixin],
   props: {
     mode: {
       type: String,

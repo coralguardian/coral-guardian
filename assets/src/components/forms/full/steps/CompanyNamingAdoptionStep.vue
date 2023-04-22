@@ -1,15 +1,15 @@
 <template>
-  <div id="multipleAdoption">
+  <div id="namingAdoption">
     <div v-if="adopter.type === adopterEnum.company">
       <hint>
         <p class="cg-base-text"
-           v-html="$tc('default.stepper.multipleAdoption.description.' + project, order.quantity, translation)"/>
+           v-html="$tc('default.stepper.namingAdoption.description.' + project, order.quantity, translation)"/>
       </hint>
 
       <p
           v-if="adoption.type !== null"
           class="cg-base-text"
-          v-html="$t('default.stepper.multipleAdoption.description.company')"
+          v-html="$t('default.stepper.namingAdoption.description.company')"
       />
 
       <v-tabs
@@ -21,12 +21,12 @@
       >
         <v-tab @change="updateForm({adoption: {type: 'fields'}})">
             <span class="cg-base-text light text-no-transform">
-              {{ $t('default.stepper.multipleAdoption.tabs.fields.title') }}
+              {{ $t('default.stepper.namingAdoption.tabs.fields.title') }}
             </span>
         </v-tab>
         <v-tab @change="updateForm({adoption: {type: 'file'}})">
             <span class="cg-base-text light text-no-transform">
-              {{ $t('default.stepper.multipleAdoption.tabs.file.title') }}
+              {{ $t('default.stepper.namingAdoption.tabs.file.title') }}
             </span>
         </v-tab>
 
@@ -59,69 +59,36 @@
         <v-tab-item class="mb-4">
 
           <p class="cg-base-text light file-description mt-2 mb-6">
-            {{ $t('default.stepper.multipleAdoption.tabs.file.description', plural) }}
+            {{ $t('default.stepper.namingAdoption.tabs.file.description', plural) }}
           </p>
 
           <v-btn depressed :elevation="null" class="download-btn" :href="adoptionFileUrl" target="_blank">
             <v-icon color="primary" class="mr-2">
               mdi-download
             </v-icon>
-            {{ $t('default.stepper.multipleAdoption.tabs.file.button') }}
+            {{ $t('default.stepper.namingAdoption.tabs.file.button') }}
           </v-btn>
 
-<!--          <v-form-->
-<!--              v-if="tab === 1"-->
-<!--              :ref="formRefName"-->
-<!--              v-model="valid"-->
-<!--          >-->
-<!--            <p class="my-5">{{ $t('default.stepper.multipleAdoption.tabs.file.upload.description') }}</p>-->
-<!--            <v-file-input-->
-<!--                v-model="namesFile"-->
-<!--                chips-->
-<!--                :label="$t('default.stepper.multipleAdoption.tabs.file.upload.label')"-->
-<!--                outlined-->
-<!--                dense-->
-<!--                :rules="[rules.required]"-->
-<!--                accept=".xlsx"-->
-<!--            />-->
-<!--          </v-form>-->
+          <v-form
+              v-if="tab === 1"
+              :ref="formRefName"
+              v-model="valid"
+          >
+            <p class="my-5">{{ $t('default.stepper.namingAdoption.tabs.file.upload.description') }}</p>
+            <v-file-input
+                v-model="namesFile"
+                chips
+                :label="$t('default.stepper.namingAdoption.tabs.file.upload.label')"
+                outlined
+                dense
+                :rules="[rules.required]"
+                accept=".xlsx"
+            />
+          </v-form>
         </v-tab-item>
 
       </v-tabs-items>
     </div>
-    <div v-else class="adoptions">
-      <hint>
-        <p class="cg-base-text"
-           v-html="$tc('default.stepper.multipleAdoption.description.' + project, order.quantity, translation)"/>
-      </hint>
-      <v-form
-          v-if="adoption.type !== null"
-          :ref="formRefName"
-          v-model="valid"
-      >
-        <v-row>
-          <v-col
-              cols="6"
-              v-for="n in order.quantity"
-              :key="n"
-          >
-            <adoption-name-block
-                v-model="adoption.names[n-1]"
-                :n="n"
-            />
-          </v-col>
-        </v-row>
-      </v-form>
-    </div>
-
-    <div>
-      <v-checkbox class="mt-0" :input-value="adoption.type === null" @change="updateAdoptionType($event)">
-        <template v-slot:label>
-          <p class="cg-base-text">{{ $t('default.stepper.multipleAdoption.no_idea') }}</p>
-        </template>
-      </v-checkbox>
-    </div>
-
   </div>
 </template>
 
@@ -137,7 +104,7 @@ import Hint from "@/components/utils/Hint.vue";
 import AdoptionTypeEnum from "@/enums/adoptionTypeEnum";
 
 export default {
-  name: "multiple-adoption-step",
+  name: "naming-adoption-step",
   mixins: [validationMixin, itemTranslationMixin, apiMixin, redirectionMixin],
   components: {
     Hint,
@@ -229,7 +196,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#multipleAdoption {
+#namingAdoption {
   .adoptions {
     max-height: 550px;
     overflow: auto;

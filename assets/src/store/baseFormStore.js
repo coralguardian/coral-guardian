@@ -127,7 +127,6 @@ export default class BaseFormStore {
               resolve()
               break
             }
-            console.log('next')
             stepNumber++
             stepIncremented++
           }

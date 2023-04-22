@@ -33,7 +33,6 @@ import StripeCardData from "@/components/utils/StripeCardData";
 import PaymentMethodBlock from "../blocks/PaymentMethodBlock";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 import validationMixin from "@/mixins/validationMixin";
-import paymentMixin from "@/mixins/paymentMixin";
 import {mapActions, mapGetters, mapState} from "vuex";
 import apiMixin from "@/mixins/apiMixin";
 import GtagService from "@/services/gtagService";
@@ -41,6 +40,7 @@ import AdopterEnum from "@/enums/adopterEnum";
 import DonationEnum from "@/enums/donationEnum";
 import PaymentMethodEnum from "@/enums/paymentMethodEnum";
 import Hint from "@/components/utils/Hint.vue";
+import stripeMixin from "@/mixins/stripeMixin";
 
 export default {
   name: "payment-step",
@@ -49,7 +49,7 @@ export default {
     StripeCardData,
     PaymentMethodBlock,
   },
-  mixins: [itemTranslationMixin, validationMixin, paymentMixin, apiMixin],
+  mixins: [itemTranslationMixin, validationMixin, stripeMixin, apiMixin],
   props: {
     mode: {
       type: String,
@@ -120,7 +120,6 @@ export default {
           this.$root.$emit("hidePreviousButton")
           this.updateElementStatus("success")
           this.$emit('succeeded')
-          console.log('payment')
           this.$root.$off(this.customValidationEventName)
           this.$root.$on(this.customValidationEventName, () => {
             if (this.mode === "donation") {

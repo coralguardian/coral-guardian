@@ -6,13 +6,12 @@
 
 <script>
 import BaseForm from "@/components/forms/BaseForm";
-import paymentMixin from "./mixins/paymentMixin";
 import {mapGetters} from "vuex";
 import missingTranslationsMixin from "@/mixins/missingTranslationsMixin";
 
 export default {
   name: "app",
-  mixins: [paymentMixin, missingTranslationsMixin],
+  mixins: [missingTranslationsMixin],
   components: {
     BaseForm
   },
