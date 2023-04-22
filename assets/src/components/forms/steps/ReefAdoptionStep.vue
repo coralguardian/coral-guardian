@@ -1,12 +1,17 @@
 <template>
   <div id="reef-adoption-step">
+    <hint class="mb-10">
+      <p
+          class="cg-base-text"
+          v-html="description"
+      />
+    </hint>
+
     <v-tabs
         v-model="tab"
         grow
-        hide-slider
         centered
         center-active
-        color="tertiary"
         active-class="tab-active"
         :vertical="windowWidth <= 450"
     >
@@ -15,11 +20,13 @@
           @change="updateForm(product)"
           :key="index"
       >
-        {{ $t('default.stepper.adoption.' + product.key + '.' + product.variant + '.title') }}
+        <span class="cg-base-text light text-no-transform">
+          {{ $t('default.stepper.adoption.' + product.key + '.' + product.variant + '.title') }}
+        </span>
       </v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab" class="text-body-2">
+    <v-tabs-items v-model="tab" class="cg-base-text reef-tab">
       <v-tab-item
           v-for="(product, index) in products"
           :key="index"
@@ -27,8 +34,12 @@
       />
     </v-tabs-items>
 
-    <adoption-count-block :options="localOptions"/>
-
+    <v-form
+        :ref="formRefName"
+        v-model="valid"
+    >
+      <adoption-count-block :alert="alert" :max="maxCount"/>
+    </v-form>
   </div>
 </template>
 
@@ -48,15 +59,11 @@ export default {
     }
   },
   computed: {
-    localOptions () {
-      let options = this.options;
-      options.item = this.translation.item;
-      if (this.count === this.maxCount) {
-        options.displayAlert = true;
-        options.message = this.$t('default.stepper.adoption.reef.max', {max: this.maxCount, item: this.plural.item})
-        this.$vuetify.goTo('#deduction', { container: '#ReefAdoptionStep' })
+    alert() {
+      if (this.order.quantity === this.maxCount) {
+        return this.$t('default.stepper.adoption.reef.max', {max: this.maxCount, item: this.plural.item})
       }
-      return options
+      return null
     }
   },
   methods: {
@@ -90,8 +97,9 @@ export default {
   margin-bottom: 1rem;
 }
 
-.tab-active {
-  text-decoration: underline;
-  font-weight: 900;
+.reef-tab {
+  height: unset !important;
+  text-align: center;
+  padding: 20px;
 }
 </style>

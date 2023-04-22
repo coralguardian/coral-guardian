@@ -1,38 +1,11 @@
 import AbstractForm from "../abstractForm";
 import ProductEnum from "@/enums/productEnum";
-import PaymentMethodEnum from "@/enums/paymentMethodEnum";
-import BankTransferThanksForm from "@/forms/full/bankTransferThanksForm";
-import adoptionHelper from "@/helpers/adoptionHelper";
-import RecipientFullForm from "@/forms/full/recipientFullForm";
-import FinalGiftForm from "@/forms/full/finalGiftForm";
-import FinalAdoptionForm from "@/forms/full/finalAdoptionForm";
 import {clone} from "lodash";
+import Step from "@/forms/Step";
+import BankTransferThanksStep from "@/forms/steps/BankTransfertThanksStep";
+import FinalAdoptionStep from "@/forms/steps/FinalAdoptionStep";
 
 export default class AdoptionForm extends AbstractForm {
-
-  nextForm(context) {
-    return new Promise((resolve, reject) => {
-      if (context.state.data.payment_method === PaymentMethodEnum.bankTransfer) {
-        context.dispatch("loadForm", new BankTransferThanksForm())
-          .then(() => {
-            resolve()
-          })
-      } else if (context.state.data.target === adoptionHelper.friend) {
-        context.dispatch("loadForm", context.state.data.adopter.send_to_friend ? new RecipientFullForm() : new FinalGiftForm())
-          .then(() => {
-            resolve()
-          })
-          .catch((err) => console.log(err))
-      } else if (context.state.data.target === adoptionHelper.me) {
-        context.dispatch("loadForm", new FinalAdoptionForm(context.state.data.project))
-          .then(() => {
-            resolve()
-          })
-      } else {
-        reject("Can't load next form !")
-      }
-    })
-  }
 
   unload(state) {
     return new Promise(resolve => {
@@ -55,59 +28,76 @@ export default class AdoptionForm extends AbstractForm {
     state.data.selectedProduct = clone(products[0])
   }
 
-  steps = [
-    {
-      tab: {
-        title: "default.stepper.header.adoption"
-      },
-      title: "default.stepper.adoption.title",
-      component: "ReefAdoptionStep",
-      display: (state) => {
-        return state.data.order.productType === ProductEnum.reef
-      }
-    },
-    {
-      tab: {
-        title: "default.stepper.header.adoption"
-      },
-      title: "default.stepper.adoption.title",
-      component: "CoralAdoptionStep",
-      display: (state) => {
-        return state.data.order.productType === ProductEnum.coral
-      }
-    },
-    {
-      tab: {
-        title: "default.stepper.header.information"
-      },
-      title: "default.stepper.information.title",
-      component: "InformationStep",
-      validate: true,
-      offset: 600
-    },
-    {
-      tab: {
-        title: "default.stepper.header.bonusDonation"
-      },
-      // title: "default.stepper.payment.title",
-      component: "PrePaymentDonationStep",
-      validate: true,
-      ignorable: true,
-      offset: 700
-    },
-    {
-      tab: {
-        title: "default.stepper.header.payment"
-      },
-      title: "default.stepper.payment.title",
-      component: "PaymentStep",
-      validate: true,
-      customValidation: true,
-      api: {
-        method: "post",
-        endpoint: "createOrder"
-      },
-      offset: 600
-    }
-  ]
+  constructor(project) {
+    super();
+    this.steps = [
+      new Step(
+        "default.stepper.adoption.title",
+        2,
+        "ReefAdoptionStep",
+        (state) => {
+          return state.data.order.productType === ProductEnum.reef
+        },
+        true,
+        false,
+        false,
+        true
+      ),
+      new Step(
+        "default.stepper.adoption.title",
+        2,
+        "CoralAdoptionStep",
+        (state) => {
+          return state.data.order.productType === ProductEnum.coral
+        },
+        true,
+        false,
+        false,
+        true
+      ),
+      new Step(
+        "default.stepper.customization.title." + project,
+        3,
+        "NamingAdoptionStep",
+        () => true,
+        true,
+        false,
+        true,
+        true
+      ),
+      new Step(
+        "default.stepper.information.title",
+        4,
+        "InformationStep",
+        () => true,
+        true,
+        false,
+        false,
+        true
+      ),
+      new Step(
+        "default.stepper.bonusDonation.title",
+        5,
+        "PrePaymentDonationStep",
+        () => true,
+        true,
+        true,
+        false,
+        true
+      ),
+      new Step(
+        "default.stepper.payment.title",
+        6,
+        "PaymentStep",
+        () => true,
+        true,
+        false,
+        true,
+        true,
+        {method: "post", endpoint: "createOrder"},
+      ),
+      new FinalAdoptionStep,
+      new BankTransferThanksStep
+    ]
+  }
 }

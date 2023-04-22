@@ -8,7 +8,6 @@ import InformationStep from "@/components/forms/steps/InformationStep";
 import PaymentStep from "@/components/forms/steps/PaymentStep";
 import ReefAdoptionStep from "@/components/forms/steps/ReefAdoptionStep";
 import FinalAdoptionStep from "@/components/forms/steps/FinalAdoptionStep";
-import FinalFriendAdoptionStep from "@/components/forms/steps/FinalFriendAdoptionStep";
 import FinalFriendGiftAdoptionStep from "@/components/forms/steps/FinalFriendGiftAdoptionStep";
 import FinalDonationStep from "@/components/forms/steps/FinalDonationStep";
 
@@ -23,7 +22,6 @@ export default {
   PaymentStep,
   ReefAdoptionStep,
   FinalAdoptionStep,
-  FinalFriendAdoptionStep,
   FinalFriendGiftAdoptionStep,
   FinalDonationStep
 }

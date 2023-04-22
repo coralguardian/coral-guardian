@@ -10,7 +10,7 @@ import ActionEnum from "@/enums/actionEnum";
 import ProductEnum from "@/enums/productEnum";
 import DonationEnum from "@/enums/donationEnum";
 
-const baseStore = new BaseAdoptionFormStore(null, null, null)
+const baseStore = new BaseAdoptionFormStore(null, null)
 
 Vue.use(Vuex)
 
@@ -25,7 +25,8 @@ export default new Vuex.Store({
         ...baseStore.state.data.adopter,
         alternate_newsletter_email: null,
         send_to_friend: null,
-        company_name: ""
+        company_name: "",
+        siret: null
       },
       order: {
         ...baseStore.state.data.order,
@@ -115,11 +116,10 @@ export default new Vuex.Store({
           reject('Formulaire incomplet')
         } else {
           let steps = checkStepsToDisplay(form, context.state)
-          if (steps.length === 0 && form !== null) {
+          if (steps.length === 0) {
             form.nextForm(context).then(() => resolve())
-          } else if (form === null) {
-            throw "Form should not be null"
-          } else {
+          }
+          else {
             form.steps = steps
             context.commit("loadSpecificForm", form)
             resolve()

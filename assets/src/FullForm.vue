@@ -1,91 +1,127 @@
 <template>
   <v-app>
-    <div id="full-form">
-      <v-progress-circular color="tertiary" indeterminate v-if="loading"/>
+    <div id="full-form" class="new-form-container">
 
-      <v-stepper
-          v-else
-          v-model="stepNumber"
-          vertical
+      <div
+          v-if="checkingForPayment"
+          class="spinner-container"
       >
-        <div v-for="index in stepCount" :key="index">
+        <v-progress-circular color="primary" indeterminate/>
+        <p class="cg-base-text">
+          {{ $t('default.stepper.payment.checking')}}
+        </p>
+      </div>
 
-          <v-stepper-step
-              v-show="!steps[index - 1].tab.hide || stepNumber >= index"
-              color="tertiary"
-              :complete="stepNumber > index"
-              :step="index"
-              :key="'tab' + index"
-          >
-            {{ $t(steps[index - 1].tab.title) }}
-          </v-stepper-step>
+      <div v-else>
 
-          <v-stepper-content
-              :step="index"
-              :key="'step' + index"
-          >
-            <transition
-                name="fade"
-                v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
-            >
+        <v-stepper
+            v-if="currentStep.number"
+            elevation="0"
+            v-model="topStepper"
+            class="stepper-top"
+        >
+          <v-stepper-header>
+            <div v-for="index in stepCount" :key="index">
+              <div class="step-header-container">
+                <v-stepper-step
+                    :complete="isCompleted(index)"
+                    :step="index"
+                    :key="'tab' + index"
+                />
+                <stepper-header-progress
+                    v-if="index < stepCount"
+                    :state="getState(index)"
+                />
+              </div>
+            </div>
+          </v-stepper-header>
+        </v-stepper>
 
-              <step
-                  :class="steps[index - 1].larger ? 'large-step' : ''"
-                  :title="steps[index - 1].title ? steps[index - 1].title : ''"
-                  :is-singular="steps[index - 1].singularTitle"
-                  :is-specific="steps[index - 1].specificTitle"
-                  :id="steps[index - 1].component"
+        <v-divider
+            v-if="currentStep.number"
+            class="cg-divider"
+        />
+
+        <v-stepper
+            v-model="stepNumber"
+            elevation="0"
+            :class="{'stepper-bottom': currentStep.number}"
+        >
+          <v-stepper-items>
+
+            <div v-for="index in dynamicStepCount" :key="index">
+
+              <v-stepper-content
+                  :step="index"
+                  :key="'step' + index"
               >
+                <transition
+                    name="fade"
+                    v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
+                >
 
-                <transition name="fade">
-                  <v-alert
-                      v-if="displayAlert"
-                      class="tooltip white--text"
-                      color="red"
-                      dismissible
-                  >{{ $t(alert, {singular}) }}
-                  </v-alert>
+                  <step
+                      :is-singular="steps[index - 1].singularTitle"
+                      :is-specific="steps[index - 1].specificTitle"
+                      :id="steps[index - 1].component"
+                      :step="steps[index - 1]"
+                  >
+
+                    <transition name="fade">
+                      <v-alert
+                          v-if="displayAlert"
+                          class="tooltip white--text"
+                          color="red"
+                          dismissible
+                      >{{ $t(alert, {singular}) }}
+                      </v-alert>
+                    </transition>
+
+                    <component
+                        :is="steps[index - 1].component"
+                        v-bind="steps[index - 1].props"
+                        v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
+                    />
+
+                    <form-footer
+                        class="mt-5"
+                        v-if="displayFooter(index)"
+                        :offset="steps[index - 1].offset ? steps[index - 1].offset : 400"
+                    />
+                  </step>
+
                 </transition>
 
-                <component
-                    :is="steps[index - 1].component"
-                    v-bind="steps[index - 1].props"
-                    v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
-                />
+              </v-stepper-content>
 
-                <form-footer
-                    class="mt-5"
-                    v-if="steps[index - 1].component === currentStep.component && index === stepNumber"
-                    :offset="steps[index - 1].offset ? steps[index - 1].offset : 400"
-                />
-              </step>
+            </div>
+          </v-stepper-items>
 
-            </transition>
-
-          </v-stepper-content>
-
-        </div>
-
-      </v-stepper>
+        </v-stepper>
+      </div>
     </div>
   </v-app>
 </template>
 
 <script>
 import FormFooter from "./components/forms/FormFooter";
-import paymentMixin from "./mixins/paymentMixin";
 import missingTranslationsMixin from "@/mixins/missingTranslationsMixin";
 import components from "@/components/forms/full/steps";
 import Step from "./components/utils/Step";
 
 import {mapGetters, mapActions} from "vuex";
-import redirectionMixin from "./mixins/redirectionMixin";
 import SetupForm from "@/forms/full/setupForm";
+import StepperHeaderProgress from "@/components/utils/StepperHeaderProgress.vue";
+import paymentCheckMixin from "@/mixins/paymentCheckMixin";
+import PaymentStatusEnum from "@/enums/paymentStatusEnum";
+import GtagService from "@/services/gtagService";
+import fillStateMixin from "@/mixins/fillStateMixin";
 
 export default {
   name: "full-form",
-  mixins: [paymentMixin, redirectionMixin, missingTranslationsMixin],
+  mixins: [paymentCheckMixin, missingTranslationsMixin, fillStateMixin],
   components: {
+    StepperHeaderProgress,
     FormFooter,
     Step,
     ...components
@@ -94,7 +130,8 @@ export default {
   data() {
     return {
       displayAlert: false,
-      alert: ""
+      alert: "",
+      stepCount: 6
     }
   },
   computed: {
@@ -102,21 +139,72 @@ export default {
       steps: 'getSteps',
       stepNumber: "step",
       currentStep: "getCurrentStep",
-      stepCount: "stepCount"
-    })
+      dynamicStepCount: "stepCount",
+      order: "getOrder",
+      adopter: "getAdopter"
+    }),
+    topStepper() {
+      return this.currentStep.number
+    }
   },
   methods: {
     ...mapActions({
-      loadForm: "loadForm"
-    })
-  },
-  created() {
-    this.fillState()
+      loadForm: "loadForm",
+      incrementStep: "incrementStep"
+    }),
+    isCompleted(index) {
+      return this.topStepper > index
+    },
+    getState(index) {
+      if (this.isCompleted(index)) {
+        return 'completed'
+      }
+      if (this.topStepper === index) {
+        return 'progress'
+      }
+      return '';
+    },
+    displayFooter(index) {
+      let step = this.steps[index - 1];
+      return (step.back || !step.isLast) && step.component === this.currentStep.component && index === this.stepNumber
+    },
+    checkForPayment() {
+      this.checkForPaymentIntent()
+        .then((status) => {
+          if (status === PaymentStatusEnum.succeeded) {
+            // redirige dernière étape
+            (new GtagService()).executeTag(this.order, 'adoption', this.adopter);
+            this.incrementStep().then(() =>
+            {
+              setTimeout(() => {
+                this.checkingForPayment = false
+              }, 200)
+              setTimeout(() => {
+                this.$vuetify.goTo('#FinalStep', {offset: 400})
+              }, 200)
+            })
+          } else if (status === PaymentStatusEnum.error) {
+            this.checkingForPayment = false
+            // on laisse le cour normal via forceUpdate on retourne à l'étape de payment
+          } else {
+            // il n'y avait pas de query param de paiement, on fait un nouveau form
+            this.startSetupForm()
+          }
+        })
+        .catch(() => {
+          // les données n'ont pas été retrouvées dans le localStorage
+          this.startSetupForm()
+        })
+    },
+    startSetupForm() {
+      this.fillState()
+        .then(() => {
+          this.loadForm(new SetupForm()).then(() => this.checkingForPayment = false)
+        })
+    }
   },
   beforeMount() {
-    if (this.handleRedirection() === false) {
-      this.loadForm(new SetupForm())
-    }
+    this.checkForPayment()
   },
   mounted() {
     this.$root.$on('displayError', (payload) => {
@@ -135,11 +223,40 @@ export default {
 .v-application {
   background: transparent !important;
 
-  .form-step {
-    max-width: 550px !important;
-    margin: auto !important;
-    height: auto !important;
+  #full-form {
 
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 400px;
+    }
+
+    .v-stepper {
+      border-radius: 30px !important;
+      box-shadow: unset !important;
+
+      .v-stepper__header {
+        justify-content: unset !important;
+        box-shadow: unset !important;
+        padding: 20px 12px 8px;
+        height: unset !important;
+      }
+
+      &.stepper-top {
+        border-bottom-left-radius: unset !important;
+        border-bottom-right-radius: unset !important;
+      }
+
+      &.stepper-bottom {
+        border-top-left-radius: unset !important;
+        border-top-right-radius: unset !important;
+      }
+    }
+  }
+
+  .form-step {
     &.large-step {
       max-width: 700px !important;
     }

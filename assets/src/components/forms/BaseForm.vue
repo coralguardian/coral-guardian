@@ -66,7 +66,6 @@
 <script>
 import FormFooter from "@/components/forms/FormFooter";
 import Step from "@/components/utils/Step";
-import Incrementor from "@/components/utils/Incrementor";
 import AdoptionMixin from "@/mixins/adoptionMixin";
 import {mapGetters} from 'vuex'
 import components from "@/components/forms/steps"
@@ -77,7 +76,6 @@ export default {
   components: {
     FormFooter,
     Step,
-    Incrementor,
     ...components
   },
   mixins: [AdoptionMixin, itemTranslationMixin],

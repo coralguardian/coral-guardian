@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import IncrementorBtn from "@/components/utils/IncrementorBtn";
+import IncrementorBtn from "@/components/old/IncrementorBtn.vue";
 
 export default {
   name: "incrementor",
