@@ -70,8 +70,6 @@ export default {
         type: "success",
         class: "green--text"
       },
-      adoptionCheckingInterval: null,
-      adoptionCheckingTimeout: null,
       isValidRecaptcha: false
     }
   },

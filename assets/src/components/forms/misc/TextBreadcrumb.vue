@@ -42,7 +42,7 @@ export default {
           }
         )
       }
-      if (this.project) {
+      if (this.project && this.order.type) {
         return this.$t('default.breadcrumb.project',
           {
             type: this.$t('default.breadcrumb.types.' + this.order.type),
@@ -50,7 +50,7 @@ export default {
           }
         )
       }
-      if (this.order.type) {
+      if (this.order.type ) {
         return this.$t('default.breadcrumb.base', {type: this.$t('default.breadcrumb.types.' + this.order.type)})
       }
       return ''

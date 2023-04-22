@@ -2,17 +2,21 @@ import PaymentStatusEnum from "@/enums/paymentStatusEnum";
 import queryParamsMixin from "@/mixins/queryParamsMixin";
 import stripeMixin from "@/mixins/stripeMixin";
 import {mapActions} from "vuex";
+import apiMixin from "@/mixins/apiMixin";
 
 export default {
-  mixins: [queryParamsMixin, stripeMixin],
+  mixins: [queryParamsMixin, stripeMixin, apiMixin],
   data() {
     return {
-      checkingForPayment: false
+      checkingForPayment: false,
+      adoptionCheckingInterval: null,
+      adoptionCheckingTimeout: null
     }
   },
   methods: {
     ...mapActions({
-      forceUpdate: 'forceUpdate'
+      forceUpdate: 'forceUpdate',
+      updateForm: 'updateForm'
     }),
     checkForPaymentIntent() {
       this.checkingForPayment = true
@@ -23,7 +27,15 @@ export default {
           if (data) {
             data = JSON.parse(data)
             this.forceUpdate(data).then(() => {
-              this.checkPaymentStatus().then((status) => resolve(status))
+              this.checkPaymentStatus().then((status) => {
+                if (data.order.type === 'regular') {
+                  this.checkForAdoptionTimeout()
+                    .then(() => resolve(status))
+                    .catch(() => resolve('error'))
+                } else {
+                  resolve(status)
+                }
+              })
             })
           } else {
             reject()
@@ -44,6 +56,30 @@ export default {
         default:
           return PaymentStatusEnum.error
       }
+    },
+    checkForAdoptionTimeout() {
+      return new Promise((resolve, reject) => {
+        this.adoptionCheckingInterval = setInterval(() => {
+          this.checkForAdoptionUuid().then(() => resolve())
+        }, 1000)
+        this.adoptionCheckingTimeout = setTimeout(() => {
+          clearInterval(this.adoptionCheckingInterval)
+          this.$root.$emit("displayError", 'adoption_not_found')
+          reject()
+        }, 10000)
+      })
+    },
+    checkForAdoptionUuid() {
+      return new Promise((resolve) => {
+        this.getByUrl(this.getGetUrlNoApiData({stripePaymentIntentId: this.params.setup_intent}, "adoption/uuid"))
+          .then((resp) => {
+            clearInterval(this.adoptionCheckingInterval)
+            clearTimeout(this.adoptionCheckingTimeout)
+            this.updateForm({order: {uuid: resp.data.uuid}}).then(() => {
+              resolve()
+            })
+          })
+      })
     },
     cleanLocalStorage() {
       const urlParams = new URLSearchParams(window.location.search)

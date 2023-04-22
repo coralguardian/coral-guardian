@@ -307,6 +307,7 @@ export default {
       }
     },
     payment: {
+      checking: "Votre paiement est en cours de vérification",
       methods: {
         card: {
           tab: "Carte",

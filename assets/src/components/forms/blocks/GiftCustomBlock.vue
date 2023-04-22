@@ -10,21 +10,21 @@
         @change="updateForm({adopter: {send_to_friend: $event}})"
     >
       <v-radio
-          :value="false"
+          :value="sendToFriendEnum.dont"
       >
         <template v-slot:label>
           <p class="cg-base-text">{{ $t('default.giftCustom.radios.dont') }}</p>
         </template>
       </v-radio>
       <v-radio
-          :value="true"
+          :value="sendToFriendEnum.send"
       >
         <template v-slot:label>
           <p class="cg-base-text">{{ $t('default.giftCustom.radios.send.' + adopter.type) }}</p>
         </template>
       </v-radio>
       <v-radio
-          :value="null"
+          :value="sendToFriendEnum.later"
       >
         <template v-slot:label>
           <p class="cg-base-text">{{ $t('default.giftCustom.radios.later') }}</p>
@@ -37,6 +37,7 @@
 
 <script>
 import {mapGetters, mapActions} from "vuex";
+import SendToFriendEnum from "@/enums/sendToFriendEnum";
 import validationMixin from "../../../mixins/validationMixin";
 
 export default {
@@ -53,7 +54,10 @@ export default {
   computed: {
     ...mapGetters({
       adopter: "getAdopter"
-    })
+    }),
+    sendToFriendEnum() {
+      return SendToFriendEnum
+    }
   },
   methods: {
     ...mapActions({

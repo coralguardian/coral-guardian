@@ -1,7 +1,19 @@
 <template>
   <v-app>
-    <div id="full-form" class="new-form-container" v-if="checkingForPayment === false">
-      <div>
+    <div id="full-form" class="new-form-container">
+
+      <div
+          v-if="checkingForPayment"
+          class="spinner-container"
+      >
+        <v-progress-circular color="primary" indeterminate/>
+        <p class="cg-base-text">
+          {{ $t('default.stepper.payment.checking')}}
+        </p>
+      </div>
+
+      <div v-else>
+
         <v-stepper
             v-if="currentStep.number"
             elevation="0"
@@ -212,6 +224,14 @@ export default {
   background: transparent !important;
 
   #full-form {
+
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 400px;
+    }
 
     .v-stepper {
       border-radius: 30px !important;
