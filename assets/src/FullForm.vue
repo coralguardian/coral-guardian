@@ -110,7 +110,6 @@ import components from "@/components/forms/full/steps";
 import Step from "./components/utils/Step";
 
 import {mapGetters, mapActions} from "vuex";
-import SetupForm from "@/forms/full/setupForm";
 import StepperHeaderProgress from "@/components/utils/StepperHeaderProgress.vue";
 import paymentCheckMixin from "@/mixins/paymentCheckMixin";
 import PaymentStatusEnum from "@/enums/paymentStatusEnum";
@@ -149,7 +148,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadForm: "loadForm",
+      startForm: "startForm",
       incrementStep: "incrementStep"
     }),
     isCompleted(index) {
@@ -199,7 +198,7 @@ export default {
     startSetupForm() {
       this.fillState()
         .then(() => {
-          this.loadForm(new SetupForm()).then(() => this.checkingForPayment = false)
+          this.startForm().then(() => this.checkingForPayment = false)
         })
     }
   },

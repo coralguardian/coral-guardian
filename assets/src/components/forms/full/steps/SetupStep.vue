@@ -28,7 +28,7 @@
 
       <div v-if="adopter.type === adopterEnum.company" class="switch-link-container">
         <a class="cg-base-text switch-link"
-           href="https://www.coralguardian.org/faire-un-don/?action=donation&c=individual">
+           href="https://www.coralguardian.org/faire-un-don/?action=donation&c=company">
           {{ $t("default.stepper.setup.switch.donation") }}
           <v-icon color="primary">
             mdi-arrow-right
@@ -43,7 +43,7 @@
       </div>
       <div v-else class="switch-link-container">
         <a class="cg-base-text switch-link"
-           href="https://www.coralguardian.org/faire-un-don/?action=donation&c=company">
+           href="https://www.coralguardian.org/faire-un-don/?action=donation&c=individual">
           {{ $t("default.stepper.setup.switch.donation") }}
           <v-icon color="primary">
             mdi-arrow-right

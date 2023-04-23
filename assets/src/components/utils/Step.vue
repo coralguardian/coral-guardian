@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" class="form-step cbo-smoothscroll mt-3">
+  <div :id="id" class="form-step mt-3">
 
     <text-breadcrumb v-if="step.displayBreadcrumb"/>
 

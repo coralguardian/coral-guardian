@@ -9,6 +9,7 @@ import {checkStepsToDisplay} from "@/helpers/functionHelper";
 import ActionEnum from "@/enums/actionEnum";
 import ProductEnum from "@/enums/productEnum";
 import DonationEnum from "@/enums/donationEnum";
+import SetupForm from "@/forms/full/setupForm";
 
 const baseStore = new BaseAdoptionFormStore(null, null)
 
@@ -43,7 +44,8 @@ export default new Vuex.Store({
       },
       forms: []
     },
-    products: null
+    products: null,
+    startingForm: new SetupForm()
   },
   getters: {
     ...baseStore.getters,
@@ -110,6 +112,13 @@ export default new Vuex.Store({
   },
   actions: {
     ...baseStore.actions,
+    startForm(context) {
+      return new Promise((resolve, reject) => {
+        context.dispatch('loadForm', context.state.startingForm)
+          .then(() => resolve())
+          .catch(error => reject(error))
+      })
+    },
     loadForm(context, form) {
       return new Promise((resolve, reject) => {
         if (!(form instanceof AbstractForm)) {
