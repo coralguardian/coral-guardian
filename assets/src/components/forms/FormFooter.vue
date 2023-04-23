@@ -111,14 +111,18 @@ export default {
       this.incrementStep().then(() => {
         this.customPreviousHide = false
         this.isLoading = false
+        this.moveToTop()
       })
+    },
+    moveToTop() {
+      setTimeout(() => {
+        this.$vuetify.goTo('#' + this.currentStep.component, {offset: this.windowWidth <= 600 ? 200 : 300})
+      }, 200)
     }
   },
   mounted() {
     if (this.isFormInitialized) {
-      setTimeout(() => {
-        this.$vuetify.goTo('#' + this.currentStep.component, {offset: this.windowWidth <= 600 ? 200 : 300})
-      }, 200)
+      this.moveToTop()
     } else {
       this.initializeForm()
     }

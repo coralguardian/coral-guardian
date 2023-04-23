@@ -103,12 +103,16 @@ export default {
       updateForm: "updateForm"
     }),
     check() {
-      if (this.scheduled && this.gift.toSendOn === null) {
-        this.errorMessage = this.$t("default.errors.select_date")
-        this.$root.$emit("IsLoaded")
+      if (this.$refs[this.formRefName].validate()) {
+        if (this.scheduled && this.gift.toSendOn === null) {
+          this.errorMessage = this.$t("default.errors.select_date")
+          this.$root.$emit("IsLoaded")
+        } else {
+          this.errorMessage = null
+          this.$root.$emit("StepValid")
+        }
       } else {
-        this.errorMessage = null
-        this.$root.$emit("StepValid")
+        this.$root.$emit("IsLoaded")
       }
     },
     sendMessageData() {

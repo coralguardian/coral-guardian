@@ -20,10 +20,10 @@ export default {
       updateForm: 'updateForm'
     }),
     checkForPaymentIntent() {
-      this.checkingForPayment = true
       this.fillParams()
       return new Promise((resolve, reject) => {
         if (this.params.setup_intent_client_secret) {
+          this.checkingForPayment = true
           let data = localStorage.getItem(this.params.setup_intent_client_secret);
           if (data) {
             data = JSON.parse(data)
