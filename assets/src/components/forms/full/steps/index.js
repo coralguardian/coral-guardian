@@ -15,6 +15,7 @@ import AdopterTypeStep from "@/components/forms/full/steps/AdopterTypeStep";
 import ProjectStep from "@/components/forms/full/steps/ProjectStep";
 import PrePaymentDonationStep from "@/components/forms/steps/PrePaymentDonationStep";
 import RecipientCustomizationStep from "@/components/forms/full/steps/RecipientCustomizationStep.vue";
+import CheckAdoption from "@/components/forms/full/steps/CheckAdoption.vue";
 
 export default {
   SetupStep,
@@ -33,5 +34,6 @@ export default {
   FinalRecipientStep,
   AdopterTypeStep,
   ProjectStep,
-  PrePaymentDonationStep
+  PrePaymentDonationStep,
+  CheckAdoption
 }

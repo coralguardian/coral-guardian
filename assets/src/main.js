@@ -4,10 +4,11 @@ import FullForm from "./FullForm";
 import DonationForm from "@/DonationForm.vue";
 import vuetify from './plugins/vuetify'
 import i18n from './plugins/i18n'
-import fullFormStore from "./store/fullFormStore";
-import giftFormStore from "./store/giftCodeFormStore";
 import './styles/styles.scss'
+import giftFormStore from "@/store/giftCodeFormStore";
 import donationFormStore from "@/store/donationFormStore";
+import adoptionFormStore from "@/store/adoptionFormStore";
+import depositFormStore from "@/store/depositFormStore";
 
 Vue.config.productionTip = false
 
@@ -15,7 +16,7 @@ if (document.querySelector("#full-form")) {
   new Vue({
     vuetify,
     i18n,
-    store: fullFormStore,
+    store: adoptionFormStore,
     render: h => h(FullForm, {})
   }).$mount('#full-form')
 }
@@ -36,4 +37,13 @@ if (document.querySelector("#gift-code-form")) {
     store: giftFormStore,
     render: h => h(App, {}),
   }).$mount('#gift-code-form')
+}
+
+if (document.querySelector("#deposit-form")) {
+  new Vue({
+    vuetify,
+    i18n,
+    store: depositFormStore,
+    render: h => h(FullForm, {}),
+  }).$mount('#deposit-form')
 }
