@@ -1,12 +1,16 @@
 <template>
-  <div id="social-share" class="d-flex justify-space-around my-5">
-    <a class="facebook" target="_blank" :href="'https://www.facebook.com/sharer/sharer.php?u=' + sharingUrl">
-      <img :src="path + '/img/social/facebook.png'" alt="">
-      <span>Partager</span>
-    </a>
+  <div id="social-share" class="my-5">
+
+    <span class="cg-base-text">{{$t('default.share')}}</span>
+
     <a class="linkedin" target="_blank" :href="'https://www.linkedin.com/sharing/share-offsite/?url=' + sharingUrl">
-      <img :src="path + '/img/social/linkedin.png'" alt="">
-      <span>Partager</span>
+      <img :src="path + '/img/social/linkedin.svg'" alt="">
+      <span class="cg-base-text">Linkedin</span>
+    </a>
+
+    <a class="facebook" target="_blank" :href="'https://www.facebook.com/sharer/sharer.php?u=' + sharingUrl">
+      <img :src="path + '/img/social/facebook.svg'" alt="">
+      <span class="cg-base-text">Facebook</span>
     </a>
   </div>
 </template>
@@ -32,6 +36,9 @@ export default {
 #social-share {
   width: 70%;
   margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 a {
@@ -39,25 +46,12 @@ a {
   display: flex;
   align-items: center;
   text-decoration: none;
-
-  span {
-    color: white;
-    font-weight: bold;
-    font-size: 0.65em;
-  }
 }
 
 img {
-  width: 35px;
-  height: 35px;
-  margin-right: 5px;
+  width: 18px;
+  height: 18px;
+  margin-right: 15px;
 }
 
-.linkedin {
-  background: #0073b1;
-}
-
-.facebook {
-  background: #1877f2;
-}
 </style>

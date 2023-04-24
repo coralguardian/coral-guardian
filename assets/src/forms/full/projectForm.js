@@ -2,6 +2,7 @@ import AbstractForm from "../abstractForm";
 import adoptionHelper from "@/helpers/adoptionHelper";
 import ProductForm from "@/forms/full/productForm";
 import ActionEnum from "@/enums/actionEnum";
+import Step from "@/forms/Step";
 
 export default class ProjectForm extends AbstractForm {
 
@@ -47,17 +48,17 @@ export default class ProjectForm extends AbstractForm {
   }
 
   steps = [
-    {
-      tab: {
-        title: "default.stepper.header.project",
-      },
-      component: "ProjectStep",
-      validate: true,
-      customValidation: true,
-      larger: true,
-      display: (state) => {
+    new Step(
+      "default.stepper.header.project",
+      1,
+      "ProjectStep",
+      (state) => {
         return state.data.project === null && state.data.target !== ActionEnum.donation
-      }
-    }
+      },
+      true,
+      false,
+      true,
+      true
+    )
   ]
 }

@@ -6,12 +6,10 @@
 
 <script>
 import BaseForm from "@/components/forms/BaseForm";
-import paymentMixin from "./mixins/paymentMixin";
 import {mapGetters} from "vuex";
 
 export default {
   name: "gift-code-form",
-  mixins: [paymentMixin],
   components: {
     BaseForm
   },

@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import {BaseAdoptionFormStore} from "@/store/baseAdoptionFormStore";
 import GiftCodeForm from "../forms/giftCodeForm";
 
-const form = new BaseAdoptionFormStore(null, null, null)
+const form = new BaseAdoptionFormStore(null, null)
 
 Vue.use(Vuex)
 

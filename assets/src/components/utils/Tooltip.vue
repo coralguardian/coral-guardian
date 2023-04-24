@@ -3,7 +3,7 @@
       @mouseenter="showTooltip"
       @mouseleave="hideTooltip"
   >
-    mdi-information-outline
+    mdi-information
   </v-icon>
 </template>
 

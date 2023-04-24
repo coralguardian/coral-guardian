@@ -10,9 +10,9 @@ const opts = {
     },
     themes: {
       light: {
-        primary: "#DDE8EE",
-        secondary: "#E3FE93",
-        tertiary: "#00456e"
+        primary: "#1B446B",
+        secondary: "#EFF0F6",
+        tertiary: "#4A3AFF"
       },
     },
   }

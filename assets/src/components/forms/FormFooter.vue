@@ -5,26 +5,35 @@
   >
     <v-btn
         v-if="displayPreviousButton"
+        class="cg-btn previous"
+        elevation="0"
         @click="previousStep"
     >
+        <v-icon color="primary">
+            mdi-arrow-left
+        </v-icon>
       {{ $t("default.ui.previous") }}
     </v-btn>
 
     <v-btn
         v-if="currentStep.ignorable"
+        depressed
         @click="ignoreStep"
-        color="primary"
+        color="transparent"
+        class="ignore-button"
     >
       {{ $t("default.ui.through") }}
     </v-btn>
 
     <v-btn
         v-if="!currentStep.isLast"
-        class="black--text"
+        elevation="0"
+        class="cg-btn"
         :class="{'align-self-end': !displayPreviousButton}"
-        color="secondary"
+        color="primary"
         :loading="isLoading"
         @click="validate"
+        rounded
     >
       {{ $t("default.ui.continue") }}
     </v-btn>
@@ -87,7 +96,6 @@ export default {
     },
     clearEvents() {
       if (this.destroy) {
-        console.log("aa")
         this.$root.$off('StepValid')
         this.$root.$off('ApiValid')
         this.$root.$off('IsLoaded')
@@ -103,14 +111,18 @@ export default {
       this.incrementStep().then(() => {
         this.customPreviousHide = false
         this.isLoading = false
+        this.moveToTop()
       })
+    },
+    moveToTop() {
+      setTimeout(() => {
+        this.$vuetify.goTo('#' + this.currentStep.component, {offset: this.windowWidth <= 600 ? 200 : 300})
+      }, 200)
     }
   },
   mounted() {
     if (this.isFormInitialized) {
-      setTimeout(() => {
-        this.$vuetify.goTo('#' + this.currentStep.component, {offset: this.windowWidth <= 600 ? 200 : 300})
-      }, 200)
+      this.moveToTop()
     } else {
       this.initializeForm()
     }
@@ -141,7 +153,15 @@ export default {
   @media (max-width: 450px) {
     padding: 1rem 0;
   }
-  padding: 1rem;
+  padding-bottom: 40px;
+  padding-top: 20px;
+  align-items: center;
 }
 
+.ignore-button {
+  text-transform: unset;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: $primary !important;
+}
 </style>

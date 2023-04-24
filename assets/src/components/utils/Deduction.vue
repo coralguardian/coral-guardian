@@ -1,5 +1,5 @@
 <template>
-  <p id="deduction" v-html="$t('default.deduction.description', options)" :class="{'text-body-1': big}"/>
+  <p id="deduction" class="cg-base-text" v-html="$t('default.deduction.description', options)"/>
 </template>
 
 <script>
@@ -12,10 +12,6 @@ export default {
     donation: {
       types: Number,
       default: 0
-    },
-    big: {
-      type: Boolean,
-      default: false
     }
   },
   computed: {
@@ -50,9 +46,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 #deduction {
-  display: block;
-  text-align: center;
+  color: #6F6C90;
+  line-height: 30px;
+  text-align: left;
 }
 </style>

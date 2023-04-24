@@ -1,27 +1,15 @@
 <template>
   <div>
-    <p v-html="$tc('default.stepper.customization.description.' + project, order.quantity, translation)"/>
+    <hint>
+      <p class="cg-base-text text-left" v-html="$tc('default.stepper.customization.description.' + project, order.quantity, translation)"/>
+    </hint>
 
     <v-form
         :ref="formRefName"
         v-model="valid"
     >
-      <div class="d-flex flex-wrap">
-
-        <div v-if="order.quantity >= 20">
-          <br>
-          <p class="font-weight-bold" v-html="$t('default.stepper.customization.downloadCsv.label')"/>
-          <br>
-          <v-btn primary @click="downloadExcelFile" :loading="loading" :disabled="loading">
-            {{$t('default.stepper.customization.downloadCsv.btnLabel')}}
-          </v-btn>
-<!--          <div>-->
-<!--            <p>{{$t('default.stepper.customization.downloadCsv.inputLabel')}}</p>-->
-<!--            <v-file-input v-model="namesFile" accept=".xlsx" dense></v-file-input>-->
-<!--          </div>-->
-        </div>
+      <div class="d-flex flex-wrap mt-4">
         <div
-            v-else
             :class="order.quantity > 1 ? 'col-6' : 'col-12'"
             v-for="n in order.quantity"
             :key="n"
@@ -44,10 +32,12 @@ import TextInput from "@/components/utils/TextInput";
 import {mapActions, mapGetters} from "vuex";
 import validationMixin from "@/mixins/validationMixin";
 import apiMixin from "@/mixins/apiMixin";
+import Hint from "@/components/utils/Hint.vue";
 
 export default {
   name: "customization-step",
   components: {
+    Hint,
     TextInput
   },
   mixins: [itemTranslationMixin, validationMixin, apiMixin],

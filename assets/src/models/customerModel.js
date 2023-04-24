@@ -19,7 +19,8 @@ export default class CustomerModel {
     if (data.adopter.type === "company") {
       merge(customer, {
         alternateNewsletterEmail: data.adopter.alternate_newsletter_email,
-        companyName: data.adopter.company_name
+        companyName: data.adopter.company_name,
+        siret: data.adopter.siret
       })
     }
 
