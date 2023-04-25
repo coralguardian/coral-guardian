@@ -20,6 +20,10 @@
           v-if="isCompany"
           :label="$t('default.stepper.information.' + informationSubstring + 'cols.information.siret')"
           v-model="adopter.siret"
+          type="number"
+          :rules="[rules.maxLength]"
+          :max-length="14"
+          :counter="true"
       />
 
       <div class="row">
@@ -108,7 +112,9 @@ export default {
   },
   mixins: [validationMixin, apiMixin],
   data() {
-    return {}
+    return {
+      maxLength: 14
+    }
   },
   computed: {
     ...mapGetters({

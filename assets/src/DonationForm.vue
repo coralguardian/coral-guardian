@@ -28,7 +28,7 @@
           @click="validStep"
           :loading="isLoading"
       >
-        {{ $t('default.ui.continue') }}
+        {{ $t('default.ui.pay') }}
       </v-btn>
     </div>
 
@@ -91,6 +91,10 @@ export default {
         this.displayPaymentStep = true
         setTimeout(() => {
           this.$vuetify.goTo('#paymentStep', {offset: 200})
+        }, 200)
+      } else {
+        setTimeout(() => {
+          this.$vuetify.goTo('#donationStep', {offset: 200})
         }, 200)
       }
     },

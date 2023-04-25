@@ -4,8 +4,8 @@
         :ref="formRefName"
         v-model="valid"
     >
-      <multiple-recipient-block v-if="adopter.type === adopterEnum.individual"/>
-      <company-multiple-recipient-step v-else-if="adopter.type === adopterEnum.company"/>
+      <multiple-recipient-block v-if="formType === formTypeEnum.advanced || adopter.type === adopterEnum.individual"/>
+      <company-multiple-recipient-step v-else-if="formType === formTypeEnum.deposit && adopter.type === adopterEnum.company"/>
 
       <v-divider class="cg-divider my-6"/>
 
@@ -18,7 +18,7 @@
       <v-textarea
           v-model="gift.message"
           class="mt-5 customization-textarea"
-          rows="3"
+          rows="5"
           no-resize
           outlined
           :placeholder="$t('default.stepper.customizationSend.message.placeholder')"
@@ -26,16 +26,17 @@
           counter
       />
 
-      <p class="cg-base-text light" v-html="$t('default.stepper.customizationSend.send.description') "/>
-
       <v-switch
+          class="scheduled-switch"
           v-model="scheduled"
           inset
       >
         <template v-slot:label>
-          <p class="cg-base-text">{{ $t('default.stepper.customizationSend.send.checkbox') }}</p>
+          <p class="cg-base-text lower">{{ $t('default.stepper.customizationSend.send.checkbox') }}</p>
         </template>
       </v-switch>
+
+      <p class="cg-base-text lower light" v-html="$t('default.stepper.customizationSend.send.description') "/>
 
       <v-row>
         <v-date-picker
@@ -57,13 +58,14 @@
 <script>
 import ErrorDisplay from "../../../utils/ErrorDisplay";
 import validationMixin from "../../../../mixins/validationMixin";
-import {mapActions, mapGetters} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 import apiMixin from "@/mixins/apiMixin";
 import MultipleRecipientBlock from "@/components/forms/blocks/MultipleRecipientBlock.vue";
 import Hint from "@/components/utils/Hint.vue";
 import AdopterEnum from "@/enums/adopterEnum";
 import CompanyMultipleRecipientStep from "@/components/forms/blocks/CompanyMultipleRecipientBlock.vue";
 import DepositTypeEnum from "@/enums/depositTypeEnum";
+import FormTypeEnum from "@/enums/formTypeEnum";
 
 export default {
   name: "recipient-customization-step",
@@ -88,6 +90,9 @@ export default {
       recipient: "getRecipient",
       giftOrderModel: "getGiftOrderModel"
     }),
+    ...mapState({
+      formType: "formType"
+    }),
     tomorrow() {
       const tomorrow = new Date(new Date())
       tomorrow.setDate(tomorrow.getDate() + 1)
@@ -100,6 +105,9 @@ export default {
     },
     adopterEnum() {
       return AdopterEnum
+    },
+    formTypeEnum() {
+      return FormTypeEnum
     }
   },
   watch: {
@@ -170,10 +178,24 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.customization-textarea textarea {
-  border: 2px solid #EFF0F6 !important;
-  border-radius: 4px !important;
+<style lang="scss">
+.customization-textarea {
+  fieldset {
+    color: #EFF0F6 !important;
+    border-width: 2px !important;
+    border-radius: 4px !important;
+  }
+
+  textarea {
+    height: 200px !important;
+    padding: 20px !important;
+  }
+}
+
+.scheduled-switch {
+  display: inline-block;
+  border-bottom: 1px solid #E5E5E5;
+  margin-bottom: 25px;
 }
 
 </style>

@@ -32,7 +32,7 @@
         @input="updateFromCustomAmount($event)"
     />
 
-    <deduction :donation="donation.price"/>
+    <deduction/>
   </div>
 </template>
 

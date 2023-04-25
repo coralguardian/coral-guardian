@@ -8,15 +8,10 @@ import FiscalEnum from "@/enums/fiscalEnum";
 
 export default {
   name: "deduction",
-  props: {
-    donation: {
-      types: Number,
-      default: 0
-    }
-  },
   computed: {
     ...mapGetters({
-      adopter: 'getAdopter'
+      adopter: 'getAdopter',
+      donation: 'getDonation'
     }),
     fiscalReduction() {
       const fiscalReductions = FiscalEnum
@@ -27,14 +22,14 @@ export default {
     },
     options() {
       return {
-        donation: this.donation,
-        deduction: this.getFormattedDeduction
+        donation: this.donation.price,
+        deduction: this.getFormattedDeduction,
+        type: this.$t('default.' + this.donation.type)
       }
     },
     getFormattedDeduction () {
-      let deduction = this.fiscalReduction * this.donation
-
-      let finalPrice = this.donation - deduction;
+      let deduction = this.fiscalReduction * this.donation.price
+      let finalPrice = this.donation.price - deduction;
 
       if (!Number.isInteger(finalPrice)) {
         finalPrice = finalPrice.toFixed(2)

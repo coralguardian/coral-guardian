@@ -14,11 +14,6 @@
           <span class="href-button-text">
             {{ $t('default.donation.dialog.activation') }}
           </span>
-          <v-icon
-              color="primary"
-          >
-            mdi-information
-          </v-icon>
         </v-btn>
       </template>
 

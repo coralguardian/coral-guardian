@@ -10,6 +10,7 @@ import ActionEnum from "@/enums/actionEnum";
 import ProductEnum from "@/enums/productEnum";
 import DonationEnum from "@/enums/donationEnum";
 import SetupForm from "@/forms/full/setupForm";
+import FormTypeEnum from "@/enums/formTypeEnum";
 
 const baseStore = new BaseAdoptionFormStore(null, null)
 
@@ -19,7 +20,7 @@ export default class FullFormStore {
   constructor() {
     this.state = {
       ...baseStore.state,
-      formType: "advanced",
+      formType: FormTypeEnum.advanced,
       data: {
         ...baseStore.state.data,
         step: 1,

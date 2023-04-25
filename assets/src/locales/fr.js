@@ -13,11 +13,13 @@ export default {
   ui: {
     continue: "Continuer",
     previous: "Précédent",
-    through: "Passer cette étape"
+    through: "Passer cette étape",
+    pay: "Payer et terminer"
   },
   rules: {
     required: "Ce champ est requis.",
     minLength: "Ce champ doit comporter {count} caractères minimum.",
+    maxLength: "Ce champ doit comporter {count} caractères maximum.",
     email: "Email non valide",
     specialChar: "Caractère(s) non admis.",
     digitOnly: "Ce champ ne doit comporter que des chiffres.",
@@ -44,7 +46,7 @@ export default {
   },
   share: 'Partagez sur',
   deduction: {
-    description: "Je fais <b>un don</b> de {donation} €,<b>soit {deduction }€</b> après déduction fiscale en France."
+    description: "Je fais <b>un don {type}</b> de {donation} €, <b>soit {deduction} €</b> après déduction fiscale en France."
   },
   stepper: {
     header: {
@@ -112,7 +114,7 @@ export default {
       seeYouSoon: "À très vite !"
     },
     bonusDonation: {
-      title: "Optionnel : Soutenez nos actions au quotidien"
+      title: "Optionnel : soutenez nos actions au quotidien"
     },
     certificate: {
       gift: {
@@ -200,8 +202,8 @@ export default {
       }
     },
     setup: {
-      adopt: "J'adopte",
-      offer: "J'offre",
+      adopt: "Adopter un corail ou un récif",
+      offer: "Offrir un corail ou un récif",
       donation: "Je fais un don",
       tooltips: {
         me: "Vous pourrez choisir le(s) nom(s) sur votre certificat(s) et le(s) télécharger directement.",
@@ -260,8 +262,8 @@ export default {
     },
     namingAdoption: {
       no_idea: {
-        individual: "Je n'ai pas d'inspiration, je choisirais donc plus tard.",
-        company: "Je n'ai pas d'inspiration, je choisirais donc plus tard. L'importation d'un fichier excel sera possible."
+        individual: "Je n’ai pas d’inspiration, je choisirai donc le nom plus tard. Je recevrai  un email avec toutes les indications pour nommer mon corail.",
+        company: "Je n’ai pas d’inspiration, je choisirai donc le nom plus tard. Je recevrai  un email avec toutes les indications pour nommer mon corail.<br>L'importation d'un fichier excel sera possible."
       },
       description: {
         indonesia: "Donnez un nom à votre {item} adopté, vous pouvez choisir celui que vous souhaitez ! |Donnez un nom à chacun de vos {item} adoptés, vous pouvez choisir ceux que vous souhaitez !",
@@ -326,11 +328,6 @@ export default {
       title: "Enfin, procédez au paiement <span class='font-weight-regular cg-base-text'>(sécurisé avec Stripe)</span>",
       important: "<b>Important</b> : lors de la validation de votre règlement sur l'application mobile de votre banque, le montant affiché sera de 0€. \n" +
         "Il s'agit d'une demande de pré-autorisation bancaire mais le montant prélevé correspond bien au montant total de votre commande indiqué ci-dessus.",
-      reminder: {
-        donation: {
-          description: "Un don {item} : {price}€"
-        }
-      },
       errors: {
         card: "Veuillez renseigner les informations de votre carte bancaire."
       }
@@ -358,7 +355,7 @@ export default {
       descriptionNoEmail: "Vous pouvez télécharger votre certificat directement en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>."
     },
     finalDonation: {
-      hint: "Vous avez fait un don de {price}€",
+      hint: "Vous avez fait un don {type} de {price}€",
       title: "Bravo et merci pour votre soutien",
       description: "Votre reçu fiscal a été envoyé par email.",
       bankTransfer: "Votre virement est en attente de réception. Une fois celui-ci validé, vous recevrez un email contenant votre reçu fiscal."
@@ -412,14 +409,10 @@ export default {
     }
   },
   newsletter: {
-    title: "Petit bonus : inscrivez-vous à notre newsletter !",
-    description: {
-      adoption: "Recevez des nouvelles liées à votre adoption et de l'avancée des projets de Coral Guardian.",
-      other: "Recevez des nouvelles de l'avancée de nos projets tous les mois."
-    },
+    title: "Bonus optionnel",
     label: {
-      adoption: "Je souhaite m'inscrire aux nouvelles envoyées par Coral Guardian.",
-      other: "Je souhaite m'inscrire à la newsletter mensuelle de Coral Guardian."
+      adoption: "Je souhaite recevoir des nouvelles <b>liées à mon adoption</b> et à l'avancée des projets de Coral Guardian et m'inscris à la newsletter mensuelle.",
+      donation: "Je souhaite recevoir des nouvelles <b>liées à mon don</b> et à l'avancée des projets de Coral Guardian et m'inscris à la newsletter mensuelle.",
     },
     otherEmail: {
       description: "Si vous souhaitez vous inscrire avec <b>une autre adresse email</b> que celle renseignée dans le formulaire, merci de renseigner le champ ci-dessous.",

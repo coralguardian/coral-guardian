@@ -2,7 +2,7 @@
   <final-step id="finalDonationStep">
 
     <template v-slot:hint>
-      {{ $t("default.stepper.finalDonation.hint", {price: donation.price}) }}
+      {{ $t("default.stepper.finalDonation.hint", {price: donation.price, type: $t('default.' + donation.type)}) }}
     </template>
 
     <p

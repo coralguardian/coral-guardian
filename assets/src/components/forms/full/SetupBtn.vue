@@ -44,6 +44,10 @@ export default {
       background: unset !important;
     }
   }
+
+  .v-btn__content {
+    letter-spacing: 0 !important;
+  }
 }
 
 </style>

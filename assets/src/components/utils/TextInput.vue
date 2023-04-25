@@ -23,7 +23,8 @@
         :type="type"
         rounded
         height="66"
-        @change="$emit('input', sanitizeValue($event))"
+        @input="$emit('input', sanitizeValue($event))"
+        @change="$emit('change', sanitizeValue($event))"
         :append-icon="icon"
     />
   </div>

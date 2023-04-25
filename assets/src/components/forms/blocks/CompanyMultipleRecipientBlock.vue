@@ -3,7 +3,7 @@
 
     <p class="cg-title" v-html="$tc('default.stepper.multipleRecipient.title', order.quantity, translation)"/>
 
-    <hint>
+    <hint class="mb-8">
       <p class="cg-base-text" v-html="$t('default.stepper.multipleRecipient.description')"/>
     </hint>
 
@@ -11,7 +11,6 @@
         fixed-tabs
         v-model="tab"
         active-class="tab-active"
-        class="mt-10 mb-5"
     >
       <v-tab @change="updateForm({recipient: {type: 'fields'}})">
         {{ $t('default.stepper.multipleRecipient.tabs.fields.title') }}
@@ -24,7 +23,7 @@
     <v-tabs-items v-model="tab">
 
       <v-tab-item class="recipients">
-        <p class="my-5 cg-base-text">
+        <p class="mt-10 mb-8 cg-base-text lower light">
           {{ $t('default.stepper.multipleRecipient.tabs.fields.description') }}
         </p>
         <div v-if="tab === 0">
@@ -32,7 +31,7 @@
               v-for="(recipient, index) in recipients"
               :key="index"
           >
-            <p class="cg-base-text mb-1">
+            <p class="cg-base-text lower mb-1">
               {{ $t('default.stepper.multipleRecipient.tabs.fields.recipient', {index: index + 1}) }} *
             </p>
             <recipient-block
@@ -49,7 +48,7 @@
         <div
             v-if="tab === 1"
         >
-          <p class="cg-base-text light my-8">{{ $t('default.stepper.multipleRecipient.tabs.file.upload.description') }}</p>
+          <p class="cg-base-text lower light mt-10 mb-8">{{ $t('default.stepper.multipleRecipient.tabs.file.upload.description') }}</p>
           <v-file-input
               v-model="namesFile"
               class="file-import-input"

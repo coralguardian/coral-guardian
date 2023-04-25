@@ -13,21 +13,21 @@
           :value="sendToFriendEnum.dont"
       >
         <template v-slot:label>
-          <p class="cg-base-text">{{ $t('default.giftCustom.radios.dont') }}</p>
+          <p class="cg-base-text lower">{{ $t('default.giftCustom.radios.dont') }}</p>
         </template>
       </v-radio>
       <v-radio
           :value="sendToFriendEnum.send"
       >
         <template v-slot:label>
-          <p class="cg-base-text">{{ $t('default.giftCustom.radios.send.' + adopter.type) }}</p>
+          <p class="cg-base-text lower">{{ $t('default.giftCustom.radios.send.' + adopter.type) }}</p>
         </template>
       </v-radio>
       <v-radio
           :value="sendToFriendEnum.later"
       >
         <template v-slot:label>
-          <p class="cg-base-text">{{ $t('default.giftCustom.radios.later') }}</p>
+          <p class="cg-base-text lower">{{ $t('default.giftCustom.radios.later') }}</p>
         </template>
       </v-radio>
     </v-radio-group>

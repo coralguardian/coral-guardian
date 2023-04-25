@@ -5,7 +5,7 @@
           v-model="isAdoptionForMe"
           @click="updateForm({target: adoptionConstants.me, order: {type: 'regular'}})"
       >
-        <icon icon-path="'img/icons/certificat.svg'" alt=""/>
+        <icon icon-path="'img/icons/corail.svg'" alt=""/>
         {{ $t("default.stepper.setup.adopt") }}
 
         <btn-tooltip>
@@ -17,7 +17,7 @@
           v-model="isAdoptionToOffer"
           @click="updateForm({target: adoptionConstants.friend, order: {type: 'gift'}})"
       >
-        <icon icon-path="'img/icons/joffre.svg'" alt=""/>
+        <icon icon-path="'img/icons/gift.svg'" alt=""/>
         {{ $t("default.stepper.setup.offer") }}
 
         <btn-tooltip>
@@ -154,10 +154,10 @@ export default {
   margin-top: 6px;
 
   .switch-link {
+    font-size: 16px;
+    line-height: 24px;
     color: $primary !important;
     text-decoration: none;
   }
-
-
 }
 </style>

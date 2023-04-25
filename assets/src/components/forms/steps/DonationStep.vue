@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="donation-select-container">
+    <div class="donation-select-container" id="donationStep">
 
       <div>
         <p class="cg-title">{{ $t("default.stepper.donation.i_want") }}</p>
@@ -176,6 +176,6 @@ export default {
 }
 
 #donation-price-select {
-  width: 80px;
+  width: 100px;
 }
 </style>

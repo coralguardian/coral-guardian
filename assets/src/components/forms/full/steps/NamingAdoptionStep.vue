@@ -28,7 +28,7 @@
     <div>
       <v-checkbox class="mt-0" :input-value="adoption.type === null" @change="updateAdoptionType($event)">
         <template v-slot:label>
-          <p class="cg-base-text">{{ $t('default.stepper.namingAdoption.no_idea.' + adopter.type) }}</p>
+          <p class="cg-base-text" v-html="$t('default.stepper.namingAdoption.no_idea.' + adopter.type)"/>
         </template>
       </v-checkbox>
     </div>

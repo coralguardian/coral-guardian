@@ -6,6 +6,7 @@
         :placeholder="placeholder ? $t(placeholder) : null"
         type="number"
         @input="$emit('input', Number($event))"
+        @change="$emit('change', Number($event))"
         :tooltip="hint ? $t('default.stepper.adoption.customAmount.hint') : null"
         :rules="[rules.minValue, rules.required]"
         :min="minAmount"

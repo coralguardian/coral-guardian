@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import FullFormStore from "@/store/fullFormStore";
 import DepositForm from "@/forms/full/depositForm";
 import GiftOrderModel from "@/models/giftOrderModel";
+import FormTypeEnum from "@/enums/formTypeEnum";
 
 const fullFormStore = new FullFormStore()
 
@@ -11,6 +12,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     ...fullFormStore.state,
+    formType: FormTypeEnum.deposit,
     data: {
       ...fullFormStore.state.data,
       gift: {

@@ -17,8 +17,8 @@
             :value="order.quantity"
             :label="$t('default.stepper.adoption.quantity.label')"
             type="number"
-            @input="updateQuantity($event)"
-            :min="1"
+            @input="updateQuantity"
+            @change="checkQuantity"
             :max="max"
             :rules="[rules.minValue, rules.required]"
         />
@@ -31,7 +31,7 @@
             v-model="order.price"
             ref="customAmount"
             @input="updateCustomAmount"
-            :minAmount="order.price"
+            @change="checkCustomPrice"
         />
       </v-col>
     </v-row>
@@ -70,6 +70,7 @@ export default {
   computed: {
     ...mapGetters({
       order: "getOrder",
+      minimumPrice: "getMinimumPrice"
     })
   },
   methods: {
@@ -80,8 +81,18 @@ export default {
     updateCustomAmount(value) {
       this.updateForm({order: {price: value, customAmount: true}})
     },
+    checkCustomPrice(value) {
+      if (value < this.minimumPrice) {
+        this.updateForm({order: {price: this.minimumPrice, customAmount: false}})
+      }
+    },
     updateQuantity(value) {
       this.setQuantity(value)
+    },
+    checkQuantity(value) {
+      if (value < 1) {
+        this.setQuantity(1)
+      }
     }
   }
 }
