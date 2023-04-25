@@ -14,7 +14,8 @@ export default {
     continue: "Continuer",
     previous: "Précédent",
     through: "Passer cette étape",
-    pay: "Payer et terminer"
+    pay: "Payer et terminer",
+    finalized: "Finaliser"
   },
   rules: {
     required: "Ce champ est requis.",
@@ -420,14 +421,14 @@ export default {
     }
   },
   giftCustom: {
-    title: "Options d'envoi des codes cadeaux*",
+    title: "Pour envoyer le(s) code(s) cadeau(x)*",
     radios: {
       dont: "Je souhaite recevoir le(s) code(s) cadeau(x) sur mon adresse email",
-      send: {
-        individual: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement.",
-        company: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement (l'import d'un fichier de contact est possible).",
-      },
-      later: "Je souhaite renseigner les adresses emails de mes destinataires plus tard."
+      send: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement.",
+      later:  {
+        individual: "Je souhaite renseigner les adresses emails de mes destinataires plus tard. Je recevrai un email avec toutes les indications.",
+        company: "Je souhaite renseigner les adresses emails de mes destinataires plus tard. Je recevrai un email avec toutes les indications (l'import d'un fichier de contact est possible).",
+      }
     }
   }
 }

@@ -86,7 +86,7 @@
                     <form-footer
                         class="mt-5"
                         v-if="displayFooter(index)"
-                        :offset="steps[index - 1].offset ? steps[index - 1].offset : 400"
+                        :step="steps[index - 1]"
                     />
                   </step>
 

@@ -35,7 +35,7 @@
         @click="validate"
         rounded
     >
-      {{ $t("default.ui.continue") }}
+      {{ continueLabel }}
     </v-btn>
   </div>
 
@@ -55,15 +55,11 @@ export default {
     }
   },
   props: {
-    offset: {
-      type: Number,
-      default: 400
-    },
     // pour prévenir de clear les events lorsque le form footer est permanent d'une étape à une autre
     destroy: {
       type: Boolean,
       default: true
-    }
+    },
   },
   computed: {
     ...mapGetters({
@@ -74,6 +70,9 @@ export default {
     }),
     displayPreviousButton() {
       return this.step > 1 && this.currentStep.back !== false && !this.customPreviousHide
+    },
+    continueLabel() {
+      return this.currentStep.continueButtonLabel ? this.$t("default.ui." + this.currentStep.continueButtonLabel) : this.$t("default.ui.continue")
     }
   },
   methods: {

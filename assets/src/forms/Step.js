@@ -11,6 +11,7 @@ export default class Step {
     api = null,
     back = true,
     isLast = false,
+    continueButtonLabel = 'continue'
   ) {
     this.title = title;
     this.number = number;
@@ -23,6 +24,7 @@ export default class Step {
     this.api = api;
     this.back = back;
     this.isLast = isLast;
+    this.continueButtonLabel = continueButtonLabel
   }
 
   evaluate() {

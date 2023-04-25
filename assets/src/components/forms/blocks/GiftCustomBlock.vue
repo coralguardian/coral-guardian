@@ -20,14 +20,14 @@
           :value="sendToFriendEnum.send"
       >
         <template v-slot:label>
-          <p class="cg-base-text lower">{{ $t('default.giftCustom.radios.send.' + adopter.type) }}</p>
+          <p class="cg-base-text lower">{{ $t('default.giftCustom.radios.send') }}</p>
         </template>
       </v-radio>
       <v-radio
           :value="sendToFriendEnum.later"
       >
         <template v-slot:label>
-          <p class="cg-base-text lower">{{ $t('default.giftCustom.radios.later') }}</p>
+          <p class="cg-base-text lower">{{ $t('default.giftCustom.radios.later.' + adopter.type) }}</p>
         </template>
       </v-radio>
     </v-radio-group>

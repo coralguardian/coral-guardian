@@ -83,7 +83,11 @@ export default class AdoptionForm extends AbstractForm {
         true,
         true,
         false,
-        true
+        true,
+        null,
+        true,
+        false,
+        'finalized'
       ),
       new Step(
         "default.stepper.payment.title",
@@ -95,6 +99,9 @@ export default class AdoptionForm extends AbstractForm {
         true,
         true,
         {method: "post", endpoint: "createOrder"},
+        true,
+        false,
+        'pay'
       ),
       new FinalAdoptionStep,
       new BankTransferThanksStep

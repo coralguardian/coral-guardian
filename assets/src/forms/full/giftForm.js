@@ -73,7 +73,11 @@ export default class GiftForm extends AbstractForm {
         true,
         true,
         false,
-        true
+        true,
+        null,
+        true,
+        false,
+        'finalized'
       ),
       new Step(
         "default.stepper.payment.title",
@@ -85,6 +89,9 @@ export default class GiftForm extends AbstractForm {
         true,
         true,
         {method: "post", endpoint: "createOrder"},
+        true,
+        false,
+        'pay'
       ),
       new Step(
         null,
