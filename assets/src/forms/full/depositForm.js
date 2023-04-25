@@ -27,7 +27,6 @@ export default class DepositForm extends AbstractForm {
           })
       }
 
-
       // mock
       let data = {
         order: {
@@ -67,7 +66,11 @@ export default class DepositForm extends AbstractForm {
       true,
       false,
       false,
-      false
+      false,
+      {method: "post"},
+      false,
+      false,
+      'finalized'
     ),
     new Step(
       null,
@@ -79,6 +82,9 @@ export default class DepositForm extends AbstractForm {
       true,
       false,
       {method: "post"},
+      false,
+      false,
+      'finalized'
     ),
     new Step(
       null,

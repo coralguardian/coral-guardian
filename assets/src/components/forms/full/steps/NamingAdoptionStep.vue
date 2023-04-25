@@ -1,31 +1,20 @@
 <template>
   <div id="namingAdoption">
-    <div class="adoptions">
-      <hint>
-        <p class="cg-base-text"
-           v-html="$tc('default.stepper.namingAdoption.description.' + project, order.quantity, translation)"/>
-      </hint>
-      <v-form
-          v-if="adoption.type !== null"
-          :ref="formRefName"
-          v-model="valid"
-      >
-        <v-row>
-          <v-col
-              cols="6"
-              v-for="n in order.quantity"
-              :key="n"
-          >
-            <adoption-name-block
-                v-model="adoption.names[n-1]"
-                :n="n"
-            />
-          </v-col>
-        </v-row>
-      </v-form>
-    </div>
+    <v-form
+        :ref="formRefName"
+        v-model="valid"
+    >
 
-    <div>
+      <multiple-adoption-block
+          v-if="formType === formTypeEnum.advanced || adopter.type === adopterEnum.individual"
+      />
+      <company-multiple-adoption-block
+          v-if="formType === formTypeEnum.deposit && adopter.type === adopterEnum.company"
+      />
+
+    </v-form>
+
+    <div v-if="formType === formTypeEnum.advanced">
       <v-checkbox class="mt-0" :input-value="adoption.type === null" @change="updateAdoptionType($event)">
         <template v-slot:label>
           <p class="cg-base-text" v-html="$t('default.stepper.namingAdoption.no_idea.' + adopter.type)"/>
@@ -37,49 +26,55 @@
 </template>
 
 <script>
-import AdoptionNameBlock from "../../blocks/AdoptionNameBlock";
-import {mapActions, mapGetters} from "vuex";
-import validationMixin from "../../../../mixins/validationMixin";
-import itemTranslationMixin from "../../../../mixins/itemTranslationMixin";
+import {mapActions, mapGetters, mapState} from "vuex";
 import AdopterEnum from "@/enums/adopterEnum";
-import Hint from "@/components/utils/Hint.vue";
 import DepositTypeEnum from "@/enums/depositTypeEnum";
+import FormTypeEnum from "@/enums/formTypeEnum";
+import MultipleAdoptionBlock from "@/components/forms/blocks/MultipleAdoptionBlock.vue";
+import CompanyMultipleAdoptionBlock from "@/components/forms/blocks/CompanyMultipleAdoptionBlock.vue";
+import validationMixin from "@/mixins/validationMixin";
 
 export default {
   name: "naming-adoption-step",
-  mixins: [validationMixin, itemTranslationMixin],
+  mixins: [validationMixin],
   components: {
-    Hint,
-    AdoptionNameBlock
+    MultipleAdoptionBlock,
+    CompanyMultipleAdoptionBlock
   },
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
     ...mapGetters({
       adoption: "getAdoption",
-      adoptionModel: "getPostAdoptionsData",
-      order: "getOrder",
       adopter: "getAdopter",
-      project: "getProject"
+    }),
+    ...mapState({
+      formType: "formType"
     }),
     adopterEnum() {
       return AdopterEnum
+    },
+    formTypeEnum() {
+      return FormTypeEnum
     }
   },
   methods: {
     ...mapActions({
       updateForm: "updateForm"
     }),
-    createAdoption() {
+    checkAdoption() {
       if (this.adoption.type === null) {
         // je n'ai pas d'inspiration
         this.$root.$emit('StepValid')
       } else {
         // il me faut les noms
         if (this.adoption.type === DepositTypeEnum.fields) {
-          this.$root.$emit(this.validationEventName)
+          if (this.$refs[this.formRefName].validate()) {
+            this.$root.$emit("StepValid")
+          } else {
+            this.$root.$emit("IsLoaded")
+          }
         }
       }
     },
@@ -94,7 +89,7 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on(this.customValidationEventName, this.createAdoption)
+    this.$root.$on(this.customValidationEventName, this.checkAdoption)
   },
   beforeDestroy() {
     this.$root.$off(this.customValidationEventName)

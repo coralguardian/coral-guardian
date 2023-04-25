@@ -40,7 +40,7 @@ export default {
       uuid: null
     }
   },
-  beforeMount() {
+  mounted() {
     this.uuid = nanoid()
   }
 }
