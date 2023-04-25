@@ -101,7 +101,7 @@ import apiMixin from "../../../../mixins/apiMixin";
 import redirectionMixin from "../../../../mixins/redirectionMixin";
 import AdopterEnum from "@/enums/adopterEnum";
 import Hint from "@/components/utils/Hint.vue";
-import AdoptionTypeEnum from "@/enums/adoptionTypeEnum";
+import DepositTypeEnum from "@/enums/depositTypeEnum";
 
 export default {
   name: "naming-adoption-step",
@@ -141,7 +141,7 @@ export default {
         this.$root.$emit('StepValid')
       } else {
         // il me faut les noms
-        if (this.adoption.type === AdoptionTypeEnum.fields) {
+        if (this.adoption.type === DepositTypeEnum.fields) {
           this.$root.$emit(this.validationEventName)
         } else {
           // c'est le fichier faudra parser
@@ -179,7 +179,7 @@ export default {
     updateAdoptionType(value) {
       if (value === false) {
         this.valid = false
-        this.updateForm({adoption: {type: AdoptionTypeEnum.fields}})
+        this.updateForm({adoption: {type: DepositTypeEnum.fields}})
       } else {
         this.valid = true
         this.updateForm({adoption: {type: null}})

@@ -26,53 +26,11 @@
 </template>
 
 <script>
-import RecipientBlock from "./RecipientBlock.vue";
-import {mapActions, mapGetters} from "vuex";
-import validationMixin from "../../../mixins/validationMixin";
-import Hint from "@/components/utils/Hint.vue";
-import itemTranslationMixin from "@/mixins/itemTranslationMixin";
+import multipleRecipientMixin from "@/mixins/multipleRecipientMixin";
 
 export default {
   name: "multiple-recipient-step",
-  mixins: [validationMixin, itemTranslationMixin],
-  components: {
-    Hint,
-    RecipientBlock,
-  },
-  data() {
-    return {
-      recipients: []
-    }
-  },
-  computed: {
-    ...mapGetters({
-      order: "getOrder",
-      recipient: "getRecipient"
-    })
-  },
-  methods: {
-    ...mapActions({
-      updateForm: "updateForm"
-    }),
-    updateRecipients() {
-      this.updateForm({gift: {recipients: this.recipients}})
-    },
-    createRecipients() {
-      let recipients = []
-      // eslint-disable-next-line no-unused-vars
-      for (let i = 0; i < this.order.quantity; i++) {
-        recipients.push({
-          first_name: "",
-          last_name: "",
-          email: ""
-        })
-      }
-      this.recipients = recipients
-    }
-  },
-  mounted() {
-    this.createRecipients()
-  }
+  mixins: [multipleRecipientMixin],
 }
 </script>
 

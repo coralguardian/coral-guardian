@@ -4,7 +4,8 @@
         :ref="formRefName"
         v-model="valid"
     >
-      <multiple-recipient-block/>
+      <multiple-recipient-block v-if="adopter.type === adopterEnum.individual"/>
+      <company-multiple-recipient-step v-else-if="adopter.type === adopterEnum.company"/>
 
       <v-divider class="cg-divider my-6"/>
 
@@ -60,11 +61,15 @@ import {mapActions, mapGetters} from "vuex";
 import apiMixin from "@/mixins/apiMixin";
 import MultipleRecipientBlock from "@/components/forms/blocks/MultipleRecipientBlock.vue";
 import Hint from "@/components/utils/Hint.vue";
+import AdopterEnum from "@/enums/adopterEnum";
+import CompanyMultipleRecipientStep from "@/components/forms/blocks/CompanyMultipleRecipientBlock.vue";
+import DepositTypeEnum from "@/enums/depositTypeEnum";
 
 export default {
   name: "recipient-customization-step",
   mixins: [validationMixin, apiMixin],
   components: {
+    CompanyMultipleRecipientStep,
     Hint,
     ErrorDisplay,
     MultipleRecipientBlock
@@ -78,7 +83,10 @@ export default {
   computed: {
     ...mapGetters({
       gift: "getGift",
-      giftMessageModel: "getGiftMessageModel"
+      giftMessageModel: "getGiftMessageModel",
+      adopter: "getAdopter",
+      recipient: "getRecipient",
+      giftOrderModel: "getGiftOrderModel"
     }),
     tomorrow() {
       const tomorrow = new Date(new Date())
@@ -89,6 +97,9 @@ export default {
       const max = new Date(new Date())
       max.setDate(max.getDate() + 365)
       return max.toISOString()
+    },
+    adopterEnum() {
+      return AdopterEnum
     }
   },
   watch: {
@@ -115,22 +126,42 @@ export default {
         this.$root.$emit("IsLoaded")
       }
     },
-    sendMessageData() {
-      this[this.apiData.method](this.giftMessageModel, this.apiData.endpoint)
-        .then(() => {
-          this.$root.$emit('ApiValid')
-        })
-        .catch(err => {
-          this.$root.$emit('displayError', err.response.data)
-        })
-        .finally(() => {
-          this.$root.$emit('IsLoaded')
-        })
+    createGift() {
+      // destinataires avec fichier
+      if (this.gift.file !== null && this.recipient.type === DepositTypeEnum.file) {
+        const options = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        let formData = new FormData();
+        formData.append("recipient_file", this.gift.file);
+        this.post(formData, "adoption/{uuid}/recipientsFile", options)
+          .then(() => {
+            this.cleanUrl()
+            this.$root.$emit('ApiValid')
+          })
+          .catch(() => {
+            this.fileError = this.$t('default.errors.incorrect_file_data')
+            this.$root.$emit('IsLoaded')
+          })
+        // destinataires via formulaire
+      } else {
+        this.post(this.giftOrderModel, "adoption/{uuid}/recipientsFile")
+          .then(() => {
+            this.cleanUrl()
+            this.$root.$emit('ApiValid')
+          })
+          .catch(err => {
+            console.error(err)
+            this.$root.$emit('IsLoaded')
+          })
+      }
     }
   },
   mounted() {
     this.$root.$on(this.customValidationEventName, () => this.check())
-    this.$root.$on(this.apiEventName, () => this.sendMessageData())
+    this.$root.$on(this.apiEventName, () => this.createGift())
   },
   beforeDestroy() {
     this.$root.$off(this.customValidationEventName)

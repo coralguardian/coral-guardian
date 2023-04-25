@@ -83,16 +83,15 @@ p {
 }
 
 .v-tab {
-  .cg-base-text {
-    font-size: 16px !important;
-  }
+  font-size: 16px !important;
+  text-transform: none !important;
+  color: #6F6C90 !important;
+  opacity: 0.5 !important;
 }
 
 .tab-active {
-  .cg-base-text {
-    color: $primary !important;
-    font-weight: 500;
-  }
+  color: $primary !important;
+  opacity: unset !important;
 }
 
 .btn-container {

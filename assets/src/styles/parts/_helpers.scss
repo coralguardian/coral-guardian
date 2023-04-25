@@ -10,6 +10,21 @@
   text-align: right;
 }
 
+.v-text-field--outlined.v-file-input {
+  fieldset {
+    border-radius: unset !important;
+    border-color: $primary;
+  }
+
+  .v-icon:not(.error--text) {
+    color: $primary !important;
+  }
+
+  label:not(.error--text) {
+    color: $primary !important;
+  }
+}
+
 .subtitles {
   font-weight: bolder;
   font-size: 1.25rem;

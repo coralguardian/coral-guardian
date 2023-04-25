@@ -1,6 +1,6 @@
 import BaseFormStore from "../store/baseFormStore";
 import AdopteeModel from "@/models/adopteeModel";
-import AdoptionTypeEnum from "@/enums/adoptionTypeEnum";
+import DepositTypeEnum from "@/enums/depositTypeEnum";
 
 const baseForm = new BaseFormStore()
 
@@ -24,12 +24,12 @@ export class BaseAdoptionFormStore {
           target: null,
           // count: 1,
           adoption: {
-            type: AdoptionTypeEnum.fields,
+            type: DepositTypeEnum.fields,
             names: []
           },
           // pour l'étape de gestion des destinataires
           recipient: {
-            type: "fields"
+            type: DepositTypeEnum.fields
           },
           // names: [],
           friend: {

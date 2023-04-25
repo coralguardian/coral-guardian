@@ -8,7 +8,7 @@
       >
         <v-progress-circular color="primary" indeterminate/>
         <p class="cg-base-text">
-          {{ $t('default.stepper.payment.checking')}}
+          {{ $t('default.stepper.payment.checking') }}
         </p>
       </div>
 
@@ -173,8 +173,7 @@ export default {
           if (status === PaymentStatusEnum.succeeded) {
             // redirige dernière étape
             (new GtagService()).executeTag(this.order, 'adoption', this.adopter);
-            this.incrementStep().then(() =>
-            {
+            this.incrementStep().then(() => {
               setTimeout(() => {
                 this.checkingForPayment = false
               }, 200)
@@ -198,7 +197,11 @@ export default {
     startSetupForm() {
       this.fillState()
         .then(() => {
-          this.startForm().then(() => this.checkingForPayment = false)
+          this.startForm()
+            .catch(error => {
+              alert(this.$t(error ? "default.errors." + error : 'default.errors.base'))
+            })
+            .finally(() => this.checkingForPayment = false)
         })
     }
   },

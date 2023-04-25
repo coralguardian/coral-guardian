@@ -1,6 +1,7 @@
 import AbstractForm from "../abstractForm";
 import Step from "@/forms/Step";
 import OrderTypeEnum from "@/enums/orderTypeEnum";
+import axios from "axios";
 import ProductEnum from "@/enums/productEnum";
 import AdopterEnum from "@/enums/adopterEnum";
 import ProjectEnum from "@/enums/projectEnum";
@@ -8,12 +9,29 @@ import ProjectEnum from "@/enums/projectEnum";
 export default class DepositForm extends AbstractForm {
 
   beforeLoad(context) {
-    return new Promise((resolve) => {
-      // appel api pour récupérer les infos de l'adoption
+    return new Promise((resolve, reject) => {
+      const params = new URLSearchParams(window.location.search)
+
+      if (params.has("adoptionUuid") === false) {
+        reject('adoption_not_found')
+      } else {
+        const uuid = params.get("adoptionUuid");
+        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/" + uuid + "/details")
+          .then(resp => {
+            let data = resp.data
+            data.order.uuid = uuid
+            context.dispatch('updateForm', data).then(() => resolve())
+          })
+          .catch(() => {
+            reject('adoption_not_found')
+          })
+      }
+
 
       // mock
       let data = {
         order: {
+          uuid: "0bc9c12a-bb79-4af0-b59b-08a012857dc5",
           type: OrderTypeEnum.gift,
           productType: ProductEnum.coral,
           quantity: 1
@@ -59,7 +77,8 @@ export default class DepositForm extends AbstractForm {
       true,
       false,
       true,
-      false
+      false,
+      {method: "post"},
     ),
     new Step(
       null,

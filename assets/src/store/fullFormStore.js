@@ -128,16 +128,20 @@ export default class FullFormStore {
           if (!(form instanceof AbstractForm)) {
             reject('Formulaire incomplet')
           } else {
-            form.beforeLoad(context).then(() => {
-              let steps = checkStepsToDisplay(form, context.state)
-              if (steps.length === 0) {
-                form.nextForm(context).then(() => resolve())
-              } else {
-                form.steps = steps
-                context.commit("loadSpecificForm", form)
-                resolve()
-              }
-            })
+            form.beforeLoad(context)
+              .then(() => {
+                let steps = checkStepsToDisplay(form, context.state)
+                if (steps.length === 0) {
+                  form.nextForm(context).then(() => resolve())
+                } else {
+                  form.steps = steps
+                  context.commit("loadSpecificForm", form)
+                  resolve()
+                }
+              })
+              .catch(error => {
+                reject(error)
+              })
           }
         })
       },

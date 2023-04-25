@@ -287,21 +287,20 @@ export default {
     multipleRecipient: {
       title: "À qui offrez-vous le {item} | À qui offrez-vous les {item}",
       description: "Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif.",
-      company: "Deux solutions s'offrent à vous :",
       tabs: {
         fields: {
-          title: "Je remplis les champs",
+          title: "Remplir les champs",
           description: "Je renseigne les coordonnées de chacun de mes destinataires dans les champs ci-dessous :",
           recipient: "Destinataire n°{index}"
         },
         file: {
-          title: "J'envoie un fichier",
-          subtitle: "J'envoie un fichier avec les coordonnées de mes destinataires",
-          description: "Je télécharge le fichier Excel mis à ma disposition. Une fois rempli, je me rends à l'adresse communiquée dans le mail de confirmation reçu et je dépose mon fichier dans le champ prévu à cet effet.",
-          button: "Télécharger le fichier",
+          title: "Importer un fichier",
+          // subtitle: "J'envoie un fichier avec les coordonnées de mes destinataires",
+          // description: "Je télécharge le fichier Excel mis à ma disposition. Une fois rempli, je me rends à l'adresse communiquée dans le mail de confirmation reçu et je dépose mon fichier dans le champ prévu à cet effet.",
+          // button: "Télécharger le fichier",
           upload: {
-            label: "Votre fichier",
-            description: "Déposez votre fichier Excel de destinataires ici :"
+            label: "Parcourir",
+            description: "Importez ci-dessous votre fichier Excel dûment complété :"
           }
         }
       }
