@@ -1,10 +1,9 @@
 <template>
   <div id="gift-step">
     <p
-        class="mb-10"
+        class="mb-10 cg-base-text"
         v-html="$t('default.stepper.gift.description')"
     />
-
     <v-form
         :ref="formRefName"
         v-model="valid"

@@ -33,4 +33,13 @@ export default class AbstractForm {
   onload() {
     console.log("You should Implement 'onload' method !")
   }
+
+  // method exécutée avant le chargement d'un formulaire
+  /**
+   * @property context - le store
+   * @returns {Promise<unknown>}
+   */
+  beforeLoad() {
+    return new Promise(resolve => resolve())
+  }
 }

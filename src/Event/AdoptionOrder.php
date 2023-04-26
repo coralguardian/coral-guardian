@@ -17,9 +17,10 @@ class AdoptionOrder extends AbstractEmailEvent
         string $fiscalReceiptUrl,
         string $nextStepUrl,
         string $project,
+        bool $namingDone,
         bool $isCompany = false,
     ) {
-        self::sendQuery($email, compact('project','lang', 'quantity', 'fiscalReceiptUrl', 'nextStepUrl', 'isCompany'));
+        self::sendQuery($email, compact('project','lang', 'quantity', 'fiscalReceiptUrl', 'nextStepUrl', 'isCompany', 'namingDone'));
     }
 
     protected static function getEventName(): SIBEvent
@@ -36,7 +37,9 @@ class AdoptionOrder extends AbstractEmailEvent
             fiscalReceiptUrl: FiscalReceiptService::getURl($entity->getUuid()),
             nextStepUrl: RedirectionService::buildRedirectionUrlWithoutHost($entity),
             project: $entity->getProject()->value,
-            isCompany: $entity->getCustomer() instanceof CompanyCustomerEntity
+            namingDone: count($entity->getAdoptees()) > 0,
+            isCompany: $entity->getCustomer() instanceof CompanyCustomerEntity,
+
         );
     }
 }

@@ -1,89 +1,99 @@
 <template>
   <div>
+    <hint
+        class="my-2"
+        v-if="alert"
+        type="danger"
+    >
+      <p
+          class="cg-base-text"
+          v-html="alert"
+      />
+    </hint>
 
-    <v-alert
-        v-if="options.displayAlert"
-        text
-        color="tertiary"
-        v-html="options.message"
-        class="text-body-2"
-    />
+    <v-row>
+      <v-col cols="6">
+        <text-input
+            :value="order.quantity"
+            :label="$t('default.stepper.adoption.quantity.label')"
+            type="number"
+            @input="updateQuantity"
+            @change="checkQuantity"
+            :max="max"
+            :rules="[rules.minValue, rules.required]"
+        />
+      </v-col>
+    </v-row>
 
-    <div class="pa-2">
-      <incrementor :options="options" :item="options.item" :big="big"/>
-    </div>
-
-    <custom-amount
-        v-model="order.price"
-        ref="customAmount"
-        @input="updateCustomAmount"
-    />
-
-    <v-divider class="primary"/>
-
-    <deduction :donation="order.price" :big="big"/>
-
+    <v-row>
+      <v-col cols="6">
+        <custom-amount
+            v-model="order.price"
+            ref="customAmount"
+            @input="updateCustomAmount"
+            @change="checkCustomPrice"
+        />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
-import Incrementor from "@/components/utils/Incrementor";
-import Deduction from "@/components/utils/Deduction";
 import CustomAmount from "@/components/utils/CustomAmount";
-import {mapGetters, mapActions, mapState} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
+import TextInput from "@/components/utils/TextInput.vue";
+import validationMixin from "@/mixins/validationMixin";
+import Hint from "@/components/utils/Hint.vue";
 
 export default {
   name: "adoption-count-block",
   components: {
-    Incrementor,
-    Deduction,
+    Hint,
+    TextInput,
     CustomAmount
   },
-  mixins: [itemTranslationMixin],
+  mixins: [itemTranslationMixin, validationMixin],
   props: {
-    options: {
-      type: Object,
-      required: true
+    alert: {
+      type: String,
+      default: ""
     },
-    big: {
-      type: Boolean,
-      default: false
+    max: {
+      type: Number,
+      default: null
     }
   },
-  data () {
+  data() {
     return {}
   },
   computed: {
     ...mapGetters({
       order: "getOrder",
-    }),
-    ...mapState({
-      baseElementPrice: state => state.data.baseElementPrice
+      minimumPrice: "getMinimumPrice"
     })
-  },
-  watch: {
-    order: {
-      deep: true,
-      handler (newVal) {
-        this.setMinInput(newVal.quantity * this.baseElementPrice)
-      }
-    }
   },
   methods: {
     ...mapActions({
-      updateForm: 'updateForm'
+      updateForm: 'updateForm',
+      setQuantity: 'setQuantity'
     }),
     updateCustomAmount(value) {
-      this.$refs.customAmount.getInput().$data.lazyValue = value
       this.updateForm({order: {price: value, customAmount: true}})
     },
-    setMinInput (value) {
-      this.$refs.customAmount.setMinInput(value)
+    checkCustomPrice(value) {
+      if (value < this.minimumPrice) {
+        this.updateForm({order: {price: this.minimumPrice, customAmount: false}})
+      }
+    },
+    updateQuantity(value) {
+      this.setQuantity(value)
+    },
+    checkQuantity(value) {
+      if (value < 1) {
+        this.setQuantity(1)
+      }
     }
-  },
-  mounted() {
-    this.setMinInput(this.order.quantity * this.baseElementPrice)
   }
 }
 </script>
@@ -92,10 +102,6 @@ export default {
 .v-divider {
   margin: 1rem 0;
   border-width: 1px;
-}
-
-.custom-amount {
-  margin-top: -30px;
 }
 
 .v-alert {

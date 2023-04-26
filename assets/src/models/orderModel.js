@@ -8,7 +8,7 @@ export default class OrderModel {
   constructor(data) {
     let order = {
       customer: new CustomerModel(data),
-      productsOrdered: [],
+      productsOrdered: null,
       donationOrdered: [],
       totalAmount: data.order.price + data.donation.price,
       lang: i18n.locale,
@@ -20,7 +20,7 @@ export default class OrderModel {
     }
 
     if (data.selectedProduct !== null) {
-      order.productsOrdered = [new ProductOrderModel(data)]
+      order.productsOrdered = new ProductOrderModel(data)
     }
 
     if (data.donation.price > 0) {

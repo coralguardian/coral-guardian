@@ -2,10 +2,9 @@
   <div>
     <v-tabs
         fixed-tabs
-        background-color="primary"
-        class="black--text"
         v-model="paymentTab"
-        active-class="tertiary-tab-active"
+        active-class="tab-active"
+        class="mb-10"
     >
       <v-tab @change="updatePaymentMethod(paymentMethodEnum.creditCard)">
         {{ $t('default.stepper.payment.methods.card.tab') }}
@@ -19,14 +18,17 @@
     <v-tabs-items v-model="paymentTab">
       <v-tab-item>
         <stripe-card-data v-if="cardDisplay" ref="cardData" :mode="mode"/>
-        <v-btn
-            v-else
-            color="secondary"
-            class="black--text mt-5"
-            @click="cardDisplay = true"
-        >
-          {{ $t('default.stepper.payment.methods.card.button') }}
-        </v-btn>
+        <div class="d-flex justify-center" v-else>
+          <v-btn
+              class="cg-btn"
+              color="primary"
+              rounded
+              @click="cardDisplay = true"
+          >
+            {{ $t('default.stepper.payment.methods.card.button') }}
+          </v-btn>
+        </div>
+
       </v-tab-item>
       <v-tab-item>
         <bank-transfer-block/>

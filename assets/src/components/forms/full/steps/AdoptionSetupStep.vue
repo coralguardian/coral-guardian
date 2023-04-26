@@ -2,23 +2,23 @@
   <div>
     <div class="d-flex justify-space-around btn-container">
       <setup-btn
+          class="text-capitalize"
           v-model="isCoral"
           @click="updateForm({order: {productType: productEnum.coral}})"
       >
-        <img class="form-icon" :src="path + '/img/icons/corail.svg'" alt="">
+        <icon icon-path="'/img/icons/corail.svg'" alt=""/>
         {{$tc('default.coral', 1)}}
       </setup-btn>
       <setup-btn
+          class="text-capitalize"
           v-model="isReef"
           @click="updateForm({order: {productType: productEnum.reef}})"
       >
-        <img class="form-icon" :src="path + '/img/icons/recif.svg'" alt="">
+        <icon icon-path="'/img/icons/recif.svg'" alt=""/>
         {{$tc('default.reef.base', 1)}}
 
         <btn-tooltip>
-          <div class="text-center">
-            <span v-html="$t('default.reef.tooltip')"/>
-          </div>
+          <span v-html="$t('default.reef.tooltip')"/>
         </btn-tooltip>
       </setup-btn>
     </div>
@@ -37,11 +37,13 @@ import validationMixin from "../../../../mixins/validationMixin";
 import BtnTooltip from "../../../utils/BtnTooltip";
 import SetupBtn from "../SetupBtn";
 import ProductEnum from "@/enums/productEnum";
+import Icon from "@/components/utils/Icon.vue";
 
 export default {
   name: "adoption-setup-step",
   mixins: [validationMixin],
   components: {
+    Icon,
     BtnTooltip,
     SetupBtn
   },
@@ -52,8 +54,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      order: "getOrder",
-      path: "getImgPath"
+      order: "getOrder"
     }),
     productEnum() {
       return ProductEnum

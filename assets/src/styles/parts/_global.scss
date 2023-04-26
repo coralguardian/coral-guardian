@@ -13,6 +13,7 @@
 
 .v-application--wrap {
   min-height: unset !important;
+  align-items: center !important;
 }
 
 .v-application {
@@ -73,22 +74,58 @@ p {
   border-left: unset !important;
 }
 
-.v-btn.secondary {
-  color: black !important;
+.v-btn.primary .v-btn__content {
+  color: white !important;
 }
 
 #app .v-card__title {
   word-break: inherit;
 }
 
-.tertiary-tab-active {
-  background: $tertiary;
+.v-tab {
+  font-size: 16px !important;
+  text-transform: none !important;
+  color: #6F6C90 !important;
+  opacity: 0.5 !important;
+}
+
+.tab-active {
+  color: $primary !important;
+  opacity: unset !important;
 }
 
 .btn-container {
   @media (max-width: 450px) {
     flex-direction: column;
   }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px
+}
+
+.cg-btn {
+  border-radius: 56px;
+  padding: 20px 40px !important;
+  height: unset !important;
+  text-transform: none !important;
+  font-size: 18px !important;
+  line-height: 20px !important;
+  font-weight: 700 !important;
+  //font-family: 'DM Sans' !important;
+
+  &.previous {
+    font-weight: 400 !important;
+    border: 1px solid $primary !important;
+    background: transparent !important;
+    color: $primary !important;
+  }
+}
+
+a.cg-btn {
+  display: inline-block;
+  color: white !important;
+  background: $primary !important;
 }
 
 #paymentStep .v-stepper, #paymentStep .v-stepper__header {
@@ -97,9 +134,34 @@ p {
 
 // empécher les tooltip d'apparaître dans le footer
 .v-tooltip__content {
-  top: 12px !important;
+  top: -20px !important;
+  left: -100px !important;
+  white-space: normal !important;
+
+    @media #{map-get($display-breakpoints, 'sm-and-up')} {
+      min-width: 350px;
+    }
+    @media #{map-get($display-breakpoints, 'sm-and-down')} {
+      min-width: 250px;
+    }
 }
 
 .v-dialog__content {
   align-items: end !important;
+}
+
+.v-input--checkbox {
+  i {
+    color: $primary !important;
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  opacity: 1
+}
+
+.cg-divider {
+  background: #D9DBE9;
+  width: 92%;
+  margin-left: 4% !important;
 }

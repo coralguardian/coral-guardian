@@ -228,7 +228,7 @@ export default {
     monthlyDonation: {
       description: "Ensure the evolution of the restoration area with a monthly donation which will help us continue to protect, restore and raise awareness."
     },
-    multipleAdoption: {
+    namingAdoption: {
       description: {
         indonesia: "Choose a name for your adopted {item}, you can choose the name you wish! |Choose a name for your adopted {item}, you can choose the names you wish!",
         spain: "Choose the name you wish! | Choose the names you wish!",
