@@ -52,7 +52,7 @@ export default {
   computed: {
     ...mapGetters({
       order: 'getOrder',
-      postAdoptionData: 'getPostAdoptionsData',
+      postAdoptionData: 'getAdopteeModel',
       orderToken: 'getOrderToken',
       project: "getProject"
     })
