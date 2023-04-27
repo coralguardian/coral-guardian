@@ -38,16 +38,15 @@
 
       <p class="cg-base-text lower light" v-html="$t('default.stepper.customizationSend.send.description') "/>
 
-      <v-row>
+      <div class="mt-5" v-if="scheduled">
         <v-date-picker
-            v-if="scheduled"
             v-model="gift.toSendOn"
             :first-day-of-week="1"
             :locale="$i18n.locale"
             :min="tomorrow"
             :max="maxDate"
         />
-      </v-row>
+      </div>
 
       <error-display :message="errorMessage"/>
 
@@ -66,10 +65,11 @@ import AdopterEnum from "@/enums/adopterEnum";
 import CompanyMultipleRecipientStep from "@/components/forms/blocks/CompanyMultipleRecipientBlock.vue";
 import DepositTypeEnum from "@/enums/depositTypeEnum";
 import FormTypeEnum from "@/enums/formTypeEnum";
+import queryParamsMixin from "@/mixins/queryParamsMixin";
 
 export default {
   name: "recipient-customization-step",
-  mixins: [validationMixin, apiMixin],
+  mixins: [validationMixin, apiMixin, queryParamsMixin],
   components: {
     CompanyMultipleRecipientStep,
     Hint,
@@ -88,7 +88,8 @@ export default {
       giftMessageModel: "getGiftMessageModel",
       adopter: "getAdopter",
       recipient: "getRecipient",
-      giftOrderModel: "getGiftOrderModel"
+      giftOrderModel: "getGiftOrderModel",
+      order: "getOrder"
     }),
     ...mapState({
       formType: "formType"
@@ -121,8 +122,19 @@ export default {
     ...mapActions({
       updateForm: "updateForm"
     }),
-    check() {
+    checkGift() {
       if (this.$refs[this.formRefName].validate()) {
+        if (this.formType === FormTypeEnum.deposit) {
+          this.callApi()
+        } else {
+          this.basicValidation()
+        }
+      } else {
+        this.$root.$emit("IsLoaded")
+      }
+    },
+    basicValidation() {
+      // if (this.$refs[this.formRefName].validate()) {
         if (this.scheduled && this.gift.toSendOn === null) {
           this.errorMessage = this.$t("default.errors.select_date")
           this.$root.$emit("IsLoaded")
@@ -130,11 +142,11 @@ export default {
           this.errorMessage = null
           this.$root.$emit("StepValid")
         }
-      } else {
-        this.$root.$emit("IsLoaded")
-      }
+      // } else {
+      //   this.$root.$emit("IsLoaded")
+      // }
     },
-    createGift() {
+    callApi() {
       // destinataires avec fichier
       if (this.gift.file !== null && this.recipient.type === DepositTypeEnum.file) {
         const options = {
@@ -147,7 +159,7 @@ export default {
         this.post(formData, "adoption/{uuid}/recipientsFile", options)
           .then(() => {
             this.cleanUrl()
-            this.$root.$emit('ApiValid')
+            this.$root.$emit('StepValid')
           })
           .catch(() => {
             this.fileError = this.$t('default.errors.incorrect_file_data')
@@ -155,10 +167,10 @@ export default {
           })
         // destinataires via formulaire
       } else {
-        this.post(this.giftOrderModel, "adoption/{uuid}/recipientsFile")
+        this.post(this.giftOrderModel, "adoption/" + this.order.uuid + "/friends")
           .then(() => {
             this.cleanUrl()
-            this.$root.$emit('ApiValid')
+            this.$root.$emit('StepValid')
           })
           .catch(err => {
             console.error(err)
@@ -168,12 +180,10 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on(this.customValidationEventName, () => this.check())
-    this.$root.$on(this.apiEventName, () => this.createGift())
+    this.$root.$on(this.customValidationEventName, () => this.checkGift())
   },
   beforeDestroy() {
     this.$root.$off(this.customValidationEventName)
-    this.$root.$off(this.apiEventName)
   }
 }
 </script>

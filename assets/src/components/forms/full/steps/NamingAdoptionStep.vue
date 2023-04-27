@@ -67,7 +67,6 @@ export default {
       updateForm: "updateForm"
     }),
     checkAdoption() {
-      console.log("adoption", this.formType)
       if (this.formType === FormTypeEnum.deposit) {
         this.callApi()
       } else {
@@ -76,10 +75,8 @@ export default {
     },
     updateAdoptionType(value) {
       if (value === false) {
-        // this.valid = false
         this.updateForm({adoption: {type: DepositTypeEnum.fields}})
       } else {
-        // this.valid = true
         this.updateForm({adoption: {type: null}})
       }
     },

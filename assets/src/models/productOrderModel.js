@@ -1,5 +1,6 @@
 import SendToFriendEnum from "@/enums/sendToFriendEnum";
 import GiftOrderModel from "@/models/giftOrderModel";
+import OrderTypeEnum from "@/enums/orderTypeEnum";
 
 export default class ProductOrderModel {
   constructor(data) {
@@ -13,7 +14,7 @@ export default class ProductOrderModel {
       product.variant = data.selectedProduct.variant
     }
 
-    if (data.adoption.names) {
+    if (data.adoption.names.length && data.order.type === OrderTypeEnum.regular) {
       product.selfAdoptionModel = {names: data.adoption.names}
     }
 
