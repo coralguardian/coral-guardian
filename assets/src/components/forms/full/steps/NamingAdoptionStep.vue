@@ -94,9 +94,7 @@ export default {
               'Content-Type': 'multipart/form-data'
             }
           }
-          let formData = new FormData();
-          formData.append("adoption_file", this.adoption.file);
-          this.post(this.recipientDepositFileModel, "adoption/" + this.order.uuid + "/recipientsFile", options)
+          this.post(this.createFormData(), "adoption/" + this.order.uuid + "/namesFile", options)
             .then(() => {
               this.cleanUrl()
               this.$root.$emit('StepValid')
@@ -124,6 +122,11 @@ export default {
           }
         }
       }
+    },
+    createFormData() {
+      let formData = new FormData();
+      formData.append("adoption_file", this.adoption.file);
+      return formData
     }
   },
   mounted() {
