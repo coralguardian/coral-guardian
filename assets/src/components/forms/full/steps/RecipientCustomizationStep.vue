@@ -38,7 +38,7 @@
 
       <p class="cg-base-text lower light" v-html="$t('default.stepper.customizationSend.send.description') "/>
 
-      <div class="mt-5" v-if="scheduled">
+      <div class="mt-5 d-inline-block" v-if="scheduled">
         <v-date-picker
             v-model="gift.toSendOn"
             :first-day-of-week="1"
@@ -85,11 +85,11 @@ export default {
   computed: {
     ...mapGetters({
       gift: "getGift",
-      giftMessageModel: "getGiftMessageModel",
       adopter: "getAdopter",
       recipient: "getRecipient",
-      giftOrderModel: "getGiftOrderModel",
-      order: "getOrder"
+      order: "getOrder",
+      recipientDepositFileModel: "getRecipientDepositFileModel",
+      recipientDepositModel: "getRecipientDepositModel"
     }),
     ...mapState({
       formType: "formType"
@@ -154,9 +154,7 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         }
-        let formData = new FormData();
-        formData.append("recipient_file", this.gift.file);
-        this.post(formData, "adoption/{uuid}/recipientsFile", options)
+        this.post(this.recipientDepositFileModel, "adoption/" + this.order.uuid + "/recipientsFile", options)
           .then(() => {
             this.cleanUrl()
             this.$root.$emit('StepValid')
@@ -167,7 +165,7 @@ export default {
           })
         // destinataires via formulaire
       } else {
-        this.post(this.giftOrderModel, "adoption/" + this.order.uuid + "/friends")
+        this.post(this.recipientDepositModel, "adoption/" + this.order.uuid + "/friends")
           .then(() => {
             this.cleanUrl()
             this.$root.$emit('StepValid')

@@ -34,10 +34,11 @@ import MultipleAdoptionBlock from "@/components/forms/blocks/MultipleAdoptionBlo
 import CompanyMultipleAdoptionBlock from "@/components/forms/blocks/CompanyMultipleAdoptionBlock.vue";
 import validationMixin from "@/mixins/validationMixin";
 import apiMixin from "@/mixins/apiMixin";
+import queryParamsMixin from "@/mixins/queryParamsMixin";
 
 export default {
   name: "naming-adoption-step",
-  mixins: [validationMixin, apiMixin],
+  mixins: [validationMixin, apiMixin, queryParamsMixin],
   components: {
     MultipleAdoptionBlock,
     CompanyMultipleAdoptionBlock
@@ -50,7 +51,7 @@ export default {
       adoption: "getAdoption",
       adopter: "getAdopter",
       order: "getOrder",
-      adopteeModel: "getAdopteeModel"
+      adopteeDepositModel: "getAdopteeDepositModel"
     }),
     ...mapState({
       formType: "formType"
@@ -84,8 +85,25 @@ export default {
     callApi() {
       if (this.$refs[this.formRefName].validate()) {
         if (this.adoption.type === DepositTypeEnum.fields) {
-          this.post(this.adopteeModel, 'adoption/' + this.order.uuid + '/names')
+          this.post(this.adopteeDepositModel, 'adoption/' + this.order.uuid + '/names')
             .then(() => this.$root.$emit("StepValid"))
+            .catch(() => this.$root.$emit("IsLoaded"))
+        } else {
+          const options = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+          let formData = new FormData();
+          formData.append("adoption_file", this.adoption.file);
+          this.post(this.recipientDepositFileModel, "adoption/" + this.order.uuid + "/recipientsFile", options)
+            .then(() => {
+              this.cleanUrl()
+              this.$root.$emit('StepValid')
+            })
+            .catch(() => {
+              this.$root.$emit('IsLoaded')
+            })
         }
       } else {
         this.$root.$emit("IsLoaded")

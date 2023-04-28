@@ -41,7 +41,7 @@ export default class FullFormStore {
         },
         gift: {
           recipients: [],
-          message: "",
+          message: null,
           toSendOn: null
         },
         forms: []

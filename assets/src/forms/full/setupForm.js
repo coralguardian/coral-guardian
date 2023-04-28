@@ -23,11 +23,11 @@ export default class SetupForm extends AbstractForm {
           context.dispatch('loadForm', new ProjectForm())
             .then(() => resolve())
           break;
-        case ActionEnum.donation:
-          context.dispatch('updateForm', {project: ProjectEnum.indonesia})
-          context.dispatch('loadForm', new DonationForm(context.state.data.project))
-            .then(() => resolve())
-          break;
+        // case ActionEnum.donation:
+        //   context.dispatch('updateForm', {project: ProjectEnum.indonesia})
+        //   context.dispatch('loadForm', new DonationForm(context.state.data.project))
+        //     .then(() => resolve())
+        //   break;
         default:
           reject("Formulaire non trouvé")
       }
