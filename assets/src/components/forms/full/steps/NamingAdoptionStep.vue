@@ -87,7 +87,10 @@ export default {
         if (this.adoption.type === DepositTypeEnum.fields) {
           this.post(this.adopteeDepositModel, 'adoption/' + this.order.uuid + '/names')
             .then(() => this.$root.$emit("StepValid"))
-            .catch(() => this.$root.$emit("IsLoaded"))
+            .catch(() => {
+              this.$vuetify.goTo('#namingAdoption', {offset: 200})
+              this.$root.$emit("IsLoaded")
+            })
         } else {
           const options = {
             headers: {
@@ -100,6 +103,7 @@ export default {
               this.$root.$emit('StepValid')
             })
             .catch(() => {
+              this.$vuetify.goTo('#namingAdoption', {offset: 200})
               this.$root.$emit('IsLoaded')
             })
         }

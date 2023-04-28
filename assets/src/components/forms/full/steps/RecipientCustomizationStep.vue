@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div id="recipientStep">
     <v-form
         :ref="formRefName"
         v-model="valid"
     >
       <multiple-recipient-block v-if="formType === formTypeEnum.advanced || adopter.type === adopterEnum.individual"/>
-      <company-multiple-recipient-step v-else-if="formType === formTypeEnum.deposit && adopter.type === adopterEnum.company"/>
+      <company-multiple-recipient-step
+          v-else-if="formType === formTypeEnum.deposit && adopter.type === adopterEnum.company"/>
 
       <v-divider class="cg-divider my-6"/>
 
@@ -134,17 +135,13 @@ export default {
       }
     },
     basicValidation() {
-      // if (this.$refs[this.formRefName].validate()) {
-        if (this.scheduled && this.gift.toSendOn === null) {
-          this.errorMessage = this.$t("default.errors.select_date")
-          this.$root.$emit("IsLoaded")
-        } else {
-          this.errorMessage = null
-          this.$root.$emit("StepValid")
-        }
-      // } else {
-      //   this.$root.$emit("IsLoaded")
-      // }
+      if (this.scheduled && this.gift.toSendOn === null) {
+        this.errorMessage = this.$t("default.errors.select_date")
+        this.$root.$emit("IsLoaded")
+      } else {
+        this.errorMessage = null
+        this.$root.$emit("StepValid")
+      }
     },
     callApi() {
       // destinataires avec fichier
@@ -161,6 +158,7 @@ export default {
           })
           .catch(() => {
             this.fileError = this.$t('default.errors.incorrect_file_data')
+            this.$vuetify.goTo('#recipientStep', {offset: 200})
             this.$root.$emit('IsLoaded')
           })
         // destinataires via formulaire
@@ -172,6 +170,7 @@ export default {
           })
           .catch(err => {
             console.error(err)
+            this.$vuetify.goTo('#recipientStep', {offset: 200})
             this.$root.$emit('IsLoaded')
           })
       }

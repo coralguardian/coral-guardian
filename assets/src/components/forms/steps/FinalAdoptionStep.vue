@@ -6,7 +6,7 @@
     </template>
 
     <p
-        v-if="adoption.type !== 'fields'"
+        v-if="adoption.type !== 'fields' && formType === formTypeEnum.advanced"
         class="cg-base-text light"
         v-html="$tc('default.stepper.finalAdoption.description_not_named', order.quantity, translation)"
     />
@@ -33,9 +33,10 @@
 <script>
 import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
-import {mapGetters} from "vuex";
+import {mapGetters, mapState} from "vuex";
 import itemTranslationMixin from "../../../mixins/itemTranslationMixin";
 import FinalStep from "@/components/forms/misc/FinalStep.vue";
+import FormTypeEnum from "@/enums/formTypeEnum";
 
 export default {
   name: "final-adoption-step",
@@ -47,7 +48,13 @@ export default {
     ...mapGetters({
       adoption: "getAdoption",
       order: "getOrder"
-    })
+    }),
+    ...mapState({
+      formType: "formType"
+    }),
+    formTypeEnum() {
+      return FormTypeEnum
+    }
   }
 }
 </script>
