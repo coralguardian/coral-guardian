@@ -1,8 +1,8 @@
 import AbstractForm from "../abstractForm";
 import adoptionHelper from "@/helpers/adoptionHelper";
 import AdoptionForm from "@/forms/full/adoptionForm";
-import Step from "@/forms/Step";
 import GiftForm from "@/forms/full/giftForm";
+import AdoptionSetupStep from "@/forms/steps/AdoptionSetupStep";
 
 export default class ProductForm extends AbstractForm {
 
@@ -38,17 +38,6 @@ export default class ProductForm extends AbstractForm {
   }
 
   steps = [
-    new Step(
-      "default.stepper.header.full.adoption",
-      1,
-      "AdoptionSetupStep",
-      (state) => {
-        return state.data.order.productType === null
-      },
-      true,
-      false,
-      true,
-      true
-    )
+    new AdoptionSetupStep()
   ]
 }

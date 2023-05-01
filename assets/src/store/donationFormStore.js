@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import BaseFormStore from "@/store/baseFormStore";
-import PaymentStep from "@/forms/steps/PaymentStep";
+import DonationPaymentStep from "@/forms/steps/DonationPaymentStep";
 import ProjectEnum from "@/enums/projectEnum";
 import AdopterEnum from "@/enums/adopterEnum";
 
@@ -33,7 +33,7 @@ export default new Vuex.Store({
   getters: {
     ...baseStore.getters,
     getCurrentStep: () => {
-      return new PaymentStep();
+      return new DonationPaymentStep();
     }
   },
   mutations: {

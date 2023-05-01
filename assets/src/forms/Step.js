@@ -27,7 +27,13 @@ export default class Step {
     this.continueButtonLabel = continueButtonLabel
   }
 
+  // méthode exécutée à chaque fois que l'on essaie d'afficher l'étape et si elle retourne false alors on saute l'étape
   evaluate() {
     return true
+  }
+
+  // méthode exécutée à chaque fois que l'on décharge l'étape en faisant précédent
+  destroy() {
+    return
   }
 }

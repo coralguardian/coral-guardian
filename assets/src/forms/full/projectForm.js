@@ -48,6 +48,13 @@ export default class ProjectForm extends AbstractForm {
       })
   }
 
+  unload(state) {
+    return new Promise(resolve => {
+      state.data.project = null
+      resolve()
+    })
+  }
+
   steps = [
     new Step(
       "default.stepper.header.project",

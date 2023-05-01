@@ -4,6 +4,7 @@ import {clone} from "lodash";
 import Step from "@/forms/Step";
 import BankTransferThanksStep from "@/forms/steps/BankTransfertThanksStep";
 import FinalAdoptionStep from "@/forms/steps/FinalAdoptionStep";
+import PaymentStep from "@/forms/steps/PaymentStep";
 
 export default class AdoptionForm extends AbstractForm {
 
@@ -89,20 +90,7 @@ export default class AdoptionForm extends AbstractForm {
         false,
         'finalized'
       ),
-      new Step(
-        "default.stepper.payment.title",
-        6,
-        "PaymentStep",
-        () => true,
-        true,
-        false,
-        true,
-        true,
-        {method: "post", endpoint: "createOrder"},
-        true,
-        false,
-        'pay'
-      ),
+      new PaymentStep(),
       new FinalAdoptionStep,
       new BankTransferThanksStep
     ]

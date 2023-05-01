@@ -3,6 +3,7 @@ import ProductEnum from "@/enums/productEnum";
 import {clone} from "lodash";
 import Step from "@/forms/Step";
 import RecipientCustomizationStep from "@/forms/steps/RecipientCustomizationStep";
+import PaymentStep from "@/forms/steps/PaymentStep";
 
 export default class GiftForm extends AbstractForm {
 
@@ -79,20 +80,7 @@ export default class GiftForm extends AbstractForm {
         false,
         'finalized'
       ),
-      new Step(
-        "default.stepper.payment.title",
-        6,
-        "PaymentStep",
-        () => true,
-        true,
-        false,
-        true,
-        true,
-        {method: "post", endpoint: "createOrder"},
-        true,
-        false,
-        'pay'
-      ),
+      new PaymentStep(),
       new Step(
         null,
         null,

@@ -4,7 +4,7 @@
       <p class="cg-base-text"
          v-html="$tc('default.stepper.namingAdoption.description.' + project, order.quantity, translation)"/>
     </hint>
-    <v-row>
+    <v-row v-if="adoption.type !== null">
       <v-col
           cols="6"
           v-for="n in order.quantity"

@@ -1,5 +1,6 @@
 import GiftOrderModel from "@/models/giftOrderModel";
 import OrderTypeEnum from "@/enums/orderTypeEnum";
+import DepositTypeEnum from "@/enums/depositTypeEnum";
 
 export default class ProductOrderModel {
   constructor(data) {
@@ -14,7 +15,8 @@ export default class ProductOrderModel {
     }
 
     if (data.order.type === OrderTypeEnum.regular) {
-      product.selfAdoptionModel = {names: data.adoption.names}
+      const names = data.adoption.type === DepositTypeEnum.fields ? data.adoption.names : []
+      product.selfAdoptionModel = {names: names}
     }
 
     if (data.order.type === OrderTypeEnum.gift) {

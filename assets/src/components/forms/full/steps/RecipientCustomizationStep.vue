@@ -5,7 +5,7 @@
         v-model="valid"
     >
       <multiple-recipient-block v-if="formType === formTypeEnum.advanced || adopter.type === adopterEnum.individual"/>
-      <company-multiple-recipient-step
+      <company-multiple-recipient-block
           v-else-if="formType === formTypeEnum.deposit && adopter.type === adopterEnum.company"/>
 
       <v-divider class="cg-divider my-6"/>
@@ -63,7 +63,7 @@ import apiMixin from "@/mixins/apiMixin";
 import MultipleRecipientBlock from "@/components/forms/blocks/MultipleRecipientBlock.vue";
 import Hint from "@/components/utils/Hint.vue";
 import AdopterEnum from "@/enums/adopterEnum";
-import CompanyMultipleRecipientStep from "@/components/forms/blocks/CompanyMultipleRecipientBlock.vue";
+import CompanyMultipleRecipientBlock from "@/components/forms/blocks/CompanyMultipleRecipientBlock.vue";
 import DepositTypeEnum from "@/enums/depositTypeEnum";
 import FormTypeEnum from "@/enums/formTypeEnum";
 import queryParamsMixin from "@/mixins/queryParamsMixin";
@@ -72,7 +72,7 @@ export default {
   name: "recipient-customization-step",
   mixins: [validationMixin, apiMixin, queryParamsMixin],
   components: {
-    CompanyMultipleRecipientStep,
+    CompanyMultipleRecipientBlock,
     Hint,
     ErrorDisplay,
     MultipleRecipientBlock

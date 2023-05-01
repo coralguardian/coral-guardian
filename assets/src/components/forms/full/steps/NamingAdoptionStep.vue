@@ -78,7 +78,7 @@ export default {
       if (value === false) {
         this.updateForm({adoption: {type: DepositTypeEnum.fields}})
       } else {
-        this.updateForm({adoption: {type: null}})
+        this.updateForm({adoption: {type: null, names: []}})
       }
     },
     // formulaire de dépot, on a besoin des noms et de les POST

@@ -2,7 +2,7 @@
   <final-step>
 
     <template v-slot:hint>
-      {{ $t("default.stepper.finalAdoption.hint", {count: order.quantity, item: order.productType}) }}
+      {{ $t("default.stepper.finalAdoption.hint", {...{count: order.quantity}, ...translation}) }}
     </template>
 
     <p
