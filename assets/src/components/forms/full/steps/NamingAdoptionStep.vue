@@ -33,10 +33,12 @@ import FormTypeEnum from "@/enums/formTypeEnum";
 import MultipleAdoptionBlock from "@/components/forms/blocks/MultipleAdoptionBlock.vue";
 import CompanyMultipleAdoptionBlock from "@/components/forms/blocks/CompanyMultipleAdoptionBlock.vue";
 import validationMixin from "@/mixins/validationMixin";
+import apiMixin from "@/mixins/apiMixin";
+import queryParamsMixin from "@/mixins/queryParamsMixin";
 
 export default {
   name: "naming-adoption-step",
-  mixins: [validationMixin],
+  mixins: [validationMixin, apiMixin, queryParamsMixin],
   components: {
     MultipleAdoptionBlock,
     CompanyMultipleAdoptionBlock
@@ -48,6 +50,8 @@ export default {
     ...mapGetters({
       adoption: "getAdoption",
       adopter: "getAdopter",
+      order: "getOrder",
+      adopteeDepositModel: "getAdopteeDepositModel"
     }),
     ...mapState({
       formType: "formType"
@@ -64,6 +68,51 @@ export default {
       updateForm: "updateForm"
     }),
     checkAdoption() {
+      if (this.formType === FormTypeEnum.deposit) {
+        this.callApi()
+      } else {
+        this.basicValidation()
+      }
+    },
+    updateAdoptionType(value) {
+      if (value === false) {
+        this.updateForm({adoption: {type: DepositTypeEnum.fields}})
+      } else {
+        this.updateForm({adoption: {type: null, names: []}})
+      }
+    },
+    // formulaire de dépot, on a besoin des noms et de les POST
+    callApi() {
+      if (this.$refs[this.formRefName].validate()) {
+        if (this.adoption.type === DepositTypeEnum.fields) {
+          this.post(this.adopteeDepositModel, 'adoption/' + this.order.uuid + '/names')
+            .then(() => this.$root.$emit("StepValid"))
+            .catch(() => {
+              this.$vuetify.goTo('#namingAdoption', {offset: 200})
+              this.$root.$emit("IsLoaded")
+            })
+        } else {
+          const options = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+          this.post(this.createFormData(), "adoption/" + this.order.uuid + "/namesFile", options)
+            .then(() => {
+              this.cleanUrl()
+              this.$root.$emit('StepValid')
+            })
+            .catch(() => {
+              this.$vuetify.goTo('#namingAdoption', {offset: 200})
+              this.$root.$emit('IsLoaded')
+            })
+        }
+      } else {
+        this.$root.$emit("IsLoaded")
+      }
+    },
+    // dans le chemin normal avant le paiement
+    basicValidation() {
       if (this.adoption.type === null) {
         // je n'ai pas d'inspiration
         this.$root.$emit('StepValid')
@@ -78,14 +127,10 @@ export default {
         }
       }
     },
-    updateAdoptionType(value) {
-      if (value === false) {
-        this.valid = false
-        this.updateForm({adoption: {type: DepositTypeEnum.fields}})
-      } else {
-        this.valid = true
-        this.updateForm({adoption: {type: null}})
-      }
+    createFormData() {
+      let formData = new FormData();
+      formData.append("adoption_file", this.adoption.file);
+      return formData
     }
   },
   mounted() {

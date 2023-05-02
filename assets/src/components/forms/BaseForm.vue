@@ -56,14 +56,14 @@
 
           </step>
 
+          <form-footer
+              v-if="displayFooter(index)"
+              class="base-form-footer"
+          />
+
         </v-tab-item>
 
       </v-tabs-items>
-
-      <form-footer
-          v-if="currentStep.component !== 'ChoiceStep'"
-          class="base-form-footer"
-      />
 
     </div>
 
@@ -107,6 +107,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      steps: 'getSteps',
       stepNumber: 'step',
       currentStep: "getCurrentStep",
       defaultTranslation: "getDefaultTranslation"
@@ -117,6 +118,12 @@ export default {
       componentName: this.steps[0].component,
       displayAlert: false,
       alert: ""
+    }
+  },
+  methods: {
+    displayFooter(index) {
+      let step = this.steps[index];
+      return step.component === this.currentStep.component && index === this.stepNumber
     }
   },
   mounted() {

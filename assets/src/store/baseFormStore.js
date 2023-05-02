@@ -152,9 +152,15 @@ export default class BaseFormStore {
 
           while (stepNumber > 0) {
             // context.getters.getSteps[stepNumber - 2] = previous car les étapes ne commencent pas à 0
-            if (context.getters.getSteps[stepNumber - 2].evaluate(context.state)) {
+            let previousStep = context.getters.getSteps[stepNumber - 2]
+            let currentStep = context.getters.getSteps[stepNumber - 1]
+            currentStep.destroy(context.state)
+            if (previousStep.evaluate(context.state)) {
               isPreviousStep = true
               context.commit('decrementStep', stepDecreased)
+              if (formToUnload !== null) {
+                context.commit('unloadForm', formToUnload)
+              }
               break
             }
             stepNumber--

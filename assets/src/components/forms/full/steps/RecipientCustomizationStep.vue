@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div id="recipientStep">
     <v-form
         :ref="formRefName"
         v-model="valid"
     >
       <multiple-recipient-block v-if="formType === formTypeEnum.advanced || adopter.type === adopterEnum.individual"/>
-      <company-multiple-recipient-step v-else-if="formType === formTypeEnum.deposit && adopter.type === adopterEnum.company"/>
+      <company-multiple-recipient-block
+          v-else-if="formType === formTypeEnum.deposit && adopter.type === adopterEnum.company"/>
 
       <v-divider class="cg-divider my-6"/>
 
@@ -38,16 +39,15 @@
 
       <p class="cg-base-text lower light" v-html="$t('default.stepper.customizationSend.send.description') "/>
 
-      <v-row>
+      <div class="mt-5 d-inline-block" v-if="scheduled">
         <v-date-picker
-            v-if="scheduled"
             v-model="gift.toSendOn"
             :first-day-of-week="1"
             :locale="$i18n.locale"
             :min="tomorrow"
             :max="maxDate"
         />
-      </v-row>
+      </div>
 
       <error-display :message="errorMessage"/>
 
@@ -63,15 +63,16 @@ import apiMixin from "@/mixins/apiMixin";
 import MultipleRecipientBlock from "@/components/forms/blocks/MultipleRecipientBlock.vue";
 import Hint from "@/components/utils/Hint.vue";
 import AdopterEnum from "@/enums/adopterEnum";
-import CompanyMultipleRecipientStep from "@/components/forms/blocks/CompanyMultipleRecipientBlock.vue";
+import CompanyMultipleRecipientBlock from "@/components/forms/blocks/CompanyMultipleRecipientBlock.vue";
 import DepositTypeEnum from "@/enums/depositTypeEnum";
 import FormTypeEnum from "@/enums/formTypeEnum";
+import queryParamsMixin from "@/mixins/queryParamsMixin";
 
 export default {
   name: "recipient-customization-step",
-  mixins: [validationMixin, apiMixin],
+  mixins: [validationMixin, apiMixin, queryParamsMixin],
   components: {
-    CompanyMultipleRecipientStep,
+    CompanyMultipleRecipientBlock,
     Hint,
     ErrorDisplay,
     MultipleRecipientBlock
@@ -85,10 +86,11 @@ export default {
   computed: {
     ...mapGetters({
       gift: "getGift",
-      giftMessageModel: "getGiftMessageModel",
       adopter: "getAdopter",
       recipient: "getRecipient",
-      giftOrderModel: "getGiftOrderModel"
+      order: "getOrder",
+      recipientDepositFileModel: "getRecipientDepositFileModel",
+      recipientDepositModel: "getRecipientDepositModel"
     }),
     ...mapState({
       formType: "formType"
@@ -121,20 +123,27 @@ export default {
     ...mapActions({
       updateForm: "updateForm"
     }),
-    check() {
+    checkGift() {
       if (this.$refs[this.formRefName].validate()) {
-        if (this.scheduled && this.gift.toSendOn === null) {
-          this.errorMessage = this.$t("default.errors.select_date")
-          this.$root.$emit("IsLoaded")
+        if (this.formType === FormTypeEnum.deposit) {
+          this.callApi()
         } else {
-          this.errorMessage = null
-          this.$root.$emit("StepValid")
+          this.basicValidation()
         }
       } else {
         this.$root.$emit("IsLoaded")
       }
     },
-    createGift() {
+    basicValidation() {
+      if (this.scheduled && this.gift.toSendOn === null) {
+        this.errorMessage = this.$t("default.errors.select_date")
+        this.$root.$emit("IsLoaded")
+      } else {
+        this.errorMessage = null
+        this.$root.$emit("StepValid")
+      }
+    },
+    callApi() {
       // destinataires avec fichier
       if (this.gift.file !== null && this.recipient.type === DepositTypeEnum.file) {
         const options = {
@@ -142,38 +151,36 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         }
-        let formData = new FormData();
-        formData.append("recipient_file", this.gift.file);
-        this.post(formData, "adoption/{uuid}/recipientsFile", options)
+        this.post(this.recipientDepositFileModel, "adoption/" + this.order.uuid + "/recipientsFile", options)
           .then(() => {
             this.cleanUrl()
-            this.$root.$emit('ApiValid')
+            this.$root.$emit('StepValid')
           })
           .catch(() => {
             this.fileError = this.$t('default.errors.incorrect_file_data')
+            this.$vuetify.goTo('#recipientStep', {offset: 200})
             this.$root.$emit('IsLoaded')
           })
         // destinataires via formulaire
       } else {
-        this.post(this.giftOrderModel, "adoption/{uuid}/recipientsFile")
+        this.post(this.recipientDepositModel, "adoption/" + this.order.uuid + "/friends")
           .then(() => {
             this.cleanUrl()
-            this.$root.$emit('ApiValid')
+            this.$root.$emit('StepValid')
           })
           .catch(err => {
             console.error(err)
+            this.$vuetify.goTo('#recipientStep', {offset: 200})
             this.$root.$emit('IsLoaded')
           })
       }
     }
   },
   mounted() {
-    this.$root.$on(this.customValidationEventName, () => this.check())
-    this.$root.$on(this.apiEventName, () => this.createGift())
+    this.$root.$on(this.customValidationEventName, () => this.checkGift())
   },
   beforeDestroy() {
     this.$root.$off(this.customValidationEventName)
-    this.$root.$off(this.apiEventName)
   }
 }
 </script>

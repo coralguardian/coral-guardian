@@ -2,9 +2,9 @@ import AbstractForm from "../abstractForm";
 import Step from "@/forms/Step";
 import OrderTypeEnum from "@/enums/orderTypeEnum";
 import axios from "axios";
-import ProductEnum from "@/enums/productEnum";
-import AdopterEnum from "@/enums/adopterEnum";
-import ProjectEnum from "@/enums/projectEnum";
+// import ProductEnum from "@/enums/productEnum";
+// import AdopterEnum from "@/enums/adopterEnum";
+// import ProjectEnum from "@/enums/projectEnum";
 
 export default class DepositForm extends AbstractForm {
 
@@ -28,18 +28,18 @@ export default class DepositForm extends AbstractForm {
       }
 
       // mock
-      let data = {
-        order: {
-          uuid: "0bc9c12a-bb79-4af0-b59b-08a012857dc5",
-          type: OrderTypeEnum.gift,
-          productType: ProductEnum.coral,
-          quantity: 1
-        },
-        adopter: {
-          type: AdopterEnum.company
-        },
-        project: ProjectEnum.indonesia
-      }
+      // let data = {
+      //   order: {
+      //     uuid: "0bc9c12a-bb79-4af0-b59b-08a012857dc5",
+      //     type: OrderTypeEnum.gift,
+      //     productType: ProductEnum.coral,
+      //     quantity: 1
+      //   },
+      //   adopter: {
+      //     type: AdopterEnum.company
+      //   },
+      //   project: ProjectEnum.indonesia
+      // }
 
       // let data = {
       //   order: {
@@ -53,7 +53,7 @@ export default class DepositForm extends AbstractForm {
       //   project: ProjectEnum.indonesia
       // }
 
-      context.dispatch('updateForm', data).then(() => resolve())
+      // context.dispatch('updateForm', data).then(() => resolve())
     })
   }
 
@@ -65,9 +65,9 @@ export default class DepositForm extends AbstractForm {
       (state) => state.data.order.type === OrderTypeEnum.regular,
       true,
       false,
+      true,
       false,
-      false,
-      {method: "post"},
+      null,
       false,
       false,
       'finalized'
@@ -81,7 +81,7 @@ export default class DepositForm extends AbstractForm {
       false,
       true,
       false,
-      {method: "post"},
+      null,
       false,
       false,
       'finalized'

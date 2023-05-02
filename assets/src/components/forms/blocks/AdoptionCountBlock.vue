@@ -20,6 +20,7 @@
             @input="updateQuantity"
             @change="checkQuantity"
             :max="max"
+            :min="0"
             :rules="[rules.minValue, rules.required]"
         />
       </v-col>
