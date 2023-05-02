@@ -11,13 +11,13 @@
       <div id="payment-message" class="hidden"></div>
       <span class="error-message red--text mt-3">{{ errorMessage }}</span>
 
-      <vue-recaptcha
-          ref="recaptcha"
-          sitekey="6LdEnlMaAAAAANkYSXFqJPuxMFAaTFVWaOalVs9g"
-          @verify="$emit('reCaptchaValid')"
-          @error="$emit('reCaptchaNotValid')"
-          @expired="$emit('reCaptchaNotValid')"
-      />
+<!--      <vue-recaptcha-->
+<!--          ref="recaptcha"-->
+<!--          sitekey="6LdEnlMaAAAAANkYSXFqJPuxMFAaTFVWaOalVs9g"-->
+<!--          @verify="$emit('reCaptchaValid')"-->
+<!--          @error="$emit('reCaptchaNotValid')"-->
+<!--          @expired="$emit('reCaptchaNotValid')"-->
+<!--      />-->
     </form>
   </div>
 </template>
@@ -25,12 +25,14 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import apiMixin from "@/mixins/apiMixin";
-import {VueRecaptcha} from "vue-recaptcha";
+// import {VueRecaptcha} from "vue-recaptcha";
 import stripeMixin from "@/mixins/stripeMixin";
 
 export default {
   name: "stripe-card-data",
-  components: {VueRecaptcha},
+  components: {
+    // VueRecaptcha
+  },
   mixins: [apiMixin, stripeMixin],
   props: {
     mode: {
@@ -110,7 +112,6 @@ export default {
       this.paymentElement.mount(this.$refs.paymentElement);
       this.paymentElement.on('change', (event) => this.checkCompletion(event))
       this.isFormLoaded = true
-      this.$refs.recaptcha.execute()
     },
     validateCard() {
       if (this.isCompleted) {

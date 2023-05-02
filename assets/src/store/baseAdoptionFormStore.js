@@ -70,7 +70,7 @@ export class BaseAdoptionFormStore {
       getCurrentStep: (state, getters) => {
         return getters.getSteps[state.data.step]
       },
-      getPostAdoptionsData(state) {
+      getAdopteeModel(state) {
         return new AdopteeModel(state.data)
       },
       getAdoption: state => state.data.adoption,

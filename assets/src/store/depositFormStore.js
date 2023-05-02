@@ -4,6 +4,9 @@ import FullFormStore from "@/store/fullFormStore";
 import DepositForm from "@/forms/full/depositForm";
 import GiftOrderModel from "@/models/giftOrderModel";
 import FormTypeEnum from "@/enums/formTypeEnum";
+import RecipientDepositFileModel from "@/models/recipientDepositFileModel";
+import RecipientDepositModel from "@/models/recipientDepositModel";
+import AdopteeDepositModel from "@/models/adopteeDepositModel";
 
 const fullFormStore = new FullFormStore()
 
@@ -31,6 +34,15 @@ export default new Vuex.Store({
     getGiftOrderModel: (state) => {
       return new GiftOrderModel(state.data)
     },
+    getRecipientDepositFileModel: (state) => {
+      return new RecipientDepositFileModel(state.data)
+    },
+    getRecipientDepositModel: (state) => {
+      return new RecipientDepositModel(state.data)
+    },
+    getAdopteeDepositModel: (state) => {
+      return new AdopteeDepositModel(state.data)
+    }
   },
   mutations: {
     ...fullFormStore.mutations

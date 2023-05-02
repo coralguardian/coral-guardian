@@ -413,7 +413,7 @@ export default {
     title: "Bonus optionnel",
     label: {
       adoption: "Je souhaite recevoir des nouvelles <b>liées à mon adoption</b> et à l'avancée des projets de Coral Guardian et m'inscris à la newsletter mensuelle.",
-      donation: "Je souhaite recevoir des nouvelles <b>liées à mon don</b> et à l'avancée des projets de Coral Guardian et m'inscris à la newsletter mensuelle.",
+      donation: "Recevez des nouvelles <b>liées à votre don</b> et de l'avancée des projets de Coral Guardian.<br>Je souhaite m'inscrire aux nouvelles envoyées par Coral Guardian.",
     },
     otherEmail: {
       description: "Si vous souhaitez vous inscrire avec <b>une autre adresse email</b> que celle renseignée dans le formulaire, merci de renseigner le champ ci-dessous.",

@@ -43,17 +43,13 @@ export default {
   mixins: [itemTranslationMixin, validationMixin, apiMixin],
   data() {
     return {
-      names: [],
-      namesFile: null,
-      loading: false,
-      hasDownloaded: false
+      names: []
     }
   },
   computed: {
     ...mapGetters({
       order: 'getOrder',
-      postAdoptionData: 'getPostAdoptionsData',
-      orderToken: 'getOrderToken',
+      adopteeDepositModel: 'getAdopteeDepositModel',
       project: "getProject"
     })
   },
@@ -64,41 +60,13 @@ export default {
     postNames() {
       if (this.names.length === this.order.quantity) {
         this.updateForm({adoption: {names: this.names}}).then(() => {
-          this.post(this.postAdoptionData, this.apiData.endpoint)
-              .then(() => {
-                this.$root.$emit('ApiValid')
-              })
+          this.post(this.adopteeDepositModel, 'adoption/' + this.order.uuid + '/names')
+            .then(() => this.$root.$emit("ApiValid"))
+            .catch(() => {
+              this.$root.$emit("IsLoaded")
+            })
         })
-      } else {
-        if (this.hasDownloaded) {
-          this.updateForm({hasDownloaded: this.hasDownloaded})
-          this.$root.$emit('ApiValid')
-        } else {
-          this.$root.$emit('displayError', 'download_file')
-          this.$root.$emit('IsLoaded')
-        }
       }
-    },
-    downloadExcelFile() {
-      this.loading = true;
-      this.get({responseType: 'blob', params: {token: this.orderToken}}, 'excel_template')
-          .then(response => {
-            const url = URL.createObjectURL(new Blob([response.data], {
-              type: 'application/vnd.ms-excel'
-            }))
-            const link = document.createElement('a')
-            link.href = url
-            link.setAttribute('download', 'coralguardian-coral-sheet-name.xlsx')
-            document.body.appendChild(link)
-            link.click()
-            this.hasDownloaded = true;
-          })
-          .catch(() => {
-            this.$root.$emit('displayError')
-          })
-          .finally(() => {
-            this.loading = false
-          })
     }
   },
   mounted() {

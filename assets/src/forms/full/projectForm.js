@@ -3,6 +3,7 @@ import adoptionHelper from "@/helpers/adoptionHelper";
 import ProductForm from "@/forms/full/productForm";
 import ActionEnum from "@/enums/actionEnum";
 import Step from "@/forms/Step";
+import OrderTypeEnum from "@/enums/orderTypeEnum";
 
 export default class ProjectForm extends AbstractForm {
 
@@ -22,7 +23,7 @@ export default class ProjectForm extends AbstractForm {
               .then(() => {
                 context.dispatch('loadForm', new ProductForm())
                   .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'regular'}})
+                    context.dispatch('updateForm', {order: {type: OrderTypeEnum.regular}})
                       .then(() => resolve())
                   });
               })
@@ -36,7 +37,7 @@ export default class ProjectForm extends AbstractForm {
               .then(() => {
                 context.dispatch('loadForm', new ProductForm())
                   .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'gift'}})
+                    context.dispatch('updateForm', {order: {type: OrderTypeEnum.gift}})
                       .then(() => resolve())
                   })
               })
@@ -45,6 +46,13 @@ export default class ProjectForm extends AbstractForm {
             reject("Formulaire non trouvé")
         }
       })
+  }
+
+  unload(state) {
+    return new Promise(resolve => {
+      state.data.project = null
+      resolve()
+    })
   }
 
   steps = [
