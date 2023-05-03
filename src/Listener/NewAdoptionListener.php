@@ -13,11 +13,5 @@ class NewAdoptionListener
     {
         // Envoie du mail
         AdoptionOrder::sendEvent($adoptionEntity);
-
-        // Est ce que le nommage a déjà eu lieu ?
-        // Si oui on envoi direct l'évènement naming_done
-        if(count($adoptionEntity->getAdoptees())) {
-            NamingDone::sendEvent($adoptionEntity);
-        }
     }
 }
