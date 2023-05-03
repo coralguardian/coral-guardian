@@ -7,7 +7,7 @@
           @click="updateForm({order: {productType: productEnum.coral}})"
       >
         <icon icon-path="'/img/icons/corail.svg'" alt=""/>
-        {{$tc('default.coral', 1)}}
+        <span>{{$tc('default.coral', 1)}}</span>
       </setup-btn>
       <setup-btn
           class="text-capitalize"
@@ -91,9 +91,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-container {
-  @media (max-width: 450px) {
-    height: 140px;
-  }
-}
 </style>

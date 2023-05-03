@@ -241,6 +241,11 @@ export default {
 
       .v-stepper__header {
         justify-content: unset !important;
+
+        @media (max-width: 800px) {
+          justify-content: space-between !important;
+        }
+
         box-shadow: unset !important;
         padding: 20px 12px 8px;
         height: unset !important;
@@ -259,10 +264,13 @@ export default {
   }
 
   .form-step {
+    @media #{map-get($display-breakpoints, 'xs-only')} {
+      padding: 0 1rem !important;
+    }
+
     &.large-step {
       max-width: 700px !important;
     }
-
   }
 }
 </style>

@@ -141,11 +141,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-container {
-  @media (max-width: 450px) {
-    height: 200px;
-  }
-}
 
 .switch-link-container {
   display: flex;

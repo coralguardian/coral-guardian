@@ -151,6 +151,9 @@ export default {
 <style lang="scss" scoped>
 .new-form-container {
   padding: 55px;
+  @media #{map-get($display-breakpoints, 'xs-only')} {
+    padding: 25px 15px 15px;
+  }
 }
 
 .step {

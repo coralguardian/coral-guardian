@@ -95,9 +95,6 @@ p {
 }
 
 .btn-container {
-  @media (max-width: 450px) {
-    flex-direction: column;
-  }
   display: flex;
   flex-direction: column;
   align-items: flex-start;

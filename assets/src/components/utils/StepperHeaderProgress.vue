@@ -33,6 +33,10 @@ export default {
   width: 60px;
   background: #EFF0F7;
 
+  @media (max-width: 800px) {
+    display: none;
+  }
+
   &.completed {
     background: $primary;
   }
