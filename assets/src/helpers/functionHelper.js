@@ -1,4 +1,5 @@
 import AbstractForm from "@/forms/abstractForm";
+import md5 from 'blueimp-md5'
 
 export function customizerMergeObjectWithArrays(objValue, srcValue) {
   if (Array.isArray(objValue)) {
@@ -13,4 +14,10 @@ export function checkStepsToDisplay(formToCheck, state) {
   let steps = formToCheck.getSteps()
 
   return steps.filter(step => typeof step.display !== "function" || step.display(state))
+}
+
+export function getAuthorizationHeader() {
+  const date = new Date()
+  const token = md5('Bloc4B0tz' + Math.round(date.getTime() / 1000 / 60))
+  return { headers: {'Authorization': 'Bearer ' + token }}
 }

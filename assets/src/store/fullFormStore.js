@@ -5,7 +5,7 @@ import AbstractForm from "../forms/abstractForm";
 import GiftModel from "../models/giftModel";
 import GiftMessageModel from "@/models/giftMessageModel";
 import axios from "axios";
-import {checkStepsToDisplay} from "@/helpers/functionHelper";
+import {checkStepsToDisplay, getAuthorizationHeader} from "@/helpers/functionHelper";
 import ActionEnum from "@/enums/actionEnum";
 import ProductEnum from "@/enums/productEnum";
 import DonationEnum from "@/enums/donationEnum";
@@ -132,7 +132,7 @@ export default new Vuex.Store({
         if (context.state.data.project === null) {
           reject("Un projet doit être sélectionné !")
         }
-        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject, context.getters.getAuthorizationHeader)
+        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject, getAuthorizationHeader())
           .then(resp => {
             context.commit("updateProducts", resp.data)
             const uniqueTypes = [...new Set(resp.data.map(product => product.key))];
