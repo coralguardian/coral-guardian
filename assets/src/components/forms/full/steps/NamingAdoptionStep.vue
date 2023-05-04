@@ -92,12 +92,10 @@ export default {
               this.$root.$emit("IsLoaded")
             })
         } else {
-          const options = {
-            headers: {
+          const headers = {
               'Content-Type': 'multipart/form-data'
-            }
           }
-          this.post(this.createFormData(), "adoption/" + this.order.uuid + "/namesFile", options)
+          this.post(this.createFormData(), "adoption/" + this.order.uuid + "/namesFile", headers)
             .then(() => {
               this.cleanUrl()
               this.$root.$emit('StepValid')

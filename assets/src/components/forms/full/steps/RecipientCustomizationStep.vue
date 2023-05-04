@@ -146,12 +146,10 @@ export default {
     callApi() {
       // destinataires avec fichier
       if (this.gift.file !== null && this.recipient.type === DepositTypeEnum.file) {
-        const options = {
-          headers: {
+        const headers = {
             'Content-Type': 'multipart/form-data'
-          }
         }
-        this.post(this.recipientDepositFileModel, "adoption/" + this.order.uuid + "/recipientsFile", options)
+        this.post(this.recipientDepositFileModel, "adoption/" + this.order.uuid + "/recipientsFile", headers)
           .then(() => {
             this.cleanUrl()
             this.$root.$emit('StepValid')

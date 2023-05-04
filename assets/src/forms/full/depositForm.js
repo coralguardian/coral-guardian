@@ -16,7 +16,7 @@ export default class DepositForm extends AbstractForm {
         reject('adoption_not_found')
       } else {
         const uuid = params.get("adoptionUuid");
-        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/" + uuid + "/details")
+        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/" + uuid + "/details", context.getters.getAuthorizationHeader)
           .then(resp => {
             let data = resp.data
             data.order.uuid = uuid

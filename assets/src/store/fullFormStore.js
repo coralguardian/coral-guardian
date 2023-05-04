@@ -151,7 +151,7 @@ export default class FullFormStore {
           if (context.state.data.project === null) {
             reject("Un projet doit être sélectionné !")
           }
-          axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject)
+          axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/products?project=" + context.getters.getProject, context.getters.getAuthorizationHeader)
             .then(resp => {
               context.commit("updateProducts", resp.data)
               const uniqueTypes = [...new Set(resp.data.map(product => product.key))];

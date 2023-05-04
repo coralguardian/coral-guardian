@@ -6,7 +6,8 @@ export default {
   computed: {
     ...mapGetters({
       apiData: "getApiData",
-      apiNameSpace: "getApiNamespace"
+      apiNameSpace: "getApiNamespace",
+      authorizationHeader: 'getAuthorizationHeader'
     }),
     apiEventName() {
       return this.$options._componentTag + 'Api'
@@ -16,10 +17,10 @@ export default {
     }
   },
   methods: {
-    post(data, endpoint, options) {
+    post(data, endpoint, headers = {}) {
       return new Promise((resolve, reject) => {
         let url = this.baseUrl + endpoint
-        // console.log(data, url)
+        const options = {headers: {...this.authorizationHeader.headers, ...headers}}
         axios.post(url, data, options)
           .then(resp => {
             resolve(resp)
@@ -35,7 +36,8 @@ export default {
     get(data) {
       return new Promise((resolve, reject) => {
         let url = this.getGetUrl(data)
-        axios.get(url)
+        const options = {...this.authorizationHeader}
+        axios.get(url, options)
           .then(resp => {
             resolve(resp)
           })
@@ -47,7 +49,8 @@ export default {
     },
     getByUrl(url) {
       return new Promise((resolve, reject) => {
-        axios.get(url)
+        const options = {...this.authorizationHeader}
+        axios.get(url, options)
           .then(resp => {
             resolve(resp)
           })
