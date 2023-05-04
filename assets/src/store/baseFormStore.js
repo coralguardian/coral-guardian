@@ -77,12 +77,7 @@ export default class BaseFormStore {
       getOrderModel: (state) => new OrderModel(state.data),
       getProject: state => state.data.project,
       isInitialized: state => state.isInitialized,
-      getPaymentMethod: state => state.data.payment_method,
-      getAuthorizationHeader: () => {
-        const date = new Date()
-        const token = md5('Bloc4B0tz' + Math.round(date.getTime() / 1000 / 60))
-        return { headers: {'Authorization': 'Bearer ' + token }}
-      }
+      getPaymentMethod: state => state.data.payment_method
     };
 
     this.mutations = {

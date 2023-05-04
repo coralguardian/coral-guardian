@@ -2,6 +2,7 @@ import AbstractForm from "../abstractForm";
 import Step from "@/forms/Step";
 import OrderTypeEnum from "@/enums/orderTypeEnum";
 import axios from "axios";
+import {getAuthorizationHeader} from "@/helpers/functionHelper";
 // import ProductEnum from "@/enums/productEnum";
 // import AdopterEnum from "@/enums/adopterEnum";
 // import ProjectEnum from "@/enums/projectEnum";
@@ -16,7 +17,7 @@ export default class DepositForm extends AbstractForm {
         reject('adoption_not_found')
       } else {
         const uuid = params.get("adoptionUuid");
-        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/" + uuid + "/details", context.getters.getAuthorizationHeader)
+        axios.get("/wp-json/" + context.getters.getApiNamespace + "/adoption/" + uuid + "/details", getAuthorizationHeader())
           .then(resp => {
             let data = resp.data
             data.order.uuid = uuid

@@ -1,13 +1,13 @@
 import axios from "axios";
 import {mapGetters} from "vuex";
 import {isEmpty} from "lodash";
+import {getAuthorizationHeader} from "@/helpers/functionHelper";
 
 export default {
   computed: {
     ...mapGetters({
       apiData: "getApiData",
-      apiNameSpace: "getApiNamespace",
-      authorizationHeader: 'getAuthorizationHeader'
+      apiNameSpace: "getApiNamespace"
     }),
     apiEventName() {
       return this.$options._componentTag + 'Api'
@@ -20,7 +20,7 @@ export default {
     post(data, endpoint, headers = {}) {
       return new Promise((resolve, reject) => {
         let url = this.baseUrl + endpoint
-        const options = {headers: {...this.authorizationHeader.headers, ...headers}}
+        const options = {headers: {...getAuthorizationHeader().headers, ...headers}}
         axios.post(url, data, options)
           .then(resp => {
             resolve(resp)
@@ -36,7 +36,7 @@ export default {
     get(data) {
       return new Promise((resolve, reject) => {
         let url = this.getGetUrl(data)
-        const options = {...this.authorizationHeader}
+        const options = {...getAuthorizationHeader()}
         axios.get(url, options)
           .then(resp => {
             resolve(resp)
@@ -49,7 +49,7 @@ export default {
     },
     getByUrl(url) {
       return new Promise((resolve, reject) => {
-        const options = {...this.authorizationHeader}
+        const options = {...getAuthorizationHeader()}
         axios.get(url, options)
           .then(resp => {
             resolve(resp)
