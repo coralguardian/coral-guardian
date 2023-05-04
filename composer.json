@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-      "wordpress-hyperion/sendinblue": "^1.0"
+      "wordpress-hyperion/sendinblue": "1.*"
     },
     "minimum-stability": "dev"
 }
