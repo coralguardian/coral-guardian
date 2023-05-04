@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
+    "blueimp-md5": "^2.19.0",
     "chart.js": "^3.9.1",
     "chartjs-plugin-datalabels": "^2.1.0",
     "core-js": "^3.6.5",

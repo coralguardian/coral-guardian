@@ -140,14 +140,12 @@ export default {
     createAdoption() {
       // adoption avec le fichier après avoir été redirigé sur cette étape
       if (this.namesFile !== null && this.adoption.type === "file") {
-        const options = {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+        const headers = {
+          'Content-Type': 'multipart/form-data'
         }
         let formData = new FormData();
         formData.append("adoption_file", this.namesFile);
-        this.post(formData, "namingFileImport", options)
+        this.post(formData, "namingFileImport", headers)
             .then(() => {
               this.cleanUrl()
               this.$root.$emit('ApiValid')

@@ -3,6 +3,7 @@ import CustomerModel from "@/models/customerModel";
 import OrderModel from "@/models/orderModel";
 import DonationEnum from "@/enums/donationEnum";
 import PaymentMethodEnum from "@/enums/paymentMethodEnum";
+import md5 from 'blueimp-md5'
 
 // public path is from wp, used to set full images path
 /* global publicPath */
@@ -75,7 +76,13 @@ export default class BaseFormStore {
       getApiNamespace: state => state.apiNamespace,
       getOrderModel: (state) => new OrderModel(state.data),
       getProject: state => state.data.project,
-      isInitialized: state => state.isInitialized
+      isInitialized: state => state.isInitialized,
+      getPaymentMethod: state => state.data.payment_method,
+      getAuthorizationHeader: () => {
+        const date = new Date()
+        const token = md5('Bloc4B0tz' + Math.round(date.getTime() / 1000 / 60))
+        return { headers: {'Authorization': 'Bearer ' + token }}
+      }
     };
 
     this.mutations = {

@@ -162,14 +162,12 @@ export default {
     },
     createGift() {
       if (this.namesFile !== null && this.recipient.type === "file") {
-        const options = {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+        const headers = {
+          'Content-Type': 'multipart/form-data'
         }
         let formData = new FormData();
         formData.append("recipient_file", this.namesFile);
-        this.post(formData, "recipientFileImport", options)
+        this.post(formData, "recipientFileImport", headers)
             .then(() => {
                 this.cleanUrl()
                 this.$root.$emit('ApiValid')
