@@ -18,6 +18,6 @@ export function checkStepsToDisplay(formToCheck, state) {
 
 export function getAuthorizationHeader() {
   const date = new Date()
-  const token = md5('Bloc4B0tz' + Math.round(date.getTime() / 1000 / 60))
+  const token = md5('Bloc4B0tz' + Math.trunc(date.getTime() / 1000 / 60))
   return { headers: {'Authorization': 'Bearer ' + token }}
 }
