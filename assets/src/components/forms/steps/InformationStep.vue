@@ -1,7 +1,11 @@
 <template>
   <div>
     <hint>
-      <span class="cg-base-text">{{ $t("default.stepper.information.description") }}</span>
+      <span class="cg-base-text">
+        {{ $t("default.stepper.information.description") }}
+        <br>
+              <span class="cg-base-text font-weight-bold">{{ $t("default.stepper.information.required") }}</span>
+      </span>
     </hint>
 
     <v-form
@@ -17,6 +21,7 @@
       />
 
       <text-input
+          id="information-siret"
           v-if="isCompany"
           :label="$t('default.stepper.information.' + informationSubstring + 'cols.information.siret')"
           v-model="adopter.siret"
@@ -154,5 +159,14 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+#information-siret {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button, {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  -moz-appearance: textfield;
+}
 </style>

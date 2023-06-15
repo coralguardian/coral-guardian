@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {nanoid} from 'nanoid';
+import {customAlphabet} from 'nanoid/non-secure';
 
 export default {
   name: "btn-tooltip",
@@ -41,6 +41,7 @@ export default {
     }
   },
   mounted() {
+    const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMONPQRSTUVWXYZ', 20);
     this.uuid = nanoid()
   }
 }

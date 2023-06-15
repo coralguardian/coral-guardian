@@ -10,6 +10,7 @@
         :tooltip="hint ? $t('default.stepper.adoption.customAmount.hint') : null"
         :rules="[rules.minValue, rules.required]"
         :min="minAmount"
+        icon="mdi-currency-eur"
     />
   </div>
 </template>
