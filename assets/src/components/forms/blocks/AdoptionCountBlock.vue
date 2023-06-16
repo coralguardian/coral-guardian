@@ -32,7 +32,6 @@
             v-model="order.price"
             ref="customAmount"
             @input="updateCustomAmount"
-            @change="checkCustomPrice"
         />
       </v-col>
     </v-row>
@@ -74,17 +73,24 @@ export default {
       minimumPrice: "getMinimumPrice"
     })
   },
+  watch: {
+    minimumPrice: {
+      deep: true,
+      handler(newVal) {
+        this.setMinInput(newVal)
+      }
+    }
+  },
   methods: {
     ...mapActions({
       updateForm: 'updateForm',
       setQuantity: 'setQuantity'
     }),
     updateCustomAmount(value) {
-      this.updateForm({order: {price: value, customAmount: true}})
-    },
-    checkCustomPrice(value) {
-      if (value < this.minimumPrice) {
+      if (value <= this.minimumPrice) {
         this.updateForm({order: {price: this.minimumPrice, customAmount: false}})
+      } else {
+        this.updateForm({order: {price: value, customAmount: true}})
       }
     },
     updateQuantity(value) {
@@ -94,7 +100,13 @@ export default {
       if (value < 1) {
         this.setQuantity(1)
       }
+    },
+    setMinInput(value) {
+      this.$refs.customAmount.setMinInput(value)
     }
+  },
+  mounted() {
+    this.setMinInput(this.minimumPrice)
   }
 }
 </script>

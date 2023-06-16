@@ -27,6 +27,7 @@
     <custom-amount
         ref="customAmount"
         :value="donation.price"
+        label="default.stepper.adoption.customAmount.other"
         :hint="false"
         :min-amount="min"
         @input="updateFromCustomAmount($event)"
@@ -81,6 +82,9 @@ export default {
       updateForm: 'updateForm'
     }),
     updateCustomAmount(amount) {
+      if (this.isSelectedPrice(amount)) {
+        amount = 0
+      }
       this.selectedPrice = amount
       this.updateForm({donation: {price: amount}})
     },

@@ -99,6 +99,7 @@ export default {
       },
       customAmount: {
         label: "Montant",
+        other: "Autre montant",
         hint: "Le surplus de don sera utilisé pour soutenir l'ensemble de nos actions."
       },
       quantity: {
@@ -166,7 +167,7 @@ export default {
     },
     customizationSend: {
       message: {
-        description: "Vous pouvez écrire un message <b>commun</b> à l'intention de vos destinataires.",
+        description: "Vous pouvez écrire un message à l'intention de votre destinataire. | Vous pouvez écrire un message <b>commun</b> à l'intention de vos destinataires.",
         placeholder: "Votre message"
       },
       send: {
@@ -290,7 +291,7 @@ export default {
     },
     multipleRecipient: {
       title: "À qui offrez-vous le {item} | À qui offrez-vous les {item}",
-      description: "Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif.",
+      description: "Renseignez les coordonnées de votre destinataire afin qu'il reçoive son code cadeau. | Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif.",
       tabs: {
         fields: {
           title: "Remplir les champs",
@@ -299,9 +300,6 @@ export default {
         },
         file: {
           title: "Importer un fichier",
-          // subtitle: "J'envoie un fichier avec les coordonnées de mes destinataires",
-          // description: "Je télécharge le fichier Excel mis à ma disposition. Une fois rempli, je me rends à l'adresse communiquée dans le mail de confirmation reçu et je dépose mon fichier dans le champ prévu à cet effet.",
-          // button: "Télécharger le fichier",
           upload: {
             label: "Parcourir",
             description: "Importez ci-dessous votre fichier Excel dûment complété :"

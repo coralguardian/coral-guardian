@@ -4,7 +4,7 @@
     <p class="cg-title" v-html="$tc('default.stepper.multipleRecipient.title', order.quantity, translation)"/>
 
     <hint>
-      <p class="cg-base-text" v-html="$t('default.stepper.multipleRecipient.description')"/>
+      <p class="cg-base-text" v-html="$tc('default.stepper.multipleRecipient.description', order.quantity)"/>
     </hint>
 
     <div class="recipients mt-5">
