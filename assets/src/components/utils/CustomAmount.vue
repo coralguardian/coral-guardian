@@ -1,15 +1,15 @@
 <template>
   <div class="custom-amount">
     <text-input
+        ref="customAmountTextInput"
         :value="value"
         :label="label ? $t(label) : null"
         :placeholder="placeholder ? $t(placeholder) : null"
         type="number"
-        @input="$emit('input', Number($event))"
-        @change="$emit('change', Number($event))"
+        @change="emit"
         :tooltip="hint ? $t('default.stepper.adoption.customAmount.hint') : null"
         :rules="[rules.minValue, rules.required]"
-        :min="minAmount"
+        icon="mdi-currency-eur"
     />
   </div>
 </template>
@@ -46,6 +46,22 @@ export default {
     placeholder: {
       type: String,
       default: null
+    }
+  },
+  methods: {
+    setMinInput(value) {
+      this.min = value
+      this.getInput().$el.querySelector('input').min = value
+    },
+    getInput() {
+      return this.$refs.customAmountTextInput
+    },
+    emit(value) {
+      if (value < this.min) {
+        this.getInput().getInput().$data.lazyValue = this.min
+        value = this.min
+      }
+      this.$emit('input', Number(value))
     }
   }
 }

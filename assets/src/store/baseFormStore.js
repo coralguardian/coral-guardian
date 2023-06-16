@@ -3,7 +3,6 @@ import CustomerModel from "@/models/customerModel";
 import OrderModel from "@/models/orderModel";
 import DonationEnum from "@/enums/donationEnum";
 import PaymentMethodEnum from "@/enums/paymentMethodEnum";
-import md5 from 'blueimp-md5'
 
 // public path is from wp, used to set full images path
 /* global publicPath */

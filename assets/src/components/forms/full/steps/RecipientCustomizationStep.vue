@@ -13,7 +13,7 @@
       <p class="cg-title" v-html="$t('default.stepper.header.customizationSend')"/>
 
       <hint>
-        <p class="cg-base-text" v-html="$t('default.stepper.customizationSend.message.description')"/>
+        <p class="cg-base-text" v-html="$tc('default.stepper.customizationSend.message.description', order.quantity)"/>
       </hint>
 
       <v-textarea

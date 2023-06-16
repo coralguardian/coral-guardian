@@ -10,7 +10,6 @@
     >
     <donation-block
         class="mt-3"
-        :min="2"
         :prices="[2, 5, 10, 20]"
     />
     </v-form>
