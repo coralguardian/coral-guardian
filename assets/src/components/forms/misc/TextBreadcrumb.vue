@@ -4,6 +4,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import ProjectEnum from "@/enums/projectEnum";
 
 export default {
   name: "text-breadcrumb",
@@ -34,7 +35,7 @@ export default {
         return text;
       }
       if (this.order.productType) {
-        return this.$t('default.breadcrumb.project',
+        return this.$t('default.breadcrumb.product',
           {
             type: this.$t('default.breadcrumb.types.' + this.order.type),
             project: this.$t('default.stepper.project.' + this.project),
@@ -43,12 +44,18 @@ export default {
         )
       }
       if (this.project && this.order.type) {
-        return this.$t('default.breadcrumb.project',
-          {
-            type: this.$t('default.breadcrumb.types.' + this.order.type),
-            project: this.$t('default.stepper.project.' + this.project)
-          }
-        )
+        let translationData = {
+          type: this.$t('default.breadcrumb.types.' + this.order.type),
+          project: this.$t('default.stepper.project.' + this.project)
+        }
+
+        if (this.project === ProjectEnum.spain) {
+          translationData.product = this.$tc("default.coral", 1)
+
+          return this.$t('default.breadcrumb.product', translationData)
+        }
+
+        return this.$t('default.breadcrumb.project', translationData)
       }
       if (this.order.type ) {
         return this.$t('default.breadcrumb.base', {type: this.$t('default.breadcrumb.types.' + this.order.type)})
