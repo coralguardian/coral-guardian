@@ -192,7 +192,8 @@ export default {
         recurrent: "tous les mois"
       },
       amount: "pour un montant de",
-      other_amount: "autre"
+      other_amount: "autre",
+      fiscal_reduction: "Soit <b>{reducedPrice} €</b> après déduction fiscale en France."
     },
     friend: {
       title: "Renseignez les informations de votre destinataire",

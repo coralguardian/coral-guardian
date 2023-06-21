@@ -46,6 +46,8 @@
           :rules="[rules.required, rules.minValue]"
       />
 
+      <p class="cg-base-text text-center mt-2" v-html="$t('default.stepper.donation.fiscal_reduction', {reducedPrice: this.reducedPrice})"/>
+
     </div>
 
   </div>
@@ -58,15 +60,26 @@ import validationMixin from "../../../mixins/validationMixin";
 import screenMixin from "@/mixins/screenMixin";
 import DonationEnum from "@/enums/donationEnum";
 import CustomAmount from "@/components/utils/CustomAmount.vue";
+import fiscalReductionMixin from "@/mixins/fiscalReductionMixin";
 
 export default {
   name: "donation-step",
   components: {CustomAmount},
-  mixins: [itemTranslationMixin, validationMixin, screenMixin],
+  mixins: [itemTranslationMixin, validationMixin, screenMixin, fiscalReductionMixin],
   data() {
     return {
       displayCustomAmount: false,
-      basePriceSelect: 0
+      basePriceSelect: 0,
+      reducedPrice: null
+    }
+  },
+  watch: {
+    donation: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        this.reducedPrice = this.getFormattedDeduction(value.price)
+      }
     }
   },
   computed: {
