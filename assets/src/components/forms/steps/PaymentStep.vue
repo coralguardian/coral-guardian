@@ -8,8 +8,6 @@
       <stripe-card-data
           :mode="mode"
           ref="cardData"
-          @reCaptchaValid="isValidRecaptcha = true"
-          @reCaptchaNotValid="isValidRecaptcha = true"
       />
     </div>
 
@@ -69,8 +67,7 @@ export default {
         text: "",
         type: "success",
         class: "green--text"
-      },
-      isValidRecaptcha: false
+      }
     }
   },
   computed: {

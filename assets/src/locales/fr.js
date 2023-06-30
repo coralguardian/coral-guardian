@@ -47,7 +47,7 @@ export default {
   },
   share: 'Partagez sur',
   deduction: {
-    description: "Je fais <b>un don {type}</b> de {donation} €, <b>soit {deduction} €</b> après déduction fiscale en France."
+    description: "Je fais <b>un don {type}</b> de {donation} €, <b>soit {deduction} €</b> après déduction fiscale."
   },
   stepper: {
     header: {
@@ -75,7 +75,7 @@ export default {
     },
     adoption: {
       title: "Choisissez un nombre de {item}",
-      description: "En faisant un <b>don</b> de {donation} €, <b>soit {reducedPrice} €</b> après réduction fiscale en France, vous redonnez vie aux écosystèmes marins en danger.",
+      description: "En faisant un <b>don</b> de {donation} €, <b>soit {reducedPrice} €</b> après réduction fiscale, vous redonnez vie aux écosystèmes marins en danger.",
       corals: {
         hint: {
           individual: "Adopter un récif entier à partir de 30 coraux sur notre page dédiée \"<a href='/adopter-un-recif-particuliers/'>Adopter un récif</a>\" !",
@@ -193,7 +193,7 @@ export default {
       },
       amount: "pour un montant de",
       other_amount: "autre",
-      fiscal_reduction: "Soit <b>{reducedPrice} €</b> après déduction fiscale en France."
+      fiscal_reduction: "Soit <b>{reducedPrice} €</b> après déduction fiscale."
     },
     friend: {
       title: "Renseignez les informations de votre destinataire",

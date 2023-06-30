@@ -8,7 +8,7 @@
         type="number"
         @change="emit"
         :tooltip="hint ? $t('default.stepper.adoption.customAmount.hint') : null"
-        :rules="[rules.minValue, rules.required]"
+        :rules="inputRules"
         icon="mdi-currency-eur"
     />
   </div>
@@ -46,6 +46,19 @@ export default {
     placeholder: {
       type: String,
       default: null
+    },
+    isRequired: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    inputRules() {
+      let rules = [this.rules.minValue]
+      if (this.isRequired) {
+        rules.push(this.rules.required)
+      }
+      return rules
     }
   },
   methods: {

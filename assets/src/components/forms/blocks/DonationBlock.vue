@@ -26,10 +26,11 @@
 
     <custom-amount
         ref="customAmount"
-        :value="donation.price"
+        v-model="customAmount"
         label="default.stepper.adoption.customAmount.other"
         :hint="false"
         :min-amount="min"
+        :is-required="false"
         @input="updateFromCustomAmount($event)"
     />
 
@@ -68,7 +69,8 @@ export default {
   },
   data() {
     return {
-      selectedPrice: null
+      selectedPrice: null,
+      customAmount: null
     }
   },
   computed: {
@@ -84,8 +86,11 @@ export default {
     updateCustomAmount(amount) {
       if (this.isSelectedPrice(amount)) {
         amount = 0
+        this.selectedPrice = null
+      } else {
+        this.selectedPrice = amount
+        this.customAmount = null
       }
-      this.selectedPrice = amount
       this.updateForm({donation: {price: amount}})
     },
     updateFromCustomAmount(amount) {
@@ -94,7 +99,13 @@ export default {
     },
     isSelectedPrice(price) {
       return this.selectedPrice === price
+    },
+    setMinInput(value) {
+      this.$refs.customAmount.setMinInput(value)
     }
+  },
+  mounted() {
+    this.setMinInput(0)
   }
 }
 </script>
