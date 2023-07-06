@@ -7,3 +7,11 @@
   border-radius: 30px;
   text-align: left;
 }
+
+.file-import-input {
+  max-width: 240px !important;
+
+  .v-input__slot {
+    cursor: pointer !important;
+  }
+}
