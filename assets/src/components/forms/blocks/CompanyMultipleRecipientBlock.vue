@@ -110,9 +110,5 @@ export default {
     max-height: 550px;
     overflow: auto;
   }
-
-  .file-import-input {
-    max-width: 240px !important;
-  }
 }
 </style>

@@ -113,7 +113,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.file-import-input {
-  max-width: 240px !important;
-}
 </style>
