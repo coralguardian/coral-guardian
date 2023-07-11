@@ -44,7 +44,7 @@ class NamingDone extends AbstractEmailEvent
                 lang: $entity->getLang(),
                 adoptedProduct: $entity->getAdoptedProduct(),
                 quantity: $entity->getQuantity(),
-                fiscalReceiptUrl: FiscalReceiptService::getUrl($entity->getUuid()),
+                fiscalReceiptUrl: "",
                 certificateUrl: CertificateService::getUrl($entity->getUuid()),
                 fromGift: 0,
                 project: $entity->getProject()->value
