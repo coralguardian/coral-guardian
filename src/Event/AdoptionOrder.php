@@ -7,6 +7,7 @@ use D4rk0snet\Adoption\Service\RedirectionService;
 use D4rk0snet\CoralCustomer\Entity\CompanyCustomerEntity;
 use D4rk0snet\Coralguardian\Enums\SIBEvent;
 use D4rk0snet\FiscalReceipt\Service\FiscalReceiptService;
+use D4rk0snet\NamingFileImport\API\GetNamingFileEndPoint;
 
 class AdoptionOrder extends AbstractEmailEvent
 {
@@ -19,8 +20,11 @@ class AdoptionOrder extends AbstractEmailEvent
         string $project,
         bool $namingDone,
         bool $isCompany = false,
+        string $adoptionUuid = null,
+        string $namingFileUrl = null
     ) {
-        self::sendQuery($email, compact('project','lang', 'quantity', 'fiscalReceiptUrl', 'nextStepUrl', 'isCompany', 'namingDone'));
+        self::sendQuery($email, compact('project','lang', 'quantity', 'fiscalReceiptUrl', 'nextStepUrl', 'isCompany',
+                                        'namingDone', 'adoptionUuid', 'namingFileUrl'));
     }
 
     protected static function getEventName(): SIBEvent
@@ -39,7 +43,8 @@ class AdoptionOrder extends AbstractEmailEvent
             project: $entity->getProject()->value,
             namingDone: count($entity->getAdoptees()) > 0,
             isCompany: $entity->getCustomer() instanceof CompanyCustomerEntity,
-
+            adoptionUuid: $entity->getUuid(),
+            namingFileUrl: GetNamingFileEndPoint::getUrl(['adoptionUuid' => $entity->getUuid()])
         );
     }
 }
