@@ -44,7 +44,7 @@ class AdoptionOrder extends AbstractEmailEvent
             namingDone: count($entity->getAdoptees()) > 0,
             isCompany: $entity->getCustomer() instanceof CompanyCustomerEntity,
             adoptionUuid: $entity->getUuid(),
-            namingFileUrl: GetNamingFileEndPoint::getUrl(['adoptionUuid' => $entity->getUuid()])
+            namingFileUrl: GetNamingFileEndPoint::getUrl()."?adoptionUuid=".$entity->getUuid()
         );
     }
 }
