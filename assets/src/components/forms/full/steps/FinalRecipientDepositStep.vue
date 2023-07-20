@@ -31,7 +31,7 @@ export default {
       let base = 'default.stepper.finalDeposit.recipient.description.';
       base += this.gift.toSendOn === null ? "base" : "scheduled"
 
-      return this.$t(base)
+      return this.$tc(base, this.order.quantity)
     }
   }
 }
