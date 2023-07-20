@@ -11,6 +11,7 @@ use D4rk0snet\Coralguardian\Shortcodes\DonationFormShortcode;
 use D4rk0snet\Coralguardian\Shortcodes\FullFormShortcode;
 use D4rk0snet\Coralguardian\Shortcodes\GiftCodeFormShortcode;
 use D4rk0snet\Coralguardian\Shortcodes\ReefAdoptionFormShortcode;
+use D4rk0snet\Coralguardian\Shortcodes\DepositFormShortcode;
 use WP_CLI;
 
 class Plugin
@@ -22,6 +23,7 @@ class Plugin
         ShortcodeService::registerShortcode(ReefAdoptionFormShortcode::class);
         ShortcodeService::registerShortcode(DonationFormShortcode::class);
         ShortcodeService::registerShortcode(GiftCodeFormShortcode::class);
+        ShortcodeService::registerShortcode(DepositFormShortcode::class);
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new SetAdoptionAsPaidEndPoint());
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CreateAdoptionAdmin());
         do_action(\Hyperion\RestAPI\Plugin::ADD_API_ENDPOINT_ACTION, new CreateDonationAdmin());

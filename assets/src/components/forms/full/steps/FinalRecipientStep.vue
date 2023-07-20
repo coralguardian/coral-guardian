@@ -1,25 +1,30 @@
 <template>
-  <div>
-    <p v-html="description"/>
-    <social-share-block/>
-  </div>
+  <final-step>
+
+    <template v-slot:hint>
+      {{ $t("default.stepper.finalRecipient.hint", {count: order.quantity, item: translation.item}) }}
+    </template>
+
+    <p class="cg-base-text light" v-html="description"/>
+
+  </final-step>
 </template>
 
 <script>
 import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
-import SocialShareBlock from "../../blocks/SocialShareBlock";
-import validationMixin from "../../../../mixins/validationMixin";
-import itemTranslationMixin from "../../../../mixins/itemTranslationMixin";
 import {mapGetters} from "vuex";
-import paymentMixin from "@/mixins/paymentMixin";
+import FinalStep from "@/components/forms/misc/FinalStep.vue";
+import SendToFriendEnum from "@/enums/sendToFriendEnum";
+import validationMixin from "@/mixins/validationMixin";
+import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 
 export default {
-  name: "final-adoption-step",
+  name: "final-recipient-step",
   components: {
-    SocialShareBlock
+    FinalStep
   },
-  mixins: [apiMixin, finalStepMixin, validationMixin, itemTranslationMixin, paymentMixin],
+  mixins: [apiMixin, finalStepMixin, validationMixin, itemTranslationMixin],
   computed: {
     ...mapGetters({
       adopter: "getAdopter",
@@ -27,24 +32,21 @@ export default {
     }),
     description() {
       let base = 'default.stepper.finalRecipient.description.';
-      if (!this.adopter.send_to_friend) {
+      if (this.adopter.send_to_friend === SendToFriendEnum.later) {
+        base += "later"
+      } else if (this.adopter.send_to_friend === SendToFriendEnum.dont) {
         base += "sendToMe"
       } else {
         base += this.gift.toSendOn === null ? "base" : "scheduled"
       }
       return this.$t(base)
     }
-  },
-  mounted() {
-    this.$root.$on(this.apiEventName, () => this.$root.$emit('ApiValid'))
-    this.cleanLocalStorage()
-  },
-  beforeDestroy() {
-    this.$root.$off(this.apiEventName)
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.cg-base-text.light {
+  line-height: 25px;
+}
 </style>

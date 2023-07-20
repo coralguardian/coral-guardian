@@ -1,25 +1,32 @@
 <template>
-  <v-tooltip
-      class="btn-tooltip"
-      color="tertiary"
-      max-width="350"
-      :attach="attach"
-  >
-    <template v-slot:activator="{ on, attrs }">
-      <v-icon
-          class="setup-tooltip-icon"
-          v-bind="attrs"
-          v-on="on"
-          small
-      >
-        mdi-information-outline
-      </v-icon>
-    </template>
-    <slot></slot>
-  </v-tooltip>
+  <div class="button-container" :id="uuid">
+    <v-tooltip
+        class="btn-tooltip"
+        color="primary"
+        max-width="350"
+        :attach="'#' + uuid"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-icon
+            class="setup-tooltip-icon"
+            color="primary"
+            v-bind="attrs"
+            v-on="on"
+            small
+        >
+          mdi-information
+        </v-icon>
+      </template>
+      <div class="tooltip-container">
+        <slot></slot>
+      </div>
+    </v-tooltip>
+  </div>
 </template>
 
 <script>
+import {customAlphabet} from 'nanoid/non-secure';
+
 export default {
   name: "btn-tooltip",
   props: {
@@ -30,16 +37,32 @@ export default {
   },
   data() {
     return {
-      show: true
+      uuid: null
     }
+  },
+  mounted() {
+    const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMONPQRSTUVWXYZ', 20);
+    this.uuid = nanoid()
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.button-container {
+  position: relative;
+  display: inline-block;
+}
+
 .setup-tooltip-icon {
-  position: absolute;
-  right: -15px;
-  top: -5px;
+  color: $primary;
+  margin-left: 16px;
+  font-size: 20px !important;
+}
+
+.tooltip-container {
+  color: white;
+  line-height: 24px;
+  font-size: 16px;
+  padding: 10px;
 }
 </style>

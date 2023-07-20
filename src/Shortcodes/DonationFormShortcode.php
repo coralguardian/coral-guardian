@@ -16,13 +16,6 @@ class DonationFormShortcode extends AbstractFormShortcode
 
     protected static function getAttributes(array $atts): array
     {
-        $attributes = [];
-        if(array_key_exists("fiscal_type", $atts)) {
-            $attributes[] = ["data-initial-fiscal-type" => $atts["fiscal_type"]];
-        }
-        if(array_key_exists("donation_type", $atts)) {
-            $attributes[] = ["data-initial-donation-type" => $atts["donation_type"]];
-        }
-        return $attributes;
+        return [];
     }
 }

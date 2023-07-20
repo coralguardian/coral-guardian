@@ -33,7 +33,7 @@
             :key="index"
             disabled
         >
-          <span v-if="tab.title">{{ $t(tab.title) }}</span>
+          <span class="cg-base-text white--text" v-if="tab.title">{{ $t(tab.title) }}</span>
         </v-tab>
 
       </v-tabs>
@@ -44,18 +44,26 @@
             v-for="(step, index) in steps"
             :key="index"
         >
-          <step :title="step.title" :is-singular="step.singularTitle" :is-specific="step.specificTitle"
-                :class="step.classes" :id="step.component">
+          <step
+              :step="step"
+              :is-singular="step.singularTitle"
+              :is-specific="step.specificTitle"
+              :class="step.classes"
+              :id="step.component"
+          >
 
             <component v-bind:is="step.component" v-bind="step.props" v-if="step.component === currentStep.component && index === stepNumber"/>
 
           </step>
 
+          <form-footer
+              v-if="displayFooter(index)"
+              class="base-form-footer"
+          />
+
         </v-tab-item>
 
       </v-tabs-items>
-
-      <form-footer v-if="currentStep.component !== 'ChoiceStep'" :destroy="false"/>
 
     </div>
 
@@ -66,7 +74,6 @@
 <script>
 import FormFooter from "@/components/forms/FormFooter";
 import Step from "@/components/utils/Step";
-import Incrementor from "@/components/utils/Incrementor";
 import AdoptionMixin from "@/mixins/adoptionMixin";
 import {mapGetters} from 'vuex'
 import components from "@/components/forms/steps"
@@ -77,7 +84,6 @@ export default {
   components: {
     FormFooter,
     Step,
-    Incrementor,
     ...components
   },
   mixins: [AdoptionMixin, itemTranslationMixin],
@@ -101,6 +107,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      steps: 'getSteps',
       stepNumber: 'step',
       currentStep: "getCurrentStep",
       defaultTranslation: "getDefaultTranslation"
@@ -111,6 +118,12 @@ export default {
       componentName: this.steps[0].component,
       displayAlert: false,
       alert: ""
+    }
+  },
+  methods: {
+    displayFooter(index) {
+      let step = this.steps[index];
+      return step.component === this.currentStep.component && index === this.stepNumber
     }
   },
   mounted() {
@@ -129,7 +142,6 @@ export default {
 
 .form-container {
   width: 475px;
-  height: $form-height;
   border: 2px solid $primary;
   border-radius: $base-border-radius;
   background: white;
@@ -152,9 +164,9 @@ export default {
   border-radius: $base-border-radius;
 }
 
-.v-window-item:not(first-child) {
-  height: calc(#{$form-height} - 116px);
-}
+//.v-window-item:not(first-child) {
+//  height: calc(#{$form-height} - 116px);
+//}
 
 .v-tab {
   font-size: 0.7rem;
@@ -178,11 +190,19 @@ export default {
 
 .step-active {
   background: white;
-  color: black !important;
+
+  span {
+    color: $primary !important;
+  }
 }
 
 .v-tab--disabled {
   opacity: unset;
+}
+
+.base-form-footer {
+  padding-right: 20px;
+  padding-bottom: 20px !important;
 }
 
 </style>

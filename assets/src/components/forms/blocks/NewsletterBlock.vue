@@ -1,23 +1,23 @@
 <template>
-  <div class="text-left">
-    <p class="subtitles poppins-police">
+  <div>
+    <p class="cg-title" v-if="isAdoption">
       {{ $t("default.newsletter.title") }}
     </p>
-    <p>
-      {{ $t(description) }}
-    </p>
-    <v-checkbox color="tertiary" class="mt-0" :input-value="value" @change="$emit('input', $event)">
+
+    <v-checkbox class="mt-0" :input-value="value" @change="$emit('input', $event)">
       <template v-slot:label>
-        <p class="black--text">{{ $t(label) }}</p>
+        <p class="cg-base-text" v-html="$t(label)"/>
       </template>
     </v-checkbox>
+
     <div v-if="full && value">
-      <p class="mb-2" v-html="$t('default.newsletter.otherEmail.description')"/>
+      <p class="mb-5 cg-base-text light lower" v-html="$t('default.newsletter.otherEmail.description')"/>
       <text-input
           :placeholder="$t('default.newsletter.otherEmail.email')"
           v-model="adopter.alternate_newsletter_email"
       />
     </div>
+
   </div>
 </template>
 
@@ -43,11 +43,11 @@ export default {
       adopter: "getAdopter",
       target: "getTarget"
     }),
-    label() {
-      return this.target === ActionEnum.getTarget(ActionEnum.adoption) ? "default.newsletter.label.adoption" : "default.newsletter.label.other"
+    isAdoption() {
+      return this.target === ActionEnum.getTarget(ActionEnum.adoption) || this.target === ActionEnum.getTarget(ActionEnum.gift)
     },
-    description() {
-      return this.target === ActionEnum.getTarget(ActionEnum.adoption) ? "default.newsletter.description.adoption" : "default.newsletter.description.other"
+    label() {
+      return this.isAdoption ? "default.newsletter.label.adoption" : "default.newsletter.label.donation"
     }
   }
 }

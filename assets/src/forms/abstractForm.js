@@ -22,7 +22,6 @@ export default class AbstractForm {
    * @returns {Promise<unknown>}
    */
   unload() {
-    console.log("You should Implement 'unload' method !")
     return new Promise(resolve => resolve())
   }
 
@@ -31,6 +30,14 @@ export default class AbstractForm {
    * @property state - le state du store
    */
   onload() {
-    console.log("You should Implement 'onload' method !")
+  }
+
+  // method exécutée avant le chargement d'un formulaire
+  /**
+   * @property context - le store
+   * @returns {Promise<unknown>}
+   */
+  beforeLoad() {
+    return new Promise(resolve => resolve())
   }
 }

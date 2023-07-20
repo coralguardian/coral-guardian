@@ -1,53 +1,29 @@
 <template>
   <div>
+    <hint class="mb-10">
+      <p
+          class="cg-base-text"
+          v-html="description"
+      />
+    </hint>
 
-    <p class="pb-2" v-html="$t('default.stepper.adoption.description', {donation: order.price}) "/>
-
-    <adoption-count-block :options="localOptions" :big="true"/>
-
+    <v-form
+        :ref="formRefName"
+        v-model="valid"
+    >
+      <adoption-count-block/>
+    </v-form>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapState} from "vuex";
 import AdoptionStep from "@/components/forms/steps/AdoptionStep";
-import {isEmpty} from "lodash";
 
 export default {
   name: "coral-adoption-step",
-  extends: AdoptionStep,
-  computed: {
-    ...mapState({
-      interval: 'interval'
-    }),
-    ...mapGetters({
-      donatorNature: 'getDonatorNature'
-    }),
-    localOptions () {
-      let options = this.options;
-      options.item = this.translation.item;
-      if (!isEmpty(this.interval) && this.order.quantity >= this.interval.min && this.order.quantity <= this.interval.max) {
-        options.displayAlert = true;
-        options.message = this.$t('default.stepper.adoption.corals.hint.individual', {max: this.maxCount, item: this.plural.item})
-        this.$vuetify.goTo('#deduction', { container: '#CoralAdoptionStep' })
-      }
-      return options
-    }
-  }
+  extends: AdoptionStep
 }
 </script>
 
 <style lang="scss" scoped>
-.v-divider {
-  margin: 1rem 0;
-  border-width: 1px;
-}
-
-.v-tab {
-  font-size: 0.7rem;
-}
-
-.v-tabs-items {
-  padding: 1rem 0.5rem;
-}
 </style>
