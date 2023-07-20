@@ -11,34 +11,26 @@
 </template>
 
 <script>
-import apiMixin from "@/mixins/apiMixin";
 import finalStepMixin from "@/mixins/finalStepMixin";
 import {mapGetters} from "vuex";
 import FinalStep from "@/components/forms/misc/FinalStep.vue";
-import SendToFriendEnum from "@/enums/sendToFriendEnum";
-import validationMixin from "@/mixins/validationMixin";
 import itemTranslationMixin from "@/mixins/itemTranslationMixin";
 
 export default {
-  name: "final-recipient-step",
+  name: "final-recipient-deposit-step",
   components: {
     FinalStep
   },
-  mixins: [apiMixin, finalStepMixin, validationMixin, itemTranslationMixin],
+  mixins: [finalStepMixin, itemTranslationMixin],
   computed: {
     ...mapGetters({
       adopter: "getAdopter",
       gift: "getGift"
     }),
     description() {
-      let base = 'default.stepper.finalRecipient.description.';
-      if (this.adopter.send_to_friend === SendToFriendEnum.later) {
-        base += "later"
-      } else if (this.adopter.send_to_friend === SendToFriendEnum.dont) {
-        base += "sendToMe"
-      } else {
-        base += this.gift.toSendOn === null ? "base" : "scheduled"
-      }
+      let base = 'default.stepper.finalDeposit.recipient.description.';
+      base += this.gift.toSendOn === null ? "base" : "scheduled"
+
       return this.$t(base)
     }
   }

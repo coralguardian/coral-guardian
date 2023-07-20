@@ -374,6 +374,18 @@ export default {
         scheduled: "Votre reçu fiscal vous a été envoyé par email.<br>Les codes cadeaux seront envoyés à vos destinataires à la date programmée."
       },
       description2: "Si vous avez choisi de nous faire parvenir les noms de vos destinataires grâce au fichier à disposition, vous pouvez le remplir et nous le renvoyer à l'adresse inscrite dans l'email de confirmation que vous venez de recevoir."
+    },
+    finalDeposit: {
+      adoption: {
+        description: "Votre certificat vous a été envoyé par email. | Vos certificats vous ont été envoyés par email.",
+        download: "Vous pouvez aussi le télécharger directement. | Vous pouvez aussi les télécharger directement."
+      },
+      recipient: {
+        description: {
+          base: "Le code cadeau a été envoyé à votre destinataire. | Les codes cadeaux ont été envoyés à vos destinataires.",
+          scheduled: "Le code cadeau sera envoyé à votre destinataire à la date programmée. | Les codes cadeaux seront envoyés à vos destinataires à la date programmée."
+        }
+      }
     }
   },
   errors: {

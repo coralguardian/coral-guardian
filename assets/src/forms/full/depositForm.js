@@ -90,7 +90,7 @@ export default class DepositForm extends AbstractForm {
     new Step(
       null,
       null,
-      "FinalAdoptionStep",
+      "FinalAdoptionDepositStep",
       (state) => state.data.order.type === OrderTypeEnum.regular,
       false,
       false,
@@ -103,7 +103,7 @@ export default class DepositForm extends AbstractForm {
     new Step(
       null,
       null,
-      "FinalRecipientStep",
+      "FinalRecipientDepositStep",
       (state) => state.data.order.type === OrderTypeEnum.gift,
       false,
       false,
