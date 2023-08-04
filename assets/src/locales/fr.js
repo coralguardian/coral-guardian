@@ -214,9 +214,18 @@ export default {
         donation: "Je donne une fois ou tous les mois le montant de mon choix."
       },
       switch: {
-        donation: "Vous pouvez aussi faire un don",
-        individual: "Vous êtes un particulier ?",
-        company: "Vous êtes une entreprise ?"
+        donation: {
+          text: "Vous pouvez aussi faire un don",
+          link: "https://www.coralguardian.org/faire-un-don/"
+        },
+        individual: {
+          text:  "Vous êtes un particulier ?",
+          link: "https://www.coralguardian.org/adopte-corail/"
+        },
+        company: {
+          text: "Vous êtes une entreprise ?",
+          link: "https://www.coralguardian.org/nous-soutenir/"
+        }
       }
     },
     gift: {

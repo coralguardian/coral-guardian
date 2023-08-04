@@ -27,30 +27,28 @@
       </setup-btn>
 
       <div v-if="adopter.type === adopterEnum.company" class="switch-link-container">
-        <a class="cg-base-text switch-link"
-           href="https://www.coralguardian.org/faire-un-don/?action=donation&c=company">
-          {{ $t("default.stepper.setup.switch.donation") }}
+        <a class="cg-base-text switch-link" :href="donationLink">
+          {{ $t("default.stepper.setup.switch.donation.text") }}
           <v-icon color="primary">
             mdi-arrow-right
           </v-icon>
         </a>
-        <a class="cg-base-text switch-link" href="https://www.coralguardian.org/adopte-corail/?c=individual">
-          {{ $t("default.stepper.setup.switch.individual") }}
+        <a class="cg-base-text switch-link" :href="individualLink">
+          {{ $t("default.stepper.setup.switch.individual.text") }}
           <v-icon color="primary">
             mdi-arrow-right
           </v-icon>
         </a>
       </div>
       <div v-else class="switch-link-container">
-        <a class="cg-base-text switch-link"
-           href="https://www.coralguardian.org/faire-un-don/?action=donation&c=individual">
-          {{ $t("default.stepper.setup.switch.donation") }}
+        <a class="cg-base-text switch-link" :href="donationLink">
+          {{ $t("default.stepper.setup.switch.donation.text") }}
           <v-icon color="primary">
             mdi-arrow-right
           </v-icon>
         </a>
-        <a class="cg-base-text switch-link" href="https://www.coralguardian.org/nous-soutenir/?c=company">
-          {{ $t("default.stepper.setup.switch.company") }}
+        <a class="cg-base-text switch-link" :href="companyLink">
+          {{ $t("default.stepper.setup.switch.company.text") }}
           <v-icon color="primary">
             mdi-arrow-right
           </v-icon>
@@ -109,6 +107,18 @@ export default {
     // isDonation() {
     //   return this.target === ActionEnum.donation
     // },
+    donationLink() {
+      if (this.adopter.type === this.adopterEnum.company) {
+        return this.$t("default.stepper.setup.switch.donation.link") + "?c=company"
+      }
+      return this.$t("default.stepper.setup.switch.donation.link") + "?c=individual"
+    },
+    individualLink() {
+      return this.$t("default.stepper.setup.switch.individual.link") + "?c=individual"
+    },
+    companyLink() {
+      return this.$t("default.stepper.setup.switch.company.link") + "?c=company"
+    },
     projectEnum() {
       return ProjectEnum
     },
