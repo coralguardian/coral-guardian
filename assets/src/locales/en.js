@@ -223,7 +223,7 @@ export default {
         },
         company: {
           text: "Are you a company?",
-          link: "coralguardian.org/en/csr-coral-guardian/"
+          link: "https://www.coralguardian.org/en/csr-coral-guardian/"
         }
       }
     },
