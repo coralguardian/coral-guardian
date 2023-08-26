@@ -37,8 +37,15 @@ export default {
   align-items: center;
   justify-content: center;
 
+  @media #{map-get($display-breakpoints, 'xs-only')} {
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+  }
+
   .cg-icon {
     width: 35px;
   }
 }
+
 </style>

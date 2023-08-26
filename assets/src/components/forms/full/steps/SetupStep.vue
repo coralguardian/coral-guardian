@@ -6,7 +6,7 @@
           @click="updateForm({target: adoptionConstants.me, order: {type: 'regular'}})"
       >
         <icon icon-path="'img/icons/corail.svg'" alt=""/>
-        {{ $t("default.stepper.setup.adopt") }}
+        <span class="width-tooltip">{{ $t("default.stepper.setup.adopt") }}</span>
 
         <btn-tooltip>
           <span>{{ $t('default.stepper.setup.tooltips.me') }}</span>
@@ -18,7 +18,7 @@
           @click="updateForm({target: adoptionConstants.friend, order: {type: 'gift'}})"
       >
         <icon icon-path="'img/icons/gift.svg'" alt=""/>
-        {{ $t("default.stepper.setup.offer") }}
+        <span class="width-tooltip">{{ $t("default.stepper.setup.offer") }}</span>
 
         <btn-tooltip>
           <span>{{ $t('default.stepper.setup.tooltips.recipient') }}</span>

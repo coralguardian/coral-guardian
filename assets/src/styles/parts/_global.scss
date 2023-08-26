@@ -74,6 +74,10 @@ p {
   border-left: unset !important;
 }
 
+.v-btn {
+  white-space: normal !important;
+}
+
 .v-btn.primary .v-btn__content {
   color: white !important;
 }
@@ -135,12 +139,15 @@ a.cg-btn {
   left: -100px !important;
   white-space: normal !important;
 
-    @media #{map-get($display-breakpoints, 'sm-and-up')} {
-      min-width: 350px;
-    }
-    @media #{map-get($display-breakpoints, 'sm-and-down')} {
-      min-width: 250px;
-    }
+  @media #{map-get($display-breakpoints, 'sm-and-up')} {
+    min-width: 350px;
+  }
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
+    min-width: 250px;
+  }
+  @media #{map-get($display-breakpoints, 'xs-only')} {
+    left: -200px !important;
+  }
 }
 
 .v-dialog__content {

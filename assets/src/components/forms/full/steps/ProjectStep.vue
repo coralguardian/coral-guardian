@@ -6,7 +6,7 @@
           @click="updateForm({project: projectConstant.indonesia})"
       >
         <icon icon-path="/img/icons/indonesia.svg" alt=""/>
-        {{ $t("default.stepper.project.indonesia") }}
+        <span class="width-tooltip">{{ $t("default.stepper.project.indonesia") }}</span>
 
         <btn-tooltip>
           <span v-html="$t('default.stepper.project.tooltips.indonesia')"/>
@@ -18,7 +18,7 @@
           @click="updateForm({project: projectConstant.spain})"
       >
         <icon icon-path="/img/icons/spain.svg" alt=""/>
-        {{ $t("default.stepper.project.spain") }}
+        <span class="width-tooltip">{{ $t("default.stepper.project.spain") }}</span>
 
         <btn-tooltip>
           <span v-html="$t('default.stepper.project.tooltips.spain')"/>

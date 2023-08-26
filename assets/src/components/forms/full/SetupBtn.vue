@@ -32,6 +32,11 @@ export default {
   font-size: 18px !important;
   line-height: 20px !important;
 
+  @media #{map-get($display-breakpoints, 'xs-only')} {
+    padding: 9px 16px !important;
+    font-size: 16px !important;
+  }
+
   &:hover {
     background: $secondary !important;
   }
@@ -47,6 +52,17 @@ export default {
 
   .v-btn__content {
     letter-spacing: 0 !important;
+    width: 100%;
+  }
+}
+
+@media #{map-get($display-breakpoints, 'xs-only')} {
+  .width-tooltip {
+    width: calc(100% - 92px);
+  }
+
+  .width-no-tooltip {
+    width: calc(100% - 63px);
   }
 }
 

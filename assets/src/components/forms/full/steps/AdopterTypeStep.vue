@@ -5,7 +5,7 @@
         @click="updateForm({adopter: {type: adopterType.individual}})"
     >
       <icon icon-path="'img/icons/individual.svg'" alt=""/>
-      {{ $t("default.stepper.adopterType.individual") }}
+      <span>{{ $t("default.stepper.adopterType.individual") }}</span>
     </setup-btn>
 
     <setup-btn
@@ -13,7 +13,7 @@
         @click="updateForm({adopter: {type: adopterType.company}})"
     >
       <icon icon-path="'img/icons/company.svg'" alt=""/>
-      {{ $t("default.stepper.adopterType.company") }}
+      <span>{{ $t("default.stepper.adopterType.company") }}</span>
     </setup-btn>
 
   </div>

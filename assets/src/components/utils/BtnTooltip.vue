@@ -57,6 +57,10 @@ export default {
   color: $primary;
   margin-left: 16px;
   font-size: 20px !important;
+
+  @media #{map-get($display-breakpoints, 'xs-only')} {
+    margin-left: 9px;
+  }
 }
 
 .tooltip-container {
