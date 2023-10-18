@@ -113,11 +113,11 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
         DoctrineService::getEntityManager()->flush();
 
         $adoptionFilename = self::saveFileFromRequest($_FILES["file"]["tmp_name"]['adoptions']);
-        NamingFileService::importDataFromFile($adoptionFilename, $adoption);
+        NamingFileService::importDataFromFile($adoption->getUuid(), $adoptionFilename);
 
         if ($adoption instanceof GiftAdoption) {
             $recipientFilename = self::saveFileFromRequest($_FILES["file"]["tmp_name"]['recipients']);
-            RecipientFileService::importDataFromFile($recipientFilename, $adoption);
+            RecipientFileService::importDataFromFile($adoption->getUuid(), $recipientFilename);
         }
         $_SESSION["success_notice"] = "Adoption ajoutée avec succès.";
 

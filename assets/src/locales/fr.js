@@ -13,11 +13,14 @@ export default {
   ui: {
     continue: "Continuer",
     previous: "Précédent",
-    through: "Passer cette étape"
+    through: "Passer cette étape",
+    pay: "Payer et terminer",
+    finalized: "Finaliser"
   },
   rules: {
     required: "Ce champ est requis.",
     minLength: "Ce champ doit comporter {count} caractères minimum.",
+    maxLength: "Ce champ doit comporter {count} caractères maximum.",
     email: "Email non valide",
     specialChar: "Caractère(s) non admis.",
     digitOnly: "Ce champ ne doit comporter que des chiffres.",
@@ -31,8 +34,20 @@ export default {
       refused: "Votre paiement a été refusé, veuillez réessayer."
     }
   },
+  breadcrumb: {
+    base: "Merci ! Vous souhaitez <b>{type}</b> un corail ou un récif.",
+    project: "Merci ! Vous souhaitez <b>{type}</b> un corail ou un récif en <b>{project}</b>.",
+    product: "Merci ! Vous souhaitez <b>{type}</b> un <b>{product}</b> en <b>{project}</b>.",
+    price: "Merci ! Vous souhaitez <b>{type} {quantity} {product}</b> en <b>{project}</b> pour <b>{price}€</b>.",
+    monthlyDonation: "Vous avez généreusement ajouté un <b>don mensuel de {donation}€</b>.",
+    types: {
+      regular: "adopter",
+      gift: "offrir"
+    }
+  },
+  share: 'Partagez sur',
   deduction: {
-    description: "Je fais <b>un don</b> de {donation}€,<br><b>soit {deduction}€</b> après déduction fiscale en France."
+    description: "Je fais <b>un don {type}</b> de {donation} €, <b>soit {deduction} €</b> après déduction fiscale."
   },
   stepper: {
     header: {
@@ -51,7 +66,7 @@ export default {
         setup: "Que souhaitez-vous faire ?",
         adoption: "Que souhaitez-vous adopter ?"
       },
-      customizationSend: "Personnalisation de l'envoi",
+      customizationSend: "Personnalisez votre envoi",
       thanks: "Merci !"
     },
     adopterType: {
@@ -59,8 +74,8 @@ export default {
       company: "Une entreprise"
     },
     adoption: {
-      title: "Adoptez un {item} | Adoptez des {item}",
-      description: "<b>Pour {donation}€</b>, redonnez vie aux écosystèmes marins en danger.",
+      title: "Choisissez un nombre de {item}",
+      description: "En faisant un <b>don</b> de {donation} €, <b>soit {reducedPrice} €</b> après réduction fiscale, vous redonnez vie aux écosystèmes marins en danger.",
       corals: {
         hint: {
           individual: "Adopter un récif entier à partir de 30 coraux sur notre page dédiée \"<a href='/adopter-un-recif-particuliers/'>Adopter un récif</a>\" !",
@@ -80,10 +95,15 @@ export default {
           title: "Napoléon",
           description: "Récif Napoléon de <b>150 coraux</b> (base de 4500€)"
         },
-        max: "Vous souhaitez adopter plus de {max} {item} ? <a href='mailto:n.radouane@coralguardian.org'>Contactez-nous directement</a> !"
+        max: "Vous souhaitez adopter plus de {max} {item} ?<br><a href='mailto:n.radouane@coralguardian.org'>Contactez-nous directement</a> !"
       },
       customAmount: {
-        label: "Montant :",
+        label: "Montant",
+        other: "Autre montant",
+        hint: "Le surplus de don sera utilisé pour soutenir l'ensemble de nos actions."
+      },
+      quantity: {
+        label: "Quantité",
         hint: "Le surplus de don sera utilisé pour soutenir l'ensemble de nos actions."
       }
     },
@@ -91,9 +111,12 @@ export default {
       error: "Veuillez sélectionner un type d'adoption."
     },
     bankTransferThanks: {
-      title: "Votre paiement par virement est en attente",
+      hint: "Votre paiement par virement est en attente",
       description: "Dès que votre virement sera validé, vous recevrez un email contenant un lien vous permettant de continuer le processus d'adoption personnalisé.",
       seeYouSoon: "À très vite !"
+    },
+    bonusDonation: {
+      title: "Optionnel : soutenez nos actions au quotidien"
     },
     certificate: {
       gift: {
@@ -144,15 +167,13 @@ export default {
     },
     customizationSend: {
       message: {
-        title: "Écrire un message",
-        description: "Vous pouvez écrire un message à l'intention de vos destinataires.<br>Ce message sera commun à l'ensemble des destinataires.",
+        description: "Vous pouvez écrire un message à l'intention de votre destinataire. | Vous pouvez écrire un message <b>commun</b> à l'intention de vos destinataires.",
         placeholder: "Votre message"
       },
       send: {
-        title: "Programmer l'envoi",
-        description1: "Vous avez la possibilité de programmer l'envoi des bons cadeaux à vos destinataires à une date ultérieure. L'email sera envoyé le matin du jour sélectionné.",
-        description2: "Si vous ne programmez pas l'envoi, les codes cadeaux seront envoyés immédiatement à la fin de la commande.",
-        checkbox: "Je souhaite programmer mon envoi"
+        description: "Vous avez la possibilité de programmer l'envoi des bons cadeaux à vos destinataires à une date ultérieure. L'email sera envoyé le matin du jour sélectionné. " +
+          "<br>Si vous ne programmez pas l'envoi, les codes cadeaux seront envoyés à la fin de votre commande.",
+        checkbox: "Programmez votre envoi"
       }
     },
     donation: {
@@ -164,7 +185,15 @@ export default {
       buttons: {
         unique: "Je donne une fois",
         recurrent: "Je donne tous les mois"
-      }
+      },
+      i_want: "Je souhaite donner",
+      select_duration: {
+        unique: "une fois",
+        recurrent: "tous les mois"
+      },
+      amount: "pour un montant de",
+      other_amount: "autre",
+      fiscal_reduction: "Soit <b>{reducedPrice} €</b> après déduction fiscale."
     },
     friend: {
       title: "Renseignez les informations de votre destinataire",
@@ -176,13 +205,27 @@ export default {
       }
     },
     setup: {
-      adopt: "J'adopte",
-      offer: "J'offre",
+      adopt: "Adopter un corail ou un récif",
+      offer: "Offrir un corail ou un récif",
       donation: "Je fais un don",
       tooltips: {
         me: "Vous pourrez choisir le(s) nom(s) sur votre certificat(s) et le(s) télécharger directement.",
         recipient: "Votre destinataire(s) recevra un code cadeau, à la date de votre choix, lui permettant de choisir le nom sur leur(s) certificat(s) et le(s) télécharger directement.",
         donation: "Je donne une fois ou tous les mois le montant de mon choix."
+      },
+      switch: {
+        donation: {
+          text: "Vous pouvez aussi faire un don",
+          link: "https://www.coralguardian.org/faire-un-don/"
+        },
+        individual: {
+          text:  "Vous êtes un particulier ?",
+          link: "https://www.coralguardian.org/adopte-corail/"
+        },
+        company: {
+          text: "Vous êtes une entreprise ?",
+          link: "https://www.coralguardian.org/nous-soutenir/"
+        }
       }
     },
     gift: {
@@ -196,9 +239,11 @@ export default {
     information: {
       title: "Renseignez vos informations",
       description: "Les informations demandées sont utilisées pour éditer votre reçu fiscal et pour procéder au paiement.",
+      required: "Les champs marqués d'une * sont obligatoires.",
       company: {
         cols: {
           information: {
+            siret: "Numéro SIRET",
             companyName: "Nom de l'entreprise*",
             firstname: "Prénom du contact principal*",
             name: "Nom du contact principal*",
@@ -228,7 +273,11 @@ export default {
     monthlyDonation: {
       description: "Assurez la poursuite de nos actions de recherche, de restauration et de sensibilisation au quotidien avec un don mensuel."
     },
-    multipleAdoption: {
+    namingAdoption: {
+      no_idea: {
+        individual: "Je n’ai pas d’inspiration, je choisirai donc le nom plus tard. Je recevrai  un email avec toutes les indications pour nommer mon corail.",
+        company: "Je n’ai pas d’inspiration, je choisirai donc le nom plus tard. Je recevrai  un email avec toutes les indications pour nommer mon corail.<br>L'importation d'un fichier excel sera possible."
+      },
       description: {
         indonesia: "Donnez un nom à votre {item} adopté, vous pouvez choisir celui que vous souhaitez ! |Donnez un nom à chacun de vos {item} adoptés, vous pouvez choisir ceux que vous souhaitez !",
         spain: "Vous pouvez choisir le nom que vous souhaitez ! | Vous pouvez choisir les noms que vous souhaitez !",
@@ -236,17 +285,13 @@ export default {
       },
       tabs: {
         fields: {
-          title: "Je remplis les champs",
-          description: {
-            indonesia: "Je renseigne chaque nom de {item} dans les champs ci-dessous :",
-            spain: "Je renseigne chaque nom dans les champs ci-dessous :"
-          }
+          title: "Je remplis les champs"
         },
         file: {
           title: "J'envoie un fichier",
-          subtitle: "J'ai beaucoup de certificats à nommer ? J'envoie un fichier avec les personnalisations.",
-          description: "Je télécharge le fichier Excel mis à ma disposition. Une fois rempli, je me rends à l'adresse communiquée dans le mail de confirmation reçu et je dépose mon fichier dans le champ prévu à cet effet.",
-          button: "Télécharger le fichier",
+          description: "Si vous avez beaucoup de {item} à nommer, téléchargez le fichier Excel ci-dessous.\n" +
+            "Une fois dûment rempli, rendez-vous sur l’adresse communiquée dans l’email de confirmation que vous allez recevoir et importez le fichier.",
+          button: "Télécharger le fichier Excel",
           upload: {
             label: "Votre fichier",
             description: "Déposez votre fichier Excel de noms complété ici :"
@@ -255,27 +300,25 @@ export default {
       }
     },
     multipleRecipient: {
-      description: "Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif.",
-      company: "Deux solutions s'offrent à vous :",
+      title: "À qui offrez-vous le {item} | À qui offrez-vous les {item}",
+      description: "Renseignez les coordonnées de votre destinataire afin qu'il reçoive son code cadeau. | Renseignez les coordonnées de vos destinataires afin qu'ils reçoivent leur code cadeau respectif.",
       tabs: {
         fields: {
-          title: "Je remplis les champs",
+          title: "Remplir les champs",
           description: "Je renseigne les coordonnées de chacun de mes destinataires dans les champs ci-dessous :",
           recipient: "Destinataire n°{index}"
         },
         file: {
-          title: "J'envoie un fichier",
-          subtitle: "J'envoie un fichier avec les coordonnées de mes destinataires",
-          description: "Je télécharge le fichier Excel mis à ma disposition. Une fois rempli, je me rends à l'adresse communiquée dans le mail de confirmation reçu et je dépose mon fichier dans le champ prévu à cet effet.",
-          button: "Télécharger le fichier",
+          title: "Importer un fichier",
           upload: {
-            label: "Votre fichier",
-            description: "Déposez votre fichier Excel de destinataires ici :"
+            label: "Parcourir",
+            description: "Importez ci-dessous votre fichier Excel dûment complété :"
           }
         }
       }
     },
     payment: {
+      checking: "Votre paiement est en cours de vérification",
       methods: {
         card: {
           tab: "Carte",
@@ -283,8 +326,8 @@ export default {
         },
         bank: {
           tab: "Virement",
-          button: "Télécharger le RIB",
-          description: "Pour payer par virement bancaire, télécharger le RIB de l'association et procédez au paiement via votre établissement bancaire.",
+          title: "Télécharger le RIB de Coral Guardian",
+          description: "Procédez ensuite au paiement via votre établissement bancaire.",
           hint: "Un délai de traitement de 2 à 5 jours est à prévoir le temps de valider le paiement. Une fois validé, vous recevrez un email vous permettant de continuer votre commande."
         }
       },
@@ -292,22 +335,9 @@ export default {
         description: "Pour accompagner votre adoption, soutenez nos actions au quotidien avec un don mensuel optionnel <b>à partir de 2€</b> !",
         label: "Mon don mensuel"
       },
-      title: "Procédez au paiement",
-      description: "Le paiement est sécurisé avec Stripe 🔒",
-      important: "IMPORTANT : lors de la validation de votre règlement sur l'application mobile de votre banque, le montant affiché sera de 0€. \n" +
+      title: "Enfin, procédez au paiement <span class='font-weight-regular cg-base-text'>(sécurisé avec Stripe)</span>",
+      important: "<b>Important</b> : lors de la validation de votre règlement sur l'application mobile de votre banque, le montant affiché sera de 0€. \n" +
         "Il s'agit d'une demande de pré-autorisation bancaire mais le montant prélevé correspond bien au montant total de votre commande indiqué ci-dessus.",
-      reminder: {
-        title: "Rappel de votre don",
-        adoption: {
-          description: {
-            indonesia: "{count} {item} adopté sur l'île d'Hatamin en Indo-Pacifique : {price}€ | {count} {item} adoptés sur l'île d'Hatamin en Indo-Pacifique : {price}€",
-            spain: "{count} {item} adopté à Punta de la Mona en Méditerranée : {price}€ | {count} {item} adoptés à Punta de la Mona en Méditerranée : {price}€"
-          }
-        },
-        donation: {
-          description: "Un don {item} : {price}€"
-        }
-      },
       errors: {
         card: "Veuillez renseigner les informations de votre carte bancaire."
       }
@@ -320,15 +350,14 @@ export default {
         indonesia: "📍 À Pulau Hatamin, en Indonésie<br>🤝 En collaboration avec l’association locale WES<br>⚠️ La pêche à la dynamite<br>🌊 Actions de restauration du récif corallien, protection de l’aire marine protégée, suivis scientifiques de la zone, et sensibilisation locale"
       }
     },
-    finalAdoption: {
-      title: "Bravo et merci, vous avez adopté {count} {item}",
-      description: "Vous pouvez aussi directement télécharger le certificat en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>.|Vous pouvez aussi directement télécharger les certificats en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>.",
-      description_no_certif: "Votre reçu fiscal a été envoyé par email. Vous recevrez votre certificat par email une fois que vous nous aurez retourné votre fichier de noms.| Votre reçu fiscal a été envoyé par email. Vous recevrez vos certificats par email une fois que vous nous aurez retourné votre fichier de noms.",
-      description_file: "Votre reçu fiscal et votre certificat ont été envoyés par email.| Votre reçu fiscal et vos certificats ont été envoyés par email."
+    finalStep: {
+      title: "Bravo et merci !",
     },
-    finalFriendAdoption: {
-      title: "Bravo et merci, vous avez adopté {count} {item} pour votre destinataire",
-      description: "Votre reçu fiscal a été envoyé par email.<br><br>Le code cadeau de votre destinataire est le suivant : {orderToken}<br><br>Il/elle recevra un email pour personnaliser votre cadeau !"
+    finalAdoption: {
+      hint: "Vous avez adopté {count} {item} !",
+      download: "Téléchargez le certificat | Téléchargez les certificats",
+      download_description: "Vous pouvez aussi directement télécharger votre certificat. | Vous pouvez aussi directement télécharger vos certificats.",
+      description_not_named: "Votre reçu fiscal a été envoyé par email. Pour obtenir votre certificat, nommez votre {item} via le lien présent dans l'email que vous allez recevoir.| Votre reçu fiscal a été envoyé par email. Pour obtenir vos certificats, nommez vos {item} via le lien présent dans l'email que vous allez recevoir.",
     },
     finalFriendGift: {
       title: "Bravo et merci, vous avez adopté {count} {item}",
@@ -336,6 +365,7 @@ export default {
       descriptionNoEmail: "Vous pouvez télécharger votre certificat directement en cliquant <a class='font-weight-bold text-decoration-underline' href='{link}' target='_blank'>ici</a>."
     },
     finalDonation: {
+      hint: "Vous avez fait un don {type} de {price}€",
       title: "Bravo et merci pour votre soutien",
       description: "Votre reçu fiscal a été envoyé par email.",
       bankTransfer: "Votre virement est en attente de réception. Une fois celui-ci validé, vous recevrez un email contenant votre reçu fiscal."
@@ -345,13 +375,26 @@ export default {
       description: "Votre reçu fiscal récapitulant l’ensemble de vos dons de l’année fiscale en cours vous sera envoyé par email au mois de janvier prochain."
     },
     finalRecipient: {
-      title: "Bravo et merci, vous avez adopté {count} {item} pour votre destinataire | Bravo et merci, vous avez adopté {count} {item} pour vos destinataires",
+      hint: "Vous avez offert {count} {item} !",
       description: {
         base: "Votre reçu fiscal vous a été envoyé par email.<br>Les codes cadeaux ont été envoyés à vos destinataires.",
+        later: "Votre reçu fiscal vous a été envoyé par email.<br>Pour renseigner les informations de vos destinataires et leur permettre de recevoir leur code cadeaux, suivez le lien présent dans l'email.",
         sendToMe: "Votre reçu fiscal a été envoyé par email ainsi que l'ensemble des codes cadeaux.<br>En se rendant sur le site Coral Guardian, vos destinataires pourront personnaliser leur cadeau !",
         scheduled: "Votre reçu fiscal vous a été envoyé par email.<br>Les codes cadeaux seront envoyés à vos destinataires à la date programmée."
       },
       description2: "Si vous avez choisi de nous faire parvenir les noms de vos destinataires grâce au fichier à disposition, vous pouvez le remplir et nous le renvoyer à l'adresse inscrite dans l'email de confirmation que vous venez de recevoir."
+    },
+    finalDeposit: {
+      adoption: {
+        description: "Votre certificat vous a été envoyé par email. | Vos certificats vous ont été envoyés par email.",
+        download: "Vous pouvez aussi le télécharger directement. | Vous pouvez aussi les télécharger directement."
+      },
+      recipient: {
+        description: {
+          base: "Le code cadeau a été envoyé à votre destinataire. | Les codes cadeaux ont été envoyés à vos destinataires.",
+          scheduled: "Le code cadeau sera envoyé à votre destinataire à la date programmée. | Les codes cadeaux seront envoyés à vos destinataires à la date programmée."
+        }
+      }
     }
   },
   errors: {
@@ -388,14 +431,10 @@ export default {
     }
   },
   newsletter: {
-    title: "Petit bonus : inscrivez-vous à notre newsletter !",
-    description: {
-      adoption: "Recevez des nouvelles liées à votre adoption et de l'avancée des projets de Coral Guardian.",
-      other: "Recevez des nouvelles de l'avancée de nos projets tous les mois."
-    },
+    title: "Bonus optionnel",
     label: {
-      adoption: "Je souhaite m'inscrire aux nouvelles envoyées par Coral Guardian.",
-      other: "Je souhaite m'inscrire à la newsletter mensuelle de Coral Guardian."
+      adoption: "Je souhaite recevoir des nouvelles <b>liées à mon adoption</b> et à l'avancée des projets de Coral Guardian et m'inscris à la newsletter mensuelle.",
+      donation: "Recevez des nouvelles <b>liées à votre don</b> et de l'avancée des projets de Coral Guardian.<br>Je souhaite m'inscrire aux nouvelles envoyées par Coral Guardian.",
     },
     otherEmail: {
       description: "Si vous souhaitez vous inscrire avec <b>une autre adresse email</b> que celle renseignée dans le formulaire, merci de renseigner le champ ci-dessous.",
@@ -403,10 +442,14 @@ export default {
     }
   },
   giftCustom: {
-    title: "Options d'envoi des codes cadeaux*",
+    title: "Pour envoyer le(s) code(s) cadeau(x)*",
     radios: {
       dont: "Je souhaite recevoir le(s) code(s) cadeau(x) sur mon adresse email",
-      send: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement (l'import d'un fichier de contact est possible)"
+      send: "Je souhaite renseigner les adresses emails du ou des destinataire(s) afin qu'il(s) reçoive(nt) leur code directement.",
+      later:  {
+        individual: "Je souhaite renseigner les adresses emails de mes destinataires plus tard. Je recevrai un email avec toutes les indications.",
+        company: "Je souhaite renseigner les adresses emails de mes destinataires plus tard. Je recevrai un email avec toutes les indications (l'import d'un fichier de contact est possible).",
+      }
     }
   }
 }

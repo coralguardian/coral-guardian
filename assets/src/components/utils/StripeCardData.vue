@@ -17,11 +17,11 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import apiMixin from "@/mixins/apiMixin";
-import paymentMixin from "../../mixins/paymentMixin";
+import stripeMixin from "@/mixins/stripeMixin";
 
 export default {
   name: "stripe-card-data",
-  mixins: [apiMixin, paymentMixin],
+  mixins: [apiMixin, stripeMixin],
   props: {
     mode: {
       type: String,

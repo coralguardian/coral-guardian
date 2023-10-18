@@ -1,5 +1,6 @@
 import {merge} from "lodash";
 import i18n from "@/plugins/i18n";
+import AdopterEnum from "@/enums/adopterEnum";
 
 export default class CustomerModel {
   constructor(data) {
@@ -16,11 +17,15 @@ export default class CustomerModel {
       language: i18n.locale
     }
 
-    if (data.adopter.type === "company") {
+    if (data.adopter.type === AdopterEnum.company) {
       merge(customer, {
         alternateNewsletterEmail: data.adopter.alternate_newsletter_email,
-        companyName: data.adopter.company_name
+        companyName: data.adopter.company_name,
       })
+
+      if (data.adopter.siret) {
+        customer.siret = data.adopter.siret
+      }
     }
 
     return customer

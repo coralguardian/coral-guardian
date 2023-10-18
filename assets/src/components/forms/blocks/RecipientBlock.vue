@@ -1,22 +1,22 @@
 <template>
   <div>
-    <div class="double-input-container">
-      <div class="double-input-item">
-        <text-input
-            :placeholder="$t('default.stepper.friend.form.firstname')"
-            :rules="[rules.required, rules.specialChar]"
-            v-model="value.first_name"
-            @input="$emit('input', value)"
-        />
-      </div>
-      <div class="double-input-item">
-        <text-input
-            :placeholder="$t('default.stepper.friend.form.name')"
-            :rules="[rules.required, rules.specialChar]"
-            v-model="value.last_name"
-            @input="$emit('input', value)"
-        />
-      </div>
+    <div class="row">
+      <text-input
+          class="col-6"
+          :placeholder="$t('default.stepper.friend.form.firstname')"
+          :rules="[rules.required, rules.specialChar]"
+          v-model="value.first_name"
+          @input="$emit('input', value)"
+          icon="mdi-account-outline"
+      />
+      <text-input
+          class="col-6"
+          :placeholder="$t('default.stepper.friend.form.name')"
+          :rules="[rules.required, rules.specialChar]"
+          v-model="value.last_name"
+          @input="$emit('input', value)"
+          icon="mdi-account-outline"
+      />
     </div>
 
     <text-input
@@ -24,6 +24,7 @@
         :rules="[rules.required, rules.email]"
         v-model="value.email"
         @input="$emit('input', value)"
+        icon="mdi-email-outline"
     />
   </div>
 </template>

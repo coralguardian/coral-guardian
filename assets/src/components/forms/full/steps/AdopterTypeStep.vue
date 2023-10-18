@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <div class="d-flex justify-space-between btn-container">
-      <setup-btn
-          v-model="isIndividual"
-          @click="updateForm({adopter: {type: adopterType.individual}})"
-      >
-        <img class="form-icon" :src="path + 'img/icons/individual.svg'" alt="">
-        {{$t("default.stepper.adopterType.individual")}}
-      </setup-btn>
+  <div class="btn-container">
+    <setup-btn
+        v-model="isIndividual"
+        @click="updateForm({adopter: {type: adopterType.individual}})"
+    >
+      <icon icon-path="'img/icons/individual.svg'" alt=""/>
+      <span>{{ $t("default.stepper.adopterType.individual") }}</span>
+    </setup-btn>
 
-      <setup-btn
-          v-model="isCompany"
-          @click="updateForm({adopter: {type: adopterType.company}})"
-      >
-        <img class="form-icon" :src="path + 'img/icons/company.svg'" alt="">
-        {{$t("default.stepper.adopterType.company")}}
-      </setup-btn>
+    <setup-btn
+        v-model="isCompany"
+        @click="updateForm({adopter: {type: adopterType.company}})"
+    >
+      <icon icon-path="'img/icons/company.svg'" alt=""/>
+      <span>{{ $t("default.stepper.adopterType.company") }}</span>
+    </setup-btn>
 
-    </div>
   </div>
 </template>
 
@@ -26,17 +24,18 @@ import {mapActions, mapGetters} from "vuex";
 import SetupBtn from "../SetupBtn";
 import AdopterEnum from "@/enums/adopterEnum";
 import validationMixin from "@/mixins/validationMixin";
+import Icon from "@/components/utils/Icon.vue";
 
 export default {
   name: "adopter-type-step",
   mixins: [validationMixin],
   components: {
+    Icon,
     SetupBtn
   },
   computed: {
     ...mapGetters({
       adopter: "getAdopter",
-      path: "getImgPath"
     }),
     adopterType() {
       return AdopterEnum
@@ -72,9 +71,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-container {
-  @media (max-width: 450px) {
-    height: 135px;
-  }
-}
 </style>

@@ -5,13 +5,11 @@
           v-model="isAdoptionForMe"
           @click="updateForm({target: adoptionConstants.me, order: {type: 'regular'}})"
       >
-        <img class="form-icon" :src="path + 'img/icons/certificat.svg'" alt="">
-        {{ $t("default.stepper.setup.adopt") }}
+        <icon icon-path="'img/icons/corail.svg'" alt=""/>
+        <span class="width-tooltip">{{ $t("default.stepper.setup.adopt") }}</span>
 
         <btn-tooltip>
-          <div class="text-center">
-            <span>{{ $t('default.stepper.setup.tooltips.me') }}</span>
-          </div>
+          <span>{{ $t('default.stepper.setup.tooltips.me') }}</span>
         </btn-tooltip>
       </setup-btn>
 
@@ -19,30 +17,57 @@
           v-model="isAdoptionToOffer"
           @click="updateForm({target: adoptionConstants.friend, order: {type: 'gift'}})"
       >
-        <img class="form-icon" :src="path + 'img/icons/joffre.svg'" alt="">
-        {{ $t("default.stepper.setup.offer") }}
+        <icon icon-path="'img/icons/gift.svg'" alt=""/>
+        <span class="width-tooltip">{{ $t("default.stepper.setup.offer") }}</span>
 
         <btn-tooltip>
-          <div class="text-center">
-            <span>{{ $t('default.stepper.setup.tooltips.recipient') }}</span>
-          </div>
+          <span>{{ $t('default.stepper.setup.tooltips.recipient') }}</span>
         </btn-tooltip>
 
       </setup-btn>
 
-      <setup-btn
-          v-model="isDonation"
-          @click="updateForm({target: 'donation'})"
-      >
-        <img class="form-icon" :src="path + 'img/icons/don.svg'" alt="">
-        {{ $t("default.stepper.setup.donation") }}
+      <div v-if="adopter.type === adopterEnum.company" class="switch-link-container">
+        <a class="cg-base-text switch-link" :href="donationLink">
+          {{ $t("default.stepper.setup.switch.donation.text") }}
+          <v-icon color="primary">
+            mdi-arrow-right
+          </v-icon>
+        </a>
+        <a class="cg-base-text switch-link" :href="individualLink">
+          {{ $t("default.stepper.setup.switch.individual.text") }}
+          <v-icon color="primary">
+            mdi-arrow-right
+          </v-icon>
+        </a>
+      </div>
+      <div v-else class="switch-link-container">
+        <a class="cg-base-text switch-link" :href="donationLink">
+          {{ $t("default.stepper.setup.switch.donation.text") }}
+          <v-icon color="primary">
+            mdi-arrow-right
+          </v-icon>
+        </a>
+        <a class="cg-base-text switch-link" :href="companyLink">
+          {{ $t("default.stepper.setup.switch.company.text") }}
+          <v-icon color="primary">
+            mdi-arrow-right
+          </v-icon>
+        </a>
+      </div>
 
-        <btn-tooltip>
-          <div class="text-center">
-            <span>{{ $t('default.stepper.setup.tooltips.donation') }}</span>
-          </div>
-        </btn-tooltip>
-      </setup-btn>
+      <!--      <setup-btn-->
+      <!--          v-model="isDonation"-->
+      <!--          @click="updateForm({target: 'donation'})"-->
+      <!--      >-->
+      <!--        <icon icon-path="'img/icons/don.svg'" alt=""/>-->
+      <!--        {{ $t("default.stepper.setup.donation") }}-->
+
+      <!--        <btn-tooltip>-->
+      <!--          <div class="text-center">-->
+      <!--            <span>{{ $t('default.stepper.setup.tooltips.donation') }}</span>-->
+      <!--          </div>-->
+      <!--        </btn-tooltip>-->
+      <!--      </setup-btn>-->
     </div>
 
   </div>
@@ -54,21 +79,24 @@ import adoptionMixin from "../../../../mixins/adoptionMixin";
 import BtnTooltip from "../../../utils/BtnTooltip";
 import SetupBtn from "../SetupBtn";
 import validationMixin from "@/mixins/validationMixin";
-import ActionEnum from "@/enums/actionEnum";
+// import ActionEnum from "@/enums/actionEnum";
 import ProjectEnum from "@/enums/projectEnum";
+import Icon from "@/components/utils/Icon.vue";
+import AdopterEnum from "@/enums/adopterEnum";
 
 export default {
   name: "setup-step",
   mixins: [adoptionMixin, validationMixin],
   components: {
+    Icon,
     BtnTooltip,
     SetupBtn
   },
   computed: {
     ...mapGetters({
       target: "getTarget",
-      path: "getImgPath",
-      project: "getProject"
+      project: "getProject",
+      adopter: 'getAdopter'
     }),
     isAdoptionForMe() {
       return this.target === this.adoptionConstants.me
@@ -76,11 +104,26 @@ export default {
     isAdoptionToOffer() {
       return this.target === this.adoptionConstants.friend
     },
-    isDonation() {
-      return this.target === ActionEnum.donation
+    // isDonation() {
+    //   return this.target === ActionEnum.donation
+    // },
+    donationLink() {
+      if (this.adopter.type === this.adopterEnum.company) {
+        return this.$t("default.stepper.setup.switch.donation.link") + "?c=company"
+      }
+      return this.$t("default.stepper.setup.switch.donation.link") + "?c=individual"
+    },
+    individualLink() {
+      return this.$t("default.stepper.setup.switch.individual.link") + "?c=individual"
+    },
+    companyLink() {
+      return this.$t("default.stepper.setup.switch.company.link") + "?c=company"
     },
     projectEnum() {
       return ProjectEnum
+    },
+    adopterEnum() {
+      return AdopterEnum
     }
   },
   methods: {
@@ -108,9 +151,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-container {
-  @media (max-width: 450px) {
-    height: 200px;
+
+.switch-link-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+
+  .switch-link {
+    font-size: 16px;
+    line-height: 24px;
+    color: $primary !important;
+    text-decoration: none;
   }
 }
 </style>

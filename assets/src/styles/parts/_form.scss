@@ -1,0 +1,17 @@
+.new-form-container {
+  max-width: 760px;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid #EFF0F7;
+  border-radius: 30px;
+  text-align: left;
+}
+
+.file-import-input {
+  max-width: 240px !important;
+
+  .v-input__slot {
+    cursor: pointer !important;
+  }
+}

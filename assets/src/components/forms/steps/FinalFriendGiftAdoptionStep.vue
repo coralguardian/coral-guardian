@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p v-if="adopter.send_to_friend">{{ $tc('default.stepper.certificate.gift.email', order.quantity) }}</p>
-    <p v-html="description"/>
+    <p class="cg-base-text" v-if="adopter.send_to_friend">{{ $tc('default.stepper.certificate.gift.email', order.quantity) }}</p>
+    <p class="cg-base-text" v-html="description"/>
   </div>
 </template>
 

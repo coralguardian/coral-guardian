@@ -2,6 +2,8 @@ import AbstractForm from "../abstractForm";
 import adoptionHelper from "@/helpers/adoptionHelper";
 import ProductForm from "@/forms/full/productForm";
 import ActionEnum from "@/enums/actionEnum";
+import Step from "@/forms/Step";
+import OrderTypeEnum from "@/enums/orderTypeEnum";
 
 export default class ProjectForm extends AbstractForm {
 
@@ -21,7 +23,7 @@ export default class ProjectForm extends AbstractForm {
               .then(() => {
                 context.dispatch('loadForm', new ProductForm())
                   .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'regular'}})
+                    context.dispatch('updateForm', {order: {type: OrderTypeEnum.regular}})
                       .then(() => resolve())
                   });
               })
@@ -35,7 +37,7 @@ export default class ProjectForm extends AbstractForm {
               .then(() => {
                 context.dispatch('loadForm', new ProductForm())
                   .then(() => {
-                    context.dispatch('updateForm', {order: {type: 'gift'}})
+                    context.dispatch('updateForm', {order: {type: OrderTypeEnum.gift}})
                       .then(() => resolve())
                   })
               })
@@ -46,18 +48,25 @@ export default class ProjectForm extends AbstractForm {
       })
   }
 
+  unload(state) {
+    return new Promise(resolve => {
+      state.data.project = null
+      resolve()
+    })
+  }
+
   steps = [
-    {
-      tab: {
-        title: "default.stepper.header.project",
-      },
-      component: "ProjectStep",
-      validate: true,
-      customValidation: true,
-      larger: true,
-      display: (state) => {
+    new Step(
+      "default.stepper.header.project",
+      1,
+      "ProjectStep",
+      (state) => {
         return state.data.project === null && state.data.target !== ActionEnum.donation
-      }
-    }
+      },
+      true,
+      false,
+      true,
+      true
+    )
   ]
 }

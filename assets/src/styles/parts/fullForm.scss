@@ -1,7 +1,4 @@
 #full-form {
-  .v-btn.primary {
-    color: black !important;
-  }
 
   .v-btn.tertiary {
     color: white;
@@ -11,12 +8,12 @@
     }
   }
 
-  .v-tooltip__content {
-    @media #{map-get($display-breakpoints, 'sm-and-up')} {
-      left: 33% !important;
-    }
-    @media #{map-get($display-breakpoints, 'sm-and-down')} {
-      left: 25% !important;
-    }
-  }
+  //.v-tooltip__content {
+  //  @media #{map-get($display-breakpoints, 'sm-and-up')} {
+  //    left: 33% !important;
+  //  }
+  //  @media #{map-get($display-breakpoints, 'sm-and-down')} {
+  //    left: 25% !important;
+  //  }
+  //}
 }

@@ -10,8 +10,51 @@
   text-align: right;
 }
 
+.v-text-field--outlined.v-file-input {
+  fieldset {
+    border-radius: unset !important;
+    border-color: $primary;
+  }
+
+  .v-icon:not(.error--text) {
+    color: $primary !important;
+  }
+
+  label:not(.error--text) {
+    color: $primary !important;
+  }
+}
+
 .subtitles {
   font-weight: bolder;
   font-size: 1.25rem;
   padding: 12px 0;
+}
+
+.cg-base-text {
+  font-weight: 400;
+  color: $primary;
+  font-size: 18px;
+  line-height: 20px;
+
+  &.text-bolder {
+    font-weight: 500;
+  }
+
+  &.light {
+    color: #6F6C90;
+  }
+
+  &.lower {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+.cg-title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 35px;
+  color: $primary;
+  margin-bottom: 24px;
 }

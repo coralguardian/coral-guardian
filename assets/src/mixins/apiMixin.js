@@ -93,6 +93,12 @@ export default {
         i++
       })
       return url;
-    }
+    },
+    // a implémenter, remplacement des paramètres {uuid} dans les urls
+    // replaceParamsEndpointUrl(url, params) {
+    //   console.log(url, params)
+    //   let parsedUrl = url.split(new RegExp(/{.*?}/))
+    //   console.log(parsedUrl)
+    // }
   }
 }

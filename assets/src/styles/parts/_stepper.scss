@@ -1,0 +1,31 @@
+.v-stepper__step {
+  padding: 24px 19px !important;
+
+  @media #{map-get($display-breakpoints, 'xs-only')} {
+    padding: 5px !important;
+  }
+}
+
+.v-stepper__step__step {
+  height: 34px !important;
+  width: 34px !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+}
+
+.v-stepper__step--inactive {
+  .v-stepper__step__step {
+    background: $secondary !important;
+    color: #6F6C90 !important;
+  }
+}
+
+.v-stepper__label {
+  margin: unset !important;
+}
+
+@media #{map-get($display-breakpoints, 'xs-only')} {
+  .v-stepper__content {
+    padding: unset !important;
+  }
+}
