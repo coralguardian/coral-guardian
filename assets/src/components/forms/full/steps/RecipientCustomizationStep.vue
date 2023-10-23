@@ -23,7 +23,7 @@
           no-resize
           outlined
           :placeholder="$t('default.stepper.customizationSend.message.placeholder')"
-          maxlength="490"
+          maxlength="450"
           counter
       />
 

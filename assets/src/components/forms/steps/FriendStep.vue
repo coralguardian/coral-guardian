@@ -37,7 +37,7 @@
           outlined
           :placeholder="$t('default.stepper.friend.form.message')"
           :rules="[rules.required]"
-          maxlength="490"
+          maxlength="450"
           v-model="friend.message"
           counter
       />
