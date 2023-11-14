@@ -12,6 +12,7 @@ export default {
         notNull: value => value !== null,
         minLength: value => !!value && value.length >= this.minLength || i18n.t('default.rules.minLength', {count: this.minLength}),
         maxLength: value => !value ? true : (value.length <= this.maxLength || i18n.t('default.rules.maxLength', {count: this.maxLength})),
+        utf8MaxLength: value => !value ? true : (encodeURI(value).length <= this.maxLength || i18n.t('default.rules.utf8MaxLength', {count: this.maxLength})),
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || i18n.t('default.rules.email')

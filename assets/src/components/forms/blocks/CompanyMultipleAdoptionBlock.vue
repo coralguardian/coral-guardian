@@ -35,7 +35,8 @@
 
         <v-row v-if="tab === 0">
           <v-col
-              cols="6"
+              cols="12"
+              sm="6"
               v-for="n in order.quantity"
               :key="n"
           >

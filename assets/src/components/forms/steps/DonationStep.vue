@@ -157,6 +157,10 @@ export default {
   width: 80%;
   margin: auto;
 
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
+    width: 90%;
+  }
+
   > div {
     display: flex;
     align-items: center;

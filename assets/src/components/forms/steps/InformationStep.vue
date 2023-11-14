@@ -11,6 +11,7 @@
     <v-form
         :ref="formRefName"
         v-model="valid"
+        autocomplete="on"
     >
 
       <text-input
@@ -18,6 +19,7 @@
           :label="$t('default.stepper.information.' + informationSubstring + 'cols.information.companyName')"
           :rules="[rules.required, rules.minLength]"
           v-model="adopter.company_name"
+          autocomplete="organization"
       />
 
       <text-input
@@ -33,19 +35,21 @@
 
       <div class="row">
         <text-input
-            class="col-6"
+            class="col-sm-6 col-12"
             :label="$t('default.stepper.information.' + informationSubstring + 'cols.information.name')"
             :rules="[rules.required, rules.minLength, rules.specialChar]"
             v-model="adopter.last_name"
             icon="mdi-account-outline"
+            autocomplete="family-name"
         />
 
         <text-input
-            class="col-6"
+            class="col-sm-6 col-12"
             :label="$t('default.stepper.information.' + informationSubstring + 'cols.information.firstname')"
             :rules="[rules.required, rules.minLength, rules.specialChar]"
             v-model="adopter.first_name"
             icon="mdi-account-outline"
+            autocomplete="given-name"
         />
       </div>
 
@@ -54,6 +58,8 @@
           :rules="[rules.required, rules.email]"
           v-model="adopter.email"
           icon="mdi-email-outline"
+          type="email"
+          name="email"
       />
 
       <text-input
@@ -61,30 +67,34 @@
           :rules="[rules.required]"
           v-model="adopter.address"
           icon="mdi-home-outline"
+          autocomplete="street-address"
       />
 
       <div class="row">
         <text-input
-            class="col-4"
+            class="col-sm-4 col-12"
             :label="$t('default.stepper.information.cols.contact.postalCode')"
             :rules="[rules.required]"
             v-model="adopter.postal_code"
             icon="mdi-home-outline"
+            autocomplete="postal-code"
         />
         <text-input
-            class="col-4"
+            class="col-sm-4 col-12"
             :label="$t('default.stepper.information.cols.contact.city')"
             :rules="[rules.required]"
             v-model="adopter.city"
             icon="mdi-home-outline"
+            autocomplete="address-level2"
         />
         <text-input
-            class="col-4"
+            class="col-sm-4 col-12"
             id="country-input"
             :label="$t('default.stepper.information.cols.contact.country')"
             :rules="[rules.required, rules.minLength]"
             v-model="adopter.country"
             icon="mdi-home-outline"
+            autocomplete="country-name"
         />
       </div>
 

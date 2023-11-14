@@ -17,7 +17,7 @@
         <icon icon-path="'/img/icons/recif.svg'" alt=""/>
         {{$tc('default.reef.base', 1)}}
 
-        <btn-tooltip>
+        <btn-tooltip class="reef-tooltip">
           <span v-html="$t('default.reef.tooltip')"/>
         </btn-tooltip>
       </setup-btn>
@@ -90,5 +90,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.reef-tooltip {
+  .v-tooltip__content {
+    @media #{map-get($display-breakpoints, 'xs-only')} {
+      left: -100px !important;
+    }
+  }
+}
 </style>

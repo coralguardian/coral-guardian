@@ -23,8 +23,10 @@
           no-resize
           outlined
           :placeholder="$t('default.stepper.customizationSend.message.placeholder')"
-          maxlength="490"
+          :rules="[rules.utf8MaxLength]"
+          maxlength="500"
           counter
+          :counter-value="v => v ? encodeURI(v).length : 0"
       />
 
       <v-switch
@@ -80,7 +82,8 @@ export default {
   data() {
     return {
       scheduled: false,
-      errorMessage: null
+      errorMessage: null,
+      maxLength: 500
     }
   },
   computed: {

@@ -6,7 +6,8 @@
     </hint>
     <v-row v-if="adoption.type !== null">
       <v-col
-          cols="6"
+          cols="12"
+          sm="6"
           v-for="n in order.quantity"
           :key="n"
       >

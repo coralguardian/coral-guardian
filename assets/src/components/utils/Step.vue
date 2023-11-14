@@ -3,7 +3,7 @@
 
     <text-breadcrumb v-if="step.displayBreadcrumb"/>
 
-    <h3 class="cg-title" v-if="step.title">
+    <h3 class="cg-title text-center" v-if="step.title">
       <span v-if="isSpecific" v-html="$tc(step.title, count, specific)"/>
       <span v-else-if="isSingular" v-html="$tc(step.title, count, singular)"/>
       <span v-else v-html="$tc(step.title, count, translation)"/>
@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss" scoped>
 .form-step {
-  padding: 0 2rem;
+  padding: 1rem 2rem 0;
   //border-radius: $base-border-radius;
 }
 //

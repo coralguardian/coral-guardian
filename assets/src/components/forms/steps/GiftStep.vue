@@ -8,12 +8,15 @@
         :ref="formRefName"
         v-model="valid"
     >
-      <text-input
-          :rules="[rules.required]"
-          :label="$t('default.stepper.gift.input.label')"
-          :placeholder="$t('default.stepper.gift.input.placeholder')"
-          v-model="order.giftCode"
-      />
+      <div class="row">
+        <text-input
+            class="col-12 col-sm-6"
+            :rules="[rules.required]"
+            :label="$t('default.stepper.gift.input.label')"
+            :placeholder="$t('default.stepper.gift.input.placeholder')"
+            v-model="order.giftCode"
+        />
+      </div>
     </v-form>
   </div>
 </template>
@@ -80,7 +83,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#gift-step {
-  padding: 1rem 2rem 2rem;
-}
 </style>

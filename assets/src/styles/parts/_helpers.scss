@@ -37,6 +37,11 @@
   font-size: 18px;
   line-height: 20px;
 
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
+    font-size: 16px;
+    line-height: 18px;
+  }
+
   &.text-bolder {
     font-weight: 500;
   }
@@ -48,6 +53,10 @@
   &.lower {
     font-size: 16px;
     line-height: 24px;
+    @media #{map-get($display-breakpoints, 'sm-and-down')} {
+      font-size: 14px;
+      line-height: 18px;
+    }
   }
 }
 
@@ -57,4 +66,9 @@
   line-height: 35px;
   color: $primary;
   margin-bottom: 24px;
+
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
+    font-size: 20px;
+    line-height: 24px;
+  }
 }

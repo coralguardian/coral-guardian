@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <text-input
-          class="col-6"
+          class="col-sm-6 col-12"
           :placeholder="$t('default.stepper.friend.form.firstname')"
           :rules="[rules.required, rules.specialChar]"
           v-model="value.first_name"
@@ -10,7 +10,7 @@
           icon="mdi-account-outline"
       />
       <text-input
-          class="col-6"
+          class="col-sm-6 col-12"
           :placeholder="$t('default.stepper.friend.form.name')"
           :rules="[rules.required, rules.specialChar]"
           v-model="value.last_name"

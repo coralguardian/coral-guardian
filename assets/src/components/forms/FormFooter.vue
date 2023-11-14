@@ -1,42 +1,45 @@
 <template>
-  <div
-      class="app-stepper-footer d-flex"
-      :class="{'justify-end': !displayPreviousButton, 'justify-space-between': displayPreviousButton, 'flex-column': windowWidth <= 600}"
-  >
-    <v-btn
-        v-if="displayPreviousButton"
-        class="cg-btn previous"
-        elevation="0"
-        @click="previousStep"
+  <div class="app-stepper-footer">
+    <div
+        class="d-flex"
+        :class="{'justify-end': !displayPreviousButton, 'justify-space-between': displayPreviousButton}"
     >
+      <v-btn
+          v-if="displayPreviousButton"
+          class="cg-btn previous"
+          elevation="0"
+          @click="previousStep"
+      >
         <v-icon color="primary">
-            mdi-arrow-left
+          mdi-arrow-left
         </v-icon>
-      {{ $t("default.ui.previous") }}
-    </v-btn>
+        {{ $t("default.ui.previous") }}
+      </v-btn>
 
-    <v-btn
-        v-if="currentStep.ignorable"
-        depressed
-        @click="ignoreStep"
-        color="transparent"
-        class="ignore-button"
-    >
-      {{ $t("default.ui.through") }}
-    </v-btn>
-
-    <v-btn
-        v-if="!currentStep.isLast"
-        elevation="0"
-        class="cg-btn"
-        :class="{'align-self-end': !displayPreviousButton}"
-        color="primary"
-        :loading="isLoading"
-        @click="validate"
-        rounded
-    >
-      {{ continueLabel }}
-    </v-btn>
+      <v-btn
+          v-if="!currentStep.isLast"
+          elevation="0"
+          class="cg-btn"
+          :class="{'align-self-end': !displayPreviousButton}"
+          color="primary"
+          :loading="isLoading"
+          @click="validate"
+          rounded
+      >
+        {{ continueLabel }}
+      </v-btn>
+    </div>
+    <div class="d-flex justify-center align-content-center mt-1" v-if="currentStep.ignorable">
+      <v-btn
+          v-if="currentStep.ignorable"
+          depressed
+          @click="ignoreStep"
+          color="transparent"
+          class="ignore-button"
+      >
+        {{ $t("default.ui.through") }}
+      </v-btn>
+    </div>
   </div>
 
 </template>

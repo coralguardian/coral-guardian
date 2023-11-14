@@ -12,7 +12,7 @@
     </hint>
 
     <v-row>
-      <v-col cols="6" xs="12">
+      <v-col cols="12" sm="6">
         <text-input
             :value="order.quantity"
             :label="$t('default.stepper.adoption.quantity.label')"
@@ -27,7 +27,7 @@
     </v-row>
 
     <v-row>
-      <v-col cols="6" xs="12">
+      <v-col cols="12" sm="6">
         <custom-amount
             v-model="order.price"
             ref="customAmount"

@@ -8,6 +8,7 @@
         type="number"
         @change="emit"
         :tooltip="hint ? $t('default.stepper.adoption.customAmount.hint') : null"
+        tooltip-class="custom-amount-tooltip"
         :rules="inputRules"
         icon="mdi-currency-eur"
     />
@@ -80,6 +81,12 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.custom-amount-tooltip {
+  .v-tooltip__content {
+    @media #{map-get($display-breakpoints, 'xs-only')} {
+      left: -55px !important;
+    }
+  }
+}
 </style>

@@ -21,6 +21,7 @@ export default {
     required: "Ce champ est requis.",
     minLength: "Ce champ doit comporter {count} caractères minimum.",
     maxLength: "Ce champ doit comporter {count} caractères maximum.",
+    utf8MaxLength: "Ce champ est trop long. Les smiley et les accents utilisent plus d'espace que les caractères simples.",
     email: "Email non valide",
     specialChar: "Caractère(s) non admis.",
     digitOnly: "Ce champ ne doit comporter que des chiffres.",
@@ -431,7 +432,7 @@ export default {
     }
   },
   newsletter: {
-    title: "Bonus optionnel",
+    title: "Bonus optionnel 😃",
     label: {
       adoption: "Je souhaite recevoir des nouvelles <b>liées à mon adoption</b> et à l'avancée des projets de Coral Guardian et m'inscris à la newsletter mensuelle.",
       donation: "Recevez des nouvelles <b>liées à votre don</b> et de l'avancée des projets de Coral Guardian.<br>Je souhaite m'inscrire aux nouvelles envoyées par Coral Guardian.",

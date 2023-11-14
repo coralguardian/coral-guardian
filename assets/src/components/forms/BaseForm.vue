@@ -2,7 +2,7 @@
 
   <div class="d-flex justify-center">
 
-    <div class="form-container">
+    <div class="new-form-container">
 
       <transition name="fade">
         <v-alert
@@ -14,29 +14,29 @@
         </v-alert>
       </transition>
 
-      <v-tabs
-          v-show="currentStep.component !== 'ChoiceStep'"
-          :value="stepNumber"
-          background-color="primary"
-          grow
-          centered
-          center-active
-          active-class="step-active"
-          hide-slider
-      >
+<!--      <v-tabs-->
+<!--          v-show="currentStep.component !== 'ChoiceStep'"-->
+<!--          :value="stepNumber"-->
+<!--          :background-color="null"-->
+<!--          grow-->
+<!--          centered-->
+<!--          center-active-->
+<!--          active-class="step-active"-->
+<!--          hide-slider-->
+<!--      >-->
 
-        <v-tab
-            v-for="(tab, index) in tabs"
-            v-show="tab.visible"
-            class="text-no-transform"
-            :class="tab.class ? tab.class : ''"
-            :key="index"
-            disabled
-        >
-          <span class="cg-base-text white--text" v-if="tab.title">{{ $t(tab.title) }}</span>
-        </v-tab>
+<!--        <v-tab-->
+<!--            v-for="(tab, index) in tabs"-->
+<!--            v-show="tab.visible"-->
+<!--            class="text-no-transform"-->
+<!--            :class="tab.class ? tab.class : ''"-->
+<!--            :key="index"-->
+<!--            disabled-->
+<!--        >-->
+<!--          <span class="cg-base-text white&#45;&#45;text" v-if="tab.title">{{ $t(tab.title) }}</span>-->
+<!--        </v-tab>-->
 
-      </v-tabs>
+<!--      </v-tabs>-->
 
       <v-tabs-items :value="stepNumber" touchless>
 
@@ -140,28 +140,28 @@ export default {
 
 <style lang="scss" scoped>
 
-.form-container {
-  width: 475px;
-  border: 2px solid $primary;
-  border-radius: $base-border-radius;
-  background: white;
-  position: relative;
-}
+//.form-container {
+//  width: 475px;
+//  border: 2px solid $primary;
+//  border-radius: $base-border-radius;
+//  background: white;
+//  position: relative;
+//}
 
-@media (max-width: 450px) {
-  .form-container {
-    width: 100vw;
-  }
-}
+//@media (max-width: 450px) {
+//  .form-container {
+//    width: 100vw;
+//  }
+//}
 
 .v-tabs {
-  border-top-left-radius: 4% !important;
-  border-top-right-radius: 4% !important;
-  background: $primary;
+  //border-top-left-radius: 4% !important;
+  //border-top-right-radius: 4% !important;
+  //background: $primary;
 }
 
 .v-tabs-items {
-  border-radius: $base-border-radius;
+  border-radius: 50px;
 }
 
 //.v-window-item:not(first-child) {
@@ -172,13 +172,13 @@ export default {
   font-size: 0.7rem;
   padding: 0 12px;
 
-  &.round-left-top {
-    border-top-left-radius: 7px;
-  }
-
-  &.round-right-top {
-    border-top-right-radius: 7px;
-  }
+  //&.round-left-top {
+  //  border-top-left-radius: 7px;
+  //}
+  //
+  //&.round-right-top {
+  //  border-top-right-radius: 7px;
+  //}
 }
 
 @media (max-width: 450px) {
@@ -194,10 +194,6 @@ export default {
   span {
     color: $primary !important;
   }
-}
-
-.v-tab--disabled {
-  opacity: unset;
 }
 
 .base-form-footer {

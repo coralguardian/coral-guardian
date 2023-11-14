@@ -21,6 +21,7 @@ export default {
     required: "This field is required",
     minLength: "This field must be at least {count} characters long",
     maxLength: "This field must contain {count} maximum characters.",
+    utf8MaxLength: "This field is too long. Smileys and accents use more space than simple characters.",
     email: "Invalid email",
     specialChar: "Character(s) not allowed",
     digitOnly: "This field must contain digits only",
@@ -256,16 +257,16 @@ export default {
       cols: {
         information: {
           title: "Information",
-          firstname: "First name",
-          name: "Surname",
-          mail: "Email"
+          firstname: "First name*",
+          name: "Surname*",
+          mail: "Email*"
         },
         contact: {
           title: "Billing details",
-          address: "Address",
-          postalCode: "Postcode",
-          city: "Town",
-          country: "Country"
+          address: "Address*",
+          postalCode: "Postcode*",
+          city: "Town*",
+          country: "Country*"
         }
       }
     },
@@ -428,7 +429,7 @@ export default {
     }
   },
   newsletter: {
-    title: "Subscribe to our newsletter",
+    title: "Subscribe to our newsletter 😃",
     label: {
       adoption: "I would like to subscribe to news linked to my adoption.",
       donation: "Receive news <b>linked to your donation</b> and the progress of Coral Guardian's projects.<br>I would like to receive news from Coral Guardian."

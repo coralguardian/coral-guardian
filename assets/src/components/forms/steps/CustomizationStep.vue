@@ -10,7 +10,7 @@
     >
       <div class="d-flex flex-wrap mt-4">
         <div
-            :class="order.quantity > 1 ? 'col-6' : 'col-12'"
+            :class="order.quantity > 1 ? 'col-sm-6 col-12' : 'col-12'"
             v-for="n in order.quantity"
             :key="n"
         >

@@ -6,7 +6,7 @@
     >
       {{label}}
 
-      <btn-tooltip v-if="tooltip">
+      <btn-tooltip v-if="tooltip" :class="tooltipClass">
         <span>{{ tooltip }}</span>
       </btn-tooltip>
     </p>
@@ -21,8 +21,10 @@
         :maxLength="maxLength"
         :counter="counter"
         :type="type"
+        :name="name"
+        :autocomplete="autocomplete"
         rounded
-        height="66"
+        :height="windowWidth < 600 ? 44 : 66"
         @input="$emit('input', sanitizeValue($event))"
         @change="$emit('change', sanitizeValue($event))"
         :append-icon="icon"
@@ -34,10 +36,12 @@
 <script>
 import BtnTooltip from "@/components/utils/BtnTooltip.vue";
 import {nanoid} from 'nanoid';
+import ScreenMixin from "@/mixins/screenMixin";
 
 export default {
   name: "text-input",
   components: {BtnTooltip},
+  mixins: [ScreenMixin],
   props: {
     value: null,
     label: {
@@ -64,9 +68,18 @@ export default {
     tooltip: {
       type: String
     },
+    tooltipClass: {
+      type: String
+    },
     type: {
       type: String,
       default: 'text'
+    },
+    name: {
+      type: String
+    },
+    autocomplete: {
+      type: String
     },
     min: {
       type: Number,
@@ -135,9 +148,18 @@ export default {
           align-self: center;
           justify-self: center;
 
+          @media #{map-get($display-breakpoints, 'sm-and-down')} {
+            width: 20px !important;
+            height: 20px !important;
+          }
+
           i {
             font-size: 28px !important;
             color: #A0A3BD !important;
+
+            @media #{map-get($display-breakpoints, 'sm-and-down')} {
+              font-size: 20px !important;
+            }
           }
         }
       }

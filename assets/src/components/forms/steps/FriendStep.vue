@@ -36,10 +36,11 @@
           color="tertiary"
           outlined
           :placeholder="$t('default.stepper.friend.form.message')"
-          :rules="[rules.required]"
-          maxlength="490"
+          :rules="[rules.required, rules.utf8MaxLength]"
           v-model="friend.message"
+          maxlength="500"
           counter
+          :counter-value="v => v ? encodeURI(v).length : 0"
       />
 
     </v-form>
@@ -60,6 +61,7 @@ export default {
   data() {
     return {
       message: "",
+      maxLength: 500
     }
   },
   computed: {

@@ -73,8 +73,8 @@ export default {
           this.$t('default.donation.dialog.chart.labels.managementCosts')
         ],
         datasets: [{
-          backgroundColor: ['#00AC8C', '#A7B7DA',
-            '#FF9940', '#E1000F', '#1B446B', '#4A3AFF'
+          backgroundColor: ['#818b83', '#cabaac',
+            '#e6b295', '#99bbc9', '#28335f', '#cabaac'
           ],
           data: [42.5, 18.5, 2.7, 8.7, 14.8, 12.8],
         }]
