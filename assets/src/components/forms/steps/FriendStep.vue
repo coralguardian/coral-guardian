@@ -38,7 +38,7 @@
           :placeholder="$t('default.stepper.friend.form.message')"
           :rules="[rules.required, rules.utf8MaxLength]"
           v-model="friend.message"
-          maxlength="500"
+          maxlength="450"
           counter
           :counter-value="v => v ? encodeURI(v).length : 0"
       />

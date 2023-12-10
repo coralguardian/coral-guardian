@@ -19,7 +19,7 @@
             outlined
             :placeholder="$t('default.stepper.customizationSend.message.placeholder')"
             :rules="[rules.utf8MaxLength]"
-            maxlength="500"
+            maxlength="450"
             counter
             :counter-value="v => v ? encodeURI(v).length : 0"
         />
