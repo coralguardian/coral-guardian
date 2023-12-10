@@ -83,7 +83,7 @@ export default {
     return {
       scheduled: false,
       errorMessage: null,
-      maxLength: 500
+      maxLength: 450
     }
   },
   computed: {

@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       message: "",
-      maxLength: 500
+      maxLength: 450
     }
   },
   computed: {
