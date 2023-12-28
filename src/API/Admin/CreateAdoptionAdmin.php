@@ -69,6 +69,7 @@ class CreateAdoptionAdmin extends APIEnpointAbstract
                 paymentMethod: PaymentMethod::from($data['order']['payment_method']),
                 isPaid: true,
                 project: Project::from($data['donation']['project']),
+                customAmount: null,
                 address: $data['customer']['address'],
                 postalCode: $data['customer']['postal_code'],
                 city: $data['customer']['city'],
